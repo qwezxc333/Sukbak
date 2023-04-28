@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<th:block layout:fragment="content">
+<head>
+  <title>Example</title>
+</head>
+<body>
+<div sec:authorize="isAuthenticated()"><!--로그인 성공 조건  -->
+
+  <p><span sec:authentication="name"></span></p> <!-- user_id -->
+  <p><span sec:authentication="principal.user.name"></span></p><!-- name -->
+  <p><span sec:authentication="principal.user.nickname"></span></p><!-- nickname -->
+  <p><span sec:authentication="principal.password"></span></p><!-- password -->
+  <p><span sec:authentication="principal.user.phone"></span></p><!-- phone -->
+  <p><span sec:authentication="principal.user.telecom"></span></p><!-- telecom -->
+  <p><span sec:authentication="principal.user.gender"></span></p><!-- gender -->
+  <p><span sec:authentication="principal.user.agree"></span></p><!-- agree -->
+  <p><span sec:authentication="principal.user.user_status"></span></p><!-- user_status -->
+  <p><span sec:authentication="principal.user.auth_level"></span></p><!-- auth_level -->
+
+</div>
+</body>
+</th:block>
+</html>

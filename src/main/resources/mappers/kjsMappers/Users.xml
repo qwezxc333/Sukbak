@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.S20230403.UsersMapper">
+
+<!--    Select      -->
+    <select id="getUserAccount" resultType="Users">
+        select * from users where user_id = #{user_id}
+    </select>
+
+    <select id="isNewUser" resultType="int">
+        select count(*) from users where user_id = #{user_id} and auth_level = 'TEMPORARY'
+    </select>
+
+    <select id="selectUserCountById" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM users WHERE user_id = #{user_id}
+    </select>
+
+    <select id="selectUserCountByNick" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM users WHERE nickname = #{nickname}
+    </select>
+
+<!--    Insert      -->
+    <insert id="saveUser" parameterType="Users">
+        INSERT INTO USERS
+        VALUES(#{user_id},#{name},#{nickname},#{password},#{phone},#{telecom},#{gender},#{agree},'activated',#{auth_level})
+    </insert>
+
+    <insert id="saveUser2Api" parameterType="Users">
+        INSERT INTO USERS(user_id,name,password,agree,user_status,auth_level)
+        VALUES(#{user_id},#{name},#{password},'Y','activated',#{auth_level})
+    </insert>
+
+<!--    Update      -->
+    <update id="addInfoUser" parameterType="Users">
+        update users
+        set nickname = #{nickname}, phone = #{phone}, telecom = #{telecom}, gender = #{gender}, auth_level = #{auth_level}
+        where user_id = #{user_id}
+    </update>
+
+<!--    Delete      -->
+    <delete id="delete" parameterType="string">
+        delete from users where user_id = #{user_id}
+    </delete>
+</mapper>

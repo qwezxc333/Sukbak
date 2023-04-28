@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJ11l6AemMuqliJGOohZ11WOHtXeReKOw&callback=initAutocomplete&libraries=places&v=weekly"
+      defer
+    ></script>
+	<script type="text/javascript">
+		
+		function initAutocomplete() {
+			  const map = new google.maps.Map(document.getElementById("map"), {
+			    center: { lat: 37.5665, lng: 126.9780 },
+			    zoom: 13,
+			    mapTypeId: "roadmap",
+			  });
+			  // Create the search box and link it to the UI element.
+			  const input = document.getElementById("pac-input");
+			  const searchBox = new google.maps.places.SearchBox(input);
+
+			  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+			  // Bias the SearchBox results towards current map's viewport.
+			  map.addListener("bounds_changed", () => {
+			    searchBox.setBounds(map.getBounds());
+			  });
+
+			  let markers = [];
+
+			  // Listen for the event fired when the user selects a prediction and retrieve
+			  // more details for that place.
+			  searchBox.addListener("places_changed", () => {
+			    const places = searchBox.getPlaces();
+
+			    if (places.length == 0) {
+			      return;
+			    }
+
+			    // Clear out the old markers.
+			    markers.forEach((marker) => {
+			      marker.setMap(null);
+			    });
+			    markers = [];
+
+			    // For each place, get the icon, name and location.
+			    const bounds = new google.maps.LatLngBounds();
+
+			    places.forEach((place) => {
+			      if (!place.geometry || !place.geometry.location) {
+			        console.log("Returned place contains no geometry");
+			        return;
+			      }
+
+			      const icon = {
+			        url: place.icon,
+			        size: new google.maps.Size(71, 71),
+			        origin: new google.maps.Point(0, 0),
+			        anchor: new google.maps.Point(17, 34),
+			        scaledSize: new google.maps.Size(25, 25),
+			      };
+			      
+			      document.getElementById("addr1").value = place.formatted_address;
+			      document.getElementById("addr2").value = place.name;
+			      document.getElementById("latitude").value = place.geometry.location.lat()
+			      document.getElementById("longitude").value = place.geometry.location.lng()
+
+			      // Create a marker for each place.
+			      markers.push(
+			        new google.maps.Marker({
+			          map,
+			          icon,
+			          title: place.name,
+			          position: place.geometry.location,
+			        })
+			      );
+			      if (place.geometry.viewport) {
+			        // Only geocodes have viewport.
+			        bounds.union(place.geometry.viewport);
+			      } else {
+			        bounds.extend(place.geometry.location);
+			      }
+			    });
+			    map.fitBounds(bounds);
+			  });
+			}
+
+			window.initAutocomplete = initAutocomplete;
+
+			
+			function sendValue() {
+				
+				var addr1 = document.getElementById("addr1").value
+				var addr2 = document.getElementById("addr2").value
+				var addr = document.getElementById("addr1").value +' '+document.getElementById("addr2").value
+				document.getElementById("addr").value = addr
+				
+				var latitude = document.getElementById("latitude").value
+				var longitude = document.getElementById("longitude").value
+				
+				alert(addr)
+				alert(latitude)
+				alert(longitude)
+				
+				if (addr.length < 8) {
+					alert('주소를 입력하세요')
+					return false;
+				} else {
+					window.opener.postMessage({
+						addr: addr,
+						latitude: latitude,
+						longitude: longitude
+					}, window.parent);
+					event.preventDefault();
+					window.close()
+				}
+				return false;
+				
+			}
+	</script>
+<body>
+	<input
+      id="pac-input"
+      class="controls"
+      type="text"
+      placeholder="주소를 입력하세요."
+      style="width: 400px"
+    />
+    <div id="map" style="height: 600px;"></div>
+    
+    <input type="text" readonly id="addr1" name="addr1" value="주소" style="width: 400px;">
+    <input type="text" readonly id="addr2" name="addr2" value="상세주소" style="width: 400px;">
+    <input type="hidden" id="addr" name="addr" value="">
+    <input type="hidden" id="latitude" name="latitude" value="">
+    <input type="hidden" id="longitude" name="longitude" value="">
+    <button onclick="sendValue()">확인</button>
+    
+</body>	
+</html>

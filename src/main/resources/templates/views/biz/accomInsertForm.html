@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<script type="text/javascript">
+	function actAlert() {
+		alert("등록이 완료되었습니다"); 
+	}
+	
+	function accomAddrGetForm() {
+		window.open("/biz/accomAddrGetForm", "_blank", "menubar=no, toolbar=no");
+	}
+	
+	window.addEventListener('message', function(event) {
+		  // 자식뷰에서 전달한 데이터를 가져와 화면에 출력
+		  document.getElementById('addr').value = event.data.addr;
+		  document.getElementById('latitude').value = event.data.latitude;
+		  document.getElementById('longitude').value = event.data.longitude;
+		});
+</script>
+<body>
+	<th:block layout:fragment="content">
+	<form action="/biz/accomInsert" method="post" name="frm">
+		<h4>업체정보 입력</h4><br><br>
+			<div class="mb-3 row">
+			    <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+			    <div class="col-sm-10">
+			      <input type="text" readonly class="form-control-plaintext" id="user_id" name="user_id" th:value="${user_id}">
+			    </div>
+			  </div>
+				<div class="input-group mb-3">
+				<label for="biz_id" class="col-sm-2 col-form-label">사업자등록번호</label>
+				  <input type="text" class="form-control" placeholder="사업자등록번호('-'포함)입력" aria-label="Recipient's username" aria-describedby="button-addon2" name="biz_id" id="biz_id" th:value="${biz_id}">
+				  <button class="btn btn-outline-secondary" type="button" id="button-addon2">확인</button>
+				</div>
+			  <div class="mb-3 row">
+			    <label for="biz_name" class="col-sm-2 col-form-label">업체명</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" name="biz_name" id="biz_name" th:value="${biz_name}">
+			    </div>
+			  </div>	
+			  <div class="mb-3 row">		
+				<select class="form-select" aria-label="Default select example" name="accom_type" th:value="${accom_type}">
+				  <option selected>업체 유형 선택</option>
+				  <option value="511">호텔(비즈니스)</option>
+				  <option value="513">호텔(3성)</option>
+				  <option value="514">호텔(4성)</option>
+				  <option value="515">호텔(5성)</option>
+				  <option value="515">호텔(5성)</option>
+				  <option value="520">모텔</option>
+				  <option value="530">게스트하우스</option>
+				  <option value="540">펜션</option>
+				</select>
+			  </div>
+			  <div class="input-group mb-3">
+				  <input type="text" readonly class="form-control" placeholder="주소 검색" aria-label="Recipient's username" aria-describedby="button-addon2" id="addr" name="addr" th:value="${addr}">
+				  <button class="btn btn-outline-secondary" type="button" onclick="accomAddrGetForm()" id="findAddr">주소 찾기</button>
+			  </div>
+			  <div class="mb-3 row">
+			    <label for="tel" class="col-sm-2 col-form-label">대표 번호</label>
+			    <div class="col-sm-10">
+			      <input type="tel" class="form-control" id="tel" name="tel" placeholder="업체 대표 전화번호('-'포함) 입력" th:value="${tel}">
+			    </div>
+			  </div>
+			  <div class="form-check">
+			  	  <h6>부대시설 확인</h6>
+				  <input type="checkbox" name="hasPool" id="hasPool">
+				  <label for="hasPool">수영장</label><br>
+				  <input type="checkbox" name="hasParking" id=hasParking >
+				  <label for="hasParking">주차시설</label><br>
+				  <input type="checkbox" name="hasCafe" id="hasCafe" >
+				  <label for="hasCafe">카페</label><br>
+				  <input type="checkbox" name="hasRestaurant" id="hasRestaurant">
+				  <label for="hasRestaurant">레스토랑</label><br>
+				  <input type="checkbox" name="hasStore" id="hasStore">
+				  <label for="hasStore">편의점</label><br>
+				  <input type="checkbox" name="hasSauna" id="hasSauna">
+				  <label for="hasSauna">사우나</label><br>
+				  <input type="checkbox" name="hasLaundry" id="hasLaundry">
+				  <label for="hasLaundry">라운더리</label><br>
+				  <input type="checkbox" name="hasFitness" id="hasFitness">
+				  <label for="hasFitness">헬스장</label><br>
+			   </div>
+			   <br>
+			   <div class="mb-3">
+				  <label for="exampleFormControlTextarea1" class="form-label"><h5>업체 상세 소개</h5></label>
+				  <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" name="description" placeholder="ex) 최대 주차수, 기타 체육시설(테니스장), 업체 역사등을 작성해주시면 됩니다"></textarea>
+				</div><br>
+				<input type="hidden" name="accom_avail" value="210">
+				<input type="hidden" id="addr" name="addr" value="none">
+				<input type="hidden" id="latitude" name="latitude" value="1">
+				<input type="hidden" id="longitude" name="longitude" value="1">
+				<button type="submit" value="완료" onclick="actAlert()">완료</button>
+				<button type="reset" value="취소">취소</button>
+		</form>
+	</th:block>
+</body>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+</html>

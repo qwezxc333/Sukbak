@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<th:block layout:fragment="content">
+    <head>
+        <meta charset="UTF-8">
+        <title>Insert title here</title>
+        <style type="text/css">
+            .image {
+                position: relative;
+            }
+
+            .image .text {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                color: #FFF;
+            }
+
+            img {
+                width: auto;
+                height: 430px;
+                object-fit: contain;
+            }
+        </style>
+        <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
+        <script>
+            $(function() {
+                var message = /*[[${message}]]*/ null;
+                if (message) {
+                    alert(message);
+                }
+            });
+        </script>
+    </head>
+    <body>
+    <h1 th:text="${#authentication.name}"></h1>
+
+    <div id="carouselExampleControls" class="carousel slide"
+         data-bs-ride="carousel">
+        <button class="carousel-inner" style="border: none;">
+            <div class="carousel-item active">
+                <a href="/main"> <img src="img/banner1.jpg" class="d-block w-100"
+                                      alt="..."></a>
+            </div>
+            <div class="carousel-item">
+                <a href="/main"> <img src="/img/banner2.jpg"
+                                      class="d-block w-100" alt="..."></a>
+            </div>
+            <div class="carousel-item">
+                <a href="/login"> <img src="/img/banner3.jpg" class="d-block w-100"
+                                       alt="..."></a>
+            </div>
+        </button>
+        <button class="carousel-control-prev" type="button"
+                data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button"
+                data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+        <hr/>
+        <div style="text-align: center;">
+            <a href="/cgProductLists?accom-type=520" class="image"><img alt="" src="/img/menuIcon_motel.png"
+                                   style="filter: brightness(70%); border-radius: 3px; box-shadow: 5px 5px 5px #999; margin: 50px; width: 150px; height: 150px;"></a><a
+                href="/cgProductLists/hotel"><img alt="" src="/img/menuIcon_hotel.png"
+                                   style="filter: brightness(70%); border-radius: 3px; box-shadow: 5px 5px 5px #999; margin: 50px; width: 150px; height: 150px;"></a><a
+                href="/cgProductLists?accom-type=530"><img alt="" src="/img/menuIcon_pension.png"
+                                   style="filter: brightness(70%); border-radius: 3px; box-shadow: 5px 5px 5px #999; margin: 50px; width: 150px; height: 150px;"></a><a
+                href="/cgProductLists?accom-type=540"><img alt="" src="/img/menuIcon_glemping.png"
+                                   style="filter: brightness(70%); border-radius: 3px; box-shadow: 5px 5px 5px #999; margin: 50px; width: 150px; height: 150px;"></a>
+        </div>
+        <h5 style="text-align: center;">테스트 텍스트</h5>
+    </div>
+    <br>
+    <br>
+    <div style="display: flex; text-align: center;">
+        <div class="card"
+             style="margin-right: 50px; margin-left: auto; margin-bottom: 100px;">
+            <img src="/img/adBanner.jpg" class="card-img-top" alt="..."
+                 style="width: auto;">
+            <div class="card-body">
+                <h5 class="card-title">subak 소식.</h5>
+                <p class="card-text">저희 숙박은 100% 유료입니다.</p>
+                <a href="#" class="btn btn-primary stretched-link">소식 바로보기</a>
+            </div>
+        </div>
+        <div class="card" style="margin-right: auto; margin-bottom: 100px;">
+            <img src="/img/eventBanner.jpg" class="card-img-top" alt="..."
+                 style="margin-bottom: auto;">
+            <div class="card-body">
+                <h5 class="card-title">subak 이벤트</h5>
+                <p class="card-text">200% 이벤트 지금당장 참여하세요</p>
+                <a href="#" class="btn btn-primary stretched-link">이벤트 바로보기</a>
+            </div>
+        </div>
+    </div>
+    </body>
+</th:block>
+</html>

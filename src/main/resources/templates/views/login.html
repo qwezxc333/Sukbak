@@ -1,0 +1,94 @@
+<!--로그인 페이지-->
+<!-- login.html-->
+<!DOCTYPE html>
+<!-- Latest compiled and minified CSS -->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<th:block layout:fragment="content">
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('form').submit(function () {
+                    var userId = $('#user_id').val();
+                    var password = $('#password').val();
+                    if (userId === '' || password === '') {
+                        alert('아이디와 비밀번호를 모두 입력해주세요.');
+                        return false;
+                    }
+                });
+            });
+
+            function checkDuplication() {
+                var userId = $('#user_id').val();
+
+                if (!userId) {
+                    $('#duplicationCheckResult').css("display", "none");
+                    return;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/checkDuplication',
+                    data: {
+                        user_id: userId
+                    },
+                    success: function (response) {
+                        if (response === 0) {
+                            $('#duplicationCheckResult').css("display", "block");
+                            $('#duplicationCheckResult').text('회원가입을 진행해주세요.');
+                            $('#signUp').css("display", "block");
+                            $('#google_login').css("display", "block");
+                            $('#login').css("display", "none");
+                        } else {
+                            $('#login').css("display", "block");
+                            $('#signUp').css("display", "none");
+                            $('#google_login').css("display", "none");
+                            $('#duplicationCheckResult').css("display", "none");
+                        }
+                    },
+                    error: function (request, status, error) {
+                        console.log('AJAX Error: ' + error);
+                    }
+                });
+            }
+        </script>
+        <title></title>
+    </head>
+    <body>
+    <div class="container">
+        <div th:if="${param.error}" class="alert alert-danger">로그인에 실패했습니다. 다시 시도해주세요.</div>
+        <h1>로그인</h1>
+        <form th:action="@{/login_proc}" method="post">
+            <div class="form-group">
+                <label for="user_id"></label>
+                <input type="text" id="user_id" name="user_id" class="form-control" placeholder="아이디 입력해주세요"
+                       onkeyup="checkDuplication()">
+                <label for="password"></label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="비밀번호 입력해주세요">
+                <span id="duplicationCheckResult" style="display: none;" class="alert alert-danger"></span>
+            </div>
+            <div class="form-group">
+
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="login" style="display: none;">로그인</button>
+                <button type="button" class="btn btn-primary" id="signUp" onClick="location.href='sign'"
+                        style="display: block;">회원 가입
+                </button>
+            </div>
+            <hr>
+            <p>
+                <button type="button" id="google_login" class="btn btn-primary" style="display:block;"
+                        onclick="location.href='/oauth2/authorization/google'">
+                    구글 로그인
+                </button>
+            </p>
+        </form>
+        <br/>
+    </div>
+    </body>
+</th:block>
+</html>

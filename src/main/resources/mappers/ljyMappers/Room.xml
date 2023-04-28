@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.S20230403_01.RoomMapper">
+	<select id="roomList" parameterType="String" resultType="room">
+		select *
+	from room r
+	inner join accom a on  a.biz_id = r.biz_id
+	where r.biz_id in( 
+	        SELECT a.biz_id
+	        FROM users u
+	        INNER JOIN accom a ON u.user_id = a.user_id
+	        WHERE u.user_id = #{user_id})
+	</select>
+	<select id="roomIdExtract" parameterType="String" resultType="Int">
+		select max(r_id)
+		from room
+		where biz_id = #{biz_id}
+	</select>
+	
+	<insert id="roomInsert" parameterType="room">
+		insert into room (
+			biz_id,
+			r_id,
+			r_name,
+			r_price,
+			r_capacity,
+			r_info,
+			r_count,
+			bath_count,
+			bath,
+			wifi,
+			ac,
+			tv,
+			bed_type
+		) values (
+			#{biz_id},
+			#{r_id},
+			#{r_name},
+			#{r_price},
+			#{r_capacity},
+			#{r_info},
+			#{r_count},
+			#{bath_count},
+			#{bath},
+			#{wifi},
+			#{ac},
+			#{tv},
+			#{bed_type}
+			)
+			
+	</insert>
+</mapper>

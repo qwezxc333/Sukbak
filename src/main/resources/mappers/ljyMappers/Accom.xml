@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.S20230403_01.AccomMapper">
+
+	<insert id="accomInsert" parameterType="accom">
+    INSERT INTO accom (
+        biz_id,
+        user_id,
+        accom_avail,
+        accom_type,
+        biz_name,
+        addr,
+        tel,
+        room_count,
+        description,
+        latitude,
+        longitude,
+        pool,
+        parking,
+        cafe,
+        restaurant,
+        store,
+        sauna,
+        laundry,
+        fitness
+    ) VALUES (
+        #{biz_id},
+        #{user_id},
+        #{accom_avail},
+        #{accom_type},
+        #{biz_name},
+        #{addr},
+        #{tel},
+        #{room_count},
+        #{description},
+        #{latitude},
+        #{longitude},
+        #{pool},
+        #{parking},
+        #{cafe},
+        #{restaurant},
+        #{store},
+        #{sauna},
+        #{laundry},
+        #{fitness}
+    )
+    
+	</insert>
+	<select id="accomList" parameterType="string" resultType="accom">
+		select *
+		from accom
+		where user_id = #{id} and
+			accom_avail = 210
+	</select> 
+	<select id=""></select>
+	
+	<select id="accomSelect" parameterType="string" resultType="accom">
+		select *
+		from accom
+		where biz_id = #{biz_id} and
+			accom_avail = 210
+	</select>
+	
+	<update id="accomUpdate" parameterType="accom">
+		update accom
+		set accom_type	 = #{accom_type},
+			biz_name 	 = #{biz_name},
+			addr		 = #{addr},
+			tel 		 = #{tel},
+			description  = #{description},
+			pool  		 = #{pool},
+			parking 	 = #{parking},
+			cafe 	 	 = #{cafe},
+			restaurant   = #{restaurant},
+			store   	 = #{store},
+			sauna 		 = #{sauna},
+			laundry  	 = #{laundry},
+			fitness 	 = #{fitness}
+		where biz_id 	 = #{biz_id} and
+			  accom_avail = 210	
+	</update>
+	
+	<update id="accomDelete" parameterType="String">
+		update accom
+		set accom_avail = 230
+		where biz_id = #{biz_id}
+	</update>
+	
+</mapper>

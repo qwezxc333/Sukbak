@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block layout:fragment="content">
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
+        <script>
+            var verified_Phone = 0;
+            var verified_Email = 0;
+
+            function checkDuplication() {
+                var userId = $('#user_id').val();
+                if (!userId) {
+                    $('#duplicationCheckResult').css("display", "none");
+                    $('#email_check').css("display", "none");
+
+                    return;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/checkDuplication',
+                    data: {
+                        user_id: userId
+                    },
+                    success: function (response) {
+                        if (response === 0) {
+                            $('#duplicationCheckResult').removeClass("alert-danger")
+                                .addClass("alert-success")
+                                .css("display", "block")
+                                .text('사용 가능한 이메일 주소입니다.');
+                            $('#email_check').css("display", "block");
+                        } else {
+                            $('#duplicationCheckResult').removeClass("alert-success").addClass("alert-danger")
+                                .css("display", "block")
+                                .text('이미 사용중인 이메일 주소입니다.');
+                        }
+                    },
+                    error: function (request, status, error) {
+                        console.log('AJAX Error: ' + error);
+                    }
+                });
+            }
+
+            function sendEmail() {
+                var user_id = $('#user_id').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/sendEmail',
+                    data: {
+                        user_id: user_id
+                    },
+                    success: function (data) {
+                        $("#email_verify_number").css("display", "block");
+                        $("#email_verify").css("display", "block");
+                        alert("이메일 전송 성공");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("전송 실패 : 이메일 주소를 다시 확인해주세요. " + textStatus);
+                    }
+                })
+
+            }
+
+            function verifyEmail() {
+                var certifiedNumber = $("#email_verify_number").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/verify-email",
+                    data: {
+                        certifiedNumber: certifiedNumber
+                    },
+                    success: function (data) {
+                        alert("이메일 인증에 성공했습니다.");
+                        $('#email_check').css("display", "none");
+                        $("#email_verify").css("display", "none");
+                        $("#email_verify_number").prop('disabled', true);
+                        $("#user_id").prop('disabled', true);
+                        $("#email_verify_success").css("display", "block");
+                        $("#duplicationCheckResult").removeClass("alert-danger")
+                            .addClass("alert-success")
+                            .text("이메일 인증이 성공하였습니다.");
+                        verified_Email++;
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("인증번호를 다시 확인주세요.");
+                        $("#email_verify_number").val("").focus();
+                    }
+                });
+            }
+
+            function checkDuplicationNick() {
+                var nickname = $('#inputNickname').val();
+                if (!nickname) {
+                    $('#duplicationCheckNickResult').css("display", "none");
+                    return;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/checkDuplicationNick',
+                    data: {
+                        nickname: nickname
+                    },
+                    success: function (response) {
+                        if (response === 0) {
+                            $('#duplicationCheckNickResult').removeClass("alert-danger")
+                                .addClass("alert-success")
+                                .css("display", "block")
+                                .text('사용 가능한 닉네임입니다.');
+                        } else {
+                            $('#duplicationCheckNickResult').removeClass("alert-success")
+                                .addClass("alert-danger")
+                                .css("display", "block")
+                                .text('이미 사용중인 닉네임입니다.');
+                        }
+                    },
+                    error: function (request, status, error) {
+                        console.log('AJAX Error: ' + error);
+                    }
+                });
+            }
+
+            function sendPhone() {
+                var phone = $("#inputPhone").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/send-one",
+                    data: {
+                        phone: phone
+                    },
+                    success: function (data) {
+                        $("#inputCertifiedNumber").css("display", "block");
+                        $("#verify").css("display", "block");
+                        alert("전송 성공");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("전화번호를 다시 확인해주세요");
+                        $("#inputPhone").focus();
+                    }
+                });
+            }
+
+            function verifyCertifiedNumber() {
+                var certifiedNumber = $("#inputCertifiedNumber").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/verify-certified-number",
+                    data: {
+                        certifiedNumber: certifiedNumber
+                    },
+                    success: function (data) {
+                        alert("인증 성공");
+                        $("#inputPhone").prop('disabled', true);
+                        $("#inputCertifiedNumber").prop('disabled', true);
+                        $("#phone_verify_success").css("display","block");
+                        $("#verify").css("display", "none");
+                        $("#submit-button").css("display", "block");
+                        verified_Phone++;
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("인증 실패: " + textStatus);
+                    }
+                });
+            }
+
+            function checkSubmit() {
+                if (verified_Phone === 1 && verified_Email === 1) {
+                    $("form").submit();
+                } else if (verified_Email === 0) {
+                    alert("이메일 인증을 해주세요.");
+                } else if (verified_Phone === 0) {
+                    alert("휴대폰 인증을 해주세요.");
+                } else {
+                    alert("이메일과 전화번호 인증을 모두 완료해야 합니다.");
+                }
+            }
+
+        </script>
+        <title></title>
+    </head>
+    <body>
+    <form onsubmit="signUp()" method="post" action="/sign">
+        <div class="container">
+            <h1>회원가입</h1>
+            <div class="form-group">
+                <label for="user_id">이메일 주소</label>
+                <input type="email" class="form-control" id="user_id" name="user_id" placeholder="사용자 아이디"
+                       onkeyup="checkDuplication()" required="required">
+                <span id="duplicationCheckResult" class="alert alert-danger" style="display: none"></span>
+                <button type="button" id="email_check" class="btn btn-secondary" onclick="sendEmail()"
+                        style="display: none">이메일 인증
+                </button>
+            </div>
+<!--            <div class="form-group">-->
+<!--                <label for="email_verify_number" style="display:none;">인증번호</label>-->
+<!--                <input type="number" class="form-control" id="email_verify_number" name="email_verify_number"-->
+<!--                       placeholder="인증번호를 입력하세요" required="required" style="display:none;">-->
+<!--                <button type="button" id="email_verify" class="btn btn-secondary" style="display:none;"-->
+<!--                        onclick="verifyEmail()">-->
+<!--                    인증번호 확인-->
+<!--                </button>-->
+<!--                <button type="button" disabled id="email_verify_success" class="alert alert-success"-->
+<!--                        style="display: none;">인증되었습니다.-->
+<!--                </button>-->
+<!--            </div>-->
+            <div class="form-group">
+                <label for="inputName">이 름</label>
+                <input type="text" class="form-control" id="inputName" name="name" placeholder="사용자 이름"
+                       required="required">
+            </div>
+            <div class="form-group">
+                <label for="inputNickname">별 명</label>
+                <input type="text" class="form-control" id="inputNickname" name="nickname" placeholder="사용자 별명"
+                       onkeyup="checkDuplicationNick()" required="required">
+                <span id="duplicationCheckNickResult" class="alert alert-danger" style="display: none"></span>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">비밀번호</label>
+                <input type="password" class="form-control" id="inputPassword" name="password" placeholder="사용자 비밀번호"
+                       required="required">
+            </div>
+            <div class="form-group">
+                <label for="selectTelecom">통신사</label>
+                <select class="form-control" id="selectTelecom" name="telecom" required="required">
+                    <option value="SKT">SKT</option>
+                    <option value="KT">KT</option>
+                    <option value="LG">LG</option>
+                    <option value="알뜰폰">알뜰폰</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="inputPhone">전화번호</label>
+                <input type="tel" class="form-control" id="inputPhone" name="phone"
+                       placeholder="사용자 전화번호 (01012345678) '-을 제외하고 입력해주세요.'" required="required">
+                <button type="button" id="check" class="btn btn-secondary" onclick="sendPhone()">전화번호 인증</button>
+            </div>
+<!--            <div class="form-group">-->
+<!--                <label for="inputCertifiedNumber" style="display:none;">인증번호</label>-->
+<!--                <input type="number" class="form-control" id="inputCertifiedNumber" name="certifiedNumber"-->
+<!--                       placeholder="인증번호를 입력하세요" required="required" style="display:none;">-->
+<!--                <button type="button" id="verify" class="btn btn-secondary" onclick="verifyCertifiedNumber()"-->
+<!--                        style="display:none;">인증번호 확인-->
+<!--                </button>-->
+<!--                <button type="button" disabled id="phone_verify_success" class="alert alert-success"-->
+<!--                        style="display: none;">인증되었습니다.-->
+<!--                </button>-->
+<!--            </div>-->
+            <div class="form-group">
+                <label for="selectGender">성별</label>
+                <select class="form-control" id="selectGender" name="gender" required="required">
+                    <option value="" selected disabled hidden>성별을 선택해주세요</option>
+                    <option value="male">남성</option>
+                    <option value="female">여성</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="selectAuth">회원 구분</label>
+                <select class="form-control" id="selectAuth" name="auth_level" required="required">
+                    <option value="" selected disabled hidden>회원 구분을 선택해주세요</option>
+                    <option value="SELLER">SELLER</option>
+                    <option value="USER">USER</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="selectAgree">약관 동의
+                    <input type="checkbox" id="selectAgree" name="agree" value="Y" required="required">동의
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submit-button" style="display:block;">
+                가입 신청
+            </button>
+            <button type="button" class="btn btn-danger" id="cancel_button" onclick="location.href='/'"
+                    style="display: block;">
+                가입 취소
+            </button>
+        </div>
+    </form>
+    </body>
+</th:block>
+</html>

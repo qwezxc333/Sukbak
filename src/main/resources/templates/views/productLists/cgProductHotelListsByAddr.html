@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<th:block layout:fragment="content"></th:block>
+<style type="text/css">
+.cgContainer {
+	/* border: 1pt black solid; */
+	width: 90%;
+	margin: 0 auto; /* 좌우 마진을 자동으로 조절하여 수평 중앙에 위치시킴 */
+
+}
+
+.cgFilter_wrap {
+	/* border: 1pt gray solid; */
+	/* position: fixed; */
+	top: 50%;
+	/* float: left; */
+	/* transform: translateY(-50%); */
+	width: 400px;
+	height: 800px;
+	display: inline-block; /* 얘가 있어야 자기 크기만큼만 공간을 차지함 */
+	margin-left: 12%;
+	text-align: center;
+
+}
+
+.cgSelectAccom_type {
+	/* border: 1pt red solid; */
+	margin: auto;
+	padding-top: 10px;
+}
+
+.cgSearchLocationFilter {
+	/* border: 1pt black solid; */
+	padding: 10pt;
+}
+
+.cgCalenderFilter {
+	/* border: 1pt black solid; */                                                                                                
+	padding: 5pt;
+}
+
+.cgList_wrap {
+/* 	border: 1pt black solid; */
+	float: right;
+	display: inline-block;
+	padding-left: 40pt;
+	margin-right: 12%;
+	
+}
+
+.cgTop_sort {
+	/* border: 1pt black solid; */
+	padding-bottom: 10px;
+	padding-top: 11px;
+	padding-bottom: 32px;
+	margin: auto;
+	text-align: center;
+}
+
+.cgProduct_list_area {
+	border: 1pt black solid;
+	margin-bottom: 2%;
+}
+
+.cgCheckbox-filterLeft {
+	display: flex;
+	flex-direction: column;
+	/*  justify-content: space-between; */
+	margin-bottom: 10px;
+	padding-right: 10px;
+	padding-left: 113px; float : left;
+	text-align: left;
+	float: left
+}
+
+.cgCheckbox-filterRight {
+	display: flex;
+	flex-direction: column;
+	/*  justify-content: space-between; */
+	margin-bottom: 10px;
+	text-align: left;
+}
+
+.cgConditionFilter {
+	
+}
+
+* {
+	padding: 0;
+	margin: 0
+}
+
+li {
+	list-style: none
+}
+
+#a_cgProduct_list_area {
+	text-decoration: none;
+	font-size: 15px
+	
+}
+
+.menu {
+	width: 300px;
+	overflow: hidden;
+	margin: auto;
+	
+	
+}
+
+.menu>li {
+	width: 100%;
+	text-align: center;
+	line-height: 40px;
+	background-color: #0D6EFD;
+}
+
+.menu a {
+	color: #fff;
+}
+
+.submenu>li {
+	 line-height: 50px; 
+	background-color: #94a9ff;
+}
+
+.submenu {
+	height: 0; /*ul의 높이를 안보이게 처리*/
+	overflow: hidden;
+}
+
+.menu > li:hover {
+  background-color: #94a9ff;
+  transition-duration: 0.5s;
+}
+
+.menu > li:hover .submenu {
+  height: 500px; /*서브메뉴 li한개의 높이 50*5*/
+  transition-duration: 1s;
+ }
+.submenu{
+	text-align: center;
+}
+ol, ul{
+	padding-left: 0rem;
+}
+/* 공통으로 체크박스 없애기  */
+.bed{
+	display: none;
+}
+/* 싱글침대 아이콘 설정 */
+.singleBed-icon{
+	display: inline-flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.singleBed-icon-img{
+	display: inline-block;
+    background-image: url('/img/single-bed-black.png');
+	background-size: cover;
+	width: 75px;
+	height: 75px;
+	margin-right: 30px;
+	
+}
+#singleBed:checked + .singleBed-icon .singleBed-icon-img {
+  /* 체크박스가 체크되었을 때 아이콘의 스타일 변경 */
+  background-image: url('/img/single-bed-blue.png');
+}
+/* 트윈배드 아이콘설정 */
+.twinBed-icon{
+	display: inline-flex;
+	align-items: center;
+	cursor: pointer;
+	height: 100px;
+}
+
+.twinBed-icon-img{
+	display: inline-block;
+	background-image: url('/img/twin-beds-black2.png');
+	background-size: cover;
+	width: 100px;
+	height: 90px;
+	margin-right: 30px;
+	
+	
+}
+#twinBed:checked + .twinBed-icon .twinBed-icon-img {
+  /* 체크박스가 체크되었을 때 아이콘의 스타일 변경 */
+  background-image: url('/img/twin-beds-blue2.png');
+}
+/* 더블베드 아이콘설정  */
+.doubleBed-icon{
+	display: inline-flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.doubleBed-icon-img{
+	display: inline-block;
+	background-image: url('/img/double-bed-black.png');
+	background-size: cover;
+	width: 80px;
+	height: 80px;
+	margin-right: auto;
+}
+#doubleBed:checked + .doubleBed-icon .doubleBed-icon-img {
+  /* 체크박스가 체크되었을 때 아이콘의 스타일 변경 */
+  background-image: url('/img/double-bed-blue.png');
+}
+#capacity{
+	text-align: center;
+	width: 80pt;
+	border-style: none;
+}
+.subtitle{
+	font-size: 14pt;
+	font-weight: bold;
+	color: #00B7F7;
+	padding-bottom: 5pt;
+}
+.thumbnail_img{
+	height: 175pt;
+	width: 455pt;
+}
+#btn_sort{
+	padding-left: 10pt;
+	margin: auto; 
+	width: 150px;
+	font-weight: bold;
+	
+}
+#directoryBtn{
+	width: 72px;
+	height: 42px;
+	font-weight: bold;
+}
+.cgProduct_list_contents{
+	padding-left: 12px;
+}
+#productTitle{
+	font-size: 25pt; 
+	font-weight: bold;
+}
+
+#checkIn, #checkOut{
+	text-align: center;
+}
+a{
+	color: black;
+	
+}
+a:hover{
+	color: inherit;
+}
+</style>
+<head>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+</head>
+<body>
+
+<th:block layout:fragment="content"></th:block>
+	<div class="cgContainer">
+		<div class="cgFilter_wrap" th:with="accom=${accom_type}, addr=${addr}">
+			<div class = "cgSelectAccom_type">
+				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="motelBtn" onclick="location.href='/cgProductLists?accom-type=520'">모텔</button>
+				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="hotelBtn" onclick="location.href='/cgProductLists/hotel'">호텔</button>
+				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="gehaBtn" onclick="location.href='/cgProductLists?accom-type=530'">게하</button>
+				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="pensionBtn" onclick="location.href='/cgProductLists?accom-type=540'">팬션</button>
+			<p>
+			</div>
+			<div class = "cgSearchLocationFilter">
+					<input type="hidden" name="addr" id="addr" value="">
+					<ul class="menu">
+			      <li>
+			        <a th:href="@{/cgProductHotelListsByAddr(addr=서울)}">서울</a>
+			        <ul class="submenu">
+			          <li><a th:href="@{/cgProductHotelListsByAddr(addr=용산)}">용산/이태원/서울역</a></li>
+			          <li><a th:href="@{/cgProductHotelListsByAddr(addr=서초)}">서초/교대</a></li>
+			          <li><a th:href="@{/cgProductHotelListsByAddr(addr=송파)}">잠실/송파</a></li>
+			          <li><a th:href="@{/cgProductHotelListsByAddr(addr=중구)}">시청/을지로</a></li>
+			          <li><a th:href="@{/cgProductHotelListsByAddr(addr=영등포)}">영등포/여의도</a></li>
+			          <li><a th:href="@{/cgProductHotelListsByAddr(addr=양천)}">목동/신월동</a></li>
+			          <li><a th:href="@{/cgProductHotelListsByAddr(addr=광진)}">중곡/구의</a></li>
+			          <li><a th:href="@{/cgProductHotelListsByAddr(addr=동대문)}">청량리/신설동</a></li>
+			          <li><a th:href="@{/cgProductHotelListsByAddr(addr=마포)}">신촌/홍대/연남</a></li>
+			          <li><a th:href="@{/cgProductHotelListsByAddr(addr=종로)}">종로/종각/익선</a></li>
+			        </ul>
+			      </li>
+			      <li>
+			        <a href="#">강원</a>
+			        <ul class="submenu">
+			          <li><a href="#">서비스 준비중입니다.</a></li>
+			        </ul>
+			      </li>
+			      <li>
+			        <a href="#">제주</a>
+			        <ul class="submenu">
+			          <li><a href="#">서비스 준비중입니다.</a></li>
+			        </ul>
+			      </li>
+			    </ul>
+			<hr>
+			</div>
+			<div class ="cgSelectHotelGrade">
+				<label class ="subtitle">호텔등급</label><p>
+			
+				  	<input class="form-check-input" type="checkbox" name="accom_types" id="accom_types" value="511">
+				  	<span style="padding-right: 10px">비즈니스</span>
+			   
+				
+				  	<input class="form-check-input" type="checkbox" name="accom_types" id="accom_types" value="513">
+				  	<span style="padding-right: 10px">3성급</span>
+			    
+				
+				  	<input class="form-check-input" type="checkbox" name="accom_types" id="accom_types" value="514">
+				  	<span style="padding-right: 10px">4성급</span>
+			   
+				
+				  	<input class="form-check-input" type="checkbox" name="accom_types" id="accom_types" value="515">
+				  	<span style="padding-right: 10px">5성급</span>
+		
+				
+			</div>
+			<div class="cgCalenderFilter" >
+				<hr>
+				<label class ="subtitle">날짜</label><p>
+				<input type="text" id="checkIn"  name="checkIn" placeholder="체크인" style="padding-bottom: 10"><p>
+				<input type="text" id="checkOut" name="checkOut" placeholder="체크아웃"><p>
+				<button type="button" class="btn btn-outline-primary" th:attr="onclick='cgAjaxProductHotelList(\''+ ${addr} +'\', 1)'">선택완료</button>
+				<hr>
+			</div>
+			
+			<div class = "cgConditionFilter">
+				<label class ="subtitle">인원</label><p>
+					
+					<span id = "minusBtn"><img src="/img/minus.png" height="20" width="20" onclick = "minus()"></span>
+					<input type="text"     name="capacity" 	id ="capacity" 		value="2"  placeholder="2">
+					<span id = "plusBtn"><img src="/img/add.png" height="20" width="20" onclick = "plus()"></span>
+				<hr>
+					<button type="button" class="btn btn-outline-primary" th:attr="onclick='cgAjaxProductHotelList(\''+ ${addr} +'\', 1)'">선택완료</button>
+					<button type="reset" class="btn btn-outline-primary">초기화</button>
+				<hr>
+				<p>
+				<label class ="subtitle">숙소조건</label><p>
+					<div class="cgCheckbox-filterLeft">
+					  <label class="form-check-label" for="pool">
+					  	<input class="form-check-input" type="checkbox" name="pool" id="pool" value="N">
+					  	<span style="padding-right: 10px">수영장</span>
+					  </label>
+					  <label class="form-check-label" for="parking">
+					  	<input class="form-check-input" type="checkbox" name="parking" id="parking" value="N">
+					  	<span style="padding-right: 10px">주차장</span>
+					  </label>
+					  <label  class="form-check-label" for="cafe">
+					  	<input class="form-check-input" type="checkbox" name="cafe" id="cafe" value="N">
+					  	<span style="padding-right: 10px">카페</span>
+					  </label>
+					  <label  class="form-check-label" for="restaurant">
+					  	<input class="form-check-input" type="checkbox" name="restaurant" id="restaurant" value="N">
+					  	<span style="padding-right: 10px">레스토랑</span>
+					  </label>
+					  <label  class="form-check-label" for="ac">
+					  	<input class="form-check-input" type="checkbox" name="ac" id="ac" value="N">
+					  	<span style="padding-right: 10px">에어컨</span>	
+					  </label>
+					  <label  class="form-check-label" for="tv">
+					  	<input class="form-check-input" type="checkbox" name="tv" id="tv" value="N">
+					  	<span style="padding-right: 10px">tv</span>
+					  </label>
+					</div>
+					<!-- <div class="cgCheckbox-filter">
+					</div> -->
+					<div class="cgCheckbox-filterRight">
+					  <label  class="form-check-label" for="store">
+					  	<input class="form-check-input" type="checkbox" name="store" id="store" value="N">
+					  	<span style="padding-right: 10px">편의점</span>
+					  </label>
+					  <label  class="form-check-label" for="sauna">
+					  	<input class="form-check-input" type="checkbox" name="sauna" id="sauna" value="N">
+					  	<span style="padding-right: 10px">사우나</span>
+					  </label>
+					  <label  class="form-check-label" for="laundry">
+					  	<input class="form-check-input" type="checkbox" name="laundry" id="laundry" value="N">
+					  	<span style="padding-right: 10px">세탁기</span>
+					  </label>
+					  <label  class="form-check-label" for="fitness">
+					  	<input class="form-check-input" type="checkbox" name="fitness" id="fitness" value="N">
+					  	<span style="padding-right: 10px">피트니스</span>
+					  </label>
+					  <label  class="form-check-label" for="bath">
+					  	<input class="form-check-input" type="checkbox" name="bath" id="bath" value="N">
+					  	<span style="padding-right: 10px">스파</span>
+					  </label>
+					  <label  class="form-check-label" for="wifi">
+					  	<input class="form-check-input" type="checkbox" name="wifi" id="wifi" value="N">
+					  	<span style="padding-right: 10px">와이파이</span>
+					  </label>
+					</div>
+				<hr>
+				<p>
+		
+				<label class ="subtitle">침대타입</label>
+				<p>
+					<input type="checkbox" name="bed_type" id="singleBed" class="bed" value="310">
+					<label for="singleBed" class="singleBed-icon">
+						<span class="singleBed-icon-img"></span>
+						<span class="singleBed-icon-lavel"></span>
+					</label>
+					<input type="checkbox" name="bed_type" id="twinBed" class="bed" value="320">
+					<label for="twinBed" class="twinBed-icon">
+						<span class="twinBed-icon-img"></span>
+						<span class="twinBed-icon-lavel"></span>
+					</label>
+					<input type="checkbox" name="bed_type" id="doubleBed" class="bed" value="330">
+					<label for="doubleBed" class="doubleBed-icon">
+						<span class="doubleBed-icon-img"></span>
+						<span class="doubleBed-icon-lavel"></span>
+					</label>
+			</div>
+
+		</div>
+		<div class="cgList_wrap">
+			<div class="cgTop_sort" th:with="accom=${accom_type}, addr=${addr}">
+				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgAjaxProductHotelList(\''+ ${addr} +'\', 1)'">인기순</button>
+				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgAjaxProductHotelList(\''+ ${addr} +'\', 2)'">낮은가격순</button>
+				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgAjaxProductHotelList(\''+ ${addr} +'\', 3)'">높은가격순</button>
+			</div>
+			<div class = "cgProduct_lists_area">
+				<div class="cgProduct_list_area" id = "cgProduct_list_area" th:each="product : ${products}">
+					<a id="a_cgProduct_list_area" th:href="@{'/accomDetail?biz_id=' + ${product.biz_id} + '&checkIn=&checkOut='}">
+					 <div class = "cgProduct_list_img">
+						<ul>
+						  <li><img class= "thumbnail_img" th:src="@{/img/{r_img}(r_img=${product.r_img})}"></li>
+						</ul>
+					</div>
+					<div class="cgProduct_list_contents">
+						<ul>
+						  <li id = "productTitle" th:text="${product.biz_name}"></li>			  
+						  <li>
+						  	<span th:each = "i : ${#numbers.sequence(1, product.avg_rating)}">
+						  		<i><img th:src="@{/img/cgStar.png}" width="15" height="15"></i>
+						  	</span>
+						  <span id= "productRating" th:text="${product.avg_rating}+'/5'"></span>
+						  </li>
+						  <li id="productPrice" th:text="${product.min_price_r2}+원"></li>
+						  <li id="productAddr" th:text="${product.addr}"></li>
+						</ul>
+					 </div> 
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		const checkIn = document.getElementById("checkIn");
+		const checkOut = document.getElementById("checkOut");
+		let checkInDate = null;
+		let checkOutDate = null;
+
+		flatpickr(checkIn, {
+		  locale: "ko",
+		  enableTime: false,
+		  dateFormat: "Y-m-d",
+		  minDate: new Date(),
+		  maxDate: new Date().fp_incr(30),
+		  onClose: function(selectedDates, dateStr, instance) {
+			// checkInDate 에 내가 고른 날짜가 들어감.
+		    checkInDate = selectedDates[0] || null;
+		    // 선택한 날짜를 입력창에 표시할 수 있도록 설정
+		    checkIn.value = dateStr;
+		  },
+		  // 고른 체크 아웃보다 더 뒤에 날짜를 못고르게 체크아웃 날짜가 들어있으면  고를 수 있는 최대 날짜가 체크아웃 전날로 설정함.
+		  onOpen: function(selectedDates, dateStr, instance){
+			/*    if(checkOutDate != null){
+				  instance.set("maxDate", checkOutDate.fp_incr(-1));
+			  }  */
+			  
+			  resetCheckout();
+		  }
+		});
+
+		flatpickr(checkOut, {
+		  locale: "ko",
+		  enableTime: false,
+		  dateFormat: "Y-m-d",
+		  minDate: new Date().fp_incr(1),
+		  maxDate: new Date().fp_incr(30),
+		  onOpen: function(selectedDates, dateStr, instance) {
+		    // 이전에 선택한 checkInDate가 있으면 checkOut 달력의 minDate로 지정
+		    if (checkInDate != null) {
+		      instance.set("minDate", checkInDate.fp_incr(1));
+		    }
+		  }
+		});
+		
+		function resetCheckout() {
+			  checkOutDate = null;
+			  checkOut.value = '';
+			}
+	</script>
+	<script type="text/javascript">
+		
+	function cgAjaxProductHotelList(addr, kind){
+		var checkIn = $("#checkIn").val();
+		var checkOut = $("#checkOut").val();
+		var bedTypes = [];
+		$('input[name="bed_type"]:checked').each(function() {
+		    bedTypes.push($(this).val());
+		});
+		if (bedTypes.length == 0) {
+		    bedTypes = [310, 320, 330];
+		}
+		
+		// 호텔 종류 배열로 받기
+		var accom_types = [];
+		$('input[name="accom_types"]:checked').each(function() {
+			accom_types.push($(this).val());
+		});
+		if (accom_types.length == 0) {
+			accom_types = [511, 513, 514, 515];
+		}
+		
+		
+		
+		var addr 	 = addr;
+		
+		var capacity = $("#capacity").val();
+		if(!capacity){
+			capacity = 2;
+		}
+		
+	
+		var pool 		= null;
+		var parking 	= null;
+		var cafe    	= null;
+		var restaurant 	= null;
+		var store 		= null;
+		var sauna 		= null;
+		var laundry 	= null;
+		var fitness 	= null;
+		var bath		= null;
+		var wifi		= null;
+		var ac			= null;
+		var tv			= null;
+	
+		if ($("#pool").prop("checked")) {
+			pool = "Y";
+		}; 
+		
+		if ($("#parking").prop("checked")) {
+			parking = "Y";
+		}; 
+		
+		if ($("#cafe").prop("checked")) {
+			cafe = "Y";
+		}; 
+		
+		if ($("#restaurant").prop("checked")) {
+			restaurant = "Y";
+		}; 
+		
+		if ($("#store").prop("checked")) {
+			store = "Y";
+		}; 
+		
+		if ($("#sauna").prop("checked")) {
+			sauna = "Y";
+		}; 
+		
+		if ($("#laundry").prop("checked")) {
+			laundry = "Y";
+		}; 
+		
+		if ($("#fitness").prop("checked")) {
+			fitness = "Y";
+		}; 
+		if ($("#bath").prop("checked")) {
+			bath = "Y";
+		}; 
+		if ($("#ac").prop("checked")) {
+			ac = "Y";
+		}; 
+		if ($("#tv").prop("checked")) {
+			tv = "Y";
+		}; 
+		
+		
+		alert("cgAjaxProductHotelList Start... ");
+		alert("accom_types => "+accom_types);
+		alert("addr => "+addr);
+		alert("bedTypes-> "+bedTypes);
+		alert("kind ->"+ kind);
+		alert("checkin-> "+checkIn);
+		alert("checkout-> "+checkOut);
+		alert("pool -> "+pool);
+		alert("parking -> "+parking);
+		alert("cafe -> "+cafe);
+		alert("restaurant -> "+restaurant);
+		alert("store -> "+store);
+		alert("sauna -> "+sauna);
+		alert("laundry -> "+laundry);
+		alert("fitnees -> "+fitness);
+		alert("capacity -> "+capacity);
+		var str = "";
+		
+		// 버튼 클릭 시 ajax 호출
+		$.ajax({
+			url : "/cgAjaxProductHotelList",
+			data : {
+					"accom_type":accom_types,
+				    "kind":kind,
+				    "bed_type":bedTypes,
+				    "check_in":checkIn,
+				    "check_out":checkOut,
+				    "pool":pool,
+				    "parking":parking,
+				    "cafe":cafe,
+				    "restaurant":restaurant,
+				    "store":store,
+				    "sauna":sauna,
+				    "laundry":laundry,
+				    "fitness":fitness,
+				    "addr":addr,
+				    "bath":bath,
+				    "wifi":wifi,
+				    "ac":ac,
+				    "tv":tv,
+				    "r_capacity":capacity
+				    },
+			dataType : 'json',
+			success : function(productSort) {
+				$(productSort).each(function() {
+			     if (!checkIn || !checkOut) {
+		                var diffDays = 1;
+		            } else {
+		                var checkInDate = new Date(checkIn);
+		                var checkOutDate = new Date(checkOut);
+		                // 숙박일의 절대일수를 구하고 
+		                var diffTime = Math.abs(checkOutDate - checkInDate);
+		                // 진짜 올림으로 소수점 방지를 해준다.  (1000 * 60 * 60 * 24) 하루를 밀리초로 표현한것 
+		                var diffDays = Math.ceil(diffTime /  (1000 * 60 * 60 * 24));
+		            }
+			     var totalPrice = this.min_price_r2 * diffDays;
+		            
+		            str += "<div class='cgProduct_list_area'>";
+		            str += "<a href='/accomDetail?biz_id=" + this.biz_id + "&checkIn="+checkIn+"&checkOut="+checkOut+"'>";
+		            str += "<div class='cgProduct_list_img'>";
+		            str += "<ul>";
+		            str += "<li><img class='thumbnail_img' src='/img/" + this.r_img + "'></li>";
+		            str += "</ul>";
+		            str += "</div>";
+		            str += "<div class='cgProduct_list_contents'>";
+		            str += "<ul>";
+		            str += "<li id='productTitle'>" + this.biz_name + "</li>";
+		            str += "<li>";
+		            for (var i = 0; i < this.avg_rating; i++) {
+		            	str += "<i><img src='/img/cgStar.png' style='width:15px;height:15px;margin-right:5px;'></i>";
+		            }
+		            str += "<span id='productRating'>" + this.avg_rating + "/5</span>";
+		            str += "</li>";
+		            str += "<li id='productPrice'>" + totalPrice + "원</li>";
+		            str += "<li id='productAddr'>" + this.addr + "</li>";
+		            str += "</ul>";
+		            str += "</div>";
+		            str += "</a>";
+		            str += "</div>";
+					
+					/* str += "<tr>";
+					str += "<td>" + this.biz_name + "</td>";
+					str += "<td>" + this.addr + "</td>";
+					str += "<td>" + totalPrice + "</td>";
+					str += "<td>" + this.avg_rating + "</td>";
+					str += "<td>" + this.r_img + "</td>";
+					str += "</tr>"; */
+					
+					
+					
+				})
+				alert('ajax str->' + str)
+				$(".cgProduct_lists_area").html(str);
+			}
+		});
+	}
+	
+	function plus(){
+		var capacity = document.getElementById("capacity");
+		var value = parseInt(capacity.value);
+		if(value < 10){
+			capacity.value = value + 1;
+		}
+	}
+	
+	function minus(){
+		var capacity = document.getElementById("capacity");
+		var value = parseInt(capacity.value);
+		if(value > 2){
+			capacity.value = value - 1;
+		}
+	}
+	</script>
+</body>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</html>

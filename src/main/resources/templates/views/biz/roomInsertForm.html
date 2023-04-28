@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<script type="text/javascript">
+	function chkValues() {
+		var biz_id = document.getElementById("accombiz_id").value
+		alert(biz_id);
+		document.getElementById("biz_id").value = biz_id
+		return true;
+	}
+</script>
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+
+<body>
+	<h1>객실등록</h1>
+	<form action="/biz/roomInsert" th:object="${room}" method="POST" onsubmit="return chkValues()">
+		<label for="accombiz_id">
+			<select id="accombiz_id" name="accombiz_id" th:field="${accomList}">
+				<option th:each="accom : ${accomList}"
+						th:value="${accom.biz_id}"
+						th:text="${accom.biz_name}">	
+			</select>
+			업체 선택
+			<input type="hidden" required id="biz_id" name="biz_id" value="">
+		</label><br>
+		<label for="r_name">
+			<input type="text" required="required" id="r_name" name="r_name" placeholder="객실명 입력" style="width: 300px" value="">객실명
+		</label><br>
+		<label for="r_price">
+			<input type="number" required="required" id="r_price" name="r_price" placeholder="숙박요금 입력" min="0" style="width: 200px" value="" >요금
+		</label><br>
+		<label for="r_capacity">
+			<input type="number" required="required" id="r_capacity" name="r_capacity" placeholder="숙박 가능 인원 1~10" min="1" max="100" style="width: 200px" value="">숙박 가능 인원
+		</label><br>
+		<label for="r_count">
+			<input type="number" required="required" id="r_count" name="r_count" placeholder="객실 내 방 수 1~10" min="1" max="10" style="width: 200px" value="">객실 내 방 수
+		</label><br>
+		<label for="bath_count">
+			<input type="number" required="required" id="bath_count" name="bath_count" placeholder="객실 내 욕실 수 1~10" min="1" max="10" style="width: 200px" value=""> 객실 내 욕실 수
+		</label><br>
+		<label for="bed_type">
+			<select id="bed_type" name="bed_type">
+				<option value="300">침대 없음</option>
+				<option value="310" selected="selected">싱글</option>
+				<option value="320">트윈</option>
+				<option value="330">더블</option>
+			</select>
+			배드타입
+		</label><br>
+		<div>
+			<h6>객실 옵션</h6>
+				<input type="checkbox" name="bath" id="bath" checked value="Y">
+				<label for="bath">욕조</label><br>
+				<input type="checkbox" name="wifi" id="wifi" checked value="Y">
+				<label for="wifi">WIFI</label><br>
+				<input type="checkbox" name="ac" id="ac" checked value="Y">
+				<label for="ac">에어컨</label><br>
+				<input type="checkbox" name="tv" id="tv" checked value="Y">
+				<label for="tv">TV</label><br>
+		</div><br>
+		<div id="roomImgs">
+			<input type="text" readonly placeholder="등록된 사진 없음" style="width: 700px">
+			<input type="hidden" value="">
+			<input type="button" value="사진등록">
+		</div><br>
+		<label for="r_info">
+			<textarea rows="10" cols="100" id="r_info" name="r_info" placeholder="객실 소개를 입력해주세요"></textarea>
+		</label><br>
+		<input type="submit" value="확인" >
+		<input type="reset" value="취소">
+	</form>
+</body>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</html>

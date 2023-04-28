@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<script type="text/javascript">
+	function goBack() {
+		location.href.goBack();
+	}
+</script>
+<body>
+	<form action="/biz/usersInfoChk" method="POST">
+		<label for="checkPassword">비밀번호 입력</label>
+		<input type="password" name="password" id="password">
+		<input type="submit" value="입력">
+		<input type="hidden" name="userAction" th:value="${userAction}">
+		<button onclick="goBack()" value="뒤로가기">뒤로가기</button>
+	</form>
+</body>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</html>
