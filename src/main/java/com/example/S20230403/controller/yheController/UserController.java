@@ -100,10 +100,13 @@ public class UserController {
     }
 
     @PostMapping("/delete")
-    public String deleteUser(@RequestParam("user_id") String user_id, HttpSession session) {
+    public String deleteUser(@AuthenticationPrincipal PrincipalDetail users, HttpSession session, Model model) {
+        String user_id = users.getUsername();
         userService.delete(user_id);
         session.invalidate();
-        return "redirect:/";
+        model.addAttribute("nextPage", "/");
+        model.addAttribute("msg", "회원가입이 취소되었습니다.");
+        return "/redirect-page";
     }
 
     @GetMapping("/hello")

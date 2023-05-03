@@ -251,38 +251,40 @@
                     $('#duplicationCheckPhoneResult').css("display", "none");
                     return;
                 }
-                if (phone.length < 10) {
-                    return;
+                if (phone.length >= 12) {
+                    $('#phone').val(phone.substring(0, 11));
+                    alert("전화번호는 11자리를 넘을 수 없습니다.");
+                    $('#phone').focus();
                 }
-                $.ajax({
-                    type: 'POST',
-                    url: '/checkDuplicationPhone',
-                    data: {
-                        phone: phone
-                    },
-                    success: function (response) {
-                        if (response === 0) {
-                            $('#duplicationCheckPhoneResult')
-                                .removeClass("alert-danger")
-                                .addClass("alert-success")
-                                .css("display", "block")
-                                .text('전화번호 인증을 진행해주세요.');
-                        } else {
-                            $('#duplicationCheckPhoneResult')
-                                .removeClass("alert-success")
-                                .addClass("alert-danger")
-                                .css("display", "block")
-                                .text('이미 가입된 전화번호입니다.');
+                if (10 <= phone.length && phone.length <= 11) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/checkDuplicationPhone',
+                        data: {
+                            phone: phone
+                        },
+                        success: function (response) {
+                            if (response === 0) {
+                                $('#duplicationCheckPhoneResult').removeClass("alert-danger")
+                                    .addClass("alert-success")
+                                    .css("display", "block")
+                                    .text('전화번호 인증을 진행해주세요.');
+                            } else {
+                                $('#duplicationCheckPhoneResult').removeClass("alert-success")
+                                    .addClass("alert-danger")
+                                    .css("display", "block")
+                                    .text('이미 가입된 전화번호입니다.');
+                            }
+                        },
+                        error: function (request, status, error) {
+                            console.log('AJAX Error: ' + error);
                         }
-                    },
-                    error: function (request, status, error) {
-                        console.log('AJAX Error: ' + error);
-                    }
-                });
+                    });
+                }
             }
 
             function sendPhone() {
-                var phone = $("#inputPhone").val();
+                var phone = $("#phone").val();
 
                 $.ajax({
                     type: "POST",
@@ -297,7 +299,7 @@
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         alert("전화번호를 다시 확인해주세요");
-                        $("#inputPhone").focus();
+                        $("#phone").focus();
                     }
                 });
             }
@@ -313,7 +315,7 @@
             //         },
             //         success: function (data) {
             //             alert("인증 성공");
-            //             $("#inputPhone").prop('disabled', true);
+            //             $("#phone").prop('disabled', true);
             //             $("#inputCertifiedNumber").prop('disabled', true);
             //             $("#phone_verify_success").css("display", "block");
             //             $("#verify").css("display", "none");
@@ -423,7 +425,7 @@
                 <label for="phone">전화번호</label>
                 <input type="tel" th:field="*{users.phone}" th:errorclass="field-error" class="form-control" id="phone"
                        name="phone" placeholder="사용자 전화번호 (01012345678) '-을 제외하고 입력해주세요.'"
-                       onkeyup="this.value = this.value.replace(/[^0-9]/g,''); checkDuplicationPhone();" maxlength="11">
+                       onkeyup="this.value = this.value.replace(/[^0-9]/g,''); checkDuplicationPhone();">
                 <span id="duplicationCheckPhoneResult" class="alert alert-danger"
                       style="display: none"></span>
                 <div class="field-error" th:errors="*{users.phone}">

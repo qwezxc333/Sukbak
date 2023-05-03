@@ -33,6 +33,9 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .antMatchers("/hello/**").hasAnyAuthority("USER", "SELLER")
                 .antMatchers("/payment/**").hasAnyAuthority("USER", "SELLER")
+                .antMatchers("/admin").hasAnyAuthority("ADMIN")
+                .antMatchers("/users/**").hasAnyAuthority("USER")
+                .antMatchers("/seller/**").hasAnyAuthority("SELLER")
                 .anyRequest().permitAll()
                 .and()
 

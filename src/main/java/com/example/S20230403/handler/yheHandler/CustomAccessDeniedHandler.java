@@ -33,6 +33,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
             }
         }
 
-        request.getRequestDispatcher("denied-page").forward(request, response);
+        request.getRequestDispatcher("redirect-page").forward(request, response);
     }
 }
