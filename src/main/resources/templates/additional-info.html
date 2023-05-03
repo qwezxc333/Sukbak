@@ -99,7 +99,7 @@
             var verified_Phone = 1;
 
             function checkDuplicationNick() {
-                var nickname = $('#inputNickname').val();
+                var nickname = $('#nickname').val();
                 if (!nickname) {
                     $('#duplicationCheckNickResult').css("display", "none");
                     return;
@@ -233,7 +233,7 @@
         <title></title>
     </head>
     <body>
-    <form method="post" action="updateInfo">
+    <form method="post" action="/updateInfo">
         <div class="container">
             <h1>추가 정보 기입</h1>
 
@@ -244,7 +244,8 @@
                 <label for="nickname">별 명</label>
                 <input type="text" th:errorclass="field-error" class="form-control" th:field="*{users.nickname}"
                        id="nickname" name="nickname"
-                       placeholder="사용자 별명(최대 10글자까지 입력가능합니다.)" onkeyup="checkDuplicationNick()">
+                       placeholder="사용자 별명(최대 10글자까지 입력가능합니다.)"
+                       onkeyup="checkDuplicationNick()">
                 <span id="duplicationCheckNickResult" class="alert alert-danger"
                       style="display: none"></span>
                 <div class="field-error" th:errors="*{users.nickname}">
@@ -312,7 +313,7 @@
                     입력 오류
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" id="submit-button" style="display: block;"
+            <button type="submit" class="btn btn-primary" id="submit-button" style="display:block;"
                     onclick="checkSubmit()">
                 가입 완료
             </button>

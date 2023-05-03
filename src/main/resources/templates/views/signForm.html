@@ -304,29 +304,29 @@
                 });
             }
 
-            // function verifyCertifiedNumber() {
-            //     var certifiedNumber = $("#inputCertifiedNumber").val();
-            //
-            //     $.ajax({
-            //         type: "POST",
-            //         url: "/verify-certified-number",
-            //         data: {
-            //             certifiedNumber: certifiedNumber
-            //         },
-            //         success: function (data) {
-            //             alert("인증 성공");
-            //             $("#phone").prop('disabled', true);
-            //             $("#inputCertifiedNumber").prop('disabled', true);
-            //             $("#phone_verify_success").css("display", "block");
-            //             $("#verify").css("display", "none");
-            //             $("#submit-button").css("display", "block");
-            //             verified_Phone++;
-            //         },
-            //         error: function (jqXHR, textStatus, errorThrown) {
-            //             alert("인증 실패: " + textStatus);
-            //         }
-            //     });
-            // }
+            function verifyCertifiedNumber() {
+                var certifiedNumber = $("#inputCertifiedNumber").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/verify-certified-number",
+                    data: {
+                        certifiedNumber: certifiedNumber
+                    },
+                    success: function (data) {
+                        alert("인증 성공");
+                        $("#phone").prop('disabled', true);
+                        $("#inputCertifiedNumber").prop('disabled', true);
+                        $("#phone_verify_success").css("display", "block");
+                        $("#verify").css("display", "none");
+                        $("#submit-button").css("display", "block");
+                        verified_Phone++;
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("인증 실패: " + textStatus);
+                    }
+                });
+            }
 
             function checkSubmit() {
                 if (verified_Phone === 1 && verified_Email === 1 && success_check_password >= 1) {
@@ -464,6 +464,7 @@
                     <option value="" selected>회원 구분을 선택해주세요</option>
                     <option value="USER">USER</option>
                     <option value="SELLER">SELLER</option>
+                    <option value="ADMIN">ADMIN</option>
                 </select>
                 <div class="field-error" th:errors="*{users.auth_level}">
                     입력 오류
@@ -523,7 +524,7 @@
                     입력 오류
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" id="submit-button" style="display:block;"
+            <button type="submit" class="btn btn-primary" id="submit-button" style="display: block;"
                     onclick="checkSubmit()">
                 가입 신청
             </button>

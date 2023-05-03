@@ -15,19 +15,19 @@ public class SbController {
 	}
 
 	@GetMapping("redirect-page")
-	public String denied() {
+	public String redirect() {
 		return "redirect-page";
 	}
 
 	@PostMapping("redirect-page")
-	public String deniedPost() {
+	public String redirectPost() {
 		return "redirect-page";
 	}
 
 	@GetMapping("/admin")
 	@ResponseBody
 	public String admin() {
-		return "admin page";
+		return "admin_page";
 	}
 	@GetMapping("/users/myPage")
 	@ResponseBody

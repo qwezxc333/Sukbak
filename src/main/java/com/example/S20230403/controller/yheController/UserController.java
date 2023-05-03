@@ -84,10 +84,11 @@ public class UserController {
 
     @PostMapping("/updateInfo")
     public String submitAdditionalInfoForm(@Validated(AddInfoCheck.class) @ModelAttribute("users") Users user, BindingResult bindingResult,
-                                           @RequestParam("user_id")String user_id) {
+                                           @AuthenticationPrincipal PrincipalDetail users, Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "additional-info";
         }
+        String user_id = users.getUsername();
         Users currentUser = new Users();
         currentUser.setUser_id(user_id);
         currentUser.setNickname(user.getNickname());
@@ -96,7 +97,12 @@ public class UserController {
         currentUser.setGender(user.getGender());
         currentUser.setAuth_level(user.getAuth_level());
         userService.addInfoUser(currentUser);
-        return "redirect:/";
+
+        session.invalidate();
+
+        model.addAttribute("nextPage", "/");
+        model.addAttribute("msg", "추가 정보 입력이 완료되었습니다. 다시 로그인 해주세요.");
+        return "redirect-page";
     }
 
     @PostMapping("/delete")
