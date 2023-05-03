@@ -26,6 +26,9 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
             request.setAttribute("nextPage", "/additional-info");
             request.getRequestDispatcher("/denied-page").forward(request, response);
         } else {
+            request.setAttribute("msg", "로그인 되었습니다.");
+            request.setAttribute("nextPage", "/");
+            request.getRequestDispatcher("/denied-page").forward(request, response);
             super.onAuthenticationSuccess(request, response, authentication);
         }
     }

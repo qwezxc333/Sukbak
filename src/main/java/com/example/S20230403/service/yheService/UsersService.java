@@ -18,4 +18,6 @@ public interface UsersService {
     void addInfoUser(Users users);
 
     int existsNick(String nickname);
+
+    int existsPhone(String phone);
 }

@@ -1,7 +1,5 @@
 package com.example.S20230403.dao.yheDao;
 
-import java.util.Map;
-
 import com.example.S20230403.model.Users;
 
 public interface UsersDao {
@@ -20,4 +18,6 @@ public interface UsersDao {
     void addInfoUser(Users users);
 
     int selectUserCountByNick(String nickname);
+
+    int selectUserCountByPhone(String phone);
 }

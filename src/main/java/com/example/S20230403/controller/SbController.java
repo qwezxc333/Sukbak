@@ -15,10 +15,10 @@ public class SbController {
 
 	@GetMapping("denied-page")
 	public String denied() {
-		return "/denied-page";
+		return "redirect-page";
 	}
 	@PostMapping("denied-page")
 	public String deniedPost() {
-		return "/denied-page";
+		return "redirect-page";
 	}
 }

@@ -47,6 +47,7 @@ public class SecurityConfig {
                 .loginPage("/login")
                 .loginProcessingUrl("/login_proc")
                 .defaultSuccessUrl("/")
+                .successHandler(customAuthenticationSuccessHandler)
                 .and()
 
                 .oauth2Login()

@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.S20230403.UsersMapper">
-
 <!--    Select      -->
     <select id="getUserAccount" resultType="Users">
         select * from users where user_id = #{user_id}
@@ -20,6 +19,9 @@
         SELECT COUNT(*) FROM users WHERE nickname = #{nickname}
     </select>
 
+    <select id="selectUserCountByPhone" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM users WHERE phone = #{phone}
+    </select>
 <!--    Insert      -->
     <insert id="saveUser" parameterType="Users">
         INSERT INTO USERS

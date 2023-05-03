@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout" lang="ko">
+<th:block layout:fragment="content">
+    <head>
     <meta charset="UTF-8">
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-        var verified_Phone = 0;
+        var verified_Phone = 1;
 
         function checkDuplicationNick() {
             var nickname = $('#inputNickname').val();
@@ -101,33 +110,48 @@
             }
         }
     </script>
-
-</head>
+        <title></title>
+    </head>
 <body>
 <form method="post" action="updateInfo">
     <div class="container">
         <h1>추가 정보 기입</h1>
 
-        <input type="hidden" class="form-control" id="user_id" name="user_id" th:value="${user_id}">
+        <input type="hidden" class="form-control" id="user_id" name="user_id" th:value="${#authentication.name}">
+        <p th:text="${#authentication.name}">qwerqwer</p>
         <div class="form-group">
-            <label for="inputNickname">별 명</label>
-            <input type="text" class="form-control" id="inputNickname" name="nickname" placeholder="사용자 별명"
-                   onkeyup="checkDuplicationNick()" required="required">
-            <span id="duplicationCheckNickResult" class="alert alert-danger" style="display: none"></span>
+            <label for="nickname">별 명</label>
+            <input type="text" th:errorclass="field-error" class="form-control" th:field="*{users.nickname}"
+                   id="nickname" name="nickname"
+                   placeholder="사용자 별명(최대 10글자까지 입력가능합니다.)" onkeyup="checkDuplicationNick()">
+            <span id="duplicationCheckNickResult" class="alert alert-danger"
+                  style="display: none"></span>
+            <div class="field-error" th:errors="*{users.nickname}">
+                입력 오류
+            </div>
         </div>
         <div class="form-group">
-            <label for="selectTelecom">통신사</label>
-            <select class="form-control" id="selectTelecom" name="telecom" required="required">
+            <label for="telecom">통신사</label>
+            <select th:field="*{users.telecom}" th:errorclass="field-error" class="form-control" id="telecom"
+                    name="telecom">
                 <option value="SKT">SKT</option>
                 <option value="KT">KT</option>
                 <option value="LG">LG</option>
                 <option value="알뜰폰">알뜰폰</option>
             </select>
+            <div class="field-error" th:errors="*{users.telecom}">
+                입력 오류
+            </div>
         </div>
         <div class="form-group">
-            <label for="inputPhone">전화번호</label>
-            <input type="tel" class="form-control" id="inputPhone" name="phone"
-                   placeholder="사용자 전화번호 (01012345678) '-을 제외하고 입력해주세요.'" required="required">
+            <label for="phone">전화번호</label>
+            <input type="tel" th:field="*{users.phone}" th:errorclass="field-error" class="form-control" id="phone"
+                   name="phone"
+                   placeholder="사용자 전화번호 (01012345678) '-을 제외하고 입력해주세요.'"
+                   onkeyup="this.value = this.value.replace(/-/g, '');">
+            <div class="field-error" th:errors="*{users.phone}">
+                입력 오류
+            </div>
             <button type="button" id="check" class="btn btn-secondary" onclick="sendPhone()">전화번호 인증</button>
         </div>
         <div class="form-group">
@@ -142,18 +166,28 @@
             </button>
         </div>
         <div class="form-group">
-            <label for="selectGender">성별</label>
-            <select class="form-control" id="selectGender" name="gender" required="required">
+            <label for="gender">성별</label>
+            <select th:field="*{users.gender}" th:errorclass="field-error" class="form-control" id="gender"
+                    name="gender">
+                <option value="" selected disabled hidden>성별을 선택해주세요</option>
                 <option value="male">남성</option>
                 <option value="female">여성</option>
             </select>
+            <div class="field-error" th:errors="*{users.gender}">
+                입력 오류
+            </div>
         </div>
         <div class="form-group">
-            <label for="selectAuth">회원 구분</label>
-            <select class="form-control" id="selectAuth" name="auth_level" required="required">
+            <label for="auth_level">회원 구분</label>
+            <select th:field="*{users.auth_level}" th:errorclass="field-error" class="form-control" id="auth_level"
+                    name="auth_level">
+                <option value="" selected disabled hidden>회원 구분을 선택해주세요</option>
                 <option value="SELLER">SELLER</option>
-                <option value="USER" selected>USER</option>
+                <option value="USER">USER</option>
             </select>
+            <div class="field-error" th:errors="*{users.auth_level}">
+                입력 오류
+            </div>
         </div>
         <button type="submit" class="btn btn-primary" id="submit-button" style="display: block;" onclick="checkSubmit()">
             가입 완료
@@ -162,4 +196,5 @@
     </div>
 </form>
 </body>
+</th:block>
 </html>
