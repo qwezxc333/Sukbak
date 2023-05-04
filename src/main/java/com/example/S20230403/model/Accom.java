@@ -1,5 +1,7 @@
 package com.example.S20230403.model;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -32,6 +34,9 @@ public class Accom {
 	private String min_price_r2;
 	private String r_img;
 	private String avg_rating;
+	private String r_name;
+	private String r_id;
+	private List<String> accom_types;
 	
 	
 	//조회용

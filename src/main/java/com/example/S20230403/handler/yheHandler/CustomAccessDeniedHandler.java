@@ -32,7 +32,8 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
                 SecurityContextHolder.clearContext();
             }
         }
-
-        request.getRequestDispatcher("denied-page").forward(request, response);
+        request.setAttribute("msg", "허가되지 않은 접근입니다.");
+        request.setAttribute("nextPage", "/");
+        request.getRequestDispatcher("redirect-page").forward(request, response);
     }
 }
