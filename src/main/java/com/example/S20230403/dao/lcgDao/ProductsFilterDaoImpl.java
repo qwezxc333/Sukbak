@@ -20,34 +20,20 @@ public class ProductsFilterDaoImpl implements ProductsFilterDao {
 		@Override
 		public List<Accom> cgGetProductByAccomtype(String accom_type) {
 			System.out.println(" 다오 cgProductByAccomtype 시작");
-			List<Accom> cgProductListsWithoutHotel = null;
+			List<Accom> cgProductLists = null;
 			try {
-				cgProductListsWithoutHotel = session.selectList("cgGetProductByAccomtype",accom_type);
+				cgProductLists = session.selectList("cgGetProductByAccomtype",accom_type);
 			} catch (Exception e) {
 				System.out.println(" 다오 cgProductByAccomtype 에러-> "+e.getMessage());
 				// TODO: handle exception
 			}
-			return cgProductListsWithoutHotel;
+			return cgProductLists;
 		}
 		
-		// 호텔만 다가져오기
-		
-		@Override
-		public List<Accom> cgGetProductHotelLists() {
-			System.out.println("dao cgGetProductHotelList 시작");
-			List<Accom> cgProductHotelLists = null;
-			try {
-				cgProductHotelLists = session.selectList("cgGetProductHotelLists");
-			} catch (Exception e) {
-				System.out.println("dao cgGetProductHotelList 에러-> "+e.getMessage());
-				// TODO: handle exception
-			}
-			return cgProductHotelLists;
-		}
 		
 		// 호텔 사진빼고 다가져오기
 		@Override
-		public List<Room_Img> cgGetRoom_imgWithoutHotel() {
+		public List<Room_Img> cgGetRoom_img() {
 			System.out.println("다오 getRoom_img 시작");
 			List<Room_Img> cgGetRoom_img = null;
 			try {
@@ -58,21 +44,6 @@ public class ProductsFilterDaoImpl implements ProductsFilterDao {
 			return cgGetRoom_img;
 		}
 		
-		
-		
-		// 호텔 이미지만 가져오기
-		@Override
-		public List<Room_Img> cgGetHotelImg() {
-			System.out.println("dao cgGetHotelImg 시작");
-			List<Room_Img> cgHotelImg = null;
-			try {
-				cgHotelImg = session.selectList("cgGetRoom_img");
-			} catch (Exception e) {
-				System.out.println("dao cgGetHotelImg 에러 -> "+e.getMessage());
-				// TODO: handle exception
-			}
-			return cgHotelImg;
-		}
 		
 		// 주소로 호텔빼고 리스트 가져오기
 		@Override
@@ -89,46 +60,21 @@ public class ProductsFilterDaoImpl implements ProductsFilterDao {
 			return cgProductListsByAddr;
 		}
 		
-		// 주소로 호텔 리스트 가져오기
-		@Override
-		public List<Accom> cgGetProductHotelListsByAddr(String addr) {
-			System.out.println("dao cgGetProductHotelListsByAddr 시작");
-			List<Accom> cgProductHotelListsByAddr = null;
-			try {
-				cgProductHotelListsByAddr = session.selectList("cgGetProductHotelListsByAddr", addr);
-			} catch (Exception e) {
-				System.out.println("dao cgGetProductHotelListsByAddr 에러-> "+e.getMessage());
-				// TODO: handle exception
-			}
-			return cgProductHotelListsByAddr;
-		}
 		
 		// ajax dao 필터링
 		@Override
-		public List<ChanJoin> cgGetAjaxProductListsWithoutHotel(ChanJoin chanJoin) {
+		public List<ChanJoin> cgGetAjaxProductListsByAccomtypeAndAddr(ChanJoin chanJoin) {
 			System.out.println("다오 cgProductList[통합] 시작");
-			List<ChanJoin> cgAjaxProductListsWithoutHotel = null;
+			List<ChanJoin> cgAjaxProductLists = null;
 			try {
-				cgAjaxProductListsWithoutHotel = session.selectList("cgGetAjaxProductListsWithoutHotel", chanJoin);
-				System.out.println("다오 cgProductList[통합] 침대확인용 2개 나와야됨 ->"+cgAjaxProductListsWithoutHotel.size());
+				//cgAjaxProductListsWithoutHotel = session.selectList("cgGetAjaxProductListsWithoutHotel", chanJoin);
+				cgAjaxProductLists = session.selectList("cgGetAjaxProductListsByAccomtypeAndAddr", chanJoin);
+				System.out.println("다오 cgProductList[통합] 침대확인용 2개 나와야됨 ->"+cgAjaxProductLists.size());
 			} catch (Exception e) {
 				System.out.println("다오 cgProductList 에러 -> "+e.getMessage());
 				// TODO: handle exception
 			}
-			return cgAjaxProductListsWithoutHotel;
+			return cgAjaxProductLists;
 		}
 
-		//ajax dao 호텔만 필터링
-		@Override
-		public List<ChanJoin> cgGetAjaxProductHotelLists(ChanJoin chanJoin) {
-			System.out.println("다오 cgProductHotelList 시작");
-			List<ChanJoin> hotelProductLists = null;
-			try {
-				hotelProductLists = session.selectList("cgGetAjaxProductHotelLists", chanJoin);
-			} catch (Exception e) {
-				System.out.println("다오 cgProductHotelList 에러-> "+e.getMessage());
-				// TODO: handle exception
-			}
-			return hotelProductLists;
-		}
 }

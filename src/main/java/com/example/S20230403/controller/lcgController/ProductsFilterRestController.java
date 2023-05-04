@@ -17,7 +17,7 @@ public class ProductsFilterRestController {
 	private final ProductsFilterService service;
 	
 	@RequestMapping("/cgAjaxProductList")
-	public List<ChanJoin> cgGetAjaxProductListsWithoutHotel(ChanJoin chanJoin){
+	public List<ChanJoin> cgGetAjaxProductListsByAccomtypeAndAddr(ChanJoin chanJoin){
 		System.out.println("ajax cgProductList  시작");
 		System.out.println("ajax cgProductList getKind->"+chanJoin.getKind());
 		System.out.println("ajax cgProductList getAccom_type->"+chanJoin.getAccom_type());
@@ -38,22 +38,11 @@ public class ProductsFilterRestController {
 			System.out.println("ajax cgProductList 높은가격순");
 		}
 		
-		List<ChanJoin> cgAjaxProductListsWithoutHotel = service.cgGetAjaxProductListsWithoutHotel(chanJoin);
-		System.out.println("ajax cgProductList  사이즈 -> "+cgAjaxProductListsWithoutHotel.size());
+		List<ChanJoin> cgAjaxProductLists = service.cgGetAjaxProductListsByAccomtypeAndAddr(chanJoin);
+		System.out.println("ajax cgProductList  사이즈 -> "+cgAjaxProductLists.size());
 		System.out.println("ajax cgProductList  끝");
-		return cgAjaxProductListsWithoutHotel;
+		return cgAjaxProductLists;
 	}
 	
-
-	@RequestMapping("/cgAjaxProductHotelList")
-	public List<ChanJoin> cgGetAjaxProductHotelLists(ChanJoin chanJoin){
-		System.out.println("ajax cgAjaxProductHotelList 시작");
-		System.out.println("ajax cgAjaxProductHotelList getAccom_type->"+chanJoin.getAccom_type());
-		System.out.println("ajax cgAjaxProductHotelList getBed_type->"+chanJoin.getBed_type());
-		List<ChanJoin> cgAjaxProductHotelLists = service.cgGetAjaxProductHotelLists(chanJoin);
-		System.out.println("ajax cgAjaxProductHotelList 사이즈 -> "+cgAjaxProductHotelLists.size());
-		System.out.println("ajax cgAjaxProductHotelList 끝");
-		return cgAjaxProductHotelLists;
-	}
 
 }
