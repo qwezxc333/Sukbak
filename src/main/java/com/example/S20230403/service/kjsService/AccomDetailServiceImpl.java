@@ -20,12 +20,12 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AccomDetailServiceImpl implements AccomDetailService {
-	private final AccomDetailDao ld;
+	private final AccomDetailDao ad;
 	
 	@Override
 	public List<Accom> getAccomList() {
 		System.out.println("서비스 accomList 스타트");
-		List<Accom> accomLists = ld.fetchAccomList();
+		List<Accom> accomLists = ad.fetchAccomList();
 		
 		return accomLists;
 	}
@@ -35,7 +35,7 @@ public class AccomDetailServiceImpl implements AccomDetailService {
 	@Override
 	public List<JinJoin> getAccomDetailRoomList(String biz_id, String checkIn, String checkOut) {
 		System.out.println("서비스 accomDetail 스타트");
-		List<JinJoin> accomDetailRoomList = ld.fetchAccomDetailRoomList(biz_id, checkIn, checkOut);
+		List<JinJoin> accomDetailRoomList = ad.fetchAccomDetailRoomList(biz_id, checkIn, checkOut);
 		
 		//LocalDate로 파싱
 		LocalDate localCheckIn = LocalDate.parse(checkIn);
@@ -62,7 +62,7 @@ public class AccomDetailServiceImpl implements AccomDetailService {
 	@Override
 	public List<Room_Img> getRoomImgList(String biz_id) {
 		System.out.println("서비스 roomImgList 스타트");
-		List<Room_Img> roomImg = ld.fetchRoomImgList(biz_id);
+		List<Room_Img> roomImg = ad.fetchRoomImgList(biz_id);
 		return roomImg;
 	}
 		
@@ -71,7 +71,7 @@ public class AccomDetailServiceImpl implements AccomDetailService {
 	public Accom getAccomBasicInfo(String biz_id) {
 		System.out.println("서비스 accomBasicInfo");
 		
-		Accom accomBasicInfo = ld.fetchAccomBasicInfo(biz_id);
+		Accom accomBasicInfo = ad.fetchAccomBasicInfo(biz_id);
 		
 		accomBasicInfo.setPool(convertYNtoText(accomBasicInfo.getPool(), "수영장"));
 		accomBasicInfo.setParking(convertYNtoText(accomBasicInfo.getParking(), "주차장")); 
@@ -104,7 +104,7 @@ public class AccomDetailServiceImpl implements AccomDetailService {
 	@Override
 	public List<Review> getAccomReviewWithImagesList(String biz_id) {
 		// 한 사업자에 대해 리뷰 리스트를 가져온다
-		List<Review> accomReview = ld.fetchAccomReviewList(biz_id);
+		List<Review> accomReview = ad.fetchAccomReviewList(biz_id);
 		// payIds를 저장할 ArrayList 생성
 		List<Integer> payIds = new ArrayList<>();
 		
@@ -116,7 +116,7 @@ public class AccomDetailServiceImpl implements AccomDetailService {
 		System.out.println("payIds->" + payIds);
 		// payIds가 IN에 포함된 리뷰 이미지 리스트를 가져온다
 		//reviewImages는 그 사진 목록 저장하는 필드(Review객체에 생성했음)
-		List<Review_Img> reviewImages = ld.fetchAccomReviewImgList(payIds);		
+		List<Review_Img> reviewImages = ad.fetchAccomReviewImgList(payIds);		
 		System.out.println("reviewImages->"+reviewImages);
 		
 		// accomReview 리뷰리스트에서 
@@ -142,7 +142,7 @@ public class AccomDetailServiceImpl implements AccomDetailService {
 	//리뷰 총갯수, 평점
 	@Override
 	public Review getCalculateReview(String biz_id) {
-		Review calculateReview = ld.fetchCalculateReview(biz_id);
+		Review calculateReview = ad.fetchCalculateReview(biz_id);
 
 		//Math는 Long으로 받아서 10.0으로 다시 나눠야함 
 		double calAvgReview = (Math.round((calculateReview.getAvgReview() * 10)) / 10.0 ); 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.S20230403.QnaMapper">
+	<insert id="jsQnaInsert" parameterType="Qna">
+		INSERT INTO qna values (Qna_ID_SEQ.nextval, #{user_id}, 430, #{qna_title}, #{qna_content}, sysdate)
+	</insert>
+</mapper>

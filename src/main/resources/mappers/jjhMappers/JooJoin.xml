@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.S20230403.JooJoinMapper">
+	
+	<!-- admin page 페이징을 위한 카운트 -->
+	<select id="jhUserTotal" resultType="int">
+		select Count(*) from users
+	</select>
+	<select id="jhAccomTotal" resultType="int">
+		select Count(*) from accom
+	</select>
+	<select id="jhQnaTotal" resultType="int">
+		select Count(*) from qna
+	</select>
+	<select id="jhReviewTotal" resultType="int">
+		select Count(*) from review
+	</select>
+	
+	<!-- admin page user list 불러오기  -->
+	<select id="jhUserlist" resultType="JooJoin" parameterType="JooJoin">
+		select *
+		from(
+			select rownum rn , a.*
+			from (select * from Users order by name) a)
+		where rn BETWEEN #{start} and #{end}
+	</select>
+	
+	<!-- admin page accom list 불러오기  -->
+	<select id="jhAccomlist" resultType="JooJoin" parameterType="JooJoin">
+		select *
+		from(
+			select rownum rn , a.*
+			from(select * from accom)a)
+		where rn BETWEEN #{start} and #{end}
+	</select>
+	
+	<!-- admin page qna list 불러오기  -->
+	<select id="jhQnalist" resultType="JooJoin" parameterType="JooJoin">
+		select rn, qna_id, user_id, qna_type, qna_title, qna_content, reply
+		from(
+			select rownum rn, q.qna_id, q.user_id, q.qna_type, q.qna_title, q.qna_content, r.reply 
+			from qna q LEFT JOIN qna_re r ON q.qna_id = r.qna_id 
+			ORDER BY qna_id asc) 
+		where rn BETWEEN #{start} and #{end}
+	</select>
+	
+	<!-- admin page review list 불러오기  -->
+	<select id="jhReviewlist" resultType="JooJoin" parameterType="JooJoin">
+		select *
+		from(
+			select rownum rn , a.*
+			from(select * from review order by pay_id)a)
+		where rn BETWEEN #{start} and #{end}
+	</select>
+	
+	<!-- Users 테이블 한 row 비활성화 -->
+	<update id="adminDeleteUser" parameterType="JooJoin">
+		UPDATE users SET user_status = 'deactivated' WHERE user_id = #{user_id}
+	</update>
+	
+	<!-- Accom 테이블 한 row 비활성화 -->
+	<update id="adminDeleteAccom" parameterType="JooJoin">
+		UPDATE accom SET accom_avail = '230' WHERE biz_id = #{biz_id}
+	</update>
+	
+	<!-- QnA 테이블 한 row 삭제 -->
+	<delete id="adminDeleteQnARe" parameterType="int">
+		DELETE FROM qna_re WHERE qna_id = #{qna_id}
+	</delete>
+	
+	<delete id="adminDeleteQnA" parameterType="int">
+		DELETE FROM qna WHERE qna_id = #{qna_id}
+	</delete>
+	
+	<!-- Review 테이블 한 row 삭제 -->
+	<delete id="adminDeleteReview" parameterType="int">
+		DELETE FROM review WHERE pay_id = #{pay_id}
+	</delete>
+	
+	<select id="jhQnaSelOne" parameterType="int" resultType="JooJoin">
+		Select * From qna WHERE qna_id = #{qna_id}
+	</select>
+	
+	<insert id="jhInsertQnaRe" parameterType="JooJoin">
+		Insert into qna_re values (#{qna_id}, #{user_id}, #{reply})
+	</insert>
+	
+	
+	
+</mapper>

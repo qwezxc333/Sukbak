@@ -22,9 +22,16 @@
 		    END AS is_reserved
 		FROM accom a
 		JOIN room r ON a.biz_id = r.biz_id
-		LEFT JOIN room_img ri ON r.biz_id = ri.biz_id AND r.r_id = ri.r_id
-		WHERE r.biz_id = #{biz_id}
-			AND ri.r_img_id = 1
+		LEFT JOIN (
+		    SELECT *
+		    FROM room_img ri1
+		    WHERE ri1.r_img_id = (
+		        SELECT MIN(ri2.r_img_id)
+		        FROM room_img ri2
+		        WHERE ri1.biz_id = ri2.biz_id AND ri1.r_id = ri2.r_id
+		    )
+		) ri ON r.biz_id = ri.biz_id AND r.r_id = ri.r_id
+		WHERE a.biz_id = #{biz_id}
 		]]>
 	</select>
 	

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.S20230403.Notice_FaqMapper">
+
+	<select id="jsNoticeFaqTitleList" parameterType="java.lang.String" resultType="Notice_Faq">
+		select * from notice_faq where notice_type = #{notice_type}
+	</select>
+	
+	<select id="jsNoticeFaqContentList" parameterType="java.lang.String" resultType="Notice_Faq">
+		select notice_content from notice_faq where notice_id = #{notice_id}
+	</select>
+</mapper>

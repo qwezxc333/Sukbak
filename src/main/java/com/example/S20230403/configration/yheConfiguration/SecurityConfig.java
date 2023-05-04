@@ -33,6 +33,7 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .antMatchers("/hello/**").hasAnyAuthority("USER", "SELLER")
                 .antMatchers("/payment/**").hasAnyAuthority("USER", "SELLER")
+                .antMatchers("/insertQna/**").hasAnyAuthority("USER", "SELLER")
                 .anyRequest().permitAll()
                 .and()
 
