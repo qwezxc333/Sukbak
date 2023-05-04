@@ -30,6 +30,11 @@ public class UsersDaoImpl implements UsersDao{
         return sqlSession.selectOne("selectUserCountByNick",nickname);
     }
     @Override
+    public int selectUserCountByPhone(String phone) {
+        return sqlSession.selectOne("selectUserCountByPhone",phone);
+    }
+
+    @Override
     public void saveUser2Api(Users user) {
         sqlSession.insert("saveUser2Api", user);
     }

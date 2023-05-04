@@ -49,4 +49,12 @@ spring:
 # MyBatis, classpath = resource폴더임.
 mybatis:
   config-location: classpath:configuration.xml
+<<<<<<< HEAD
   mapper-locations: classpath:mappers/*/*.xml
+=======
+  mapper-locations: classpath:mappers/**/*.xml
+
+logging:
+  level:
+    root: debug
+>>>>>>> refs/remotes/origin/master

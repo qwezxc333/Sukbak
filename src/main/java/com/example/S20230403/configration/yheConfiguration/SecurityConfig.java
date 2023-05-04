@@ -33,6 +33,10 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .antMatchers("/hello/**").hasAnyAuthority("USER", "SELLER")
                 .antMatchers("/payment/**").hasAnyAuthority("USER", "SELLER")
+                .antMatchers("/additional-info").hasAnyAuthority("TEMPORARY")
+                .antMatchers("/admin").hasAnyAuthority("ADMIN")
+                .antMatchers("/users/**").hasAnyAuthority("USER")
+                .antMatchers("/seller/**").hasAnyAuthority("SELLER")
                 .antMatchers("/insertQna/**").hasAnyAuthority("USER", "SELLER")
                 .anyRequest().permitAll()
                 .and()
@@ -48,6 +52,7 @@ public class SecurityConfig {
                 .loginPage("/login")
                 .loginProcessingUrl("/login_proc")
                 .defaultSuccessUrl("/")
+                .successHandler(customAuthenticationSuccessHandler)
                 .and()
 
                 .oauth2Login()

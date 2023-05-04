@@ -3,8 +3,6 @@ package com.example.S20230403.controller.ljyController;
 import java.util.List;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.S20230403.auth.PrincipalDetail;
 import com.example.S20230403.model.Accom;
 import com.example.S20230403.model.Room;
+import com.example.S20230403.model.Room_Img;
 import com.example.S20230403.model.Users;
 import com.example.S20230403.service.ljyService.OwnerUser;
 import com.example.S20230403.service.ljyService.SukbakService;
@@ -55,6 +54,13 @@ public class BizUserController {
 		System.out.println("accom ->"+accom);
 		// 앞이 뷰에서받은 파라미터 비번, 뒤가 db비번
 		//if(passwrodEncoder.matches(user_id, eerq))
+		
+		List<Accom> accomList = ss01.accomList(user_id);
+		for (Accom accoms :accomList ) {
+			System.out.println("비즈컨트롤01 bizMain accomList accom->"+accoms);
+		}
+		model.addAttribute("accomList", accomList) ;
+		
 		return "/views/biz/bizMain";
 	}
 	
@@ -88,6 +94,7 @@ public class BizUserController {
 		case "상세확인":
 			System.out.println("비즈컨트롤러01 accomMng 상세확인 case");
 			// 아이디로 로우 하나 가져옴
+			ss01.updateRoomCount(biz_id, "update");
 			System.out.println("accom -> "+accom.toString());
 			model.addAttribute("accom", accom);
 			return "/views/biz/accomSelect";
@@ -110,7 +117,7 @@ public class BizUserController {
 	public  String accomDelete(Accom accom, Model model) {
 		String biz_id = accom.getBiz_id();
 		ss01.accomDelete(biz_id);
-		return "/views/biz/bizMain";
+		return "redirect:/biz/bizMain";
 	}
 	
 	// 업체 수정값 입력 페이지 보냄
@@ -138,7 +145,7 @@ public class BizUserController {
 		if (accom.getFitness() == null) accom.setFitness("N");
 		System.out.println("accom -> "+accom.toString());
 		ss01.accomUpdate(accom);
-		return "/views/biz/bizMain";
+		return "redirect:/biz/bizMain";
 	}
 	
 	// 업체정보 입력 페이지 유저아이디가지고 진입
@@ -147,9 +154,6 @@ public class BizUserController {
 		System.out.println("비즈컨트롤러01 accomInsertForm 시작...");
 		String user_id = userDetail.getUsername();
 		System.out.println("비즈컨트롤러01 accomInsertForm user_id -> "+user_id);
-		// 나중에 지워야됨
-		/* user_id = "hy@aa.a"; */
-		
 		model.addAttribute("user_id", user_id);
 		return "/views/biz/accomInsertForm";	
 	}
@@ -164,7 +168,7 @@ public class BizUserController {
 //		OwnerUser ou = new OwnerUser(accom);
 		System.out.println(ownerUser.toString());
 		ss01.accomInsert(ownerUser);
-		return "/views/biz/bizMain";
+		return "redirect:/biz/bizMain";
 	}
 	
 	// 주소 찾기위한 새로운 브라우저 호출
@@ -172,6 +176,15 @@ public class BizUserController {
 	public String accomAddrGerForm() {
 		System.out.println("비즈컨트롤러01 accomAddrGetForm 시작...");
 		return "/views/biz/accomAddrGetForm";
+	}
+	
+	@GetMapping(value = "/biz/checkBizId") 
+	@ResponseBody
+	public String checkBizId (@RequestParam String biz_id) {
+		System.out.println("비즈컨트롤러01 checkBizId 시작...");
+		System.out.println("비즈컨트롤러01 checkBizId biz_id -> "+biz_id);
+		if (! ss01.getBizId(biz_id)) return "duplicate";
+		else return "available";
 	}
 	
 	// 사용자가 개인정보수정등에 접근하기 전에 비밀번호 인증 폼으로 보내는로직, 유저가 뭘보냈는지 중요
@@ -202,7 +215,7 @@ public class BizUserController {
 		if (!insertPassword.equals(DBPassword)) {
 			System.out.println("usersInfoChk 로그인 실패");
 			model.addAttribute("msg", "비밀번호 인증에 실패했습니다");
-			return "/views/biz/bizMain";
+			return "redirect:/biz/bizMain";
 		} else {
 			// 유저아이디로 현재로그인한 유저의 로우를 모두 가져옴
 			System.out.println("usersInfoChk 로그인 성공");
@@ -221,7 +234,7 @@ public class BizUserController {
 						System.out.println("비즈컨트롤 usersInfoChk 계정 삭제");
 						return "/views/biz/usersDeleteForm";
 					default:
-						return "/views/biz/bizMain";
+						return "redirect:/biz/bizMain";
 				}
 		}
 	}
@@ -232,7 +245,7 @@ public class BizUserController {
 		System.out.println("비즈컨트롤01 usersUpdate 시작...");
 		System.out.println("nowLoginUser -> "+user.toString());
 		ss01.userUpdate(user);
-		return "/views/biz/bizMain";
+		return "redirect:/biz/bizMain";
 	}
 	
 	// usersInfoChk에서 이어짐, /views/biz/usersDeleteForm 유저삭제지만 실제로는 삭제X 유저상태만 바꿈
@@ -250,7 +263,8 @@ public class BizUserController {
 	// 유저아이디로 사업자등록번호 뽑아와서 등록된 모든 업체의 모든 룸을 가져와야함
 	@ResponseBody
 	@GetMapping(value = "/biz/roomMng")
-	public List<Room> roomMng(String user_id) {
+	public List<Room> roomMng(@AuthenticationPrincipal PrincipalDetail userDetail) {
+		String user_id = userDetail.getUsername();
 		System.out.println("비즈컨트롤01 roomMng 시작...");
 		List<Room> roomList = ss01.roomList(user_id);
 		for (Room room :roomList ) {
@@ -271,7 +285,14 @@ public class BizUserController {
 		System.out.println("biz_id -> "+biz_id);
 		System.out.println("room_id -> "+r_id);
 		// 방 하나 딱 찝을거라 복합키구성하는 2개키 필요...
-//		room = ss01.roomSelect(biz_id, r_id);
+		room = ss01.roomSelect(room);
+		
+		Room_Img ri = new Room_Img();
+		ri.setBiz_id(room.getBiz_id());
+		ri.setR_id(room.getR_id());
+		System.out.println("RoomImgController roomSelectForm ri -> "+ri);
+		List<Room> riList = ss01.selectRoomImgList(ri);
+		
 		model.addAttribute("biz_id", biz_id);
 		model.addAttribute("r_id", r_id);
 		switch (roomMngChk) {
@@ -279,17 +300,37 @@ public class BizUserController {
 			System.out.println("비즈컨트롤러01 accomMng 상세확인 case");
 			// 아이디로 로우 하나 가져옴, 방상세정보 확인
 			System.out.println("room -> "+room.toString());
+			System.out.println("riList -> "+riList);
 			model.addAttribute("room", room);
+			
+
+			model.addAttribute("riList", riList);
+			
 			return "/views/biz/roomSelectForm";
 		case "수정":
 			System.out.println("비즈컨트롤러01 accomMng 수정 case");
-			//바로 수정은 안하지만 로우를 가져와야함 따라서 위 다오 로직 같이 사용
+			//바로 수정은 안하지만 로우를 가져와야함 따라서 위 다오 로직 같이 사용		
+			model.addAttribute("riList", riList);
 			model.addAttribute("room", room);
 			return "/views/biz/roomUpdateForm";
+		case "숨기기":
+			System.out.println("비즈컨트롤러01 accomMng 숨기기 case");
+			ss01.roomStatus(room, "hidden");
+			riList = ss01.selectRoomImgList(ri);
+			model.addAttribute("riList", riList);
+			return "redirect:/biz/rooms";
+		case "숨김해제":
+			System.out.println("비즈컨트롤러01 accomMng 숨김해제 case");
+			ss01.roomStatus(room, "open");
+			riList = ss01.selectRoomImgList(ri);
+			model.addAttribute("riList", riList);
+			return "redirect:/biz/rooms";
 		case "삭제":
 			System.out.println("비즈컨트롤러01 accomMng 삭제 case");
 			model.addAttribute("room", room);
-			return "/views/biz/roomDeleteForm";
+			ss01.roomStatus(room, "delete");
+			ss01.updateRoomCount(biz_id, "minus");
+			return "redirect:/biz/rooms";
 		default:
 			return "/views/biz/exceptionThrows";
 		}
@@ -297,7 +338,8 @@ public class BizUserController {
 	
 	// 룸 새로 삽입, 유저아이디를 가지고 업체명+사업자번호로 구성된 Accom리스트 리턴 
 	@PostMapping(value = "biz/roomInsertForm")
-	public String roomInsertForm(String user_id, Model model) {
+	public String roomInsertForm(@AuthenticationPrincipal PrincipalDetail userDetail, Model model) {
+		String user_id = userDetail.getUsername();
 		System.out.println("비즈컨트롤러01 roomInsertForm start...");
 		System.out.println("user_id -> "+user_id);
 		List<Accom> accomList = ss01.accomList(user_id);
@@ -305,14 +347,18 @@ public class BizUserController {
 		return "/views/biz/roomInsertForm";
 	}
 	
-	// 실제 방 등록, 방등록할때 서비스로직으로 방코드를 시퀀스처럼 부여, sql문 두개 있음
-	@PostMapping(value = "/biz/roomInsert")
-	public String roomInsert(Room room, Accom accom, Model model) {
-		System.out.println("비즈컨트롤러01 roomInsert start...");
-		String biz_id = accom.getBiz_id();
-		room.setBiz_id(biz_id);
-		System.out.println("biz_id -> "+biz_id);
-		ss01.roomInsert(room);
-		return "redirect:/biz/bizMain";
+	@GetMapping(value = "/biz/rooms")
+	public String rooms(@AuthenticationPrincipal PrincipalDetail userDetail, Model model) {
+		String user_id = userDetail.getUsername();
+		System.out.println("비즈컨트롤01 rooms 시작...");
+		List<Room> roomList = ss01.roomList(user_id);
+		for (Room room :roomList ) {
+			System.out.println("비즈컨트롤01 rooms accom->"+room);
+		}
+		model.addAttribute("roomList", roomList);
+		return "/views/biz/rooms";
 	}
+	
+	
+	
 }

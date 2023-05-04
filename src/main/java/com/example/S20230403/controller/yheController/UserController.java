@@ -2,27 +2,24 @@ package com.example.S20230403.controller.yheController;
 
 import com.example.S20230403.auth.PrincipalDetail;
 import com.example.S20230403.handler.yheHandler.MailHandler;
+import com.example.S20230403.model.users.AddInfoCheck;
+import com.example.S20230403.model.users.SaveCheck;
 import com.example.S20230403.model.Users;
 import com.example.S20230403.service.yheService.UsersService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.Collection;
 
 @Controller
 @RequiredArgsConstructor
@@ -47,66 +44,80 @@ public class UserController {
         return userService.existsNick(nickname);
     }
 
+    @PostMapping("/checkDuplicationPhone")
+    @ResponseBody
+    public int checkDuplicationPhone(@RequestParam String phone) {
+        return userService.existsPhone(phone);
+    }
     @GetMapping("/sign")
-    public String signForm() {
+    public String signForm(Model model) {
+        model.addAttribute("users", new Users());
         return "views/signForm";
     }
 
+    @PostMapping("/CheckPassword")
+    @ResponseBody
+    public boolean checkPassword(@RequestParam("password") String password, @RequestParam("checkPassword") String checkPassword) {
+        return password.equals(checkPassword);
+    }
+
     @PostMapping("/sign")
-    public String sign(@ModelAttribute Users user, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String sign(@Validated(SaveCheck.class) @ModelAttribute("users") Users user, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return "views/signForm";
+        }
         String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
         user.setPassword(encodedPassword);
         userService.saveUser(user);
-        request.setAttribute("msg", "회원가입을 축하드립니다. 로그인을 해주세요.");
-        request.setAttribute("nextPage", "/");
-        request.getRequestDispatcher("/denied-page").forward(request, response);
-        return null;
+
+        model.addAttribute("nextPage", "/login");
+        model.addAttribute("msg", "회원가입이 완료되었습니다.");
+        return "/redirect-page";
     }
 
     @GetMapping("/additional-info")
-    public String showAdditionalInfo(@AuthenticationPrincipal PrincipalDetail userDetail, Model model) {
-        String user_id = userDetail.getUsername();
-        Collection<? extends GrantedAuthority> authorities = userDetail.getAuthorities();
-
-        model.addAttribute("user_id", user_id);
-        model.addAttribute("authorities", authorities);
+    public String showAdditionalInfo(Model model) {
+        model.addAttribute("users", new Users());
         return "additional-info";
     }
 
     @PostMapping("/updateInfo")
-    public String submitAdditionalInfoForm(@ModelAttribute("user") Users user, Authentication authentication) {
-        PrincipalDetail userDetails = (PrincipalDetail) authentication.getPrincipal();
-        Users currentUser = userDetails.getUser();
+    public String submitAdditionalInfoForm(@Validated(AddInfoCheck.class) @ModelAttribute("users") Users user, BindingResult bindingResult,
+                                           @AuthenticationPrincipal PrincipalDetail users, Model model, HttpSession session) {
+        if (bindingResult.hasErrors()) {
+            return "additional-info";
+        }
+        String user_id = users.getUsername();
+        Users currentUser = new Users();
+        currentUser.setUser_id(user_id);
         currentUser.setNickname(user.getNickname());
         currentUser.setPhone(user.getPhone());
         currentUser.setTelecom(user.getTelecom());
         currentUser.setGender(user.getGender());
         currentUser.setAuth_level(user.getAuth_level());
         userService.addInfoUser(currentUser);
-        return "redirect:/";
+
+        session.invalidate();
+
+        model.addAttribute("nextPage", "/");
+        model.addAttribute("msg", "추가 정보 입력이 완료되었습니다. 다시 로그인 해주세요.");
+        return "redirect-page";
     }
 
     @PostMapping("/delete")
-    public String deleteUser(@RequestParam("user_id") String user_id, HttpSession session) {
+    public String deleteUser(@AuthenticationPrincipal PrincipalDetail users, HttpSession session, Model model) {
+        String user_id = users.getUsername();
         userService.delete(user_id);
         session.invalidate();
-        return "redirect:/";
+        model.addAttribute("nextPage", "/");
+        model.addAttribute("msg", "회원가입이 취소되었습니다.");
+        return "/redirect-page";
     }
 
     @GetMapping("/hello")
     public String hello() {
         return "hello";
-    }
-
-    @GetMapping("/seller")
-    public @ResponseBody String seller() {
-        return "seller";
-    }
-
-    @GetMapping("/reservation")
-    @ResponseBody
-    public String reservation1(@AuthenticationPrincipal PrincipalDetail userDetail) {
-        return "권한 확인";
     }
 
     @GetMapping("/error")
@@ -152,5 +163,4 @@ public class UserController {
             return ResponseEntity.badRequest().body("인증번호가 일치하지 않습니다.");
         }
     }
-
 }

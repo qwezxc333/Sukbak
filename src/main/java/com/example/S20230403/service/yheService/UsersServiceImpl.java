@@ -43,6 +43,12 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
     public int existsNick(String nickname) {
         return userDao.selectUserCountByNick(nickname);
     }
+
+    @Override
+    public int existsPhone(String phone) {
+        return userDao.selectUserCountByPhone(phone);
+    }
+
     @Override
     public void saveUser2Api(Users user) {
         userDao.saveUser2Api(user);
