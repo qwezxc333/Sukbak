@@ -27,9 +27,9 @@ public class OwnerUser {
         accom.setLaundry(this.getStringBool(this.hasLaundry)); 
         accom.setFitness(this.getStringBool(this.hasFitness)); 
         accom.setAccom_avail("210");
-        accom.setAddr("seaslug");
-        accom.setLatitude("3");
-        accom.setLongitude("3");
+        accom.setAddr(this.addr);
+        accom.setLatitude(this.latitude);
+        accom.setLongitude(this.longitude);
         
         return accom;
     }

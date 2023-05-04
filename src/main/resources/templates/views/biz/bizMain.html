@@ -3,100 +3,20 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:replace="fragments/header :: headerFragment"></th:block>
+<head>
+	<link rel="stylesheet" href="/css/lcg/bizMain.css">
+	<style type="text/css">
+	#biz_id{
+		border: none;
+		text-align: center;
+	}
+	</style>
+</head>
 <body>
 <script th:inline="javascript">
-	function bizAccomCall() {
-		
-		alert("bizAccomCall");
-		var str = "";
-		var str2 = "";
-		var userid = /*[[${user_id}]]*/ 'default-value';
-		
-		$.ajax(
-				{
-				    url: "/biz/accomMng",
-				    dataType: "json",
-				    type: "GET",
-				    success: function(accomList) {
-				    	var userid = userid;
-				    	var accomListRead = JSON.stringify(accomList);
-				    	if (!accomList) {
-				    		accomList = [];
-				    	} else {
-				    		userid = accomListRead[0].user_id;
-				    	}
-						
-						alert("accomList -> "+accomListRead);
-						
-						$('#content').append(accomList)
-						$('#goodslists').empty();
-						$(accomList).each(
-								function(){
-									str2 = "<form action=\"accomMngChk\" method=\"POST\"><div value ='"+this.biz_id+"'>업체명 : "+this.biz_name	
-									+"<input type=\"hidden\" name=\"biz_id\" value='"+this.biz_id+"'>"
-									+"<input type=\"hidden\" name=\"user_id\" value='"+this.user_id+"'>"
-									+"<input type=\"submit\" name=\"accomMngChk\" value=\"상세확인\">"
-									+"<input type=\"submit\" name=\"accomMngChk\" value=\"수정\">"
-									+"<input type=\"submit\" name=\"accomMngChk\" value=\"삭제\"></form></div>";
-									str += str2;
-								}
-							)
-							alert("str -> "+str);
-							str += "<form action=\"/biz/accomInsertForm\" method=\"POST\"><div class=\"d-grid gap-2\">"
-								  +"<input type=\"hidden\" name=\"user_id\" value='"+userid+"'>"
-								  +"<button class=\"btn btn-outline-primary\" type=\"submit\">업체 등록하기</button></div></form>";
-							$('#goodslists').append(str);		
-				    }, error: function(xhr, status, error) {}
-			}
-		);
-	} 	
-	function bizRoomCall() {
-		alert("bizRoomCall");
-		var str = "";
-		var str2 = "";
-		
-		$.ajax(
-				{
-					url: "/biz/roomMng",
-					dataType: "json",
-					type: "GET",
-					data: {user_id : "hy@aa.a"},
-					success: function(roomList) {
-						var userid = "";
-						var roomListRead = JSON.stringify(roomList);
-						if (!roomList) {
-							roomList = [];
-				    		userid = "hy@aa.a"
-				    	} else {
-				    		userid = roomListRead[0].user_id
-				    	}
-						
-						alert("roomList -> "+roomListRead);
-						$('#content').append(roomList);
-						$('#goodslists').empty();
-						$(roomList).each(	
-							function(){
-								str2 = "<form action=\"roomMngChk\" method=\"POST\"><div value = '"+this.r_name+"'>"+this.biz_name+"   "+this.r_name
-								+"<input type=\"hidden\" name=\"biz_id\" value='"+this.biz_id+"'>"
-								+"<input type=\"hidden\" name=\"r_id\" value='"+this.r_id+"'>"
-								+"<input type=\"hidden\" name=\"user_id\" value='"+this.user_id+"'>"
-								+"<input type=\"submit\" name=\"roomMngChk\" value=\"상세확인\">"
-								+"<input type=\"submit\" name=\"roomMngChk\" value=\"수정\">"
-								+"<input type=\"submit\" name=\"roomMngChk\" value=\"삭제\"></form></div>";
-								str += str2;
-							}		
-						)
-						alert("str -> "+str);
-						str += "<form action=\"/biz/roomInsertForm\" method=\"POST\"><div class=\"d-grid gap-2\">"
-						      +"<input type=\"hidden\" name=\"user_id\" value='"+userid+"'>"
-							  +"<button class=\"btn btn-outline-primary\" type=\"submit\">객실 등록하기</button></div></form>";
-						$('#goodslists').append(str);	 
-					},  error: function(xhr, status, error) {}
-				}
-			);
-	}
 </script>
 	</th:block>
+	<div class="container">
 		<div class="accordion accordion-flush" id="accordionFlushExample" style="width: 200px">
 			  <div class="accordion-item">
 			    <h2 class="accordion-header" id="flush-headingOne">
@@ -106,8 +26,8 @@
 			    </h2>
 			    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 			      <div class="accordion-body">
-						<a href="#" onclick="bizAccomCall()">업체관리</a><br>
-						<a href="#" onclick="bizRoomCall()">객실관리</a><br>
+						<a href="/biz/bizMain">업체관리</a><br>
+						<a href="/biz/rooms" >객실관리</a><br>
 				  </div>
 			    </div>
 			  </div>
@@ -142,10 +62,72 @@
 			  </div>
 		</div>
 		
-		<div id="content" class="content" style="float: right">
-			<div id="goodslists">	
-			</div>
+	<div class="myAccoms">
+		<div class="miniTitle">
+			<label >내 업체 관리</label>
 		</div>
+	<table class="responsive-table">
+	    <thead>
+	      <tr>
+	         <th scope="col">업체명</th>
+	        <th scope="col">업체코드</th>
+	        <th scope="col">유형</th>
+	        <th scope="col">주소</th>
+	        <th scope="col">대표번호</th>
+	        <th scope="col">객실 수</th>
+	        <th scope="col">상태</th>
+	        <th scope="col">관리</th>
+	      </tr>
+	    </thead>
+	    
+	    <tbody th:each="accoms : ${accomList}" class="accomsList">
+	    <form action="accomMngChk" method="POST">
+		      <tr>
+		        <th scope="row" th:text="${accoms.biz_name}">
+		        </th>
+		        <td data-title="biz_id">
+		        	<input type="text" 	 id="biz_id"   name = "biz_id" 	th:value="${accoms.biz_id}" readonly="readonly">
+		        </td>
+		        <td data-title="Studio">
+					<span th:switch="${accoms.accom_type}">
+					    <span th:case="'999'">기타</span>
+					    <span th:case="'511'">호텔(biz)</span>
+					    <span th:case="'513'">호텔(3성)</span>
+					    <span th:case="'514'">호텔(4성)</span>
+					    <span th:case="'515'">호텔(5성)</span>
+					    <span th:case="'520'">모텔</span>
+					    <span th:case="'530'">게스트하우스</span>
+					    <span th:case="'540'">펜션</span>
+					</span>
+				</td>
+		        <td data-title="addr" data-type="currency" th:text="${accoms.addr}"></td>
+		        <td data-title="tel" data-type="currency" th:text="${accoms.tel}"></td>
+		        <td data-title="room_count" data-type="currency" th:text="${accoms.room_count}"></td>
+		        <td data-title="accom_avail" data-type="currency">
+		        	
+		        	<span th:switch="${accoms.accom_avail}">
+					    <span th:case="'210'">사용가능</span>
+					    <span th:case="'220'">숨김</span>
+					    <span th:case="'230'">삭제</span>
+					</span> 
+		        </td>
+		        <td data-title="Budget" data-type="currency">
+		        			<input type="submit" name = "accomMngChk" value="상세확인">
+							<input type="submit" name = "accomMngChk" value="수정">
+							<input type="submit" name = "accomMngChk" value="삭제"></td>
+		      </tr>
+	      </form>
+	    </tbody>
+	 </table>
+	 
+	<form action="/biz/accomInsertForm" method="POST">
+		<input type="hidden" id="biz_id" name="biz_id" th:value="${accom.biz_id}">
+		<div class="d-grid gap-2">
+			<button class="btn btn-outline-primary" type="submit">업체 등록하기</button>
+		</div>
+	</form>
+	</div>
+	</div>
 </body>
 <th:block th:replace="fragments/footer :: footerFragment"></th:block>
 </html>
