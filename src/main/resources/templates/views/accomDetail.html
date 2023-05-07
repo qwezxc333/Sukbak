@@ -55,9 +55,6 @@
 			</div>
 		</div>
 
-
-
-
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
 			<li class="nav-item" role="presentation">
 	    		<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" 
@@ -93,19 +90,22 @@
 						<li th:if="${accomBasicInfo.pool != ''}" 			th:text="${accomBasicInfo.pool}"></li>
 						<li th:if="${accomBasicInfo.parking != ''}" 		th:text="${accomBasicInfo.parking}"></li>
 						<li th:if="${accomBasicInfo.cafe != ''}" 			th:text="${accomBasicInfo.cafe}"></li>
-						<li th:if="${accomBasicInfo.restaurant != ''}" th:text="${accomBasicInfo.restaurant}"></li>
-						<li th:if="${accomBasicInfo.store != ''}" 		th:text="${accomBasicInfo.store}"></li>
-						<li th:if="${accomBasicInfo.sauna != ''}" 		th:text="${accomBasicInfo.sauna}"></li>
+						<li th:if="${accomBasicInfo.restaurant != ''}" 	th:text="${accomBasicInfo.restaurant}"></li>
+						<li th:if="${accomBasicInfo.store != ''}" 			th:text="${accomBasicInfo.store}"></li>
+						<li th:if="${accomBasicInfo.sauna != ''}" 			th:text="${accomBasicInfo.sauna}"></li>
 						<li th:if="${accomBasicInfo.laundry != ''}" 		th:text="${accomBasicInfo.laundry}"></li>
-						<li th:if="${accomBasicInfo.fitness != ''}" 		th:text="${accomBasicInfo.fitness }"></li>
+						<li th:if="${accomBasicInfo.fitness != ''}" 			th:text="${accomBasicInfo.fitness }"></li>
 					</ul>
 					<ul>
 						<li class="subTitle">주소</li>
 						<li><p th:text="${accomBasicInfo.addr}"></p></li>
 						<!-- latitude, longitude th:data로 저장하고 자바스크립트에서 사용 -->
-						<li><div id="location"
+						<li>
+							<div id="location"
 								th:data-latitude="${accomBasicInfo.latitude}"
-								th:data-longitude="${accomBasicInfo.longitude}"></div></li>
+								th:data-longitude="${accomBasicInfo.longitude}">
+							</div>
+						</li>
 						<li><div id="map"></div></li>
 					</ul>
 				</div>

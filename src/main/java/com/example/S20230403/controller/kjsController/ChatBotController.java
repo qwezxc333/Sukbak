@@ -20,15 +20,13 @@ public class ChatBotController {
 	
 	@PostMapping("/noticeFaqTitle")
 	public List<Notice_Faq> noticeFaqtitle(String notice_type) {
-		System.out.println("컨트롤러 notice_type->"+notice_type);
     	List<Notice_Faq> noticeFaqtitle = cs.getNoticeFaqTitleList(notice_type);
-	    System.out.println("컨트롤러 noticeFaqtitle->"+noticeFaqtitle);
+    	
 	    return noticeFaqtitle;
 	}
 	
 	@PostMapping("/noticeFaqContent")
 	public List<Notice_Faq> noticeFaqContent(String notice_id){
-		System.out.println("notice_id->"+notice_id);
 		List<Notice_Faq> noticeFaqContent = cs.getNoticeFaqContentList(notice_id);
 		
 		return noticeFaqContent;
@@ -36,10 +34,7 @@ public class ChatBotController {
 	
 	@PostMapping("/qnaInsert")
 	public void qnaInsert(@AuthenticationPrincipal PrincipalDetail users, Qna qna) {
-		
 		String user_id = users.getUsername();
-		System.out.println("getUsername() ->" + user_id);
-		
 		qna.setUser_id(user_id);
 		
 		cs.qnaInsert(qna);

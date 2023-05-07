@@ -37,7 +37,6 @@ public class SecurityConfig {
                 .antMatchers("/admin").hasAnyAuthority("ADMIN")
                 .antMatchers("/users/**").hasAnyAuthority("USER")
                 .antMatchers("/seller/**").hasAnyAuthority("SELLER")
-                .antMatchers("/insertQna/**").hasAnyAuthority("USER", "SELLER")
                 .anyRequest().permitAll()
                 .and()
 

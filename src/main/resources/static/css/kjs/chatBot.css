@@ -3,7 +3,7 @@
 	#chat {
 		position: fixed;
 		bottom: 37px;
-				right: 19px;
+		right: 19px;
 	    width: 370px;
 	    height: 480px;
 	    margin: 0 auto;
@@ -75,9 +75,9 @@
 	
 	.message {
 		position: relative;
-	    max-width: 80%;
+	    max-width: 82%;
 	    height: auto;
-	    margin-bottom: 8px;
+	    margin: 0px 0px 8px 7px;
 	    padding: 8px;
 	    border-radius: 4px;
 	}
@@ -131,8 +131,9 @@
 		width: 25px;
 		  height: 25px;
 		  position: absolute;
-		  left: -29px;
+		  left: -31px;
 		  bottom: 3px;
+		  border-radius: 50px;
 	}
 	
 	.top-penguin-name {
@@ -209,8 +210,7 @@
 	}
 	
 	.isInput{
-		background-color: darkgray;
-		color: darkgary;
+		background-color: lightgray;
 	}
 	
 	.isInput:hover{
@@ -218,7 +218,7 @@
 	}
 	
 	#chat::-webkit-scrollbar {
-	    width: 2px;  /* 스크롤바의 너비 */
+	    width: 3px;  /* 스크롤바의 너비 */
 	    height: 20px;
 	}
 	

@@ -3,11 +3,11 @@
         const messageDiv = document.createElement('div');
 	        messageDiv.classList.add('message');
 	        messageDiv.classList.add(position);
-	        messageDiv.textContent = text;
+	        messageDiv.innerHTML = text;
         
         if(position === 'left'){
         	const img = document.createElement('img');
-        	img.src = '/img/penguin2.png';
+        	img.src = '/img/penguin5.png';
         	img.classList.add('left-penguin-img');
         	messageDiv.appendChild(img);
         	
@@ -82,7 +82,7 @@
             addMessage('리뷰 문의', 'left');
             value = 414;
         }else if (messageType === 'qna') {
-        	addMessage('1대1 문의', 'left');
+        	addMessage('1:1 문의', 'left');
         }
         
         $.ajax({
@@ -92,13 +92,10 @@
         		notice_type: value
         	},
         	success: data => {
-        		console.log("getNoticeFaqTitle data->", data);
         		
         		data.forEach( item => {
 	        		addButtonMessage("Q. " + item.notice_title, undefined, item.notice_id);
-        			console.log("item.notice_title->", item.notice_title);
         		});
-        		/* addButtonMessage('이전 페이지로!', undefined, undefined, true); */
         	}
         });
     }
@@ -112,17 +109,15 @@
                 notice_id: notice_id
             },
             success: data => {
-                console.log("getNoticeFaqContent data->", data);
                 
                 data.forEach( item => {
 	                addMessage(item.notice_content, "left");
-	                console.log("item.notice_content->",item.notice_content)
                 });
                 
                 // 처음페이지 이동 버튼
-                addButtonMessage('처음 메뉴로!', undefined, undefined, true);
+                addButtonMessage('처음으로', undefined, undefined, true);
                 // 공지사항 페이지 이동
-                addButtonMessage('자세항 사항은 여기!', undefined, undefined, undefined, true);
+                addButtonMessage('자세히 알아보기', undefined, undefined, undefined, true);
             }
         });
     }
@@ -222,7 +217,7 @@
  			
  		});
  		
- 		//페이지 로드시에 Form호출될 때 실행되게 하려고 추가
+ 		// Form호출될 때 실행되게 하려고 추가
  		updateBtn();
  	}
  	
@@ -237,11 +232,11 @@
  			},
  			success: data => {
  				
- 				addMessage('문의 작성 완료!','left');
+ 				addMessage('문의가 접수되었습니다.<br>빠른 시일내에 답변 드리겠습니다.','left');
  				// 처음페이지 이동 버튼
-                addButtonMessage('처음 메뉴로!', undefined, undefined, true);
+                addButtonMessage('처음으로', undefined, undefined, true);
                 // 공지사항 페이지 이동
-                addButtonMessage('자세항 사항은 여기!', undefined, undefined, undefined, true);
+                addButtonMessage('자세히 알아보기', undefined, undefined, undefined, true);
  			}
  		});
  	}
@@ -270,18 +265,18 @@
         chatDiv.innerHTML = ''; */
         
         if(showInitialMessage){
-		    addMessage('안녕하세요. 헹귄이에요. 무엇을 도와드릴까요?', 'left');
+		    addMessage('안녕하세요~ 헹귄이에요.<br>무엇을 도와드릴까요?', 'left');
         }
 	    
         if(!showInitialMessage){
-	    	addMessage('처음 메뉴로 이동!', 'left');
+	    	addMessage('무엇이든 물어보세요!', 'left');
 	    }
         
 	    addButtonMessage('예약 문의', 'reservation');
 	    addButtonMessage('결제 문의', 'payment');
 	    addButtonMessage('회원 문의', 'users');
 	    addButtonMessage('리뷰 문의', 'review');
-	    addButtonMessage('1대1문의 작성', 'qna')
+	    addButtonMessage('1:1 문의 작성', 'qna')
 	    
     }
     
@@ -311,8 +306,6 @@
     	
     	//시간표시
     	currentTime();
-    	
-    	
     	
     	//헹귄봇 클릭 시
     	chatBtn.addEventListener('click', () => {

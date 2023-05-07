@@ -18,17 +18,20 @@ public class ChatBotDaoImpl implements ChatBotDao {
 	@Override
 	public List<Notice_Faq> fetchNoticeFaqTitleList(String notice_type) {
 		List<Notice_Faq> noticeFaqTitle = session.selectList("jsNoticeFaqTitleList", notice_type);
+		
 		return noticeFaqTitle;
 	}
 
 	@Override
 	public List<Notice_Faq> fetchNoticeFaqContentList(String notice_id) {
 		List<Notice_Faq> noticeFaqContent = session.selectList("jsNoticeFaqContentList", notice_id);
+		
 		return noticeFaqContent;
 	}
 
 	@Override
 	public void qnaInsert(Qna qna) {
+		
 		session.insert("jsQnaInsert", qna);
 	}
 
