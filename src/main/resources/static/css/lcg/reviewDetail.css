@@ -1,7 +1,4 @@
-@charset "UTF-8";
-
-
-	.container{
+.container{
 		max-width: 100%;
 
 	}  
@@ -71,6 +68,7 @@
 	  display: block;
 	  margin: 0 auto;
 	}
+
 	#modal-notice{
 	  text-align: center;
 	  color: red;
@@ -95,4 +93,9 @@
 		margin-bottom: 10px;
 		text-align: right;
 	}
-	
+
+	.modalWordCount{
+		text-align: right;
+		margin-right: 50px;
+		color: red;
+	}

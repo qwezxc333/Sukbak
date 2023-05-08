@@ -1,7 +1,9 @@
 package com.example.S20230403.controller.lcgController;
 
+import java.util.Collection;
 import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,7 @@ public class SellerReviewMgtController {
 	public String getMyAccoms(@AuthenticationPrincipal PrincipalDetail userDetail, Model model) {
 		System.out.println("컨트롤러 getMyAccoms 시작");
 		String sellerUser_id = userDetail.getUsername();
+
 		System.out.println("컨트롤러 getMyAccoms  selleruser_id-> "+sellerUser_id);
 		List<Accom> myAccoms = service.getMyAccoms(sellerUser_id);
 		System.out.println("컨트롤러 getMyAccoms myAccoms 사이즈 -> "+myAccoms.size());

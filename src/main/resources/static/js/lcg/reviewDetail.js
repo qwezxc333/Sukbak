@@ -1,11 +1,16 @@
 function checkLength(index) {
+	  // 텍스트에리어의 값을 읽음
 	  const textarea = $("#del_reason"+index).val();
-	  if (textarea.length > 150) {
+	  // <span id = "wordCount">0</span>의 값을 읽음.
+	  // 모달 별로 값이 달라야하기 때문에 인덱스를 부여해줘야 함.
+	  const wordCount = $("#wordCount"+index);
+	  // wordCount.text에 textarea.length값을 덮어 씌워줌.
+	  wordCount.text(textarea.length+'/150');
+	  // 길이를 150으로 하면 151까지 써져가지고 149로 했음.
+	  if (textarea.length > 149) {
 		    alert("글자 제한이 넘어갔습니다.");
 		  }
-	  
-	
-}
+	}
 
 	function chk(index){
 		// 띄어쓰기까지 없애기
@@ -92,7 +97,10 @@ function checkLength(index) {
 					str += "</div>";
 					str += "<div class='modal-body'>";
 					 
-					str += "<textarea name='del_reason' onkeyup='checkLength("+index+")' id='del_reason" + index + "' rows='10' cols='100' maxlength='200' placeholder='150자까지 작성 가능합니다.'></textarea><p>";
+					str += "<textarea name='del_reason' onkeyup='checkLength("+index+")' id='del_reason" + index + "' rows='10' cols='100' maxlength='200' placeholder='150자까지 작성 가능합니다.' style='resize: none;'></textarea><p>";
+					str += "<div class = 'modalWordCount'>";
+					str += "<span id = 'wordCount"+index+"'>0/150</span>";
+					str += "</div>";
 					str += "<input type='hidden' name='pay_id' id= 'pay_id' value='" + this.pay_id + "'>";
 					str += "<input type='hidden' name='biz_id' id= 'biz_id' value='" + this.biz_id + "'>";
 					str += "<input type='hidden' name='del_request' id= 'del_request' value='" + this.del_request + "'>";
