@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.S20230403.model.JooJoin;
 
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class AdminPageDaoImpl implements AdminPageDao {
 	private final SqlSession session;
 
@@ -28,7 +30,7 @@ public class AdminPageDaoImpl implements AdminPageDao {
 		try {
 			userlist = session.selectList("jhUserlist", user_id);
 		} catch (Exception e) {
-			System.out.println("AdminDaoImpl05 userlist Exception : "+e.getMessage());
+			System.out.println("jjhDao AdminPageDaoImpl userlist Exception : "+e.getMessage());
 		}
 		return userlist;
 	}
@@ -43,10 +45,10 @@ public class AdminPageDaoImpl implements AdminPageDao {
 	public List<JooJoin> accomlist(JooJoin biz_id) {
 		List<JooJoin> accomlist =null;
 		try {
-			System.out.println("AdminDaoImpl accomlist 시작");
+			System.out.println("jjhDao AdminPageDaoImpl accomlist 시작");
 			accomlist = session.selectList("jhAccomlist", biz_id);
 		} catch (Exception e) {
-			System.out.println("AdminDaoImpl05 accomlist Exception : "+e.getMessage());
+			System.out.println("jjhDao AdminPageDaoImpl accomlist Exception : "+e.getMessage());
 		}
 		return accomlist;
 	}
@@ -63,7 +65,7 @@ public class AdminPageDaoImpl implements AdminPageDao {
 		try {
 			qnalist = session.selectList("jhQnalist", qna_id);
 		} catch (Exception e) {
-			System.out.println("AdminDaoImpl05 qnalist Exception : "+e.getMessage());
+			System.out.println("jjhDao AdminPageDaoImpl qnalist Exception : "+e.getMessage());
 		}
 		return qnalist;
 	}
@@ -80,7 +82,7 @@ public class AdminPageDaoImpl implements AdminPageDao {
 		try {
 			reviewlist = session.selectList("jhReviewlist", review_id);
 		} catch (Exception e) {
-			System.out.println("AdminDaoImpl05 reviewlist Exception : "+e.getMessage());
+			System.out.println("jjhDao AdminPageDaoImpl reviewlist Exception : "+e.getMessage());
 		}
 		return reviewlist;
 	}
@@ -101,15 +103,29 @@ public class AdminPageDaoImpl implements AdminPageDao {
 //	각 row 삭제-----------------------------------------------------------
 	
 	@Override
+	public int delQnARe(int qna_id) {
+		return session.delete("adminDeleteQnARe", qna_id);
+	}
+	
+	@Override
 	public int delQnA(int qna_id) {
 		int result = 0;
 		result = session.delete("adminDeleteQnA", qna_id);
 		return result;
 	}
-
+	
 	@Override
-	public int delQnARe(int qna_id) {
-		return session.delete("adminDeleteQnARe", qna_id);
+	public int delReviewImg(int pay_id) {
+		int result = 0;
+		System.out.println("다오 delReviewImg 삭제 시작");
+		try {
+			result = session.delete("adminDeleteReviewImg", pay_id);
+			System.out.println("다오 delReviewImg 삭제 시작 result -> "+result);
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("다오 delReviewImg 삭제 에러-> "+e.getMessage());
+		}
+		return result;
 	}
 	
 	@Override
@@ -125,17 +141,22 @@ public class AdminPageDaoImpl implements AdminPageDao {
 		JooJoin jooJoin = new JooJoin();
 		try {
 			jooJoin = session.selectOne("jhQnaSelOne", qna_id);
-			System.out.println("AdminDaoImpl listReply qna_id-> "+qna_id);
+			System.out.println("jjhDao AdminPageDaoImpl listReply qna_id-> "+qna_id);
 		} catch (Exception e) {
-			System.out.println("AdminDaoImpl listReply Exception-> "+e.getMessage());
+			System.out.println("jjhDao AdminPageDaoImpl listReply Exception-> "+e.getMessage());
 		}
 		return jooJoin;
 	}
 	@Override
 	public int saveReply(JooJoin jooJoin) {
-		System.out.println("AdminDaoImpl insertReply start");
+		System.out.println("jjhDao AdminPageDaoImpl insertReply start");
 		return session.insert("jhInsertQnaRe", jooJoin);
 	}
+	@Override
+	public int rejectDelReview(JooJoin jooJoin) {
+		return session.update("adminRejectDelReview", jooJoin);
+	}
 
+	
 	
 }

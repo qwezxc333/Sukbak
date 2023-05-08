@@ -46,6 +46,7 @@ public class JooJoin {
 	private String qna_type;
 	private String qna_title;
 	private String qna_content;
+	private String write_time;
 	
 //	QnARe
 //	private int qna_id;
