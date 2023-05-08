@@ -42,4 +42,11 @@ public class Review {
 	private String biz_name;
 	private int    kind; // ajax sorting용
 	
+	// 건화 리뷰 페이지 조회용
+	private Date	check_in, check_out;
+	private int	pay_amt;
+	private String	addr;
+	private List<Review_Img> matchingReviewImages;
+	private String review_img;
+	
 }

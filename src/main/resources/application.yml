@@ -49,5 +49,6 @@ spring:
 # MyBatis, classpath = resource폴더임.
 mybatis:
   config-location: classpath:configuration.xml
-
+  
   mapper-locations: classpath:mappers/**/*.xml
+  
