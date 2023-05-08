@@ -24,11 +24,22 @@ public class AdminPageDaoImpl implements AdminPageDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("jhUserTotal");
 	}
+	
 	@Override
-	public List<JooJoin> userlist(JooJoin user_id) {
+	public List<JooJoin> userlist(String user_id) {
 		List<JooJoin> userlist =null;
 		try {
 			userlist = session.selectList("jhUserlist", user_id);
+		} catch (Exception e) {
+			System.out.println("jjhDao AdminPageDaoImpl userlist Exception : "+e.getMessage());
+		}
+		return userlist;
+	}
+	@Override
+	public List<JooJoin> userlist(JooJoin jooJoin) {
+		List<JooJoin> userlist =null;
+		try {
+			userlist = session.selectList("jhUserlist", jooJoin);
 		} catch (Exception e) {
 			System.out.println("jjhDao AdminPageDaoImpl userlist Exception : "+e.getMessage());
 		}
@@ -156,6 +167,67 @@ public class AdminPageDaoImpl implements AdminPageDao {
 	public int rejectDelReview(JooJoin jooJoin) {
 		return session.update("adminRejectDelReview", jooJoin);
 	}
+	
+	
+//	게시판 / 리뷰 탭 나누기
+	@Override
+	public int qnaReTotal() {
+		return session.selectOne("jhQnaReTotal");
+	}
+	@Override
+	public List<JooJoin> qnaRelist(JooJoin qna_id) {
+		List<JooJoin> qnaRelist =null;
+		try {
+			qnaRelist = session.selectList("jhQnaRelist", qna_id);
+		} catch (Exception e) {
+			System.out.println("jjhDao AdminPageDaoImpl qnaRelist Exception : "+e.getMessage());
+		}
+		return qnaRelist;
+	}
+	@Override
+	public int reviewDelTotal() {
+		return session.selectOne("jhReviewDelTotal");
+	}
+	@Override
+	public List<JooJoin> reviewDellist(JooJoin review_id) {
+		List<JooJoin> reviewDellist =null;
+		try {
+			reviewDellist = session.selectList("jhReviewDellist", review_id);
+		} catch (Exception e) {
+			System.out.println("jjhDao AdminPageDaoImpl reviewDellist Exception : "+e.getMessage());
+		}
+		return reviewDellist;
+	}
+
+	
+//	일반 회원 검색
+	@Override
+	public int condUserCnt(JooJoin jooJoin) {
+		System.out.println("jjhDao AdminPageDaoImpl condUserCnt 시작");
+		int conditionUserCount = 0;
+		try {
+			conditionUserCount = session.selectOne("condUserCnt", jooJoin);
+			System.out.println("jjhDao AdminPageDaoImpl conditionUserCount-> "+conditionUserCount);
+		} catch (Exception e) {
+			System.out.println("jjhDao AdminPageDaoImpl condUserCnt 에러: "+e.getMessage());
+		}
+		return conditionUserCount;
+	}
+
+	@Override
+	public List<JooJoin> listSearchUser(JooJoin jooJoin) {
+		System.out.println("jjhDao AdminPageDaoImpl listSearchUser 시작");
+		List<JooJoin> listSearchUser = null;
+		try {
+			listSearchUser = session.selectList("jhUserSearchList", jooJoin);
+			System.out.println("jjhDao AdminPageDaoImpl listSearchUser-> "+listSearchUser);
+		} catch (Exception e) {
+			System.out.println("jjhDao AdminPageDaoImpl listSearchUser 에러: "+e.getMessage());
+		}
+		return listSearchUser;
+	}
+	
+	
 
 	
 	
