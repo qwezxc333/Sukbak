@@ -59,10 +59,13 @@
         	}
         }
         
-        messageDiv.appendChild(button);
-        document.getElementById('chat').appendChild(messageDiv);
+        setTimeout(() => {
+	        messageDiv.appendChild(button);
+	        document.getElementById('chat').appendChild(messageDiv);
+	        
+    	    scrollToBottom();
+        }, 500);
         
-        scrollToBottom();
     }
 	
     // notice 제목 출력
@@ -168,10 +171,12 @@
  		labelTitle.appendChild(requiredMark.cloneNode(true));
  		labelContent.appendChild(requiredMark.cloneNode(true));
 		
- 		//#chat에 폼 추가
- 		document.getElementById('chat').appendChild(form);
  		
- 		scrollToBottom();
+ 		setTimeout(() => {
+	 		//#chat에 폼 추가
+	 		document.getElementById('chat').appendChild(form);
+	 		scrollToBottom();
+ 		}, 200);
  		
  		//입력 안할 시 inInput 추가,제거
  		inputTitle.addEventListener('input', updateBtn);
@@ -261,22 +266,26 @@
     
 	// 초기 메시지 설정
     function resetToInitialState(showInitialMessage = true){
-    	/* const chatDiv = document.getElementById('chat');
-        chatDiv.innerHTML = ''; */
+        
+        function resetButtons() {
+        	addButtonMessage('예약 문의', 'reservation');
+		    addButtonMessage('결제 문의', 'payment');
+		    addButtonMessage('회원 문의', 'users');
+		    addButtonMessage('리뷰 문의', 'review');
+		    addButtonMessage('1:1 문의 작성', 'qna')
+        }
         
         if(showInitialMessage){
 		    addMessage('안녕하세요~ 헹귄이에요.<br>무엇을 도와드릴까요?', 'left');
+		    setTimeout(() => {
+		    	resetButtons();
+		    	scrollToBottom();
+		    }, 1000);
+        }else{
+        	addMessage('무엇이든 물어보세요!', 'left');
+        	resetButtons();
+        	scrollToBottom();
         }
-	    
-        if(!showInitialMessage){
-	    	addMessage('무엇이든 물어보세요!', 'left');
-	    }
-        
-	    addButtonMessage('예약 문의', 'reservation');
-	    addButtonMessage('결제 문의', 'payment');
-	    addButtonMessage('회원 문의', 'users');
-	    addButtonMessage('리뷰 문의', 'review');
-	    addButtonMessage('1:1 문의 작성', 'qna')
 	    
     }
     
