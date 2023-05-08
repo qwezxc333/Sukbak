@@ -33,6 +33,11 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .antMatchers("/hello/**").hasAnyAuthority("USER", "SELLER")
                 .antMatchers("/payment/**").hasAnyAuthority("USER", "SELLER")
+                .antMatchers("/additional-info").hasAnyAuthority("TEMPORARY")
+                .antMatchers("/admin").hasAnyAuthority("ADMIN")
+                .antMatchers("/commonUser/**").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/seller/**").hasAnyAuthority("SELLER")
+                .antMatchers("/cgAjaxInsertZzim").hasAnyAuthority("USER")// ajax에서 거르긴 하지만 찬규 이중 보안이라는 의미로 !
                 .anyRequest().permitAll()
                 .and()
 
@@ -47,6 +52,7 @@ public class SecurityConfig {
                 .loginPage("/login")
                 .loginProcessingUrl("/login_proc")
                 .defaultSuccessUrl("/")
+                .successHandler(customAuthenticationSuccessHandler)
                 .and()
 
                 .oauth2Login()

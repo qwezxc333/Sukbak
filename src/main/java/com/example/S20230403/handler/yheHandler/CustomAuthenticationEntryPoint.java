@@ -15,6 +15,6 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         request.setAttribute("msg", "로그인한 회원만 이용이 가능합니다.");
         request.setAttribute("nextPage", "/login");
-        request.getRequestDispatcher("denied-page").forward(request, response);
+        request.getRequestDispatcher("redirect-page").forward(request, response);
     }
 }

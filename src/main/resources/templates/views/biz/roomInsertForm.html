@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
 <script type="text/javascript">
-	function chkValues() {
+	function actAlert() {
 		var biz_id = document.getElementById("accombiz_id").value
-		alert(biz_id);
-		document.getElementById("biz_id").value = biz_id
-		return true;
+		document.getElementById("biz_id").value = biz_id;
+		var a = confirm("객실 정보 등록을 완료하고 이미지등록을 하시겠습니까?")
+		if (a) return true;
+		else return false;
+	}
+	
+	function goBack() {
+		var a = confirm("작성한 내용은 저장되지 않습니다. 사업자 메인 페이지로 이동합니다.")
+		if (a) window.location.href = "/biz/rooms";
+		else return false;
 	}
 </script>
-<th:block th:replace="fragments/header :: headerFragment"></th:block>
-
 <body>
 	<h1>객실등록</h1>
-	<form action="/biz/roomInsert" th:object="${room}" method="POST" onsubmit="return chkValues()">
+	<form action="/biz/roomImgInsertForm" method="post" >
 		<label for="accombiz_id">
 			<select id="accombiz_id" name="accombiz_id" th:field="${accomList}">
 				<option th:each="accom : ${accomList}"
@@ -49,25 +55,20 @@
 		</label><br>
 		<div>
 			<h6>객실 옵션</h6>
-				<input type="checkbox" name="bath" id="bath" checked value="Y">
-				<label for="bath">욕조</label><br>
-				<input type="checkbox" name="wifi" id="wifi" checked value="Y">
-				<label for="wifi">WIFI</label><br>
-				<input type="checkbox" name="ac" id="ac" checked value="Y">
-				<label for="ac">에어컨</label><br>
-				<input type="checkbox" name="tv" id="tv" checked value="Y">
-				<label for="tv">TV</label><br>
-		</div><br>
-		<div id="roomImgs">
-			<input type="text" readonly placeholder="등록된 사진 없음" style="width: 700px">
-			<input type="hidden" value="">
-			<input type="button" value="사진등록">
+				<input type="checkbox" name="hasBath" id="hasBath" checked>
+				<label for="hasBath">욕조</label><br>
+				<input type="checkbox" name="hasWifi" id="hasWifi" checked>
+				<label for="hasWifi">WIFI</label><br>
+				<input type="checkbox" name="hasAc" id="hasAc" checked>
+				<label for="hasAc">에어컨</label><br>
+				<input type="checkbox" name="hasTv" id="hasTv" checked>
+				<label for="hasTv">TV</label><br>
 		</div><br>
 		<label for="r_info">
 			<textarea rows="10" cols="100" id="r_info" name="r_info" placeholder="객실 소개를 입력해주세요"></textarea>
 		</label><br>
-		<input type="submit" value="확인" >
-		<input type="reset" value="취소">
+		<input type="submit" value="다음 단계로" onclick="return actAlert()" >
+		<input type="button" onclick="return goBack()" value="메인으로">
 	</form>
 </body>
 <th:block th:replace="fragments/footer :: footerFragment"></th:block>

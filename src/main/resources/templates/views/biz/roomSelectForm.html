@@ -3,8 +3,98 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:replace="fragments/header :: headerFragment"></th:block>
-<body>
+<script type="text/javascript">
 
+	function chkDelete() {
+		var a = confirm("객실이 삭제되어 마이페이지와 고객에게 노출되지 않습니다. 진행하시겠습니까?")
+		if (a) return true;
+		else return false;
+	}
+	
+	function goBack() {
+	    alert("사업자 메인 페이지로 이동합니다.");
+	    window.location.href = "/biz/rooms";
+	}
+	
+	
+</script>
+<body>
+	<h4>객실 상세정보 확인</h4>
+		<form action="roomMngChk" method="POST">
+			<input type="hidden" id="biz_id" name="biz_id" th:value="${room.biz_id}">
+			<input type="hidden" id="r_id" name="r_id" th:value="${room.r_id}">
+			<div class="mb-3 row">
+			    <label for="biz_name" class="col-sm-2 col-form-label">업체명</label>
+			    <div class="col-sm-10">
+			      <input type="text" readonly class="form-control-plaintext" id="biz_name" name="biz_name" th:value="${room.biz_name}">
+			    </div>
+			 </div>
+			 <div class="mb-3 row">
+			    <label for="r_name" class="col-sm-2 col-form-label">객실명</label>
+			    <div class="col-sm-10">
+			      <input type="text" readonly class="form-control-plaintext" id="r_name" name="r_name" th:value="${room.r_name}">
+			    </div>
+			 </div>
+			 <div class="mb-3 row">
+			    <label for="r_price" class="col-sm-2 col-form-label">요금</label>
+			    <div class="col-sm-10">
+			      <input type="number" readonly class="form-control-plaintext" id="r_price" name="r_price" th:value="${room.r_price}">
+			    </div>
+			 </div>
+			 <div class="mb-3 row">
+			    <label for="r_capacity" class="col-sm-2 col-form-label">수용인원</label>
+			    <div class="col-sm-10">
+			      <input type="number" readonly class="form-control-plaintext" id="r_capacity" name="r_capacity" th:value="${room.r_capacity}">
+			    </div>
+			 </div>
+			 <div class="mb-3 row">
+			    <label for="r_count" class="col-sm-2 col-form-label">객실 내 방 수</label>
+			    <div class="col-sm-10">
+			      <input type="number" readonly class="form-control-plaintext" id="r_count" name="r_count" th:value="${room.r_count}">
+			    </div>
+			 </div>
+			 <div class="mb-3 row">
+			    <label for="bath_count" class="col-sm-2 col-form-label">객실 내 욕실 수</label>
+			    <div class="col-sm-10">
+			      <input type="number" readonly class="form-control-plaintext" id="bath_count" name="bath_count" th:value="${room.bath_count}">
+			    </div>
+			 </div>
+			 <div class="mb-3 row">
+			    <label for="bed_type" class="col-sm-2 col-form-label">침대 유형</label>
+			    <div class="col-sm-10">
+			      <input type="number" readonly class="form-control-plaintext" id="bed_type" name="bed_type" 
+					th:value="${bedType == 999 ? '침대 없음' : bedType == 310 ? '싱글' : bedType == 320 ? '트윈' : '더블'}">
+			    </div>
+			 </div>
+			  <div class="form-check">
+			  	  <h6>객실 옵션</h6>
+			  	  <label for="bath">욕조</label>
+				  <input type="text" readonly name="bath" id="bath" th:value="${room.bath}"><br>
+				  <label for="wifi">WIFI</label>
+				  <input type="text" readonly name="wifi" id="wifi" th:value="${room.wifi}"><br>
+				  <label for="ac">AC</label>
+				  <input type="text" readonly name="ac" id="ac" th:value="${room.ac}"><br>
+				  <label for="tv">TV</label>
+				  <input type="text" readonly name="tv" id="tv" th:value="${room.tv}"><br>
+			   </div>
+			   
+			   <!-- review 객체에 review테이블과 review_img테이블의 pay_id가 일치하는  
+							List타입의 reviewImages 필드를 또한번 each로 꺼내서 reviewImage를 받아내서 거기에 review_img를 뽑아냄 -->
+				  <div class="roomImgs" th:each="room_img : ${riList}">
+						
+						<input type="text" readonly th:value="${room_img.r_img}">
+						<img th:src="@{/img/room/{img}(img=${room_img.r_img})}"
+							class="img-thumbnail" onerror="this.style.display='none';">
+				  </div><br>
+				  
+				<h6>객실 소개</h6>
+				<label for="r_info">
+				<textarea rows="10" cols="100" id="r_info" name="r_info" th:value="${room.r_info}" th:text="${room.r_info}" readonly></textarea>
+				</label><br>
+				<button type="submit" name="roomMngChk" value="수정">수정하기</button>
+				<button type="submit" name="roomMngChk" value="삭제" onclick="return chkOpen()">삭제하기</button>
+				<input type="button" onclick="return goBack()" value="메인으로">
+		</form>
 </body>
 <th:block th:replace="fragments/footer :: footerFragment"></th:block>
 </html>

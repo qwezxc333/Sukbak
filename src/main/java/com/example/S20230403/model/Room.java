@@ -17,6 +17,7 @@ public class Room {
 	private String ac;
 	private String tv;
 	private String bed_type;
+	private String r_avail;
 
 	// room_img - 재영
 	private int r_img_id;

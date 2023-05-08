@@ -24,8 +24,11 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
         if (userService.isNewUser(userId) == 1) {
             request.setAttribute("msg", "추가 회원정보를 입력해야 이용 가능합니다.");
             request.setAttribute("nextPage", "/additional-info");
-            request.getRequestDispatcher("/denied-page").forward(request, response);
+            request.getRequestDispatcher("/redirect-page").forward(request, response);
         } else {
+            request.setAttribute("msg", "로그인 되었습니다.");
+            request.setAttribute("nextPage", "/");
+            request.getRequestDispatcher("/redirect-page").forward(request, response);
             super.onAuthenticationSuccess(request, response, authentication);
         }
     }
