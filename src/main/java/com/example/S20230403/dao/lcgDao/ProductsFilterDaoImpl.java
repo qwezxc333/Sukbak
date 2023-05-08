@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.S20230403.model.Accom;
 import com.example.S20230403.model.Room_Img;
+import com.example.S20230403.model.Zzim;
 import com.example.S20230403.model.ChanJoin;
 
 import lombok.RequiredArgsConstructor;
@@ -75,6 +76,20 @@ public class ProductsFilterDaoImpl implements ProductsFilterDao {
 				// TODO: handle exception
 			}
 			return cgAjaxProductLists;
+		}
+
+
+		@Override
+		public List<Zzim> getZzimLists(String user_id) {
+			System.out.println("다오 getZzimLists시작");
+			List<Zzim> zzimLists = null;
+			try {
+				zzimLists = session.selectList("getZzimLists", user_id);
+			} catch (Exception e) {
+				System.out.println("getZzimLists 에러-> "+e.getMessage());
+				// TODO: handle exception
+			}
+			return zzimLists;
 		}
 
 }
