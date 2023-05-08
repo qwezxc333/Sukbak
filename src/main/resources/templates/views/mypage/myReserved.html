@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<head>
+<style type="text/css">
+	.container {
+		max-width: 100%;
+	}
+	.sidenav {
+	  width: 200px;
+	  display: inline-block;
+	  z-index: 1;
+	  top: 20px;
+	  left: 10px;
+	  background: #ebf5fc;
+	  overflow-x: hidden;
+	  padding: 8px 0;
+	  margin-left: 44px; 
+	
+	}
+	
+	.sidenav a {
+	  padding: 13px 8px 6px 16px;
+	  text-decoration: none;
+	  font-size: 20px;
+	  color: #2196F3;
+	  display: block;
+	  font-weight: bold; 
+	
+	}
+	
+	.sidenav a:hover {
+	  color: #064579;
+	}
+	
+	.main {
+	  font-size: 16px; /* Increased text to enable scrolling */
+	  padding: 0px 10px 100px;
+	  display: inline-block;
+	  float: right;
+	  margin-right: 35%
+	}
+	
+	@media screen and (max-height: 450px) {
+	  .sidenav {padding-top: 15px;}
+	  .sidenav a {font-size: 18px;}
+	}
+	
+	.rTitle {
+		text-align: center;
+		font-size: 28px;
+		font-weight: bold;
+		color: #00b7f7;
+		padding: 20px 5px 30px 5px;
+	}
+	
+	.myResvBizName {
+		font-size: 16px;
+		font-weight: bold;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	
+	.goToMyNewReview {
+		margin-bottom: 20px;
+	}
+	
+	.rButtons {
+		clear: both;
+	}
+	
+	.rButtons button {
+		margin-top: 10px;
+		width:		200px;
+		padding:	8px;
+		border-radius: 10px;
+		border: 	none;
+	}
+	
+</style>
+</head>
+<body>
+<th:block layout:fragment="content"></th:block>
+	
+	<div class="container">
+	
+		<div class="sidenav">
+		  <a href="/commonUser/myProfile">프로필 수정</a>
+		  <a href="/commonUser/myReserved">예약 내역</a>
+		  <a href="/commonUser/myReviews">후기 관리</a>
+		  <a href="/commonUser/myZzim">내 찜목록</a>
+		  <a href="/commonUser/myQnA">내가 남긴 문의</a>
+		</div>
+	
+		<div class="main">
+			<div class="rTitle">
+				<p>예약 내역</p>
+			</div>
+			
+			<div class="myResvContent">
+				<form action="" method="get" name="frm">
+					<div class="myResvList" th:each="myResvList : ${myResvList}">
+						<!-- 숙소 대표 이미지 -->
+						<!-- 예시: th:src="@{/img/{r_img}(r_img=${product.r_img})}
+								  product라는 변수로 선언한 list값을 먼저 화면에 뿌린 후, 그 product내의 r_img를 불러오는 것. -->
+						<!-- <div class="accomMainImg">
+							<p th:each="myResvImg : ${myResvImgList}">
+							<img th:src="@{/img/room/{r_img}(r_img=${myResvImg.r_img})}" alt="숙소 대표 사진"></p>
+						</div> -->
+						
+						<!-- 숙소이름(업체이름) -->
+						<div class="myResvBizName">
+							<span th:text="${myResvList.biz_name}"></span>
+			 			</div>
+			 			
+			 			<!-- 숙박기간(체크인~체크아웃) -->
+						<div class="myResvUsedDates">
+							<span th:text="${#dates.format(myResvList.check_in, 'yyyy-MM-dd')} + ' ~ '"></span>
+							<span th:text="${#dates.format(myResvList.check_out, 'yyyy-MM-dd')}"></span>
+						</div>
+						
+						<!-- 총금액 -->
+						<div class="myResvPayAmt">
+							<span th:text="${#numbers.formatInteger(myResvList.pay_amt, 1, 'COMMA')} + '원'"></span>
+						</div>
+						
+						<!-- 숙소 주소 -->
+						<div class="myResvAccomAddr">
+							<span th:text="${myResvList.addr}"></span>
+						</div>
+						
+						<!-- 예약/결제 상태 -->
+						<div class="myResvStatus">
+							<p th:text="${myResvList.content}"></p>
+						</div>
+						
+						<div class="rButtons">
+							<!-- 예약 취소 버튼 -->
+							<!-- payment 테이블의 상태가 결제 대기 상태인 것만 노출되기? -->
+							<div class="cancelMyResvButton">
+								<button type="button" th:if="${myResvList.pay_status eq '610'}"
+								th:onclick="|location.href='@{/commonUser/cancelMyResv(biz_id=${biz_id}, r_id=${r_id}, pay_id=${myResvList.pay_id})}'|">
+								예약 취소</button>
+			
+							</div>
+							
+							<!-- 리뷰 작성하기 버튼 -->
+							<div class="goToMyNewReview">
+								<th:block th:with="biz_id=${myResvList.biz_id}, r_id=${myResvList.r_id}">
+									<button type="button" th:if="${#dates.createNow()} >= ${myResvList.check_out}"
+									th:onclick="|location.href='@{/commonUser/myNewReview(biz_id=${biz_id}, r_id=${r_id}, pay_id=${myResvList.pay_id})}'|">
+									후기 작성하기</button>
+								</th:block>
+							</div>
+								
+							<!-- <div class="rBack">
+								<input type="hidden" th:value="${myResvList.pay_id}">
+								<button type="button"  name="backToMypage"
+								th:onclick="|location.href='@{/commonUser/mypage}'|">
+								마이페이지로 돌아가기</button>
+							</div> -->
+						</div>
+							
+					</div>
+				</form>
+			</div>
+		</div>
+		
+	</div>
+	<p>
+	
+
+
+
+</body>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</html>

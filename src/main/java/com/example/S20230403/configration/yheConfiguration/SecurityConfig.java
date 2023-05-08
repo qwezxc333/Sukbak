@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .antMatchers("/payment/**").hasAnyAuthority("USER", "SELLER")
                 .antMatchers("/additional-info").hasAnyAuthority("TEMPORARY")
                 .antMatchers("/admin").hasAnyAuthority("ADMIN")
-                .antMatchers("/users/**").hasAnyAuthority("USER")
+                .antMatchers("/commonUser/**").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/seller/**").hasAnyAuthority("SELLER")
                 .anyRequest().permitAll()
                 .and()
