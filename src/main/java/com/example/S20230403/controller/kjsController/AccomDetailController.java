@@ -50,8 +50,7 @@ public class AccomDetailController {
 		
 		//1. 객실안내/예약 리스트에 날짜예약 체크해서 리스트 다 가져오되, 날짜에 걸린 객실만 is_reserved 로 1 받아 view에서 예약불가버튼 변경예정
 		//2. 서비스단에서 금액*박수 구해서 총 계산한 값 JinJoin의 totalRoomPrice에 담았음
-		List<JinJoin> accomDetailRoomList = as.getAccomDetailRoomList(biz_id, checkIn, checkOut);
-		List<JinJoin> accomDetailRoomList1 = as.getAccomDetailRoomList(biz_id, checkIn, checkOut);
+		List<JinJoin> accomDetailRoomList = as.getAccomDetailRoomList(biz_id, checkOut, checkOut);
 		
 		return accomDetailRoomList;
 	}
