@@ -22,6 +22,12 @@ public class AdminPageServiceImpl implements AdminPageService {
 		System.out.println("jjhService AdminPageServiceImpl userTotal() : "+ad.userTotal());
 		return ad.userTotal();
 	}
+	
+	@Override
+	public List<JooJoin> userlist(String user_id) {
+		// TODO Auto-generated method stub
+		return ad.userlist(user_id);
+	}
 	@Override
 	public List<JooJoin> userlist(JooJoin jooJoin) {
 		// TODO Auto-generated method stub
@@ -132,6 +138,49 @@ public class AdminPageServiceImpl implements AdminPageService {
 		System.out.println("jjhService AdminPageServiceImpl insertReply start");
 		return ad.saveReply(jooJoin);
 	}
+	
+	
+//	게시판 / 리뷰 탭 나누기
+	@Override
+	public int qnaReTotal() {
+		System.out.println("jjhService AdminPageServiceImpl qnaReTotal start");
+		return ad.qnaReTotal();
+	}
+	@Override
+	public List<JooJoin> qnaRelist(JooJoin jooJoin) {
+		System.out.println("jjhService AdminPageServiceImpl qnaRelist start");
+		return ad.qnaRelist(jooJoin);
+	}
+	@Override
+	public int reviewDelTotal() {
+		System.out.println("jjhService AdminPageServiceImpl reviewDelTotal start");
+		return ad.reviewDelTotal();
+	}
+	@Override
+	public List<JooJoin> reviewDellist(JooJoin jooJoin) {
+		System.out.println("jjhService AdminPageServiceImpl reviewDellist start");
+		return ad.reviewDellist(jooJoin);
+	}
+
+//	일반 회원 검색
+	@Override
+	public int conditionUserTotal(JooJoin jooJoin) {
+		System.out.println("jjhService AdminPageServiceImpl conditionUserTotal 시작");
+		int condUserCnt = ad.condUserCnt(jooJoin);
+		System.out.println("jjhService AdminPageServiceImpl conditionUserTotal condUserCnt-> "+condUserCnt);
+		return condUserCnt;
+	}
+
+	@Override
+	public List<JooJoin> listSearchUser(JooJoin jooJoin) {
+		List<JooJoin> userSearchList = null;
+		System.out.println("jjhService AdminPageServiceImpl listSearchUser 시작");
+		userSearchList = ad.listSearchUser(jooJoin);
+		System.out.println("jjhService AdminPageServiceImpl userSearchList.size()-> "+userSearchList.size());
+		return userSearchList;
+	}
+	
+	
 	
 
 

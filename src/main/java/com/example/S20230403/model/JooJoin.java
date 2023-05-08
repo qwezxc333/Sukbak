@@ -60,6 +60,8 @@ public class JooJoin {
 	private Date review_date;
 	private String review_content;
 	private String del_request;
+	private String del_reason;
+	private String del_date;
 	
 //	ReviewImg
 //	private int pay_id;
@@ -86,4 +88,6 @@ public class JooJoin {
 	private String pageNum;
 	private int start;
 	private int end;
+	private String s_user_id;
+	private String s_name;
 }
