@@ -83,7 +83,7 @@
 					</ul>
 					<ul>
 						<li class="subTitle">숙소 소개</li>
-						<li th:text="${accomBasicInfo.description}"></li>
+						<li class="intro" th:text="${accomBasicInfo.description}"></li>
 					</ul>
 					<ul>
 						<li class="subTitle">편의시설</li>
@@ -91,10 +91,10 @@
 						<li th:if="${accomBasicInfo.parking != ''}" 		th:text="${accomBasicInfo.parking}"></li>
 						<li th:if="${accomBasicInfo.cafe != ''}" 			th:text="${accomBasicInfo.cafe}"></li>
 						<li th:if="${accomBasicInfo.restaurant != ''}" 	th:text="${accomBasicInfo.restaurant}"></li>
-						<li th:if="${accomBasicInfo.store != ''}" 			th:text="${accomBasicInfo.store}"></li>
-						<li th:if="${accomBasicInfo.sauna != ''}" 			th:text="${accomBasicInfo.sauna}"></li>
+						<li th:if="${accomBasicInfo.store != ''}" 		th:text="${accomBasicInfo.store}"></li>
+						<li th:if="${accomBasicInfo.sauna != ''}" 		th:text="${accomBasicInfo.sauna}"></li>
 						<li th:if="${accomBasicInfo.laundry != ''}" 		th:text="${accomBasicInfo.laundry}"></li>
-						<li th:if="${accomBasicInfo.fitness != ''}" 			th:text="${accomBasicInfo.fitness }"></li>
+						<li th:if="${accomBasicInfo.fitness != ''}" 		th:text="${accomBasicInfo.fitness }"></li>
 					</ul>
 					<ul>
 						<li class="subTitle">주소</li>

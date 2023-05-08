@@ -44,15 +44,16 @@
 	}
 	
 	.nav-link{
-		color: rgb(0, 183, 247);
+		color: darkgray;
 	}
 	
-	.nav-link:hover{
-		color: rgb(0, 183, 247);
-		font-weight: bold;
+	.nav-link:hover, .nav-link:active, .nav-link:focus{
+		color: black;
 	}
 	
-	.nav-item .active {
+	.nav-item .active , 
+	.nav-tabs .nav-link.active {
+		color: rgb(0, 183, 247);
 		font-weight: bold;
 	}
 	
@@ -234,7 +235,7 @@
 		}
 		
 		.roomListContent h2 {
-			margin-bottom: 10px;
+			margin: 10px 0 30px;
 		}
 		
 		.roomListContent{
@@ -265,6 +266,12 @@
 	.accomBasicInfo .subTitle{
 		color: rgb(0, 183, 247);
 		font-weight: bold;
+		margin-bottom: 5px;
+	}
+	
+	.accomBasicInfo .intro {
+		width: 590px;
+		word-wrap: break-word;
 	}
 	
 	.accomReview {

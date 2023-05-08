@@ -109,7 +109,10 @@ public class AccomDetailServiceImpl implements AccomDetailService {
 	        //Review객체에 생성한 reviewImages(pay_id가 일치하는 이미지만 저장한 필드)에 setter로 저장
 	        review.setReviewImages(reviewImagesForCurrentReview);
 	    }
+		
+		System.out.println("reviewImages->"+reviewImages);
 		return accomReview;
+		
 	}
 	
 	//리뷰 총갯수, 평점

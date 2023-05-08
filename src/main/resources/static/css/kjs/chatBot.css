@@ -118,7 +118,7 @@
 	.penguinBot {
 		position: fixed;
 		bottom: 18px;
-				right: 2px;
+		right: 2px;
 		width: 130px;
 		height: 130px;
 		visibility: visible;
@@ -215,6 +215,10 @@
 	
 	.isInput:hover{
 		cursor: not-allowed;
+	}
+	
+	.btn-close:focus, .btn-close:active:focus {
+	    box-shadow: none;
 	}
 	
 	#chat::-webkit-scrollbar {
