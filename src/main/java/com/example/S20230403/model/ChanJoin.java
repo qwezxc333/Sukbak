@@ -67,5 +67,5 @@ public class ChanJoin {
    private String avg_rating;// 평균별점
    private int 	    kind;      // 인기순, 높은가격, 낮은가격순
    private String bed_type_r2;
-
+   private String zzim_status;
 }

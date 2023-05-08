@@ -1,4 +1,79 @@
-const checkIn = document.getElementById("checkIn");
+		// 찜버튼 로직
+		function cgAjaxInsertZzim(biz_id, user_id, auth){
+			alert("찜버튼 시작");
+			alert("biz_id -> "+biz_id);
+			alert("user_id-> "+user_id);
+			alert("auth-> "+auth);
+			// 로그인을 하지 않았거나, user권한인지 판단하기 위함.
+			if(user_id == null || user_id == "" || auth != "[USER]"){
+				alert("로그인이 필요한 서비스 입니다.")
+				return false;
+			}
+			// insert 하는 ajax
+			$.ajax({
+				url : "/cgAjaxInsertZzim",
+				dataType : "json",
+				data : { 
+					"biz_id" : biz_id,
+					"user_id" : user_id,
+					"auth" : auth
+				},
+				success : function(zzim){
+					if(zzim == 1){
+						alert("찜목록에 추가하였습니다.");
+					}else{
+						alert("찜목록 등록 실패");
+					}
+				}
+			})
+		}
+		
+		// 찜 삭제 로직
+		function cgAjaxDeleteZzim(biz_id, user_id, auth){
+			alert("찜삭제 시작");
+			alert("biz_id -> "+biz_id);
+			alert("user_id-> "+user_id);
+			alert("auth-> "+auth);
+			
+			// insert 하는 ajax
+			$.ajax({
+				url : "/cgAjaxDeletetZzim",
+				dataType : "json",
+				data : { 
+					"biz_id" : biz_id,
+					"user_id" : user_id,
+					"auth" : auth
+				},
+				success : function(zzim){
+					if(zzim == 1){
+						alert("찜목록에서 삭제되었습니다.");
+					}else{
+						alert("찜삭제  등록 실패");
+					}
+				}
+			})
+			
+		}
+		
+		
+		// 변수를 계속 변경해주어야 하므로 .val()을 사용하지 않는다.
+		// 객체 자체를 선택한거임.
+		const priceSlider = $("#priceSlider");
+		const maxPriceInput = $("#maxPrice");
+
+		// 이벤트 리스너 추가
+		// priceSlider가 작동될 때 input 이벤트가 발생되고, priceslider의 값이 maxPrice값에 들어가게 되는 것.
+		// input 이벤트는 키를 누르거나 복사/붙여넣기 등을 통해 입력한 내용이 변경될 때마다 발생한다. 
+		priceSlider.on("input", function() {
+		// 여기선 구체적인 벨류값을 가져와야하므로 .val()을 넣어야함. 
+		if($("#priceSlider").val() == 100){
+			maxPriceInput.val(priceSlider.val()+'만원 이상');
+		} else{
+			maxPriceInput.val(priceSlider.val()+'만원');
+		}
+		});
+		
+		const checkIn = document.getElementById("checkIn");
 		const checkOut = document.getElementById("checkOut");
 		let checkInDate = null;
 		let checkOutDate = null;
@@ -44,9 +119,25 @@ const checkIn = document.getElementById("checkIn");
 			  checkOut.value = '';
 			}
 		
-	function cgAjaxProductListsWithoutHotelByAddr(accom, kind, addr){
+	function cgAjaxProductListsWithoutHotelByAddr(accom, kind, addr, user_id, auth){
 		var checkIn = $("#checkIn").val();
 		var checkOut = $("#checkOut").val();
+		var maxPrice = ($("#priceSlider").val()*10000);
+		// 모든 가격이 다 나와야하니까 큰 값으로  치환한다. 
+		if(maxPrice == 1000000){
+			maxPrice = 9999999999;
+		}
+		alert("maxPrice-> "+maxPrice);
+		alert("user_id-> "+user_id);
+		alert("auth-> "+auth);
+		
+		// 체크아웃이 없을 때 유효성 검사
+		if(checkIn != '' && !checkOut){
+			alert("체크아웃 날짜를 선택해주세요");
+			return false;
+		}
+		
+		
 		var bedTypes = [];
 		$('input[name="bed_type"]:checked').each(function() {
 		    bedTypes.push($(this).val());
@@ -153,7 +244,8 @@ const checkIn = document.getElementById("checkIn");
 				    "wifi":wifi,
 				    "ac":ac,
 				    "tv":tv,
-				    "r_capacity":capacity
+				    "r_capacity":capacity,
+				    "min_price_r2":maxPrice
 				    },
 			dataType : 'json',
 			success : function(productSort) {
@@ -191,10 +283,29 @@ const checkIn = document.getElementById("checkIn");
 		            str += "</ul>";
 		            str += "</div>";
 		            str += "</a>";
+		            if (this.zzim_status == null) {
+		                str += "<div class='zzimButtons'>";
+		                str += "<div>";
+		                str += "<img id='zzimBtn' src='/img/dislike.png' onclick='cgAjaxInsertZzim(\"" + this.biz_id + "\", \"" + user_id + "\", \"" + auth + "\")'>";
+		                str += "</div>";
+		                str += "</div>";
+		            } else if (this.zzim_status == 'Y') {
+		                str += "<div class='zzimButtons'>";
+		                str += "<div>";
+		                str += "<img id='zzimBtn' src='/img/like.png' onclick='cgAjaxDeleteZzim(\"" + this.biz_id + "\", \"" + user_id + "\", \"" + auth + "\")'>";
+		                str += "</div>";
+		                str += "</div>";
+		            }
 		            str += "</div>";
 				})
 				alert('ajax str->' + str)
-				$(".cgProduct_lists_area").html(str);
+				if(productSort == ""){
+					$(".listEmpty").show();
+					$(".cgProduct_lists_area").html(str);
+				
+				}else{
+					$(".cgProduct_lists_area").html(str);	
+				}
 			}
 		});
 	}

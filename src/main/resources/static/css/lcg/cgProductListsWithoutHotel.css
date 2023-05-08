@@ -17,23 +17,19 @@
 }
 
 .cgSelectAccom_type {
-	/* border: 1pt red solid; */
 	margin: auto;
 	padding-top: 10px;
 }
 
 .cgSearchLocationFilter {
-	/* border: 1pt black solid; */
 	padding: 10pt;
 }
 
-.cgCalenderFilter {
-	/* border: 1pt black solid; */                                                                                                
+.cgCalenderFilter {                                                                                        
 	padding: 5pt;
 }
 
 .cgList_wrap {
-/* 	border: 1pt black solid; */
 	display: inline-block;
 	padding-left: 40pt;
 	float: right;
@@ -42,23 +38,23 @@
 }
 
 .cgTop_sort {
-	/* border: 1pt black solid; */
-	padding-bottom: 10px;
 	padding-top: 11px;
-	padding-bottom: 32px;
+	padding-bottom: 55px;
 	margin: auto;
 	text-align: center;
+	width: 608px;
+	height: 37.6px;
 }
 
 .cgProduct_list_area {
 	border: 1pt black solid;
 	margin-bottom: 2%;
+
 }
 
 .cgCheckbox-filterLeft {
 	display: flex;
 	flex-direction: column;
-	/*  justify-content: space-between; */
 	margin-bottom: 10px;
 	padding-right: 10px;
 	padding-left: 113px; float : left;
@@ -69,13 +65,12 @@
 .cgCheckbox-filterRight {
 	display: flex;
 	flex-direction: column;
-	/*  justify-content: space-between; */
 	margin-bottom: 10px;
 	text-align: left;
 }
 
 .cgConditionFilter {
-	
+	margin-top: 50px;
 }
 
 * {
@@ -248,4 +243,47 @@ a{
 }
 a:hover{
 	color: inherit;
+}
+/* 가격범위 css */
+#minPrice{
+	border: none;
+	padding-left: 30px;
+}
+#maxPrice{
+	text-align: right;
+	border: none;
+	padding-right: 10px;
+}
+#priceSlider{
+	width: 330px;
+}
+
+.zzimButtons img{
+	width: 30px; 
+	height: 30px;
+	display: inline-block;
+	float: right;
+	margin-top: -44px;
+	margin-right: 18px;
+
+}
+.zzimButtons img:hover{
+ 	cursor: pointer;
+}
+.cgProduct_list_contents{
+	display: inline-block;
+}
+
+.listEmpty{
+	display: none;
+	text-align: center;
+	color: #00B7F7;
+}
+.listEmpty img{
+	width: 300px;
+	height: 300px;
+	margin-bottom: 50px;
+}
+.emptyNotice{
+	font-weight: bold;
 }
