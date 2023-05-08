@@ -37,7 +37,7 @@ public class Accom {
 	private String r_name;
 	private String r_id;
 	private List<String> accom_types;
-	
+	private String zzim_status;
 	
 	//조회용
 	private String search;

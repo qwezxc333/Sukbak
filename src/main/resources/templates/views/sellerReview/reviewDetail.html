@@ -4,7 +4,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:replace="fragments/header :: headerFragment"></th:block>
 <head>
-  <link rel="stylesheet" href="/css/lcg/reviewDetail.css">
+<link rel="stylesheet" href="/css/lcg/reviewDetail.css">
 </head>
 <body>
 <div class = "container">
@@ -18,8 +18,8 @@
 			    </h2>
 			    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 			      <div class="accordion-body">
-						<a href="/biz/bizMain">업체관리</a><br>
-						<a href="/biz/rooms" >객실관리</a><br>
+						<a href="#" onclick="bizAccomCall()">업체관리</a><br>
+						<a href="#" onclick="bizRoomCall()">객실관리</a><br>
 				  </div>
 			    </div>
 			  </div>
@@ -118,12 +118,16 @@
 								      </div>
 								      <div class="modal-body">
 								      <!--  textarea태그에  유효성 검사를 하기 위해 form에도 인덱스를 넣어준다. th:id="'del_reason'+${status.index}" 아이디값에 줘야함.  -->
+								 		<!-- maxlength가 151인건 alert가 뜨면 글자 하나를 지워버려서 151에서 한글자 빠지면 150이 되기 때문 -->
+								 		<!-- th:onkeyup="'checkLength('+${status.index}+')'"  onkeyup은 키보드 입력될 때쓰는 이벤트트리거  -->
 								        <textarea name="del_reason" th:onkeyup="'checkLength('+${status.index}+')'" 
 								        		  class= "del_reason" th:id="'del_reason'+${status.index}" 
-								        		  rows="10" cols="100" style="resize: none;" maxlength="200"
+								        		  rows="10" cols="100" style="resize: none;" maxlength="151"
 								        		  placeholder="150자까지 작성 가능합니다."></textarea><p>
+								       <div class = "modalWordCount">
+								       	<span th:id = "'wordCount'+${status.index}">0/150</span>
+								       </div>
 								        <input type="hidden" name="pay_id" id= "pay_id" th:value="${myReview.pay_id}">
-								    <!--     <input type="text" name="\nickname" id= "pay_id" th:value="${myReview.nickname}"> -->
 								        <input type="hidden" name="biz_id" id= "biz_id" th:value="${myReview.biz_id}">
 								        <input type="hidden" name="del_request" id= "del_request" th:value="${myReview.del_request}">
 								      </div>

@@ -1,16 +1,11 @@
 .cgContainer {
-	/* border: 1pt black solid; */
 	width: 90%;
 	margin: 0 auto; /* 좌우 마진을 자동으로 조절하여 수평 중앙에 위치시킴 */
 
 }
 
 .cgFilter_wrap {
-	/* border: 1pt gray solid; */
-	/* position: fixed; */
 	top: 50%;
-	/* float: left; */
-	/* transform: translateY(-50%); */
 	width: 400px;
 	height: 800px;
 	display: inline-block; /* 얘가 있어야 자기 크기만큼만 공간을 차지함 */
@@ -20,23 +15,19 @@
 }
 
 .cgSelectAccom_type {
-	/* border: 1pt red solid; */
 	margin: auto;
 	padding-top: 10px;
 }
 
 .cgSearchLocationFilter {
-	/* border: 1pt black solid; */
 	padding: 10pt;
 }
 
-.cgCalenderFilter {
-	/* border: 1pt black solid; */                                                                                                
+.cgCalenderFilter {                                                                                           
 	padding: 5pt;
 }
 
 .cgList_wrap {
-/* 	border: 1pt black solid; */
 	float: right;
 	display: inline-block;
 	padding-left: 40pt;
@@ -45,12 +36,12 @@
 }
 
 .cgTop_sort {
-	/* border: 1pt black solid; */
-	padding-bottom: 10px;
 	padding-top: 11px;
-	padding-bottom: 32px;
+	padding-bottom: 55px;
 	margin: auto;
 	text-align: center;
+	width: 608px;
+	height: 37.6px;
 }
 
 .cgProduct_list_area {
@@ -61,7 +52,6 @@
 .cgCheckbox-filterLeft {
 	display: flex;
 	flex-direction: column;
-	/*  justify-content: space-between; */
 	margin-bottom: 10px;
 	padding-right: 10px;
 	padding-left: 113px; float : left;
@@ -72,13 +62,12 @@
 .cgCheckbox-filterRight {
 	display: flex;
 	flex-direction: column;
-	/*  justify-content: space-between; */
 	margin-bottom: 10px;
 	text-align: left;
 }
 
 .cgConditionFilter {
-	
+	margin-top: 50px;
 }
 
 * {
@@ -250,4 +239,48 @@ a{
 }
 a:hover{
 	color: inherit;
+}
+
+/* 가격범위 css */
+#minPrice{
+	border: none;
+	padding-left: 30px;
+}
+#maxPrice{
+	text-align: right;
+	border: none;
+	padding-right: 10px;
+}
+#priceSlider{
+	width: 330px;
+}
+
+.zzimButtons img{
+	width: 30px; 
+	height: 30px;
+	display: inline-block;
+	float: right;
+	margin-top: -44px;
+	margin-right: 18px;
+
+}
+.zzimButtons img:hover{
+ 	cursor: pointer;
+}
+.cgProduct_list_contents{
+	display: inline-block;
+}
+
+.listEmpty{
+	display: none;
+	text-align: center;
+	color: #00B7F7;
+}
+.listEmpty img{
+	width: 300px;
+	height: 300px;
+	margin-bottom: 50px;
+}
+.emptyNotice{
+	font-weight: bold;
 }

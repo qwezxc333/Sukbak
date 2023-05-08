@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.S20230403.model.Accom;
 import com.example.S20230403.model.Room_Img;
+import com.example.S20230403.model.Zzim;
 import com.example.S20230403.model.ChanJoin;
 
 
@@ -23,6 +24,9 @@ public interface ProductsFilterDao {
 	// ajax에서 사용
 	
 	List<ChanJoin> cgGetAjaxProductListsByAccomtypeAndAddr(ChanJoin chanJoin);
+
+	// 찜목록 가져오기
+	List<Zzim> getZzimLists(String user_id);
 	
 		
 

@@ -149,5 +149,50 @@
 		WHERE 	a.biz_id = r.biz_id
 		AND 	a.biz_id = #{biz_id}
 	</select> 
+	
+	<!-- user_id로 찜 목록 가져오는 로직   -->
+	<select id="getMyAccomZzimListsByUser_id" parameterType="java.lang.String" resultType="Accom">
+		SELECT a.biz_id, a.biz_name, a.addr, r.min_price_r2 , room_resv_pay_re.avg_rating,z.zzim_date,z.zzim_status
+		FROM    accom a
+		      ,
+		        zzim  z
+		      ,
+		        (
+		            SELECT room1.biz_id_r1 biz_id_r2, 
+		                   room1.min_price_r1 min_price_r2, 
+		                   room2.bed_type bed_type_r2, 
+		                   room2.r_id r_id_r2, 
+		                   room2.wifi wifi, 
+		                   room2.tv tv, 
+		                   room2.ac ac, 
+		                   room2.bath bath, 
+		                   room2.r_capacity r_capacity 
+		            FROM room room2,
+		                    ( 
+		                    SELECT r.biz_id biz_id_r1, min(r.r_price) min_price_r1
+		                    FROM room r
+		                    GROUP BY r.biz_id
+		                    )room1
+		            WHERE room1.biz_id_r1 = room2.biz_id
+		        ) r
+		      , (
+		            SELECT r.biz_id  biz_id , nvl(round(avg(rating),0),0) avg_rating
+		            FROM room r, reservation resv, payment p, review re
+		            WHERE r.biz_id = resv.biz_id(+)
+		            AND   r.r_id = resv.r_id(+)
+		            AND   resv.biz_id = p.biz_id(+)
+		            AND   resv.r_id = p.r_id(+)
+		            AND   resv.user_id = p.user_id(+)
+		            AND   p.pay_id = re.pay_id(+)
+		            GROUP BY r.biz_id
+		        ) room_resv_pay_re
+		where   a.biz_id =  r.biz_id_r2
+		AND   a.biz_id = z.biz_id
+		AND   a.accom_avail = 210
+		and   z.user_id = #{user_id}
+		AND   r.biz_id_r2 = room_resv_pay_re.biz_id
+		GROUP BY a.biz_id, a.biz_name, a.addr,  r.min_price_r2 , room_resv_pay_re.avg_rating,z.zzim_date,z.zzim_status
+		ORDER BY  z.zzim_date DESC
+	</select>
 
 </mapper>

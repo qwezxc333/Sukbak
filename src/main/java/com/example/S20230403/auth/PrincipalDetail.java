@@ -42,11 +42,20 @@ public class PrincipalDetail implements UserDetails, OAuth2User {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        String authLevel = user.getAuth_level();
-        if (authLevel == null) {
-            authLevel = "TEMPORARY";
+        if (user.getAuth_level() != null) {
+            switch (user.getAuth_level()) {
+                case "USER":
+                    authorities.add(new SimpleGrantedAuthority("USER"));
+                    break;
+                case "SELLER":
+                    authorities.add(new SimpleGrantedAuthority("SELLER"));
+                    break;
+                default:
+                    authorities.add(new SimpleGrantedAuthority("TEMPORARY"));
+            }
+        } else {
+            authorities.add(new SimpleGrantedAuthority("TEMPORARY"));
         }
-        authorities.add(new SimpleGrantedAuthority(authLevel));
         return authorities;
     }
 

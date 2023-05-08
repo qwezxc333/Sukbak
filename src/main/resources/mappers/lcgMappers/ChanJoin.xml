@@ -67,6 +67,7 @@
 	    		#{bed_type}
 	    	</foreach>
 	    </if>
+	    AND   r.min_price_r2 BETWEEN  0 and #{min_price_r2}
 		GROUP BY a.biz_id, a.biz_name, a.addr, r.min_price_r2 , room_resv_pay_re.avg_rating 
 		ORDER BY  
 		<choose>
