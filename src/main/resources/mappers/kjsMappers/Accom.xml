@@ -3,6 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.S20230403.AccomMapper">
 
+	<!-- 메인에서 모든 숙소에 대한 리스트목록 임시구현(삭제예정) -->
+	<select id="jsAccomList" resultType="Accom">
+		SELECT * FROM accom
+	</select>
+	
 	<!-- 메인 숙소이름,주소 출력-->
 	<select id="jsAccomBasicInfo" parameterType="java.lang.String" resultType="Accom">
 		SELECT *

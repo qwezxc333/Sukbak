@@ -3,14 +3,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.S20230403.Review_ImgMapper">
 
-	<!-- 모든객실의 사진들 다 가져와서 메인에서 롤링으로 뿌려줌 -->
+	<!-- 모든객실의 사진들 다 가져와서 메인에서 롤링으로 뿌려줄거 -->
 	<select id="jsRoomImgList" parameterType="java.lang.String" resultType="Room_Img">
 		SELECT *
 		FROM room_img
 		WHERE biz_id = #{biz_id}
 	</select>
 	
-	<!-- 각 리뷰의 pay_id와 그에 맞는 리뷰사진 pay_id를 IN 조건 -->
+	<!-- 각 리뷰의 pay_id와 그에 맞는 리뷰사진 pay_id를 IN으로 포함시켜서 가져옴 -->
+	<!-- 여기서 한 사업장에 한번도 결제가 없어서 pay_id가 없다면 오류나서 if문 걸어줌 -->
 	<select id="jsAccomReviewImgList" parameterType="List" resultType="Review_Img">
 		SELECT re.pay_id, ri.review_img
 		FROM review re, review_img ri

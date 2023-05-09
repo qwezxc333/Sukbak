@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.example.S20230403.model.Accom;
 import com.example.S20230403.model.Comm;
 import com.example.S20230403.model.Room;
-import com.example.S20230403.model.Room_Img;
 import com.example.S20230403.model.Users;
 
 import lombok.AllArgsConstructor;
@@ -168,149 +167,11 @@ public class BizUserDao implements SukbakDao{
 			System.out.println("비즈다오01 roomIdExtract room -> "+ room);
 			String biz_id = room.getBiz_id();
 			System.out.println("비즈다오01 roomIdExtract biz_id -> "+ biz_id);
-			Integer maxR_id = sqlSession.selectOne("roomIdExtract", biz_id); 
-			System.out.println("maxR_id -> "+maxR_id);
-			if (maxR_id == null) {
-				maxR_id =0;
-				System.out.println("maxR_id -> "+maxR_id);
-			}
+			int maxR_id = sqlSession.selectOne("roomIdExtract", biz_id); 
 			return maxR_id;
 		} catch (Exception e) {
 			throw e;
 		}
-		
-	}
-
-	@Override
-	public int getImgNum(Room room) {
-		try {
-			System.out.println("비즈다오01 getImgNum room -> "+ room);
-			Integer imgNum =  sqlSession.selectOne("getImgNum", room);
-			if (imgNum == null) {
-				imgNum = 0;		
-			}
-			System.out.println("비즈다오01 getImgNum imgNum -> "+imgNum);
-			return imgNum;
-		} catch (Exception e) {
-			throw e;
-		}
-	}
-
-	@Override
-	public void roomImgInsert(Room room) {
-		try {
-			System.out.println("비즈다오01 roomImgInsert room -> "+ room);
-			sqlSession.insert("roomImgInsert", room);
-		} catch (Exception e) {
-			throw e;
-		}
-		
-	}
-
-	@Override
-	public List<Room> selectRoomImgList(Room_Img ri) {
-		try {
-			System.out.println("비즈다오01 selectRoomImgList ri -> "+ ri);
-			return sqlSession.selectList("selectRoomImgList", ri);
-		} catch (Exception e) {
-			throw e;
-		}		
-	}
-
-	@Override
-	public Room roomSelect(Room room) {
-		try {
-			System.out.println("비즈다오01 roomSelect room -> "+ room);
-			return sqlSession.selectOne("roomSelect", room);
-		} catch (Exception e) {
-			throw e;
-		}	
-	}
-
-	@Override
-	public void roomImgDelete(Room room) {
-		try {
-			System.out.println("비즈다오01 roomImgDelete room -> "+ room);
-			sqlSession.delete("roomImgDelete", room);
-		} catch (Exception e) {
-			throw e;
-		}	
-		
-	}
-
-	@Override
-	public void roomUpdate(Room room) {
-		try {
-			System.out.println("비즈다오01 roomUpdate room -> "+ room);
-			sqlSession.update("roomUpdate", room);
-		} catch (Exception e) {
-			throw e;
-		}	
-		
-		
-	}
-
-	@Override
-	public void roomStatus(Room room, String string) {
-		try {
-			System.out.println("비즈다오01 roomStatus room -> "+ room);
-			System.out.println("비즈다오01 roomStatus string -> "+ string);
-			switch (string) {
-				case "hidden" :
-				System.out.println("비즈다오01 roomStatus roomHidden 시작");
-				sqlSession.update("roomHidden", room);
-				break;
-				case "open" :
-				System.out.println("비즈다오01 roomStatus roomOpen 시작");
-				sqlSession.update("roomOpen", room);
-				break;
-				case "delete" :
-				System.out.println("비즈다오01 roomStatus roomDelete 시작");
-				sqlSession.update("roomDelete", room);
-				break;
-			}		
-		} catch (Exception e) {
-			throw e;
-		}	
-		
-	}
-
-	@Override
-	public boolean getBizId(String biz_id) {
-		try {
-			System.out.println("비즈다오01 getBizId biz_id -> "+ biz_id);
-			int result = sqlSession.selectOne("getBizId", biz_id);
-			System.out.println("비즈다오01 getBizId result ->"+result);
-			return !(result > 0);
-		} catch (Exception e) {
-			throw e;
-		}	
-	}
-
-	@Override
-	public void updateRoomCount(String biz_id, String string) {
-		try {
-			System.out.println("비즈다오01 updateRoomCount biz_id -> "+ biz_id);
-			System.out.println("비즈다오01 updateRoomCount string -> "+ string);
-			switch (string) {
-				case "update" :
-				System.out.println("비즈다오01 roomStatus roomCountUpdate 시작");
-				sqlSession.update("roomCountUpdate", biz_id);
-				break;
-				
-				case "add" :
-				System.out.println("비즈다오01 roomStatus roomCountAdd 시작");
-				sqlSession.update("roomCountAdd", biz_id);
-				break;
-				
-				case "minus" :
-				System.out.println("비즈다오01 roomStatus roomCountMinus 시작");
-				sqlSession.update("roomCountMinus", biz_id);
-				break;
-			}		
-		} catch (Exception e) {
-			throw e;
-		}	
 		
 	}
 

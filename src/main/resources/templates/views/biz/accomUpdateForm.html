@@ -4,27 +4,13 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:replace="fragments/header :: headerFragment"></th:block>
 <script type="text/javascript">
-function goBack() {
-	var a = confirm("작성한 내용은 저장되지 않습니다. 사업자 메인 페이지로 이동합니다.")
-	if (a) window.location.href = "/biz/bizMain";
-	else return false;
+	function goBizMain() {
+		window.location.href = "/biz/bizMain"
 	}
-
+	
 	function actAlert() {
 		alert("수정이 완료되었습니다")
 	}
-	
-	function accomAddrGetForm() {
-		window.open("/biz/accomAddrGetForm", "_blank", "menubar=no, toolbar=no");
-	}
-	
-	window.addEventListener('message', function(event) {
-		  // 자식뷰에서 전달한 데이터를 가져와 화면에 출력
-		  document.getElementById('addr').value = event.data.addr;
-		  document.getElementById('latitude').value = event.data.latitude;
-		  document.getElementById('longitude').value = event.data.longitude;
-		});
-	
 </script>
 <body>
 	<th:block layout:fragment="content">
@@ -61,8 +47,8 @@ function goBack() {
 				</select>
 			  </div>
 			  <div class="input-group mb-3">
-				  <input type="text" readonly class="form-control" placeholder="주소 검색" aria-label="Recipient's username" aria-describedby="button-addon2" name="addr" id="addr" th:value="${accom.addr}">
-				  <button class="btn btn-outline-secondary" type="button"  onclick="accomAddrGetForm()" id="findAddr">주소 찾기</button>
+				  <input type="text" readonly class="form-control" placeholder="주소 검색" aria-label="Recipient's username" aria-describedby="button-addon2" name="addr" th:value="${accom.addr}">
+				  <button class="btn btn-outline-secondary" type="button" id="findAddr">주소 찾기</button>
 			  </div>
 			  <div class="mb-3 row">
 			    <label for="tel" class="col-sm-2 col-form-label">대표 번호</label>
@@ -94,13 +80,14 @@ function goBack() {
 				  <label for="exampleFormControlTextarea1" class="form-label"><h5>업체 상세 소개</h5></label>
 				  <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" name="description" placeholder="ex) 최대 주차수, 기타 체육시설(테니스장), 업체 역사등을 작성해주시면 됩니다" th:value="${accom.description}"></textarea>
 				</div><br>
-				<input type="hidden" id="accom_avail" name="accom_avail" value="${accom.accom_avail}">
-				<input type="hidden" id="latitude" 	name="latitude" value="0">
-				<input type="hidden" id="longitude" name="longitude" value="0">
+				<input type="hidden" name="accom_avail" value="210">
+				<input type="hidden" name="addr" value="none">
+				<input type="hidden" name="latitude" value="5">
+				<input type="hidden" name="longitude" value="5">
 				<button type="submit" value="완료" onclick="actAlert()">완료</button>
 				<button type="reset" value="취소">취소</button>
 				
-				<input type="button" onclick="return goBack()" value="메인으로">
+				<button type="button" onclick="goBizMain()">마이페이지로</button>
 		</form>
 	</th:block>
 </body>

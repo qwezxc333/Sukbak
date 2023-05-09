@@ -10,6 +10,8 @@ import com.example.S20230403.model.Room_Img;
 
 public interface AccomDetailDao {
 
+	List<Accom> fetchAccomList();
+
 	List<JinJoin> fetchAccomDetailRoomList(String biz_id, String checkIn, String checkOut);
 	
 	Accom fetchAccomBasicInfo(String biz_id);

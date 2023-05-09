@@ -4,7 +4,7 @@
 
 <mapper namespace="com.example.S20230403_01.AccomMapper">
 
-	<insert id="accomInsert" parameterType="Accom">
+	<insert id="accomInsert" parameterType="accom">
     INSERT INTO accom (
         biz_id,
         user_id,
@@ -48,7 +48,7 @@
     )
     
 	</insert>
-	<select id="accomList" parameterType="string" resultType="Accom">
+	<select id="accomList" parameterType="string" resultType="accom">
 		select *
 		from accom
 		where user_id = #{id} and
@@ -56,14 +56,14 @@
 	</select> 
 	<select id=""></select>
 	
-	<select id="accomSelect" parameterType="string" resultType="Accom">
+	<select id="accomSelect" parameterType="string" resultType="accom">
 		select *
 		from accom
 		where biz_id = #{biz_id} and
 			accom_avail = 210
 	</select>
 	
-	<update id="accomUpdate" parameterType="Accom">
+	<update id="accomUpdate" parameterType="accom">
 		update accom
 		set accom_type	 = #{accom_type},
 			biz_name 	 = #{biz_name},
@@ -85,42 +85,6 @@
 	<update id="accomDelete" parameterType="String">
 		update accom
 		set accom_avail = 230
-		where biz_id = #{biz_id}
-	</update>
-	
-	<select id="getBizId" parameterType="String" resultType="Int">
-		select count(*)
-		from accom
-		where biz_id = #{biz_id}
-	</select>
-	
-	<update id="roomCountUpdate" parameterType="java.lang.String">		        	        
-		update accom
-		set room_count = (
-		                  select count(*)
-		                  from room
-		                  where biz_id = #{biz_id}
-		                  )
-		where biz_id = #{biz_id}
-	</update>
-	
-	<update id="roomCountAdd" parameterType="java.lang.String">		        		        
-		update accom
-		set room_count = (
-		                  select count(*) +1
-		                  from room
-		                  where biz_id = #{biz_id}
-		                  )
-		where biz_id = #{biz_id}
-	</update>
-	
-	<update id="roomCountMinus" parameterType="java.lang.String">		                
-		update accom
-		set room_count = (
-		                  select count(*) -1
-		                  from room
-		                  where biz_id = #{biz_id}
-		                  )
 		where biz_id = #{biz_id}
 	</update>
 	

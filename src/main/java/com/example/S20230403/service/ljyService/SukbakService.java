@@ -5,7 +5,6 @@ import java.util.List;
 import com.example.S20230403.model.Accom;
 import com.example.S20230403.model.Comm;
 import com.example.S20230403.model.Room;
-import com.example.S20230403.model.Room_Img;
 import com.example.S20230403.model.Users;
 
 public interface SukbakService {
@@ -32,26 +31,8 @@ public interface SukbakService {
 
 	List<Room> 		roomList(String user_id);
 
-	int 			roomInsert(OwnerRoom ownerRoom);
+	void 			roomInsert(Room room);
 
-	int 			getImgNum(Room room);
 
-	void 			roomImgInsert(Room room);
-
-	List<Room> 		selectRoomImgList(Room_Img ri);
-
-	Room 			roomSelect(Room room);
-
-	void 			roomImgDelete(Room room);
-
-	void 			roomUpdate(OwnerRoom ownerRoom);
-
-	void 			roomStatus(Room room, String string);
-
-	boolean 		getBizId(String biz_id);
-
-	void 			updateRoomCount(String biz_id, String string);
-  
-  
-}    
-           
+} 
+         

@@ -64,8 +64,5 @@
 
 		<typeAlias alias="Users"
 			type="com.example.S20230403.model.Users" />
-			
-		<typeAlias alias="Zzim"
-			type="com.example.S20230403.model.Zzim" />
 	</typeAliases>
 </configuration>
