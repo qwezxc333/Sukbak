@@ -3,6 +3,7 @@ package com.example.S20230403.service.jjhService;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.S20230403.dao.jjhDao.AdminPageDao;
 import com.example.S20230403.model.JooJoin;
@@ -99,18 +100,36 @@ public class AdminPageServiceImpl implements AdminPageService {
 	@Override
 	public int delQnA(int qna_id) {
 		System.out.println("jjhService AdminPageServiceImpl delQnA start");
-		return ad.delQnA(qna_id);
+		int resultdelQnARe = ad.delQnARe(qna_id);
+		int resultdelQnA = 0;
+		System.out.println("서비스 resultdelQnARe-> "+resultdelQnARe);
+		
+		if(resultdelQnARe != 0) {
+			resultdelQnARe = ad.delQnARe(qna_id);
+			resultdelQnA = ad.delQnA(qna_id);
+			System.out.println("서비스 resultdelQnARe-> "+resultdelQnARe);
+			System.out.println("서비스 resultdelQnA-> "+resultdelQnA);
+			
+		}else if(resultdelQnARe == 0){
+			resultdelQnA = ad.delQnA(qna_id);
+			System.out.println("서비스 resultdelQnA-> "+resultdelQnA);
+		}else {
+			System.out.println("서비스 delQnA 에러.");
+		}
+		
+		return resultdelQnA;
 	}
 	
 //	Review 삭제
 	@Override
+	@Transactional
 	public int delReviewImg(int pay_id) {
 		System.out.println("jjhService AdminPageServiceImpl delReviewImg start");
 		int resultImg = ad.delReviewImg(pay_id);
-		System.out.println("서비스 delReviewImg result 1나와야됨 -=> "+resultImg);
+		System.out.println("서비스 delReviewImg result -> "+resultImg);
 		if(resultImg != 0) {
 			int resultRe = ad.delReview(pay_id);
-			System.out.println("서비스 delReviewRe result 1나와야됨 -=> "+ resultRe);
+			System.out.println("서비스 delReviewRe result -> "+ resultRe);
 		}else {
 			System.out.println("리뷰 이미지가 없어요 DB를 확인해보세요. 혹은 다른 문제");
 		}

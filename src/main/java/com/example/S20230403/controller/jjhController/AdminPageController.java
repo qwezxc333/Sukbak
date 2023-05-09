@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.S20230403.auth.PrincipalDetail;
@@ -125,9 +126,9 @@ public class AdminPageController {
 		jooJoin.setStart(page.getStart()); // 시작시 1
 		jooJoin.setEnd(page.getEnd());     // 시작시 10
 		
-		List<JooJoin> qnalist= as.qnaRelist(jooJoin);
+		List<JooJoin> qnaRelist= as.qnaRelist(jooJoin);
 		model.addAttribute("qnaTotal", qnaTotal);
-		model.addAttribute("qnalist",qnalist);
+		model.addAttribute("qnaRelist",qnaRelist);
 		model.addAttribute("page", page);
 		return "views/admin/adminPage-qnaRelist";
 	}
@@ -172,11 +173,14 @@ public class AdminPageController {
 		
 		jooJoin.setStart(page.getStart()); // 시작시 1
 		jooJoin.setEnd(page.getEnd());     // 시작시 10
+//		System.out.println("pay_id를 가져오는 지 확인: "+jooJoin.getPay_id());
 		
-		List<JooJoin> reviewlist= as.reviewDellist(jooJoin);
+		List<JooJoin> reviewDellist = as.reviewDellist(jooJoin);
 		model.addAttribute("reviewTotal", reviewTotal);
-		model.addAttribute("reviewlist",reviewlist);
+		model.addAttribute("reviewDellist",reviewDellist);
 		model.addAttribute("page", page);
+//		model.addAttribute("jooJoin", jooJoin);
+//		System.out.println("pay_id를 가져오는 지 확인22: "+jooJoin.getPay_id());
 		return "views/admin/adminPage-reviewDellist";
 	}
 	
@@ -246,6 +250,19 @@ public class AdminPageController {
 		
 		System.out.println("jjhController AdminPageController delReviewImg start");
 		int result = as.delReviewImg(pay_id);
+		return "forward:/admin/adminPage-reviewDellist";
+	}
+	
+//	Review 삭제
+	@RequestMapping(value = "/admin/delReImg")
+	public String delReImg(@AuthenticationPrincipal PrincipalDetail userDetail, 
+			@RequestParam("pay_id") int pay_id, Model model) {
+		
+		String user_id = userDetail.getUsername();
+		model.addAttribute("user_id",user_id);
+		
+		System.out.println("jjhController AdminPageController delReviewImg start");
+		int result = as.delReviewImg(pay_id);
 		return "forward:/admin/adminPage-reviewlist";
 	}
 
@@ -259,7 +276,7 @@ public class AdminPageController {
 		  
 		System.out.println("jjhController AdminPageController rejectDelReview start");
 		int result = as.rejectDelReview(jooJoin);
-		return "forward:/admin/adminPage-reviewlist";
+		return "forward:/admin/adminPage-reviewDellist";
 	}
 	
 //	QnA 자세히 보기 for 답변 달기
@@ -278,7 +295,7 @@ public class AdminPageController {
 		model.addAttribute("user_id",jooJoin.getUser_id());
 		model.addAttribute("qna_title",jooJoin.getQna_title());
 		model.addAttribute("qna_content",jooJoin.getQna_content());
-		model.addAttribute("write_time",jooJoin.getWrite_time());
+		model.addAttribute("qna_date",jooJoin.getQna_date());
 		return "views/admin/adminPage-detailQna";
 	}
 	
@@ -295,7 +312,7 @@ public class AdminPageController {
 		
 		if(insertResult > 0) return "forward:/admin/adminPage-qnalist";
 		else {
-			return "redirect:/admin/adminPage-qnalist";
+			return "redirect:/admin/adminPage-qnaRelist";
 		}
 	}
 	
@@ -303,11 +320,12 @@ public class AdminPageController {
 	@GetMapping("/admin/adminPage-userSearchList")
 	  public String userSearchList(@AuthenticationPrincipal PrincipalDetail userDetail, 
 			  						Model model, String currentPage, JooJoin jooJoin) {
-		System.out.println("searchlist keyword 확인용 드롭박스나와야됨 -> "+jooJoin.getSearch());
+		System.out.println("searchlist search -> "+jooJoin.getSearch());
 		String search = jooJoin.getSearch();
 		String keyword = jooJoin.getKeyword();
-		System.out.println("searchlist keyword 확인용 a나와야됨 -> "+jooJoin.getKeyword());
-		System.out.println("searchlist 커런트페이지 확인용 2나와야됨 -> "+currentPage);
+		System.out.println("searchlist keyword -> "+jooJoin.getKeyword());
+		System.out.println("searchlist currentPage 확인 -> "+currentPage);
+		
 		String user_id = userDetail.getUsername();
 	    model.addAttribute("user_id",user_id);
 		
@@ -328,9 +346,6 @@ public class AdminPageController {
 	     model.addAttribute("page", page);
 	     model.addAttribute("search", search);
 	     model.addAttribute("keyword", keyword);
-	     System.out.println("userTotal: "+ userTotal);
-	     System.out.println("userSearchList: "+ listSearchUser);
-	     System.out.println("page: "+ page);
 	     
 	     return "views/admin/adminPage-userSearchList";
 	  }

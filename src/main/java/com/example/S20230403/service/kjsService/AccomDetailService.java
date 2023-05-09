@@ -9,6 +9,8 @@ import com.example.S20230403.model.Room_Img;
 
 public interface AccomDetailService {
 
+	List<Accom> getAccomList();
+
 	List<JinJoin> getAccomDetailRoomList(String biz_id, String checkIn, String checkOut);
 
 	Accom getAccomBasicInfo(String biz_id);
@@ -18,5 +20,8 @@ public interface AccomDetailService {
 	List<Review> getAccomReviewWithImagesList(String biz_id);
 
 	Review getCalculateReview(String biz_id);
+
+
+
 
 }

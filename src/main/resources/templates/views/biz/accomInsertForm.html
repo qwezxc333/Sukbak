@@ -18,33 +18,6 @@
 		  document.getElementById('latitude').value = event.data.latitude;
 		  document.getElementById('longitude').value = event.data.longitude;
 		});
-	
-	function goBack() {
-		var a = confirm("작성한 내용은 저장되지 않습니다. 사업자 메인 페이지로 이동합니다.")
-		if (a) window.location.href = "/biz/bizMain";
-		else return false;
-	}
-	
-	function biz_idChk() {
-		var biz_id = document.getElementById("biz_id").value
-		if (biz_id =="") {
-			alert("사업자등록번호를 입력해 주세요")
-			return false
-		} else {
-			fetch('/biz/checkBizId?biz_id='+biz_id)
-			.then(response => response.text())
-			.then(result => {
-				if(result == "duplicate") {
-					alert("이미 등록된 사업자등록번호입니다/")
-					document.getElementById("biz_id").value="";
-				} else {
-					alert("사용 가능한 사업자등록번호입니다.")
-				}
-			})
-			.catch(error => console.log('error', error));
-		}
-	}
-	
 </script>
 <body>
 	<th:block layout:fragment="content">
@@ -59,7 +32,7 @@
 				<div class="input-group mb-3">
 				<label for="biz_id" class="col-sm-2 col-form-label">사업자등록번호</label>
 				  <input type="text" class="form-control" placeholder="사업자등록번호('-'포함)입력" aria-label="Recipient's username" aria-describedby="button-addon2" name="biz_id" id="biz_id" th:value="${biz_id}">
-				  <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="return biz_idChk()">중복확인</button>
+				  <button class="btn btn-outline-secondary" type="button" id="button-addon2">확인</button>
 				</div>
 			  <div class="mb-3 row">
 			    <label for="biz_name" class="col-sm-2 col-form-label">업체명</label>
@@ -119,7 +92,7 @@
 				<input type="hidden" id="latitude" name="latitude" value="1">
 				<input type="hidden" id="longitude" name="longitude" value="1">
 				<button type="submit" value="완료" onclick="actAlert()">완료</button>
-				<input type="button" onclick="return goBack()" value="메인으로">
+				<button type="reset" value="취소">취소</button>
 		</form>
 	</th:block>
 </body>

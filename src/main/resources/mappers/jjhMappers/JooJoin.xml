@@ -13,7 +13,16 @@
 	<select id="jhQnaTotal" resultType="int">
 		select Count(*) from qna
 	</select>
+	<select id="jhQnaReTotal" resultType="int">
+		select Count(*)
+		from qna q, qna_re r
+		where q.qna_id = r.qna_id(+)
+		and r.reply is null
+	</select>
 	<select id="jhReviewTotal" resultType="int">
+		select Count(*) from review
+	</select>
+	<select id="jhReviewDelTotal" resultType="int">
 		select Count(*) from review where del_request = 'Y'
 	</select>
 	
@@ -35,19 +44,41 @@
 		where rn BETWEEN #{start} and #{end}
 	</select>
 	
-	<!-- admin page qna list 불러오기  -->
+	<!-- admin page qna list 전체 불러오기  -->
 	<select id="jhQnalist" resultType="JooJoin" parameterType="JooJoin">
 		select *
 		from(
-		    select rownum rn, q.qna_id, q.user_id, q.write_time, 
+		    select rownum rn, q.qna_id, q.user_id, q.qna_date, 
 			       q.qna_type, q.qna_title, q.qna_content, r.reply 
 			from qna q, qna_re r
 			WHERE q.qna_id = r.qna_id) a
 		where rn BETWEEN #{start} and #{end}
 	</select>
 	
+	<!-- admin page 답변 없는 qna list 불러오기  -->
+	<select id="jhQnaRelist" resultType="JooJoin" parameterType="JooJoin">
+		select *
+		from(
+		    select rownum rn, q.qna_id, q.user_id, q.qna_type, q.qna_title, q.qna_content, q.qna_date
+			from qna q, qna_re r
+			where q.qna_id = r.qna_id(+)
+			and r.reply is null) a
+		where rn BETWEEN #{start} and #{end}
+	</select>
+	
 	<!-- admin page review list 불러오기  -->
 	<select id="jhReviewlist" resultType="JooJoin" parameterType="JooJoin">
+		select *
+		from(
+		    select rownum rn , a.*
+		    from(select r.*, p.user_id, p.biz_id
+		         from review r, payment p
+		         where r.pay_id = p.pay_id)a)
+		where rn BETWEEN #{start} and #{end}
+	</select>
+	
+	<!-- admin page review 삭제 요청 들어온 list 만 불러오기  -->
+	<select id="jhReviewDellist" resultType="JooJoin" parameterType="JooJoin">
 		select *
 		from(
 		    select rownum rn , a.*
@@ -85,7 +116,7 @@
 	
 	<!-- QnA Reply 저장하기 -->
 	<insert id="jhInsertQnaRe" parameterType="JooJoin">
-		Insert into qna_re values (#{qna_id}, #{user_id}, #{reply})
+		Insert into qna_re values (#{qna_id}, #{user_id}, #{reply}, sysdate)
 	</insert>
 	
 	<!-- Review_img 테이블 한 row 삭제 -->
@@ -102,18 +133,6 @@
 	<update id="adminRejectDelReview" parameterType="JooJoin">
 		UPDATE review SET del_request = 'N' WHERE pay_id = #{pay_id}
 	</update>
-	
-	
-	<!-- 진짜 사용 -->
-	<select id="ysUserlist" resultType="Users" parameterType="Users">
-			select
-			*
-			from(
-			select rownum rn , a.*
-			from(select * from Users order by name)a)
-			where rn BETWEEN #{start} and #{end}
-	</select>
-	
 	
 	<!-- QnA 테이블 전체 조회 -->
 	<select id="adminQnAListAll" resultType="JooJoin">
