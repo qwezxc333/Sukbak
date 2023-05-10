@@ -10,7 +10,7 @@
 		where user_id = #{user_id}
 	</select>
 	
-	<select id="getNowLoginUser" parameterType="String" resultType="users">
+	<select id="getNowLoginUser" parameterType="String" resultType="Users">
 		select *
 		from users
 		where user_id = #{user_id}
@@ -22,7 +22,7 @@
 		where user_id = #{user_id}
 	</update>
 	
-	<update id="userUpdate" parameterType="users">
+	<update id="userUpdate" parameterType="Users">
 		update users
 		set name = #{name},
 			nickname = #{nickname},
