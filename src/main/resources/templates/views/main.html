@@ -35,7 +35,7 @@
         </script>
     </head>
     <body>
-    <h1 th:text="${#authentication.name}"></h1>
+    <h1  th:text="${#authentication.name}"></h1>
 
     <div id="carouselExampleControls" class="carousel slide"
          data-bs-ride="carousel">
@@ -64,41 +64,62 @@
             <span class="visually-hidden">Next</span>
         </button>
         <hr/>
-        <div style="text-align: center;">
-            <a href="/cgProductLists?accom-type=520" class="image"><img alt="" src="/img/menuIcon_motel.png"
-                                   style="filter: brightness(70%); border-radius: 3px; box-shadow: 5px 5px 5px #999; margin: 50px; width: 150px; height: 150px;"></a><a
-                href="/cgProductLists?accom-type=511,513,514,515"><img alt="" src="/img/menuIcon_hotel.png"
-                                   style="filter: brightness(70%); border-radius: 3px; box-shadow: 5px 5px 5px #999; margin: 50px; width: 150px; height: 150px;"></a><a
-                href="/cgProductLists?accom-type=530"><img alt="" src="/img/menuIcon_pension.png"
-                                   style="filter: brightness(70%); border-radius: 3px; box-shadow: 5px 5px 5px #999; margin: 50px; width: 150px; height: 150px;"></a><a
-                href="/cgProductLists?accom-type=540"><img alt="" src="/img/menuIcon_glemping.png"
-                                   style="filter: brightness(70%); border-radius: 3px; box-shadow: 5px 5px 5px #999; margin: 50px; width: 150px; height: 150px;"></a>
-        </div>
-        <h5 style="text-align: center;">테스트 텍스트</h5>
+       <div style="display: flex; flex-wrap: wrap; justify-content: center; max-width: 100%;">
+    <a href="/cgProductLists?accom-type=520" class="image"><img alt="" src="/img/menuIcon_motel.png" style="filter: brightness(70%); border-radius: 3px; box-shadow: 5px 5px 5px #999; margin: 10px; width: 150px; height: 150px;"></a>
+    <a href="/cgProductLists?accom-type=511,513,514,515"><img alt="" src="/img/menuIcon_hotel.png" style="filter: brightness(70%); border-radius: 3px; box-shadow: 5px 5px 5px #999; margin: 10px; width: 150px; height: 150px;"></a>
+    <a href="/cgProductLists?accom-type=530"><img alt="" src="/img/menuIcon_pension.png" style="filter: brightness(70%); border-radius: 3px; box-shadow: 5px 5px 5px #999; margin: 10px; width: 150px; height: 150px;"></a>
+    <a href="/cgProductLists?accom-type=540"><img alt="" src="/img/menuIcon_glemping.png" style="filter: brightness(70%); border-radius: 3px; box-shadow: 5px 5px 5px #999; margin: 10px; width: 150px; height: 150px;"></a>
+</div>
+
+		<hr>
+
+        <h5 style="text-align: center;">SukBak 이벤트!</h5>
     </div>
     <br>
     <br>
-    <div style="display: flex; text-align: center;">
-        <div class="card"
-             style="margin-right: 50px; margin-left: auto; margin-bottom: 100px;">
-            <img src="/img/adBanner.jpg" class="card-img-top" alt="..."
-                 style="width: auto;">
-            <div class="card-body">
-                <h5 class="card-title">subak 소식.</h5>
-                <p class="card-text">저희 숙박은 100% 유료입니다.</p>
-                <a href="#" class="btn btn-primary stretched-link">소식 바로보기</a>
-            </div>
-        </div>
-        <div class="card" style="margin-right: auto; margin-bottom: 100px;">
-            <img src="/img/eventBanner.jpg" class="card-img-top" alt="..."
-                 style="margin-bottom: auto;">
-            <div class="card-body">
-                <h5 class="card-title">subak 이벤트</h5>
-                <p class="card-text">200% 이벤트 지금당장 참여하세요</p>
-                <a href="#" class="btn btn-primary stretched-link">이벤트 바로보기</a>
-            </div>
-        </div>
-    </div>
+ 		<style>
+.card-deck {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1rem;
+	margin: 0 auto;
+	max-width: 860px;
+}
+
+.card {
+	width: 100%;
+	max-width: 400px;
+	margin: auto;
+	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+	object-fit: cover;
+	height: 200px;
+}
+</style>
+
+		<div class="card-deck">
+			<div class="card">
+				<img src="/img/광고.jpg" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title">sukbak 소식.</h5>
+					<p class="card-text">저희 숙박은 100% 유료입니다.</p>
+					<a href="noti?note_id=2" class="btn btn-primary stretched-link">소식 바로보기</a>
+				</div>
+			</div>
+			<div class="card">
+				<img src="/img/이벤트.jpg" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title">sukbak 이벤트</h5>
+					<p class="card-text">200% 이벤트 지금당장 참여하세요</p>
+					<a href="noti?note_id=2" class="btn btn-primary stretched-link">이벤트 바로보기</a>
+				</div>
+			</div>
+		</div>
+		
+	</body>
     </body>
 </th:block>
 </html>

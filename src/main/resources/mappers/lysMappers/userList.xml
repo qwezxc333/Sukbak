@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.S20230403.Accom">
+	<select id="ysuserTotal" resultType="int">
+		select Count(*) from users
+	</select>
+	<select id="ysUserlist" resultType="Users" parameterType="Users">
+		select
+		*
+		from(
+		select rownum rn , a.*
+		from(select * from Users order by name)a)
+		where rn BETWEEN #{start} and #{end}
+	</select>
+	<select id="ysUserSearch" parameterType="Users" resultType="Users">
+  SELECT *
+  FROM (
+    SELECT rownum rn, a.*
+    FROM (
+      SELECT *
+      FROM Users
+      <choose>
+        <when test="search == 's_user_id'">
+          WHERE  user_id LIKE '%' || #{keyword} || '%'
+        </when>
+        <when test="search == 's_name'">
+          WHERE name LIKE '%' || #{keyword} || '%'
+        </when>
+        <when test="search == 's_nickname'">
+          WHERE nickname LIKE '%' || #{keyword} || '%'
+        </when>
+        <when test="search == 's_email'">
+          WHERE email LIKE '%' || #{keyword} || '%'
+        </when>
+        <when test="search == 's_phone'">
+          WHERE phone LIKE '%' || #{keyword} || '%'
+        </when>
+        <otherwise>
+          WHERE user_id LIKE '%'
+        </otherwise>
+      </choose>
+      ORDER BY name
+    ) a  )  WHERE rn BETWEEN #{start} AND #{end}
+</select>
+		<select id="ysUsersSearchPage" resultType="int"
+		parameterType="Users">
+		select count(*)
+		from Users
+		where
+		<choose>
+			<when test="search == 's_user_id'">
+				user_id like '%' || #{keyword} || '%'
+			</when>
+			<when test="search == 's_name'">
+				name like '%' || #{keyword} || '%'
+			</when>
+			<when test="search == 's_nickname'">
+				nickname like '%' || #{keyword} || '%'
+			</when>
+			<when test="search == 's_email'">
+				email like '%' || #{keyword} || '%'
+			</when>
+			<when test="search == 's_phone'">
+				phone like '%' || #{keyword} || '%'
+			</when>
+			<otherwise>
+				user_id like '%'
+			</otherwise>
+		</choose>
+	</select>
+	
+
+
+
+</mapper>
