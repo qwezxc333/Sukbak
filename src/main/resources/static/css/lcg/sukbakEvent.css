@@ -1,0 +1,95 @@
+.container{
+	max-width: 95%;
+	height: auto;
+	margin: auto;
+}
+.sidenav {
+  width: 200px;
+  z-index: 1;
+  top: 20px;
+  left: 10px;
+  background: white;
+  overflow-x: hidden;
+  padding: 8px 0;
+  display: inline-block;
+
+
+}
+
+.sidenav a {
+  padding: 13px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #2196F3;
+  display: block;
+  font-weight: bold; 
+
+}
+
+.sidenav a:hover {
+  color: #064579;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.eventMain{
+	float: right; 
+	padding-bottom: 20px;
+	width: 750px;
+/* 	margin: auto; */
+	margin-right: 20%; 
+	
+}
+
+.eventContainer{
+	margin-bottom: 25px;
+	
+}
+
+.eventMain img{
+	width: 750px;
+	height: 200px;
+	margin-bottom: 7px;
+}
+
+#eventWord{
+	font-weight: bold;
+	font-size: 28pt;
+}
+
+.titles {
+  border: none;
+  border-radius: 5px;
+  padding: 8px 20px;
+  font-size: 16px;
+  background-color: #00B7F7;
+  color: white;
+  position: relative;
+  margin-bottom: 3px;
+  font-weight: bold;
+}
+
+.ribbon {
+  width: 60px;
+  font-size: 14px;
+  padding: 4px;
+  position: absolute;
+  right: -25px;
+  top: -12px;
+  text-align: center;
+  border-radius: 25px;
+  transform: rotate(20deg);
+  background-color: #ff9800;
+  color: white;
+}
+.eventDate{
+	color: gray;
+	margin-left: 10px;
+	margin-bottom: 3px;
+}
+.categoryTitle{
+	margin-bottom: 24px;
+}
