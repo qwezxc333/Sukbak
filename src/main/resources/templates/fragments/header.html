@@ -52,7 +52,8 @@
                            href="/admin/adminPage">관리자 페이지</a>
                         <a sec:authorize="hasAnyAuthority('USER')" class="nav-link active"
                            style="color: rgb(0, 183, 247);" aria-current="page"
-                           href="/commonUser/mypage">마이 페이지(유저)</a>
+                           href="/commonUser/myProfile">마이 페이지(유저)</a>
+
                         <a sec:authorize="hasAnyAuthority('SELLER')" class="nav-link active"
                            style="color: rgb(0, 183, 247);" aria-current="page"
                            href="/biz/bizMain">마이 페이지(판매자)</a>
@@ -81,10 +82,12 @@
 									 class="dropdown-item" href="#">1대1문의<br>불만접수</a>
                                 <hr style="margin: 0;"/>
                             </li>
+
                             <li style="margin: 0;">
                             	<a style="font-weight: bold; color: rgb(0, 183, 247);"
-									 class="dropdown-item" href="#">이벤트</a>
+									 class="dropdown-item" href="/noti?noti_id=2">이벤트</a>
 							</li>
+
                         </ul>
                     </li>
                     <li class="nav-item">

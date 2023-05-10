@@ -6,6 +6,7 @@
 		SELECT  p.biz_id,p.r_id, p.user_id, re.review_content, re.rating, re.review_date, re.del_request, p.pay_id
 		FROM    reservation resv, payment p, review re
 		WHERE   resv.biz_id = p.biz_id
+		AND     resv.resv_id = p.resv_id
 		AND     resv.r_id = p.r_id
 		AND     resv.user_id = p.user_id
 		AND     p.pay_id = re.pay_id
@@ -36,6 +37,7 @@
 		WHERE   resv.biz_id = p.biz_id
 		AND     resv.r_id = p.r_id
 		AND     resv.user_id = p.user_id
+		AND     resv.resv_id = p.resv_id
 		AND     p.pay_id = re.pay_id
 	    AND   	resv.biz_id = #{biz_id}
 		ORDER BY 

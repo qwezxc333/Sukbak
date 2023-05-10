@@ -34,6 +34,7 @@
 		            AND   resv.biz_id = p.biz_id(+)
 		            AND   resv.r_id = p.r_id(+)
 		            AND   resv.user_id = p.user_id(+)
+		            AND   resv.resv_id = p.resv_id(+)
 		            AND   p.pay_id = re.pay_id(+)
 		            GROUP BY r.biz_id
 		        ) room_resv_pay_re
@@ -45,7 +46,7 @@
 		<if test="accom_type != null and accom_type != ''">
 	    AND   a.accom_type in
 	    	<foreach item="accom_type" index="index" collection="accom_type.split(',')" open="(" separator="," close=")">
-	    		#{accom_type}
+	    		#{accom_type} 
 	    	</foreach>
 	    </if>
 		AND   a.pool 		= COALESCE(#{pool}, a.pool) 
