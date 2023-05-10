@@ -15,7 +15,7 @@
 		
 		<!-- 검색창 -->
 		<form class="searchForm" action="adminPage-userSearchList">
-   		<select name="search" id="search">
+   		<select name="search" id="search" class="select">
 				<option>검색조건</option>
 				<option value="s_user_id">아이디</option>
 				<option value="s_name">이름</option>
@@ -42,20 +42,36 @@
 					사업자 회원
 				</a> 
 					
-				<!-- QnA 관리탭 -->
+				<!-- QnA 전체 관리탭 -->
 				<a class="list-group-item list-group-item-action"
 					id="list-QnA-list" data-bs-toggle="list"
 					role="tab" aria-controls="list-QnA"
 					th:onclick="|location.href='@{/admin/adminPage-qnalist}'|">
-					게시판 관리
+					게시판 전체
 				</a>
 				
-				<!-- Review 관리탭 -->
+				<!-- QnA 답변 저장 탭 -->
+				<a class="list-group-item list-group-item-action"
+					id="list-QnARe-list" data-bs-toggle="list"
+					role="tab" aria-controls="list-QnARe"
+					th:onclick="|location.href='@{/admin/adminPage-qnaRelist}'|">
+					게시판 답변
+				</a>
+				
+				<!-- Review 전체 관리탭 -->
 				<a class="list-group-item list-group-item-action"
 					id="list-review-list" data-bs-toggle="list"
 					role="tab" aria-controls="list-review"
 					th:onclick="|location.href='@{/admin/adminPage-reviewlist}'|">
-					리뷰 관리
+					리뷰 전체
+				</a>
+				
+				<!-- Review 삭제 탭 -->
+				<a class="list-group-item list-group-item-action"
+					id="list-reviewDel-list" data-bs-toggle="list"
+					role="tab" aria-controls="list-reviewDel"
+					th:onclick="|location.href='@{/admin/adminPage-reviewDellist}'|">
+					리뷰 삭제
 				</a>
 				
 			</div>
@@ -79,7 +95,7 @@
 								<th scope="col">전화번호</th>
 								<th scope="col">성별</th>
 								<th scope="col">회원상태</th>
-								<th scope="col">권한레벨</th>
+								<th scope="col">회원분류</th>
 								<th scope="col">관리</th>
 							</tr>
 						</thead>
@@ -117,7 +133,7 @@
 					</table>
 					
 					<!-- 페이징 작업 -->
-					<div>
+					<div class="paging">
 						<nav aria-label="Page navigation example">
 							<ul class="pagination justify-content-center">
 								<li class="page-item"
@@ -129,10 +145,10 @@
 									</a>
 								</li>
 								<li class="page-item"
-									th:each="i: ${#numbers.sequence(page.startPage, page.endPage)}">[
+									th:each="i: ${#numbers.sequence(page.startPage, page.endPage)}">
 									<a class="page-link" th:href="'/admin/adminPage-userlist?currentPage=' + ${i}"
 										th:text="${i}" th:class="${i == page.currentPage ? 'active' : ''}">
-									</a>]
+									</a>
 								</li>
 								<li class="page-item"
 									th:if="${page.endPage + page.pageBlock <= page.totalPage}">
