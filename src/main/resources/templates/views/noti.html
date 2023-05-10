@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/default_layout">
+<th:block layout:fragment="content">
+	<div class="row" style="max-width: 1300px; margin: 0 auto;">
+		<div class="col-4"
+			style="text-align: center; max-width: 400px; max-height: auto;">
+			<div class="list-group" id="list-tab" role="tablist">
+				<a class="list-group-item list-group-item-action "
+					id="list-home-list" data-bs-toggle="list" href="#list-home"
+					role="tab" aria-controls="list-home">공지 및 QnA </a> <a
+					class="list-group-item list-group-item-action"
+					id="list-messages-list" data-bs-toggle="list" href="#list-messages"
+					role="tab" aria-controls="list-messages"> 1:1문의 <br> 불만접수
+				</a> <a class="list-group-item list-group-item-action"
+					id="list-settings-list" data-bs-toggle="list" href="#list-settings"
+					role="tab" aria-controls="list-settings">이벤트</a>
+			</div>
+		</div>
+		<div class="col-8">
+			<div class="tab-content" id="nav-tabContent">
+				<div class="tab-pane fade show" id="list-home" role="tabpanel"
+					aria-labelledby="list-home-list">
+					<div class="accordion" id="accordionPanelsStayOpenExample"
+						th:each="nfqlist :${nfqlist}">
+						<div class="accordion-item">
+							<h2 class="accordion-header"
+								th:id="panelsStayOpen-headingOne+${nfqlist.notice_id}">
+								<button class="accordion-button" type="button"
+									data-bs-toggle="collapse"
+									th:attr="data-bs-target=|#panelsStayOpen-collapseOne${nfqlist.notice_id}"
+									aria-expanded="false"
+									th:aria-controls="panelsStayOpen-collapseOne"
+									th:text="${nfqlist.notice_title}"></button>
+							</h2>
+							<div th:id="panelsStayOpen-collapseOne+${nfqlist.notice_id}"
+								class="accordion-collapse collapse "
+								th:aria-labelledby="panelsStayOpen-headingOne+${nfqlist.notice_id}">
+								<div class="accordion-body">
+									<strong><a th:text="${nfqlist.notice_content}"></a></strong>
+									<code th:text="${nfqlist.notice_id}">.코드 블라 빨간거 블라</code>
+									번
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="list-messages" role="tabpanel"
+					aria-labelledby="list-messages-list">
+					<form class="row g-3">
+						<div class="col-md-6">
+							<label for="qna_title" class="form-label">제목</label><input
+								type="text" class="form-control" id="qna_title">
+						</div>
+						<div class="col-md-4">
+							<label for="qna_type" class="form-label">문의 유형</label> <select
+								id="qna_type" class="form-select">
+								<option value="430" selected>1 : 1 문의</option>
+								<option value="440">불만 접수</option>
+							</select>
+						</div>
+						<div class="col-12">
+							<label for="qna_content" class="form-label">문의 내용</label>
+							<textarea type="text" class="form-control" id="qna_content"
+								placeholder="내용을 입력해 주세요"
+								style="height: 350px; vertical-align: top;"></textarea>
+						</div>
+						<div class="col-12">
+							<button type="button" class="btn btn-primary" onclick="qnachk()">문의
+								하기</button>
+						</div>
+					</form>
+				</div>
+				<div class="tab-pane fade" id="list-settings" role="tabpanel"
+					aria-labelledby="list-settings-list">
+					<div class="container">
+
+						<div class="eventMain">
+							<div class="categoryTitle">
+								<label id="eventWord">sukbak 이벤트</label>
+								<hr>
+							</div>
+							<div class="eventContainer"
+								th:each="sukbakEvent : ${sukbakEvents}">
+								<div class="eventTitle">
+									<label class="titles"> <!-- <span th:text = "${sukbakEvent.event_title}"></span> -->
+										<span th:text="${sukbakEvent.event_content}"></span> <span
+										class="ribbon">NEW</span>
+									</label>
+								</div>
+								<div class="eventDate">
+									<label
+										th:text="'기간 : '+${sukbakEvent.event_start_date}+' ~ '+${sukbakEvent.event_end_date}"></label>
+								</div>
+								<div class="eventImg">
+									<img alt=""
+										th:src="@{/img/event/{event_img}(event_img=${sukbakEvent.event_img})}">
+								</div>
+								<hr>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</th:block>
+</html>
+
+<span sec:authentication="name" id="user_id"></span>
+
+<!-- user_id -->
+<script type="text/javascript">
+	function qnachk() {
+		// Get the values of the input fields
+		var qna_title = $("#qna_title").val();
+		;
+		var qna_type = $("#qna_type").val();
+		var qna_content = $("#qna_content").val();
+		var user_id = document.getElementById("user_id").innerHTML; // 수정된 부분
+		alert(qna_title + ' === ' + qna_type + ' === ' + qna_content + ' === '
+				+ user_id);
+		// Send the data to the server using AJAX
+		$.ajax({
+			url : '/QnASend', // The URL of the server endpoint
+			method : 'POST', // Use POST method to send data
+			data : {
+				qna_title : qna_title,
+				qna_type : qna_type,
+				qna_content : qna_content,
+				user_id : user_id
+			}, // The data to send to the server
+			success : function(response) {
+				if (response == 1) {
+					alert('문의 완료');
+					location.replace("/payments/success");
+				} else if (user_id == 'anonymousUser') {
+					alert('로그인 후 이용해 주세요');
+					location.replace("/login");
+				} else if (qna_title == '') {
+					alert('제목을 입력하세요');
+					document.getElementById("qna_title").focus();
+				} else if (qna_content == '') {
+					alert('질문을 입력해 주세요');
+					document.getElementById("qna_content").focus();
+				} else {
+					alert('오류 페이지 이동');
+					location.replace("/error2");
+				}
+				console.log(response);
+			},
+			error : function(xhr, status, error) {
+				console.log(xhr);
+				// Handle the error response from the server
+			}
+		});
+	}
+	var getNoteId = window.location.search;
+	var getParam = new URLSearchParams(getNoteId);
+	var rstParamVal = getParam.get('note_id');
+
+	rstParamVal = parseInt(rstParamVal);
+
+	$('.list-group-item').eq(rstParamVal).attr('class',
+			'list-group-item list-group-item-action active');
+	$('.tab-pane').eq(rstParamVal).attr('class', 'tab-pane fade show active');
+
+	// 진선이 형쪽
+	document.addEventListener('DOMContentLoaded', function() {
+		var customNoteId = window.location.search;
+		var customParam = new URLSearchParams(customNoteId);
+		var customParamVal = customParam.get('notice_id');
+
+		customParamVal = parseInt(customParamVal);
+
+		// 해당하는 아코디언이 열리도록 수정
+		$('.accordion-item').eq(customParamVal-1).find('.accordion-collapse')
+				.addClass('show');
+		$('.accordion-item').eq(customParamVal ).find('.accordion-button')
+				.attr('aria-expanded', 'true');
+	});
+</script>

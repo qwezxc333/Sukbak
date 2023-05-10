@@ -8,4 +8,6 @@ public class Soldout {
 	private int      r_id;
 	private String resv_date;
 	private String sout_avail;
+	private String RESV_ID;
+
 }

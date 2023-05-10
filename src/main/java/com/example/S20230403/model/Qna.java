@@ -9,5 +9,6 @@ public class Qna {
 	private String qna_type;
 	private String qna_title;
 	private String qna_content;
+	private String qna_date;
 	
 }
