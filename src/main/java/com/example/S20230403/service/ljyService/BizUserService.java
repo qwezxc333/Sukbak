@@ -8,7 +8,6 @@ import com.example.S20230403.dao.ljyDao.SukbakDao;
 import com.example.S20230403.model.Accom;
 import com.example.S20230403.model.Comm;
 import com.example.S20230403.model.Room;
-import com.example.S20230403.model.Room_Img;
 import com.example.S20230403.model.Users;
 
 import lombok.RequiredArgsConstructor;
@@ -114,91 +113,17 @@ public class BizUserService implements SukbakService{
 
 
 	@Override
-	public int roomInsert(OwnerRoom ownerRoom) {
+	public void roomInsert(Room room) {
 		log.info("비즈서비스01 roomInsert 시작...");
-		Room room = ownerRoom.toRoom();
 		//방번호 추출하기
-		Integer maxR_id = sd01.roomIdExtract(room);
-		System.out.println("maxR_id -> "+maxR_id);
+		int maxR_id = sd01.roomIdExtract(room);
 		maxR_id +=1;
-		System.out.println("maxR_id -> "+maxR_id);
 		room.setR_id(maxR_id);
 		sd01.roomInsert(room);
-		return maxR_id;
 	}
 
 
-	@Override
-	public int getImgNum(Room room) {
-		log.info("비즈서비스01 getImgNum 시작...");
-		int imgNum = sd01.getImgNum(room);
-		System.out.println("비즈서비스01 getImgNum imgNum -> "+imgNum);
-		return imgNum;
-	}
 
-
-	@Override
-	public void roomImgInsert(Room room) {
-		log.info("비즈서비스01 roomImgInsert 시작...");
-		sd01.roomImgInsert(room);
-		
-	}
-
-
-	@Override
-	public List<Room> selectRoomImgList(Room_Img ri) {
-		log.info("비즈서비스01 selectRoomImgList 시작...");
-		return sd01.selectRoomImgList(ri);
-	}
-
-
-	@Override
-	public Room roomSelect(Room room) {
-		log.info("비즈서비스01 roomSelect 시작...");
-		return sd01.roomSelect(room);
-	}
-
-
-	@Override
-	public void roomImgDelete(Room room) {
-		log.info("비즈서비스01 roomImgDelete 시작...");
-		sd01.roomImgDelete(room);
-		
-	}
-
-
-	@Override
-	public void roomUpdate(OwnerRoom ownerRoom) {
-		Room room = ownerRoom.toRoom();
-		log.info("비즈서비스01 roomUpdate 시작...");
-		sd01.roomUpdate(room);
-		
-	}
-
-
-	@Override
-	public void roomStatus(Room room, String string) {
-		log.info("비즈서비스01 roomUpdate 시작...");
-		sd01.roomStatus(room, string);
-		
-	}
-
-
-	@Override
-	public boolean getBizId(String biz_id) {
-		log.info("비즈서비스01 getBizId 시작...");
-		return sd01.getBizId(biz_id);
-	}
-
-
-	@Override
-	public void updateRoomCount(String biz_id, String string) {
-		log.info("비즈서비스01 updateRoomCount 시작...");
-		sd01.updateRoomCount(biz_id, string);
-	}
-
- 
- 
 
 
 }

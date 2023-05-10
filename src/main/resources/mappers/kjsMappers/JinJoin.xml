@@ -3,8 +3,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.S20230403.JinJoinMapper">
 	
-	<!-- 객실리스트 뿌려줄 때 전부다 뿌려주지만, 날짜조건에 걸린건 is_reserved(JinJoin에 조회용 추가)로 1 담아서 view에서 1로 예약불가 버튼 변경
-		room_img는 셀프조인 후 MIN으로 맨앞장만 가져와 섬네일처럼 이용-->
+	<!-- 객실리스트 뿌려줄 때 전부다 뿌려주지만, 날짜 걸린건 is_reserved(JinJoin에 조회용 추가)로 1 담아서 view에서 1로 예약불가 버튼 변경 예정
+	room_img는 r_img_id=1로 맨앞장만 가져오거나, 셀프조인해야됌 왜냐면 A호텔에 객실이5개인데 객실사진이 15개면 15개로우가 반환됨
+	그래서 room_img셀프조인하면서 r_img_id를 MIN걸어서 1개만 가져오는걸 써야함 그러면 바로 객실마다 썸네일 뿌려주기 가능 -->
 	<select id="jsAccomDetailRoomList" parameterType="map" resultType="JinJoin">
 		<![CDATA[
 		SELECT a.*, r.*, ri.*,
@@ -21,16 +22,9 @@
 		    END AS is_reserved
 		FROM accom a
 		JOIN room r ON a.biz_id = r.biz_id
-		LEFT JOIN (
-		    SELECT *
-		    FROM room_img ri1
-		    WHERE ri1.r_img_id = (
-		        SELECT MIN(ri2.r_img_id)
-		        FROM room_img ri2
-		        WHERE ri1.biz_id = ri2.biz_id AND ri1.r_id = ri2.r_id
-		    )
-		) ri ON r.biz_id = ri.biz_id AND r.r_id = ri.r_id
-		WHERE a.biz_id = #{biz_id}
+		LEFT JOIN room_img ri ON r.biz_id = ri.biz_id AND r.r_id = ri.r_id
+		WHERE r.biz_id = #{biz_id}
+			AND ri.r_img_id = 1
 		]]>
 	</select>
 	
