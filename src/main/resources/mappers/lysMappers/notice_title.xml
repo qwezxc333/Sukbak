@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.S20230403.Notice_Faq">
+	<select id="ysNotifaq" resultType="Notice_Faq">
+		SELECT
+		*
+		FROM
+		notice_faq
+	</select>
+	<select id="yslistnc" resultType="Notice_Faq">
+		SELECT
+		notice_content
+		FROM
+		NOTICE_FAQ
+	</select>
+	<select id="yslistnt" resultType="Notice_Faq">
+		SELECT
+		notice_title
+		FROM
+		NOTICE_FAQ
+	</select>
+	<insert id="ysQnaInsert" parameterType="Qna">
+		<selectKey keyProperty="qna_id" resultType="int"
+			order="BEFORE">
+			SELECT QNA_ID_SEQ.nextval FROM dual
+		</selectKey>
+		insert into qna (qna_id,user_id,qna_type,qna_title,qna_content ,qna_date)
+		values (#{qna_id},#{user_id},#{qna_type},#{qna_title},#{qna_content},sysdate)
+	</insert>
+</mapper>

@@ -1,0 +1,17 @@
+package com.example.S20230403.service.lysService;
+
+import java.util.List;
+
+import com.example.S20230403.model.Accom;
+import com.example.S20230403.model.AccomPayment;
+import com.example.S20230403.model.Notice_Faq;
+import com.example.S20230403.model.Payment;
+import com.example.S20230403.model.Room;
+import com.example.S20230403.model.Soldout;
+import com.example.S20230403.model.Users;
+
+public interface DefaultService {
+
+	List<Accom> searchAc(Accom accom);
+
+}

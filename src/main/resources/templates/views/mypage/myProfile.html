@@ -7,6 +7,46 @@
 <link rel="stylesheet" href="/css/lgh/mypageSidebar.css">
 </head>
 <style type="text/css">
+
+.container{
+	max-width: 95%;
+	height: auto;
+	margin: auto;
+}
+
+	.sidenav {
+  width: 200px;
+  z-index: 1;
+  top: 20px;
+  left: 10px;
+  background: white;
+  overflow-x: hidden;
+  padding: 8px 0;
+  display: inline-block;
+
+
+}
+
+.sidenav a {
+  padding: 13px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #2196F3;
+  display: block;
+  font-weight: bold; 
+
+}
+
+.sidenav a:hover {
+  color: #064579;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+	
 	.myProfileTitle {
 		text-align: center;
 		font-size: 28px;
@@ -15,6 +55,19 @@
 		padding: 20px 5px 30px 5px;
 	}
 
+	.main {
+	  /* margin-left: 250px; /* Same width as the sidebar + left position in px */ */
+	  font-size: 16px; /* Increased text to enable scrolling */
+	  padding: 0px 10px 100px;
+	  display: inline-block;
+	  flex-direction: column;
+	  justify-content: center;
+	  align-items: center;
+	  float: right;
+	  margin-right: 35%;
+	}
+	
+	
 	.pItems {
 		margin-bottom: 20px;
 	}

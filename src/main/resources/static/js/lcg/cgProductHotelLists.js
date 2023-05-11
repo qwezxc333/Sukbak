@@ -4,6 +4,11 @@ function cgAjaxInsertZzim(biz_id, user_id, auth){
 	alert("biz_id -> "+biz_id);
 	alert("user_id-> "+user_id);
 	alert("auth-> "+auth);
+	// seller나 admin 찜 못하게 
+	if(auth == "[SELLER]" || auth == "[ADMIN]"){
+		alert("user 회원만 이용 가능합니다.");
+		return false;
+	}
 	// 로그인을 하지 않았거나, user권한인지 판단하기 위함.
 	if(user_id == null || user_id == "" || auth != "[USER]"){
 		alert("로그인이 필요한 서비스 입니다.")

@@ -34,6 +34,7 @@
 		            AND   resv.biz_id = p.biz_id(+)
 		            AND   resv.r_id = p.r_id(+)
 		            AND   resv.user_id = p.user_id(+)
+		            AND   resv.resv_id = p.resv_id(+)
 		            AND   p.pay_id = re.pay_id(+)
 		            GROUP BY r.biz_id
 		        ) room_resv_pay_re
@@ -83,6 +84,7 @@
 		            AND   resv.biz_id = p.biz_id(+)
 		            AND   resv.r_id = p.r_id(+)
 		            AND   resv.user_id = p.user_id(+)
+		            AND   resv.resv_id = p.resv_id(+)
 		            AND   p.pay_id = re.pay_id(+)
 		            GROUP BY r.biz_id
 		        ) room_resv_pay_re
@@ -130,6 +132,7 @@
 		            AND   resv.biz_id = p.biz_id(+)
 		            AND   resv.r_id = p.r_id(+)
 		            AND   resv.user_id = p.user_id(+)
+		            AND   resv.resv_id = p.resv_id(+)
 		            AND   p.pay_id = re.pay_id(+)
 		            GROUP BY r.biz_id
 		        ) room_resv_pay_re
@@ -182,6 +185,7 @@
 		            AND   r.r_id = resv.r_id(+)
 		            AND   resv.biz_id = p.biz_id(+)
 		            AND   resv.r_id = p.r_id(+)
+		            AND   resv.resv_id = p.resv_id(+)
 		            AND   resv.user_id = p.user_id(+)
 		            AND   p.pay_id = re.pay_id(+)
 		            GROUP BY r.biz_id

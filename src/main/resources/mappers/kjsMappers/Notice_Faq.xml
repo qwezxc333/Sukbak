@@ -4,10 +4,14 @@
 <mapper namespace="com.example.S20230403.Notice_FaqMapper">
 
 	<select id="jsNoticeFaqTitleList" parameterType="java.lang.String" resultType="Notice_Faq">
-		select * from notice_faq where notice_type = #{notice_type}
+		SELECT * 
+		FROM notice_faq 
+		WHERE notice_type = #{notice_type}
 	</select>
 	
 	<select id="jsNoticeFaqContentList" parameterType="java.lang.String" resultType="Notice_Faq">
-		select notice_content from notice_faq where notice_id = #{notice_id}
+		SELECT notice_id, notice_content 
+		FROM notice_faq 
+		WHERE notice_id = #{notice_id}
 	</select>
 </mapper>
