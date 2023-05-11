@@ -4,7 +4,10 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:replace="fragments/header :: headerFragment"></th:block>
 <head>
+<link rel="stylesheet" href="/css/lgh/mypageSidebar.css">
+</head>
 <style type="text/css">
+
 .container{
 	max-width: 95%;
 	height: auto;
@@ -51,7 +54,7 @@
 		color: #00b7f7;
 		padding: 20px 5px 30px 5px;
 	}
-	
+
 	.main {
 	  /* margin-left: 250px; /* Same width as the sidebar + left position in px */ */
 	  font-size: 16px; /* Increased text to enable scrolling */
@@ -101,6 +104,7 @@
 		font-weight: bold;
 		background-color: #2196F3;
 	}
+	
 	.pButtons #pOut {
 		color: #666666;
 		text-decoration: underline;
@@ -108,12 +112,26 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		margin: auto;
 	}
-</style>
-</head>
-<body>
-<th:block layout:fragment="content"></th:block>
 	
+	.outBtn {
+		margin-top: 10px;
+	}
+	
+	.pData{
+		margin: auto;
+	}
+	
+</style>
+<script type="text/javascript">
+	function savePopUp() {
+		alert("변경사항이 저장되었습니다.");
+	}
+
+</script>
+
+<th:block layout:fragment="content"></th:block>
 	
 	<div class="container">
 			
@@ -137,8 +155,6 @@
 							<td><input type="text"  name="name"  required="required" th:value="${myProfileInfo.name}" disabled="disabled"></td></tr>
 						<tr><th>이메일(아이디)*</th>
 							<td><input type="text"  name="user_id"  required="required" th:value="${myProfileInfo.user_id}" disabled="disabled"></td></tr>
-						<tr><th>비밀번호*</th>
-							<td><input type="password"   name="password" disabled="disabled" th:value="${myProfileInfo.password}"></td></tr>
 						<tr><th>닉네임*</th>
 							<td><input type="text"  name="nickname"  required="required" th:value="${myProfileInfo.nickname}"></td></tr>
 						<tr><th>통신사*</th>
@@ -147,24 +163,28 @@
 							<td><input type="text"  name="phone"  required="required" th:value="${myProfileInfo.phone}"></td></tr>
 						<tr><th>성별</th>
 							<td><input type="text"  name="gender"  th:value="${myProfileInfo.gender}"  disabled="disabled"></td></tr>
-						<!-- <tr><td><input type="submit" th:value="저장하기"></td>
-							<td></td></tr> -->
 					</table>
 					<div class="pButtons">
-						<button type="submit" id="pSave">변경사항 저장하기</button>
+					 <div>
+						<button type="submit" id="pSave"
+						th:onclick="savePopUp()">
+						변경사항 저장하기</button>
+						
 						<button type="button" id="pChgPwd" name="goToPwChg"
-								th:onclick="|location.href='@{/commonUser/myPwChange}'|">
-								비밀번호 변경하기</button><br>
-						<!-- <button type="button" id="pBack" name="backToMypage"
-								th:onclick="|location.href='@{/commonUser/mypage}'|">
-								마이페이지로 돌아가기</button><br> -->
+						th:onclick="|location.href='@{/commonUser/myPwChange}'|">
+						비밀번호 변경하기</button><br>
+					</div>
+					<div class = "outBtn">
 						<button type="button" id="pOut" name="goToWithdraw"
 								th:onclick="|location.href='@{/commonUser/myWithdraw}'|">
 								회원 탈퇴하기</button>
 					</div>
+					</div>
 				</form>
 			</div>
+			
 		</div>
+		
 	</div>
 </body>
 <th:block th:replace="fragments/footer :: footerFragment"></th:block>

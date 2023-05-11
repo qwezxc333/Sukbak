@@ -19,7 +19,10 @@ public interface MypageService {
 
 			//예약 관련
 			List<GunJoin> 		getMyResvList(String user_id);
-			List<GunJoin> 		GetMyResvImgList(GunJoin biz_id);
+//			List<GunJoin> 		GetMyResvImgList(GunJoin biz_id);
+			Review 				getMyResvReviews(GunJoin gunJoin);
+//			int 				cancelPay(int pay_id);
+			int 				cancelResv(GunJoin gunJoin);
 			
 			// 새 후기 관련
 			GunJoin 			getMyAccomInfo(Room room);
@@ -32,6 +35,7 @@ public interface MypageService {
 			List<Review> 		getMyReviewImages(String user_id);
 			Review				getMyReviewUpdate(int pay_id);
 			int 				updateMyReview(Review review);
+			List<Review_Img> 	getDelImgList(Review_Img delImgNums);
 			int 				deleteMyReview(int pay_id);
 			
 			// 탈퇴 관련

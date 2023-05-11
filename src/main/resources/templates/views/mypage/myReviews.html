@@ -4,38 +4,11 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:replace="fragments/header :: headerFragment"></th:block>
 <head>
+<link rel="stylesheet" href="/css/lgh/mypageSidebar.css">
+</head>
 <style type="text/css">
 	.container {
 		max-width: 100%;
-	}
-	
-	.sidenav {
-	  width: 200px;
-	 /*  position: fixed; */
-	  display:inline-block;
-	  z-index: 1;
-	  top: 20px;
-	  left: 10px;
-	  background: #ebf5fc;
-	  overflow-x: hidden;
-	  padding: 8px 0;
-/* 	  margin-top: 100px;  */
-	  margin-left: 44px; 
-	
-	}
-	
-	.sidenav a {
-	  padding: 13px 8px 6px 16px;
-	  text-decoration: none;
-	  font-size: 20px;
-	  color: #2196F3;
-	  display: block;
-	  font-weight: bold; 
-	
-	}
-	
-	.sidenav a:hover {
-	  color: #064579;
 	}
 	
 	.revTitle {
@@ -46,21 +19,63 @@
 		padding: 20px 5px 30px 5px;
 	}
 	
-	.main {
-	  /* margin-left: 250px; /* Same width as the sidebar + left position in px */ */
-	  font-size: 16px; /* Increased text to enable scrolling */
-	  padding: 0px 10px 100px;
-	  display: inline-block;
-/* 	  flex-direction: center;
-	  justify-content: center;
-	  align-items: center; */
-	  float: right;
-	  margin-right: 20%;
+	.myReviewItems {
+		width: 520px;
+		border: 1px solid #2196F3;
+		padding: 20px 50px 40px 50px;
 	}
 	
-	@media screen and (max-height: 450px) {
-	  .sidenav {padding-top: 15px;}
-	  .sidenav a {font-size: 18px;}
+	.myReviewBizName {
+		font-size: 20px;
+		font-weight: bold;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		color: #2196F3;
+	}
+	
+	.line1 {
+		clear: both;
+		display: flex;
+	}
+	
+	.myReviewUsedDates {
+		margin-right: 35%;
+		font-size: 15px;
+		font-weight: bold;
+	}
+	
+	.myReviewPayAmt {
+		justify-content: flex-end;
+		align-self: flex-end;
+		font-weight: bold;
+	}
+	
+	.myReviewAccomAddr {
+		font-size: 14px;
+		color: #404040;
+		margin-bottom: 10px;
+	}
+	
+	.line2 {
+		margin-bottom: 10px;
+	}
+	
+	.rating {
+		font-weight: bold;
+		font-size: 14px;
+		margin-right: 52%;
+	}
+	
+	.revDate {
+		font-size: 13px;
+	}
+	
+	.revText {
+		font-size: 13px;
+		margin-top: 15px;
+		margin-bottom: 10px;
+		padding: 10px;
+		background-color: #f5f5f5;
 	}
 	
 	.myReviewImage {
@@ -75,10 +90,42 @@
 		margin-right: 10px;
 	}
 	
+	.myReviewButtons {
+		clear: both;
+		display: flex;
+		justify-content: flex-end;
+		align-self: flex-end;
+		margin: 12px 0px 0px;
+	}
+	
+	.myReviewButtons button {
+		width: 60px;
+		padding:	8px;
+		border-radius: 10px;
+		border: 	none;
+		font-size: 14px;
+		font-weight: bold;
+		color: white;
+		background-color: #2196F3;
+	}
 	
 </style>
-</head>
-<body>
+<script type="text/javascript">
+	function confirmDel(index) {
+		alert("index-> " + index);
+		var payId = $('#pay_id'+index).val();
+		
+		alert("payId-> " + payId)
+		
+		var url = '/commonUser/deleteMyReview?pay_id=' + payId
+				
+		if (!confirm('리뷰를 삭제하시겠습니까? \n※ 삭제된 리뷰는 복구할 수 없습니다.')) {
+			return;
+		} else {
+			window.location.href = url;
+		}
+	}
+</script>
 <th:block layout:fragment="content"></th:block>
 
 	<div class="container">
@@ -97,64 +144,56 @@
 				<p>내가 작성한 후기</p>
 			</div>
 		
-			<!-- <form action="getMyReviewUpdate" method="post"> -->
-			<div class=myReviewItems th:each="myReviewItem : ${myReviewImgList}">
+			<div class=myReviewItems th:each="myReviewItem, status : ${myReviewImgList}">
 				<form th:action="@{/commonUser/getMyReviewUpdate}" method="post">
-					<!-- 숙소이름(업체이름) -->
+
 					<div class="myReviewBizName">
 						<p th:text="${myReviewItem.biz_name}"></p>
 					</div>
 					
-					<!-- 숙박기간(체크인~체크아웃) -->
-					<div class="myReviewUsedDates">
-						<span th:text="${#dates.format(myReviewItem.check_in, 'yyyy-MM-dd')} + ' ~ '"></span>
-						<span th:text="${#dates.format(myReviewItem.check_out, 'yyyy-MM-dd')}"></span>
+					<div class="line1">
+						<div class="myReviewUsedDates">
+							<span th:text="${#dates.format(myReviewItem.check_in, 'yyyy-MM-dd')} + ' ~ '"></span>
+							<span th:text="${#dates.format(myReviewItem.check_out, 'yyyy-MM-dd')}"></span>
+						</div>
+						
+						<div class="myReviewPayAmt">
+							<span th:text="${#numbers.formatInteger(myReviewItem.pay_amt, 1, 'COMMA')} + '원'"></span>
+						</div>
 					</div>
 					
-					<!-- 총금액 -->
-					<div class="myReviewPayAmt">
-						<span th:text="${#numbers.formatInteger(myReviewItem.pay_amt, 1, 'COMMA')} + '원'"></span>
-					</div>
-					
-					<!-- 숙소 주소 -->
 					<div class="myReviewAccomAddr">
 						<p th:text="${myReviewItem.addr}"></p>
 					</div>
 					
-					<!-- 리뷰 내용 -->
-					<div class="myReviewContent">
-						<span th:text="'평점: '+${myReviewItem.rating}+'점'"></span>
-						<span th:text="'작성날짜: '+${#dates.format(myReviewItem.review_date, 'yyyy/MM/dd')}"></span>
-						<span th:text="'리뷰 내용: '+${myReviewItem.review_content}"></span>
+					<div class="myReviewContent" th:with="metaPath = ${metaPath}">
+						<div class="line2">
+							<span class="rating" th:text="'평점: '+${myReviewItem.rating}+'점'"></span>
+							<span class="revDate" th:text="'작성날짜: '+${#dates.format(myReviewItem.review_date, 'yyyy/MM/dd')}"></span>
+						</div>
+						<div class="revText">
+							<span th:text="${myReviewItem.review_content}"></span>
+						</div>
 					</div>
-					<!-- <div class="myReviewImages" th:each="reviewImages : ${myReviewImgList}"> -->
-						<!-- <div class="myReviewImage" th:each="reviewImage : ${reviewImages}"> -->
 					<div class="myReviewImage" th:each="reviewImage : ${myReviewItem.matchingReviewImages}">
-						<!-- <input type="hidden" readonly th:value="${reviewImage.review_img}"> -->
-						<img alt="리뷰 이미지" th:src="@{/img/review/{revImg}(revImg=${reviewImage.review_img})}">
-							 <!-- onerror="this.style.display='none';"> -->
+					 	 <img th:src="@{'/img/review/' + ${reviewImage.review_img}}" alt="Uploaded Image" />
 					</div>
-					<!-- </div> -->
-					<!-- 조회, 수정, 삭제 버튼 -->
-					<div class="myReviewButtons" style="text-align: center;">
-						<input type="hidden" readonly name="pay_id" th:value="${myReviewItem.pay_id}">
+
+					<div class="myReviewButtons">
+						<input type="text" readonly name="pay_id" th:id="'pay_id'+${status.index}" th:value="${myReviewItem.pay_id}">
 						<table>
 							<tr><td colspan="2">
-								<button type="submit">수정</button>
-								<button type="button" th:onclick="|location.href='@{/commonUser/deleteMyReview(pay_id=${myReviewItem.pay_id})}'|">
+								<!-- <button type="submit">수정</button> -->
+								<button type="button"
+										  th:onclick="'confirmDel('+${status.index}+')'">
 								삭제</button>
 						</table>
 					</div>
 				</form>
 			</div>
-	
-			<!-- <button type="button"  name="backToMypage"
-						th:onclick="|location.href='@{/commonUser/mypage}'|">
-						마이페이지로 돌아가기</button> -->
 		</div>
 					
 	</div>
 	
-</body>
 <th:block th:replace="fragments/footer :: footerFragment"></th:block>
 </html>

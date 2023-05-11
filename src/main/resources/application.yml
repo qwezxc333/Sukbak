@@ -1,6 +1,10 @@
 server:
   port: 8308
 
+#upload Test
+#upload:
+#  path: /path/to/upload/directory
+
 spring:
   thymeleaf:
     prefix: classpath:/templates/
@@ -50,4 +54,10 @@ spring:
 mybatis:
   config-location: classpath:configuration.xml
   mapper-locations: classpath:mappers/**/*.xml
+
+  
+file:
+  dir: C:\Users\user\git\S20230403\bin\main\static\img\review\
+
+  
 

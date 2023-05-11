@@ -4,50 +4,9 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:replace="fragments/header :: headerFragment"></th:block>
 <head>
+<link rel="stylesheet" href="/css/lgh/mypageSidebar.css">
+</head>
 <style type="text/css">
-
-	.sidenav {
-	  width: 200px;
-	  position: fixed;
-	  z-index: 1;
-	  top: 20px;
-	  left: 10px;
-	  background: #ebf5fc;
-	  overflow-x: hidden;
-	  padding: 8px 0;
-	  margin-top: 100px; 
-	  margin-left: 44px; 
-	
-	}
-	
-	.sidenav a {
-	  padding: 13px 8px 6px 16px;
-	  text-decoration: none;
-	  font-size: 20px;
-	  color: #2196F3;
-	  display: block;
-	  font-weight: bold; 
-	
-	}
-	
-	.sidenav a:hover {
-	  color: #064579;
-	}
-	
-	.main {
-	  margin-left: 250px; /* Same width as the sidebar + left position in px */
-	  padding: 0px 10px;
-	  display: flex;
-	  flex-direction: column;
-	  justify-content: center;
-	  align-items: center;
-	}
-	
-	@media screen and (max-height: 450px) {
-	  .sidenav {padding-top: 15px;}
-	  .sidenav a {font-size: 18px;}
-	}
-	
 	.outTitle {
 		text-align: center;
 		font-size: 28px;
@@ -58,16 +17,31 @@
 	
 	.withdrawTop {
 		margin-bottom: 40px;
-		font-size: 14px;
-		color: #404040;
+		font-size: 13px;
+		color: #2196F3;
 		text-align: center;
 	}
 	
 	.wdChkBoxes {
+		clear: both;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		align-items: center;
+		text-align: center;
+		align-self: center;
+		align-items: flex-start;
+		margin-left: 10%;
+	}
+	
+	.wdChkBox {
+		clear: both;
+		display: flex;
+		font-size: 14px;
+		margin-bottom: 5px;
+	}
+	
+	input[type="checkbox"] {
+		margin-right: 5px;
 	}
 	
 	.outDetail {
@@ -75,19 +49,31 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		margin: 5px 10px;
+		font-size: 14px;
+	}
+	
+	.wdPassword {
+		text-align: center;
+		font-size: 14px;
+	}
+	
+	#inputPwd {
+		margin: 5px 15px;
 	}
 	
 	.wdWarningMsg {
 		color: red;
-		font-size: 14px;
+		font-size: 13px;
 		text-align: center;
 	}
 	
 	.outButtons button {
-		width:		200px;
+		width: 200px;
 		padding:	8px;
 		border-radius: 10px;
-		border: 	none;
+		border: none;
+		font-size: 15px;
 	}
 	
 	.outButtons #outButton {
@@ -112,7 +98,7 @@
 			return;
 		}
 		
-		alert("비밀번호 inputPwd->"+inputPwd)
+		/* alert("비밀번호 inputPwd->"+inputPwd) */
 		
 		if ($('#cb5').is(':checked')) {
 			var textarea = $('#outTextarea').val();
@@ -130,12 +116,15 @@
 			},
 			success: function (response) {
 				if (response === "1") {
-					console.log("비밀번호가 일치합니다.");
-					alert("비밀번호가 일치합니다");
-					// parameter 여러개인 경우
-					var sendData = $('form').serialize();
-					alert('sendData-> ' + sendData);
-					location.href="updateWithdraw?" + sendData;
+					if (confirm("정말 탈퇴하시겠습니까?")) {
+						console.log("비밀번호가 일치합니다.");
+						// parameter 여러개인 경우
+						var sendData = $('form').serialize();
+						location.href="updateWithdraw?" + sendData;
+					} else {
+						console.log("탈퇴 취소")
+						return;
+					}
 				} else {
 					alert("비밀번호가 일치하지 않습니다.");
 					return;
@@ -148,8 +137,8 @@
 	}
 	
 </script>
-</head>
-<body>
+
+<th:block layout:fragment="content"></th:block>
 	
 	<div class="container">
 		<div class="sidenav">
@@ -162,7 +151,7 @@
 	
 		<div class="main">
 			<div class="outTitle">
-				<p>sukbak 탈퇴하기</p>
+				<p>SukBak 탈퇴하기</p>
 			</div>
 			
 			<!-- 상단 고정 메시지(닉네임 변동) -->
@@ -206,12 +195,12 @@
 		        		<div>
 		            		<textarea name="out_content" id="outTextarea"
 		            		 style="height: 150px; width: 400px" placeholder="내용을 입력해 주세요"></textarea>
-		        		</div><br>
+		        		</div>
 		        		
 		        		<!-- 비밀번호 유효성 체크 -->
 						<div class="wdPassword">
-							<p>비밀번호 입력*<br>
-							<input type="text" name="inputPwd" id="inputPwd"></p>
+							<p>비밀번호 입력<br>
+							<input type="password" name="inputPwd" id="inputPwd"></p>
 						</div>
 		        		
 		        		<div class="wdWarningMsg">
@@ -232,5 +221,6 @@
 		</div>
 		
 	</div>
-</body>
+	
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
 </html>
