@@ -12,7 +12,9 @@
 		        WHEN EXISTS (
 		            SELECT 1
 		            FROM reservation resv
-		            JOIN soldout s ON resv.biz_id = s.biz_id AND resv.r_id = s.r_id
+		            JOIN soldout s ON resv.biz_id = s.biz_id 
+		            AND resv.r_id = s.r_id
+		            AND resv.resv_id = s.resv_id
 		            WHERE resv.biz_id = r.biz_id AND resv.r_id = r.r_id
 		                AND TO_DATE(#{checkIn}, 'YY/MM/DD') <= TO_DATE(s.resv_date, 'YY/MM/DD')
 		                AND TO_DATE(s.resv_date, 'YY/MM/DD') < TO_DATE(#{checkOut}, 'YY/MM/DD')
