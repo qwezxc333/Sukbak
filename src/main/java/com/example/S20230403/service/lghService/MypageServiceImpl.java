@@ -56,16 +56,16 @@ public class MypageServiceImpl implements MypageService {
 		return myResvList;
 	}
 
-	@Override
-	public List<GunJoin> GetMyResvImgList(GunJoin biz_id) {
-		System.out.println("MypageServiceImpl GetMyResvImgList start...");
-		// list값을 파라미터로 받는 method 추가
+//	@Override
+//	public List<GunJoin> GetMyResvImgList(GunJoin biz_id) {
+//		System.out.println("MypageServiceImpl GetMyResvImgList start...");
+//		// list값을 파라미터로 받는 method 추가
 //		List<GunJoin> myResvImgRoomId = mypageDao.getMyResvImgRoomId(biz_id);
-		
-		List<GunJoin> myResvImgList = mypageDao.GetMyResvImgList(biz_id);
-		System.out.println("MypageServiceImpl myResvImgList.size()-> " + myResvImgList.size());
-		return myResvImgList;
-	}
+//		
+//		List<GunJoin> myResvImgList = mypageDao.GetMyResvImgList(biz_id);
+//		System.out.println("MypageServiceImpl myResvImgList.size()-> " + myResvImgList.size());
+//		return myResvImgList;
+//	}
 
 	
 	
@@ -103,8 +103,9 @@ public class MypageServiceImpl implements MypageService {
 //	@Override
 //	public List<Review> getMyReviewList(String user_id) {
 //		System.out.println("MypageServiceImpl getMyReviewList...");
-//		List<Review> myReviewList = mypageDao.getMyReviewList(user_id);
-//		return myReviewList;
+//		List<Review> myReviewLists = mypageDao.getMyReviewList(user_id);
+//				
+//		return myReviewLists;
 //	}
 	
 	@Override
@@ -177,6 +178,11 @@ public class MypageServiceImpl implements MypageService {
 		System.out.println("MypageServiceImpl deleteMyReview...");
 		int deleteMyReviewImg = mypageDao.deleteMyReviewImg(pay_id);
 		int deleteMyReview = mypageDao.deleteMyReview(pay_id);
+		
+		// 서버에서도 파일 지우기
+		// 저장된 path + 파일명 불러오기 --> 변수에 저장하여 delete
+		
+		
 		return deleteMyReviewImg + deleteMyReview;
 	}
 
@@ -211,9 +217,39 @@ public class MypageServiceImpl implements MypageService {
 		return getMyQna;
 	}
 
+//	@Override
+//	public int cancelPay(int pay_id) {
+//		System.out.println("MypageService cancelPay");
+//		int cancelPay = mypageDao.cancelPay(pay_id);
+//		return cancelPay;
+//	}
 
+	@Override
+	@Transactional
+	public int cancelResv(GunJoin gunJoin) {
+		System.out.println("MypageService cancelResv");
+		int cancelSO = mypageDao.deleteSO(gunJoin);
+		int cancelPay = mypageDao.deletePay(gunJoin);
+		int cancelResv = mypageDao.deleteResv(gunJoin);
+		
+		return cancelSO + cancelPay + cancelResv;
+	}
 
-	
+	@Override
+	public Review getMyResvReviews(GunJoin gunJoin) {
+		System.out.println("MypageService getMyResvReviews");
+		Review myResvReviews = mypageDao.getMyResvReviews(gunJoin);
+		
+		return myResvReviews;
+	}
+
+	@Override
+	public List<Review_Img> getDelImgList(Review_Img delImgNums) {
+		System.out.println("MypageService getDelImgList");
+		List<Review_Img> delImgList = mypageDao.getDelImgList(delImgNums);
+		
+		return delImgList;
+	}
 
 	
 

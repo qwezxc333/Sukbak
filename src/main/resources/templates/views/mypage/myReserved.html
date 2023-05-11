@@ -4,50 +4,12 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:replace="fragments/header :: headerFragment"></th:block>
 <head>
+<link rel="stylesheet" href="/css/lgh/mypageSidebar.css">
+</head>
 <style type="text/css">
 	.container {
 		max-width: 100%;
 	}
-	.sidenav {
-	  width: 200px;
-	  display: inline-block;
-	  z-index: 1;
-	  top: 20px;
-	  left: 10px;
-	  background: #ebf5fc;
-	  overflow-x: hidden;
-	  padding: 8px 0;
-	  margin-left: 44px; 
-	
-	}
-	
-	.sidenav a {
-	  padding: 13px 8px 6px 16px;
-	  text-decoration: none;
-	  font-size: 20px;
-	  color: #2196F3;
-	  display: block;
-	  font-weight: bold; 
-	
-	}
-	
-	.sidenav a:hover {
-	  color: #064579;
-	}
-	
-	.main {
-	  font-size: 16px; /* Increased text to enable scrolling */
-	  padding: 0px 10px 100px;
-	  display: inline-block;
-	  float: right;
-	  margin-right: 35%
-	}
-	
-	@media screen and (max-height: 450px) {
-	  .sidenav {padding-top: 15px;}
-	  .sidenav a {font-size: 18px;}
-	}
-	
 	.rTitle {
 		text-align: center;
 		font-size: 28px;
@@ -56,32 +18,94 @@
 		padding: 20px 5px 30px 5px;
 	}
 	
+	.myResvContent {
+		display: inline-block;
+	}
+	
+	.myResvList {
+		/* border: 1px solid #2196F3; */
+		padding: 10px 30px 25px 50px;
+		width: 500px;
+	}
+	
+	.line1 {
+		clear: both;
+		display: flex;
+	}
+	
 	.myResvBizName {
-		font-size: 16px;
+		font-size: 20px;
 		font-weight: bold;
 		margin-top: 10px;
 		margin-bottom: 10px;
+		color: #2196F3;
 	}
 	
-	.goToMyNewReview {
-		margin-bottom: 20px;
+	.myResvUsedDates {
+		margin-right: 35%;
+		font-size: 15px;
+		font-weight: bold;
+	}
+	
+	.myResvPayAmt {
+		justify-content: flex-end;
+		align-self: flex-end;
+		font-weight: bold;
+	}
+	
+	.myResvAccomAddr {
+		font-size: 14px;
+		color: #404040;
+		margin-bottom: 10px;
 	}
 	
 	.rButtons {
 		clear: both;
+		display: flex;
 	}
 	
 	.rButtons button {
-		margin-top: 10px;
+		clear: both;
+		margin-right: 10px;
 		width:		200px;
 		padding:	8px;
 		border-radius: 10px;
 		border: 	none;
 	}
 	
+	.goToMyNewReview button {
+		background-color: #2196F3;
+		font-weight: bold;
+		color: white;
+	}
+	
 </style>
-</head>
-<body>
+<script type="text/javascript">
+	function confirmCancel(index) {
+		alert("index-> " + index);
+		var bizId = $('#biz_id'+index).val();
+		var resvId = $('#resv_id'+index).val();
+		var rId = $('#r_id'+index).val();
+		var payId = $('#pay_id'+index).val();
+		
+		alert("payId->" + payId)
+		alert("resvId->" + resvId)
+		alert("bizId->" + bizId)
+		alert("rId->" + rId)
+		
+		var url = '/commonUser/cancelMyResv?biz_id=' + bizId
+				  + '&resv_id=' + resvId
+				  + '&r_id=' + rId
+				  + '&pay_id=' + payId;
+		
+		if (!confirm('예약을 취소하시겠습니까?\n\n※ 취소된 예약은 예약 내역에 나타나지 않게 됩니다.')) {
+			return;
+		} else {
+			window.location.href = url;
+		}
+	}
+</script>
+
 <th:block layout:fragment="content"></th:block>
 	
 	<div class="container">
@@ -101,7 +125,7 @@
 			
 			<div class="myResvContent">
 				<form action="" method="get" name="frm">
-					<div class="myResvList" th:each="myResvList : ${myResvList}">
+					<div class="myResvList" th:each="myResvList, status : ${myResvList}">
 						<!-- 숙소 대표 이미지 -->
 						<!-- 예시: th:src="@{/img/{r_img}(r_img=${product.r_img})}
 								  product라는 변수로 선언한 list값을 먼저 화면에 뿌린 후, 그 product내의 r_img를 불러오는 것. -->
@@ -110,21 +134,21 @@
 							<img th:src="@{/img/room/{r_img}(r_img=${myResvImg.r_img})}" alt="숙소 대표 사진"></p>
 						</div> -->
 						
-						<!-- 숙소이름(업체이름) -->
 						<div class="myResvBizName">
-							<span th:text="${myResvList.biz_name}"></span>
+							<span th:text="${myResvList.biz_name}">숙소이름</span>
 			 			</div>
 			 			
-			 			<!-- 숙박기간(체크인~체크아웃) -->
-						<div class="myResvUsedDates">
-							<span th:text="${#dates.format(myResvList.check_in, 'yyyy-MM-dd')} + ' ~ '"></span>
-							<span th:text="${#dates.format(myResvList.check_out, 'yyyy-MM-dd')}"></span>
+						<div class="line1">				 			
+							<div class="myResvUsedDates">
+								<span th:text="${#dates.format(myResvList.check_in, 'yyyy-MM-dd')} + ' ~ '">체크인</span>
+								<span th:text="${#dates.format(myResvList.check_out, 'yyyy-MM-dd')}">체크아웃</span>
+							</div>
+
+							<div class="myResvPayAmt">
+								<span th:text="${#numbers.formatInteger(myResvList.pay_amt, 1, 'COMMA')} + '원'">총금액</span>
+							</div>
 						</div>
 						
-						<!-- 총금액 -->
-						<div class="myResvPayAmt">
-							<span th:text="${#numbers.formatInteger(myResvList.pay_amt, 1, 'COMMA')} + '원'"></span>
-						</div>
 						
 						<!-- 숙소 주소 -->
 						<div class="myResvAccomAddr">
@@ -138,42 +162,71 @@
 						
 						<div class="rButtons">
 							<!-- 예약 취소 버튼 -->
-							<!-- payment 테이블의 상태가 결제 대기 상태인 것만 노출되기? -->
 							<div class="cancelMyResvButton">
-								<button type="button" th:if="${myResvList.pay_status eq '610'}"
-								th:onclick="|location.href='@{/commonUser/cancelMyResv(biz_id=${biz_id}, r_id=${r_id}, pay_id=${myResvList.pay_id})}'|">
-								예약 취소</button>
-			
+								<div class="cancelInfo">
+									<input type="hidden" th:id="'resv_id'+${status.index}" th:value="${myResvList.resv_id}">
+									<input type="hidden" th:id="'biz_id'+${status.index}" th:value="${myResvList.biz_id}">
+									<input type="hidden" th:id="'r_id'+${status.index}" th:value="${myResvList.r_id}">
+									<input type="hidden" th:id="'pay_id'+${status.index}" th:value="${myResvList.payment_id}">
+								</div>
+								<div class="cancelBtnShow" th:if="${#dates.createNow() < myResvList.check_in}">
+										<button type="button" th:if="${myResvList.pay_status eq '610'}"
+												  th:onclick="'confirmCancel('+${status.index}+')'">
+												  <!-- onclick="confirmCancel('+${status.index}+')"> -->
+												    예약 취소</button>
+										
+								<!-- <button type="button" th:if="${myResvList.pay_status eq '610'}"
+												  th:onclick="|location.href='@{/commonUser/cancelMyResv(biz_id=${myResvList.biz_id}, r_id=${myResvList.r_id}, resv_id=${myResvList.resv_id}, pay_id=${myResvList.pay_id})}'|">
+												    예약 취소</button> -->
+								</div>
+									<!-- <button type="button" th:if="${myResvList.pay_status eq '630'}"
+									 disabled="disabled">
+									결제 취소</button> -->
 							</div>
 							
 							<!-- 리뷰 작성하기 버튼 -->
-							<div class="goToMyNewReview">
+							<div class="ReviewButtons">
+								<div class="goToMyNewReview" th:if = "${myResvList.review_pay_id == 0}" >
+									<button type="button" th:if="${#dates.createNow()} >= ${myResvList.check_out}"
+											  th:onclick="|location.href='@{/commonUser/myNewReview(biz_id=${myResvList.biz_id},
+											  r_id=${myResvList.r_id}, pay_id=${myResvList.payment_id})}'|">
+											   후기 작성하기</button>
+								</div>
+								
+								<div class="goToMyReviews" th:if = "${myResvList.review_pay_id != 0}">
+									<!-- <button type="button" th:onclick="|location.href='@{/commonUser/myReviews}'"> -->
+									<button type="button" th:onclick="|window.location.href='/commonUser/myReviews'|">
+											    후기 확인하기</button>
+								</div>
+								
+								<input type="hidden" th:value="${myResvList.review_pay_id}">
+								
+									<!-- <button type="button" th:if="${#dates.createNow()} >= ${myResvList.check_out}"
+									th:onclick="|location.href='@{/commonUser/myNewReview(biz_id=${myResvList.biz_id},
+													r_id=${myResvList.r_id}, pay_id=${myResvList.pay_id})}'|">
+													후기 작성하기</button> -->
+								
+							</div>
+							<!-- <div class="goToMyNewReview">
+								<input type="text" th:value="${myResvList.review_pay_id}">
 								<th:block th:with="biz_id=${myResvList.biz_id}, r_id=${myResvList.r_id}">
 									<button type="button" th:if="${#dates.createNow()} >= ${myResvList.check_out}"
-									th:onclick="|location.href='@{/commonUser/myNewReview(biz_id=${biz_id}, r_id=${r_id}, pay_id=${myResvList.pay_id})}'|">
-									후기 작성하기</button>
+									th:onclick="|location.href='@{/commonUser/myNewReview(biz_id=${myResvList.biz_id},
+													r_id=${myResvList.r_id}, pay_id=${myResvList.pay_id})}'|">
+													후기 작성하기</button>
 								</th:block>
-							</div>
-								
-							<!-- <div class="rBack">
-								<input type="hidden" th:value="${myResvList.pay_id}">
-								<button type="button"  name="backToMypage"
-								th:onclick="|location.href='@{/commonUser/mypage}'|">
-								마이페이지로 돌아가기</button>
 							</div> -->
+								
 						</div>
 							
 					</div>
 				</form>
 			</div>
+			
 		</div>
 		
 	</div>
-	<p>
 	
 
-
-
-</body>
 <th:block th:replace="fragments/footer :: footerFragment"></th:block>
 </html>

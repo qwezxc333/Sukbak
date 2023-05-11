@@ -59,9 +59,10 @@ public class RoomImgController {
 				// 파일 확장자
 				final String extension = FilenameUtils.getExtension(file.getOriginalFilename());
 				// 서버에 저장할 파일명
+				if (!extension.equals("")) { 
 				String savedName = uploadFile(file.getBytes(), uploadPath, room, extension);
 				System.out.println("RoomImgController roomImgInsertForm savedName -> "+savedName);
-				
+				}
 		}
 		
 		room = ss.roomSelect(room);

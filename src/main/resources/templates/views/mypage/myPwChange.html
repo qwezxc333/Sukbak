@@ -4,47 +4,15 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:replace="fragments/header :: headerFragment"></th:block>
 <head>
+<link rel="stylesheet" href="/css/lgh/mypageSidebar.css">
+</head>
 <style type="text/css">
-	.sidenav {
-	  width: 200px;
-	  position: fixed;
-	  z-index: 1;
-	  top: 20px;
-	  left: 10px;
-	  background: #ebf5fc;
-	  overflow-x: hidden;
-	  padding: 8px 0;
-	  margin-top: 100px; 
-	  margin-left: 44px; 
-	
-	}
-	
-	.sidenav a {
-	  padding: 13px 8px 6px 16px;
-	  text-decoration: none;
-	  font-size: 20px;
-	  color: #2196F3;
-	  display: block;
-	  font-weight: bold; 
-	
-	}
-	
-	.sidenav a:hover {
-	  color: #064579;
-	}
-	
 	.pwcTitle {
 		text-align: left;
 		font-size: 28px;
 		font-weight: bold;
 		color: #00b7f7;
 		padding: 20px 5px 30px 5px;
-	}
-	
-	.main {
-	  margin-left: 250px; /* Same width as the sidebar + left position in px */
-	  font-size: 16px; /* Increased text to enable scrolling */
-	  padding: 0px 10px 100px;
 	}
 	
 	.pwChk {
@@ -78,7 +46,6 @@
 	#pwcBack {
 		width: 200px
 	}
-	
 </style>
 <script type="text/javascript">
 
@@ -114,9 +81,9 @@ function PwdChk() {
 }
 
 </script>
-</head>
-<body>
+
 <th:block layout:fragment="content"></th:block>
+
 	<div class="container">
 	
 		<div class="sidenav">
@@ -128,9 +95,11 @@ function PwdChk() {
 		</div>
 	
 		<div class="main">
+		
 			<div class="pwcTitle">
 				<p>비밀번호 변경하기</p>
 			</div>
+			
 			<div class="pwChk">
 				<input type="hidden" name="matchPw"  th:value="${myPassword.password}">
 				<div class="pwData">
@@ -145,6 +114,7 @@ function PwdChk() {
 				<button type="button" id="pwcBack"
 						th:onclick="|location.href='@{/commonUser/myProfile}'|">내 프로필로 돌아가기</button>
 			</div>
+			
 		</div>
 		
 	</div>
