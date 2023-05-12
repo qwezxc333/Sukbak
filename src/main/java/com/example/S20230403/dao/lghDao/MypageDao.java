@@ -19,9 +19,7 @@ public interface MypageDao {
 
 			// 예약 관련
 			List<GunJoin> 		getMyResvList(String user_id);
-//			List<GunJoin> 		GetMyResvImgList(GunJoin biz_id);
 			Review 				getMyResvReviews(GunJoin gunJoin);
-//			int 				cancelPay(int pay_id);
 			int 				deleteSO(GunJoin gunJoin);
 			int 				deletePay(GunJoin gunJoin);
 			int 				deleteResv(GunJoin gunJoin);
@@ -35,19 +33,12 @@ public interface MypageDao {
 			// 작성된 후기 관련
 			List<Review> 		getMyReviewList(String user_id);
 			List<Review_Img> 	getMyReviewImgList(List<Integer> myPayIds);
-			Review 				getMyRevUpdate(int pay_id);
-			List<Review_Img> 	getRevImages(int pay_id);
 			List<Review_Img> 	getDelImgList(Review_Img delImgNums);
-			int 				updateMyReview(Review review);
 			int 				deleteMyReviewImg(int pay_id);
 			int 				deleteMyReview(int pay_id);
 			
-			// 탈퇴 관련
-			int 				checkPassword(String user_id, String inputPW);
+			// 탈퇴 관련;
 			int 				updateWithdraw(String user_id);
 			int 				putWithdraw(Out outData);
-			
-			// 1:1 문의 관련
-			Qna 				getMyQna(String user_id);
 
 }
