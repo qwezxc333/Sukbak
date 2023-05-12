@@ -26,13 +26,13 @@ public class ProductsFilterServiceImpl implements ProductsFilterService {
 		// 기존 로직을 재활용하기 위함과 값이 재대로 넘어왔는지 확인하기 위해 객체에 넣어줌.
 		String accom_type = accom.getAccom_type();
 		String user_id = accom.getUser_id();
-		System.out.println("찜목록 서비스 accom_type-> "+accom_type);
-		System.out.println("찜목록 서비스 user_id-> "+ user_id);
+//		System.out.println("찜목록 서비스 accom_type-> "+accom_type);
+//		System.out.println("찜목록 서비스 user_id-> "+ user_id);
 		// accom_type에 맞게 모든 상품을 다 가져오는 로직
 		List<Accom> cgProductLists = dao.cgGetProductByAccomtype(accom_type);
 		// user_id값이 변하지 않는지 확인.
 		user_id = accom.getUser_id();
-		System.out.println("찜목록 서비스 리스트 가져오고  user_id-> "+ user_id);
+	//	System.out.println("찜목록 서비스 리스트 가져오고  user_id-> "+ user_id);
 		
 		// 로그인한 user_id로 찜 테이블에서 리스트 가져오기
 		// 로그인을 하지 않았다면 리스트가 없음.
@@ -47,7 +47,7 @@ public class ProductsFilterServiceImpl implements ProductsFilterService {
 		// 우선 리스트를 하나 하나 꺼내준다.
 		for(Accom accom2 : cgProductLists) {
 			//user_id가 살아잇는지 확인.
-			System.out.println("이중 for문안에서 유저아이디-> "+user_id);
+			//System.out.println("이중 for문안에서 유저아이디-> "+user_id);
 			
 			// 이미지 사진도 꺼내줌
 			for(Room_Img room_Img : cgRoom_img) {
@@ -78,13 +78,13 @@ public class ProductsFilterServiceImpl implements ProductsFilterService {
 	public List<Accom> cgGetProductListsByAddr(Accom accom) {
 		// 기존 로직을 재활용하기 위함과 값이 재대로 넘어왔는지 확인하기 위해 객체에 넣어줌.
 		String user_id = accom.getUser_id();
-		System.out.println("주소기반 유저아이디 나와야됨 1 -> "+user_id);
+		//System.out.println("주소기반 유저아이디 나와야됨 1 -> "+user_id);
 		// accom_type과 addr에 맞게 모든 상품을 다 가져오는 로직
 		List<Accom> cgProductLists = dao.cgGetProductListsByAddr(accom);
 		
 		// 숙박업소 썸네일 가져오는 로직
 		List<Room_Img> cgGetRoomImg = dao.cgGetRoom_img();
-		System.out.println("주소기반 유저아이디 나와야됨 2 -> "+user_id);
+		//System.out.println("주소기반 유저아이디 나와야됨 2 -> "+user_id);
 		
 		// 로그인한 user_id로 찜 테이블에서 리스트 가져오기
 		// 로그인을 하지 않았다면 리스트가 없음.
@@ -96,7 +96,7 @@ public class ProductsFilterServiceImpl implements ProductsFilterService {
 		// 우선 리스트를 하나 하나 꺼내준다.
 		for(Accom accom2 : cgProductLists) {
 			//user_id가 살아잇는지 확인.
-			System.out.println("주소기반 유저아이디 나와야됨 3 -> "+user_id);
+			//System.out.println("주소기반 유저아이디 나와야됨 3 -> "+user_id);
 			
 			// 이미지 사진도 꺼내줌
 			for(Room_Img room_Img : cgGetRoomImg) {
@@ -130,7 +130,7 @@ public class ProductsFilterServiceImpl implements ProductsFilterService {
 			List<Room_Img> cgAjaxProductImg = dao.cgGetRoom_img();
 			List<Zzim> zzimLists = dao.getZzimLists(user_id);
 			List<ChanJoin> cgAjaxProductListsByAccomtypeAndAddr = new ArrayList<ChanJoin>();
-			System.out.println("user_id 잘 가져왓나 확인용 2-> "+user_id);
+			//System.out.println("user_id 잘 가져왓나 확인용 2-> "+user_id);
 			
 			for(ChanJoin chanJoin2 : cgAjaxProductLists) {
 				System.out.println("user_id 잘 가져왓나 확인용 foreach -> "+user_id);

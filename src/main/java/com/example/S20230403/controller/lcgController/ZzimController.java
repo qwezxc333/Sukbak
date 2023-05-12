@@ -23,7 +23,7 @@ public class ZzimController {
 	//  유저마이페이지에서 user_id를 파라미터로 내가 찜한 숙소 목록 보기 
 	@GetMapping("/commonUser/myZzim")
 	public String getMyAccomZzimListsByUser_id(@AuthenticationPrincipal PrincipalDetail userDetail, Model model) {
-		System.out.println("컨트롤러 getMyZzim 시작");
+		//System.out.println("컨트롤러 getMyZzim 시작");
 		// 로그인 아이디 넣기 
 		String user_id = userDetail.getUsername();
 		
@@ -34,9 +34,9 @@ public class ZzimController {
 		List<Accom> myAccomZzimListsByUser_id = service.getMyAccomZzimListsByUser_id(user_id);
 		
 		
-		System.out.println("컨트롤러 myAccomZzimLists 사이즈 3나와야됨  -> "+myAccomZzimListsByUser_id.size());
-		System.out.println("컨트롤러 myAccomZzimLists 사이즈 3나와야됨  -> "+myAccomZzimListsByUser_id);
-		System.out.println("컨트롤러 getMyZzim 유저 아디 -> "+user_id);
+//		System.out.println("컨트롤러 myAccomZzimLists 사이즈 3나와야됨  -> "+myAccomZzimListsByUser_id.size());
+//		System.out.println("컨트롤러 myAccomZzimLists 사이즈 3나와야됨  -> "+myAccomZzimListsByUser_id);
+//		System.out.println("컨트롤러 getMyZzim 유저 아디 -> "+user_id);
 		
 		// 찜할 때 권한을 계속 물고 가기 때문에 같이 보내준다. 
 		model.addAttribute("products", myAccomZzimListsByUser_id);

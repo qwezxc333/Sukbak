@@ -34,14 +34,6 @@ public class ProductsFilterRestController {
 //		System.out.println("ajax cgProductList getcapacity->"+chanJoin.getR_capacity());
 //		System.out.println("ajax cgProductList minPrice->"+chanJoin.getMin_price_r2());
 
-	
-		if (chanJoin.getKind() == 1) {
-			System.out.println("ajax cgProductList 인기순");
-		}else if(chanJoin.getKind() == 2) {
-			System.out.println("ajax cgProductList 낮은가격순");
-		}else if(chanJoin.getKind() == 3) {
-			System.out.println("ajax cgProductList 높은가격순");
-		}
 		
 		// userDetail에 있는 정보를 넣을 필드를 초기화 함.
 		// user_id 초기화
@@ -58,8 +50,8 @@ public class ProductsFilterRestController {
 			user_id = userDetail.getUsername();
 			auth = userDetail.getAuthorities();
 		}
-		System.out.println("로그인하고 안하고 확인하기 -> "+user_id);
-		System.out.println("로그인하고 안하고 확인하기 -> "+auth);
+//		System.out.println("로그인하고 안하고 확인하기 -> "+user_id);
+//		System.out.println("로그인하고 안하고 확인하기 -> "+auth);
 		// id를 세팅하는 이유는 서비스에 가서 로그인한 아이디 값으로 zzim 목록을 가져오기 위함
 		// 그리고 zzim 리스트의 user_id와 로그인한 아이디 값이 일치했을 때 accom모델에 있는 zzim_status에 Y라는 값을 넣기 위함. 서비스 딴 참고.
 		chanJoin.setUser_id(user_id);
@@ -67,8 +59,8 @@ public class ProductsFilterRestController {
 		List<ChanJoin> cgAjaxProductLists = service.cgGetAjaxProductListsByAccomtypeAndAddr(chanJoin);
 		
 		
-		System.out.println("ajax cgProductList  사이즈 -> "+cgAjaxProductLists.size());
-		System.out.println("ajax cgProductList  끝");
+//		System.out.println("ajax cgProductList  사이즈 -> "+cgAjaxProductLists.size());
+//		System.out.println("ajax cgProductList  끝");
 		return cgAjaxProductLists;
 	}
 	

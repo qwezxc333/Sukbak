@@ -23,13 +23,13 @@ public class SellerReivewMgtRestController {
 		System.out.println("/cgGetAjaxSortingReviewLists kind-> "+review.getKind());
 		System.out.println("/cgGetAjaxSortingReviewLists kind-> "+review.getBiz_id());
 		// kind가 잘 들어오는지 확인용.
-		if(1 == review.getKind()) {
-			System.out.println("최신순");
-		}else if(2 == review.getKind()) {
-			System.out.println("낮은 평점순");
-		}else {
-			System.out.println("높은 평점순");
-		}
+//		if(1 == review.getKind()) {
+//			System.out.println("최신순");
+//		}else if(2 == review.getKind()) {
+//			System.out.println("낮은 평점순");
+//		}else {
+//			System.out.println("높은 평점순");
+//		}
 		List<Review> ajaxReviewSortingLists = service.cgGetAjaxSortingReviewLists(review);
 		return ajaxReviewSortingLists;
 		
