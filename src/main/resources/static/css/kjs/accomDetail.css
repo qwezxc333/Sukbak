@@ -31,6 +31,21 @@
 		float: right;
 	}
 	
+	.accomBizname, .accomAddr {
+		max-width: 307px;
+	}
+	
+	.accomBizname h2{
+		font-size: 24px;
+		font-weight: bold;
+	}
+	
+	.accomAddr p{
+		color: gray;
+		height: 40px;
+		margin: 10px 0 0 0;
+	}
+	
 	#myTab{
 		margin-bottom: 10px;
 	}
@@ -41,6 +56,7 @@
 	
 	.date-icon{
 		display: inline-block;
+		padding-top: 8px;
 	}
 	
 	.nav-link{
@@ -184,7 +200,7 @@
 		.calendar-icon{
 			position: absolute;
 			cursor: default;
-			top: 27%;
+			top: 45%;
 			left: 1%;
 		}
 		

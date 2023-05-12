@@ -22,4 +22,16 @@ public class MyQnaServiceImpl implements MyQnaService {
 		return myQna;
 	}
 
+	@Override
+	public void myQnaUpdate(Qna qna) {
+		md.myQnaUpdate(qna);
+		
+	}
+	
+	@Override
+	public void myQnaDelete(int qna_id) {
+		md.myQnaDelete(qna_id);
+	}
+
+
 }

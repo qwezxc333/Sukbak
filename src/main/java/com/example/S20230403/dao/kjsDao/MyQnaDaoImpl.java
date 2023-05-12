@@ -28,4 +28,15 @@ public class MyQnaDaoImpl implements MyQnaDao {
 		return myQna;
 	}
 
+	@Override
+	public void myQnaUpdate(Qna qna) {
+		session.update("jsMyQnaUpdate", qna);
+	}
+	
+	@Override
+	public void myQnaDelete(int qna_id) {
+		session.delete("jsMyQnaDelete", qna_id);
+	}
+
+
 }
