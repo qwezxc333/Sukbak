@@ -1,9 +1,9 @@
 //찜 삭제 로직
 function cgAjaxDeleteZzim(biz_id, user_id, auth){
-	alert("찜삭제 시작");
-	alert("biz_id -> "+biz_id);
-	alert("user_id-> "+user_id);
-	alert("auth-> "+auth);
+	//alert("찜삭제 시작");
+	//alert("biz_id -> "+biz_id);
+	//alert("user_id-> "+user_id);
+	//alert("auth-> "+auth);
 	
 	// insert 하는 ajax
 	$.ajax({
@@ -116,7 +116,7 @@ $.ajax({
             str += "      <a href='/accomDetail?biz_id=" + this.biz_id + "&checkIn=" + checkIn + "&checkOut=" + checkOut + "'>";
             str += "        <div class='cgProduct_list_img'>";
             str += "          <ul>";
-            str += "            <li><img class='thumbnail_img' src='/img/" + this.r_img + "'></li>";
+            str += "            <li><img class='thumbnail_img' src='" + this.r_img + "'></li>";
             str += "          </ul>";
             str += "        </div>";
             str += "        <div class='cgProduct_list_contents'>";
@@ -147,7 +147,7 @@ $.ajax({
           str += "</div>";
           str += "</div>";
           
-		alert('ajax str->' + str)
+		//alert('ajax str->' + str)
 		$(".cgProduct_lists_area").html(str);
 	}
 });

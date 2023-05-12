@@ -131,10 +131,10 @@
 	            		  checkOut : formatDate(vCheckOut)},
 	            success: data => {
 	            	let html = "";
-	            	
+	            												
 	            	data.forEach( item => {
 	            		html += '<div class="roomList">'
-	            		html += '<div class="roomListImg"><img src=/img/room/' + item.r_img + ' alt = roomImage ></div>';
+	            		html += '<div class="roomListImg"><img src=' + item.r_img + ' alt = roomImage ></div>';
 	            		html += '<div class="roomListContent">';
 	            		html += '<h2>' + item.r_name + '</h2>';
 	            		html += '<p>가격  <br>' + formatPrice(item.r_price) + ' / 1박</p>';

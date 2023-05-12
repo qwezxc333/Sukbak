@@ -12,7 +12,7 @@
 	        AND p.user_id = u.user_id
 	        AND resv.biz_id = p.biz_id
 	        AND resv.user_id = p.user_id
-	        AND resv.user_id = p.user_id
+	        AND resv.resv_id = p.resv_id
 	        AND p.pay_id = re.pay_id
 	        AND r.biz_id = #{biz_id}
         ORDER BY re.review_date desc

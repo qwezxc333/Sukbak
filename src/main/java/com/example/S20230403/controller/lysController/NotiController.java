@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.S20230403.model.Event;
 import com.example.S20230403.model.Notice_Faq;
 import com.example.S20230403.model.Qna;
-import com.example.S20230403.service.lcgService.EventService;
+
 import com.example.S20230403.service.lysService.NotiServiceImpl;
 
 import lombok.RequiredArgsConstructor;

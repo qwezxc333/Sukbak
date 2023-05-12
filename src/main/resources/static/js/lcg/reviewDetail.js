@@ -13,7 +13,7 @@ function checkLength(index) {
 	}
 
 	function chk(index){
-		// 띄어쓰기까지 없애기
+		// 띄어쓰기까지 없애기 trim()으로 스페이스바 만 눌러도 통과되는걸 방지.
 		var del_reason = $("#del_reason"+index).val().trim();
 		if(del_reason == "" || del_reason == null){
 			alert("내용을 입력해주세요");
@@ -22,6 +22,7 @@ function checkLength(index) {
 		alert("접수되었습니다.");
 		return true;
 	} 
+	
 	
 	function cgGetAjaxSortingReviewLists(biz_id, kind){
 		var kind = kind;
@@ -72,7 +73,7 @@ function checkLength(index) {
 					str += "<div class = 'accomReviewRoomImg'>";
 					$(this.reviewImages).each(function(){
 					    if (this.review_img) { // 이미지가 있을 경우에만 img 태그 추가
-					        str += "<img src = '/img/review/"+this.review_img + "'class='img-thumbnail' onerror='this.style.display='none';'>";
+					        str += "<img src = '"+this.review_img + "'class='img-thumbnail' onerror='this.style.display='none';'>";
 					    }
 					});
 					str += "<div class='ReviewDeleteBtn'>";
@@ -104,6 +105,7 @@ function checkLength(index) {
 					str += "<input type='hidden' name='pay_id' id= 'pay_id' value='" + this.pay_id + "'>";
 					str += "<input type='hidden' name='biz_id' id= 'biz_id' value='" + this.biz_id + "'>";
 					str += "<input type='hidden' name='del_request' id= 'del_request' value='" + this.del_request + "'>";
+					str += "<input type='text' name='kind' id= 'kind' value='" + kind + "'>";
 					str += "</div>";
 					str += "<div class='modal-footer'>";
 					str += "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>닫기</button>";
@@ -118,7 +120,7 @@ function checkLength(index) {
 					str += "</div>";
 					str += "</div>";
 				});
-				alert("ajax str-> "+str);
+				//alert("ajax str-> "+str);
 				$(".accomReviewContainer").html(str);
 			}
 		}) 
