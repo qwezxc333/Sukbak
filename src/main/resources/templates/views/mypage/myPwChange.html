@@ -52,6 +52,12 @@
 function PwdChk() {
 	var inputPwd	= $('#inputPwd').val();
 	var newPwd		= $('#newPwd').val();
+	var newPwdChk		= $('#newPwdChk').val();
+	
+	if(newPwd != newPwdChk){
+		alert("변경할 비밀번호가 일치하지 않습니다.")
+		return;
+	}
 
 	if (!inputPwd) {
 		alert("비밀번호가 입력되지 않았습니다.")
@@ -88,7 +94,7 @@ function PwdChk() {
 		  <a href="/commonUser/myReserved">예약 내역</a>
 		  <a href="/commonUser/myReviews">후기 관리</a>
 		  <a href="/commonUser/myZzim">내 찜목록</a>
-		  <a href="/commonUser/myQnA">나의 문의</a>
+		  <a href="/commonUser/myQna">나의 문의</a>
 		</div>
 	
 		<div class="main">
@@ -101,7 +107,9 @@ function PwdChk() {
 					<label for="inputPwd">현재 비밀번호</label><br>
 					<input type="password" name="inputPwd" id="inputPwd"><br>
 					<label for="newPwd">변경 비밀번호</label><br>
-					<input type="password" name="newPwd" id="newPwd">
+					<input type="password" name="newPwd" id="newPwd"><br>
+					<label for="newPwd">변경 비밀번호 확인</label><br>
+					<input type="password" name="newPwdChk" id="newPwdChk">
 				</div>
 			</div>
 			<div class="pwcButton">

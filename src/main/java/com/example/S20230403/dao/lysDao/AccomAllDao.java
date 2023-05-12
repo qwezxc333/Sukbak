@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 @RequiredArgsConstructor
 @Slf4j
-public class DaoImpl06 implements Dao06 {
+public class AccomAllDao implements AccomAllDaoImpl {
 	private final SqlSession session;
 
 	@Override
@@ -40,9 +40,9 @@ public class DaoImpl06 implements Dao06 {
 		List<Accom> searchAc =null;
 		try {
 			searchAc =session.selectList("yssearchAc",accom);
-			System.out.println("다오 임플 시작 서치쪽 "+searchAc.size());
+			//system.out.println("다오 임플 시작 서치쪽 "+searchAc.size());
 		} catch (Exception e) {
-			System.out.println("다오 임플 서치쪽 에러 서치쪽 "+e.getMessage());
+			//system.out.println("다오 임플 서치쪽 에러 서치쪽 "+e.getMessage());
 		}
 		return searchAc;
 	}
@@ -52,9 +52,9 @@ public class DaoImpl06 implements Dao06 {
 		List<Users> userlist =null;
 		try {
 			userlist =session.selectList("ysUserlist",user_id);
-			System.out.println("다오 임플 시작 일반 유저 사이즈 "+userlist.size());
+			//system.out.println("다오 임플 시작 일반 유저 사이즈 "+userlist.size());
 		} catch (Exception e) {
-			System.out.println("userlist 쪽 에러 확잉용 다오 임플임 "+e.getMessage());
+			//system.out.println("userlist 쪽 에러 확잉용 다오 임플임 "+e.getMessage());
 		}
 
 		return userlist;
@@ -76,12 +76,12 @@ public class DaoImpl06 implements Dao06 {
 		int condCount = 0;
 		try {
 			condCount = session.selectOne("condTotalUsers", user_id);
-			System.out.println("dao 카운팅 사이즈-> "+condCount);
+			//system.out.println("dao 카운팅 사이즈-> "+condCount);
 
 		} catch (Exception e) {
-			System.out.println("dao coundTotalUser 에러 -> "+e.getMessage());
+			//system.out.println("dao coundTotalUser 에러 -> "+e.getMessage());
 		}
-		System.out.println("dao condTotalEmp 끝");
+		//system.out.println("dao condTotalEmp 끝");
 		return condCount;
 	}
 
@@ -89,12 +89,12 @@ public class DaoImpl06 implements Dao06 {
 	public List<Users> listSearchUsers(Users users) {
 		List<Users> listSearchUsers=null;
 		try {
-			System.out.println("*DAo listSearchUsers users==*>"+users);
+			//system.out.println("*DAo listSearchUsers users==*>"+users);
 			// 키워드 검색
 			listSearchUsers = session.selectList("ysSearchList",users);
-			System.out.println("dao listSearchUsers 사이즈-> "+listSearchUsers.size());
+			//system.out.println("dao listSearchUsers 사이즈-> "+listSearchUsers.size());
 		} catch (Exception e) {
-			System.out.println("dao listSearchUsers 에러 -> "+e.getMessage());
+			//system.out.println("dao listSearchUsers 에러 -> "+e.getMessage());
 		}
 
 		return listSearchUsers;
@@ -106,10 +106,10 @@ public class DaoImpl06 implements Dao06 {
 		List<Payment> getr_name=null;
 		try {
 			getr_name=session.selectList("ysr_name",pmt);
-			System.out.println("*DAo getr_name 업소명==*>"+getr_name);
+			//system.out.println("*DAo getr_name 업소명==*>"+getr_name);
 
 		} catch (Exception e) {
-			System.out.println("dao getr_name 에러 -> "+e.getMessage());
+			//system.out.println("dao getr_name 에러 -> "+e.getMessage());
 		}
 		return getr_name;
 	}
@@ -119,10 +119,10 @@ public class DaoImpl06 implements Dao06 {
 		List<AccomPayment> getapt=null;
 		try {
 			getapt=session.selectList("ygetapt",apt);
-			System.out.println("*DAo getr_name 업소명==*>"+getapt);
+			//system.out.println("*DAo getr_name 업소명==*>"+getapt);
 
 		} catch (Exception e) {
-			System.out.println("dao getapt 에러 -> "+e.getMessage());
+			//system.out.println("dao getapt 에러 -> "+e.getMessage());
 		}
 		return getapt;		
 	}
@@ -132,10 +132,10 @@ public class DaoImpl06 implements Dao06 {
 		List<Room> getR_price=null;
 		try {
 			getR_price=session.selectList("ygetR_pricet",apt);
-			System.out.println("*DAo getr_name 업소명==*>"+getR_price);
+			//system.out.println("*DAo getr_name 업소명==*>"+getR_price);
 
 		} catch (Exception e) {
-			System.out.println("dao listSearchUsers 에러 -> "+e.getMessage());
+			//system.out.println("dao listSearchUsers 에러 -> "+e.getMessage());
 		}
 		return getR_price;		
 	}
@@ -148,14 +148,14 @@ public class DaoImpl06 implements Dao06 {
 	    try {
 	        result = session.insert("ysInsertPayment", apt);
 	        if (result > 0) {
-	            System.out.println("insertPayment 성공");
+	            //system.out.println("insertPayment 성공");
 	            return 1;
 	        } else {
-	            System.out.println("insertPayment 실패");
+	            //system.out.println("insertPayment 실패");
 	            return 0;
 	        }
 	    } catch (Exception e) {
-	        System.out.println("insertPayment 오류: " + e.getMessage());
+	        //system.out.println("insertPayment 오류: " + e.getMessage());
 	        // 오류 처리를 위해 추가 작업 수행
 	        e.printStackTrace();
 	        return 0;
@@ -168,14 +168,14 @@ public class DaoImpl06 implements Dao06 {
 	    try {
 	        result = session.insert("ysInsertReserv", apt);
 	        if (result > 0) {
-	            System.out.println("insertReserv 성공");
+	            //system.out.println("insertReserv 성공");
 	            return 1;
 	        } else {
-	            System.out.println("insertReserv 실패");
+	            //system.out.println("insertReserv 실패");
 	            return 0;
 	        }
 	    } catch (Exception e) {
-	        System.out.println("insertReserv 오류: " + e.getMessage());
+	        //system.out.println("insertReserv 오류: " + e.getMessage());
 	        // 오류 처리를 위해 추가 작업 수행
 	        e.printStackTrace();
 	        return 0;
@@ -188,14 +188,14 @@ public class DaoImpl06 implements Dao06 {
 	    try {
 	        result = session.insert("ysInsertSoldOut", resvDateList);
 	        if (result > 0) {
-	            System.out.println("insertSoldOut 성공");
+	            //system.out.println("insertSoldOut 성공");
 	            return 1;
 	        } else {
-	            System.out.println("insertSoldOut 실패");
+	            //system.out.println("insertSoldOut 실패");
 	            return 0;
 	        }
 	    } catch (Exception e) {
-	        System.out.println("insertSoldOut 오류: " + e.getMessage());
+	        //system.out.println("insertSoldOut 오류: " + e.getMessage());
 	        // 오류 처리를 위해 추가 작업 수행
 	        e.printStackTrace();
 	        return 0;
@@ -208,10 +208,10 @@ public class DaoImpl06 implements Dao06 {
 		List<Soldout> getResvDate=null;
 		try {
 			getResvDate=session.selectList("ysGetResvDatet",apt);
-			System.out.println("*DAo getResvDate 잘 가지고 왔냐??==*>"+getResvDate);
+			//system.out.println("*DAo getResvDate 잘 가지고 왔냐??==*>"+getResvDate);
 
 		} catch (Exception e) {
-			System.out.println("dao getResvDate 에러 -> "+e.getMessage());
+			//system.out.println("dao getResvDate 에러 -> "+e.getMessage());
 		}
 		return getResvDate;			
 	}

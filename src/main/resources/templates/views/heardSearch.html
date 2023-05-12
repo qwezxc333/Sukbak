@@ -3,13 +3,17 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <th:block layout:fragment="content">
-	<div style="max-width:1270px; text-align:center;margin: 0 auto;" class="tab-pane fade show active" id="list-home" role="tabpanel"
+	<div style="max-width: 1270px; text-align: center; margin: 0 auto;"
+		class="tab-pane fade show active" id="list-home" role="tabpanel"
 		aria-labelledby="list-home-list">
 		<div class="accordion" id="accordionPanelsStayOpenExample"
 			th:each="searchAc :${searchAc}">
+
 			<div class="accordion-item">
+
 				<h2 class="accordion-header"
 					th:id="panelsStayOpen-headingOne+${searchAc.biz_id}">
+
 					<button class="accordion-button" type="button"
 						data-bs-toggle="collapse"
 						th:attr="data-bs-target=|#panelsStayOpen-collapseOne${searchAc.biz_id}"
@@ -22,11 +26,19 @@
 					th:id="panelsStayOpen-collapseOne+${searchAc.biz_id}"
 					class="accordion-collapse collapse show"
 					th:aria-labelledby="panelsStayOpen-headingOne+${searchAc.biz_id}">
-					<div class="accordion-body" style="text-align: center;">
-						주소 : <strong><a th:text="${searchAc.addr}"></a></strong><br>
-						세부정보 : <a th:text="${searchAc.description}"></a>
-
+					<div class="accordion-body" style="">
+						<div class="accordion" id="accordionPanelsStayOpenExample"
+							th:each="searchAc: ${searchAc}">
+							<div class="card" style="width: 18rem;">
+								<img src="..." class="card-img-top" alt="...">
+								<div class="card-body">
+								</div>
+							</div>
+							주소: <strong><a th:text="${searchAc.addr}"></a></strong><br>
+							세부정보: <a th:text="${searchAc.description}"></a>
+						</div>
 					</div>
+
 				</button>
 			</div>
 		</div>

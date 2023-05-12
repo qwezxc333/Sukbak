@@ -11,7 +11,10 @@
 		select Count(*) from accom
 	</select>
 	<select id="jhQnaTotal" resultType="int">
-		select Count(*) from qna
+	   select COUNT(*) 
+			from qna q, qna_re r
+			WHERE q.qna_id = r.qna_id
+		<!-- select Count(*) from qna -->
 	</select>
 	<select id="jhQnaReTotal" resultType="int">
 		select Count(*)

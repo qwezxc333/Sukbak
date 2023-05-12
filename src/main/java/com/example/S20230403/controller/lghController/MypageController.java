@@ -43,22 +43,22 @@ public class MypageController {
 	private final MypageService mypageService;
 	private final static BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-	
+
 	@Value("${file.dir}")
 	private String fileDir;
 
-//	=============== 프로필 관련 ===============
+	//	=============== 프로필 관련 ===============
 	// 내 프로필 화면 조회(View)
 	@RequestMapping("/commonUser/myProfile")
 	public String getMyProfile(@AuthenticationPrincipal PrincipalDetail userDetail, Model model) {
-		//System.out.println("MypageController getMyProfile start");
+		System.out.println("MypageController getMyProfile start");
 		String user_id = userDetail.getUsername();
-		//System.out.println("MypageController 프로필 정보 불러오기 user_id-> " + user_id);
+		System.out.println("MypageController 프로필 정보 불러오기 user_id-> " + user_id);
 		Users myProfileInfo = mypageService.getMyProfileInfo(user_id);
 		// mapper로 가져온 결과 조회
-		//System.out.println("MypageController 프로필 정보 myProfileInfo-> " + myProfileInfo);
+		System.out.println("MypageController 프로필 정보 myProfileInfo-> " + myProfileInfo);
 		model.addAttribute("myProfileInfo", myProfileInfo);
-		
+
 		return "/views/mypage/myProfile";
 	}
 
@@ -86,13 +86,13 @@ public class MypageController {
 
 		return "/views/mypage/myPwChange";
 	}
-	
+
 
 	// 비밀번호 체크
 	@RequestMapping("/pwdChk")
 	@ResponseBody
 	public String checkPW(@AuthenticationPrincipal PrincipalDetail userDetail,
-						  @RequestParam("inputPwd") String inputPwd) {
+			@RequestParam("inputPwd") String inputPwd) {
 		String password = userDetail.getPassword();
 		//System.out.println("Controller password-> " + password);
 		Boolean pwdBool = passwordEncoder.matches(inputPwd, password);
@@ -106,7 +106,7 @@ public class MypageController {
 	// 비밀번호 수정(프로세스)
 	@RequestMapping("/commonUser/updateMyPassword")
 	public String updatePassword(@AuthenticationPrincipal PrincipalDetail userDetail, Users users,
-								 @RequestParam("newPwd") String newPwd, HttpSession session) {
+			@RequestParam("newPwd") String newPwd, HttpSession session) {
 		//System.out.println("MypageController updatePassword start...");
 		//System.out.println("newPwdBefore-> " + newPwd);
 		String encodedPwd = new BCryptPasswordEncoder().encode(newPwd);
@@ -115,16 +115,16 @@ public class MypageController {
 		users.setUser_id(userDetail.getUsername());
 		int updatePwd = mypageService.updatePassword(users);
 		//System.out.println("MypageController updatePassword result-> " + updatePwd);
-		
+
 		// 보안 정책상 처음 로그인된 ID와 PW 정보로 session이 유지되기때문에 로그아웃 후 업데이트 된 정보로 재로그인 필요.
 		session.invalidate();
 
 		return "redirect:/";
 	}
 
-	
-	
-//  =============== 예약 관련 ===============
+
+
+	//  =============== 예약 관련 ===============
 	// 예약 내역 조회(View)
 	@RequestMapping("/commonUser/myReserved")
 	public String getMyResvLists(@AuthenticationPrincipal PrincipalDetail userDetail, GunJoin gunJoin, Model model) {
@@ -150,7 +150,7 @@ public class MypageController {
 	// 예약 취소하기(프로세스)
 	@RequestMapping("/commonUser/cancelMyResv")
 	public String cancelMyResv(@AuthenticationPrincipal PrincipalDetail userDetail, Model model,
-							   String biz_id, int resv_id, int r_id, int pay_id, GunJoin gunJoin) {
+			String biz_id, int resv_id, int r_id, int pay_id, GunJoin gunJoin) {
 		//System.out.println("MypageController cancelMyResv Start...");
 
 		// soldout, payment 삭제 후 --> reservation 삭제
@@ -163,23 +163,25 @@ public class MypageController {
 		return "redirect:/commonUser/myReserved";
 	}
 
-	
-	
-//  =============== 리뷰 관련 ===============
+
+
+	//  =============== 리뷰 관련 ===============
 	// 신규 후기 작성 페이지(View)
 	@RequestMapping("/commonUser/myNewReview")
 	public String getMyNewReview(@AuthenticationPrincipal PrincipalDetail userDetail,
-								 @RequestParam("biz_id") String biz_id, @RequestParam("r_id") int r_id,
-								 Room room, Review review, Review_Img revImg, Model model) {
-		//System.out.println("MypageController getMyNewReview Start...");
+			@RequestParam("biz_id") String biz_id, @RequestParam("r_id") int r_id,
+			Room room, Review review, Review_Img revImg, Model model) {
+		System.out.println("MypageController getMyNewReview Start...");
 
 		// 사용자 닉네임 가져오기
 		String user_id = userDetail.getUsername();
 		Users myNickname = mypageService.getMyProfileInfo(user_id);
+		System.out.println("room.getBiz_id  ="+room.getBiz_id());
+		System.out.println("room.getBiz_name()) ==>"+room.getBiz_name());
 
 		// 숙박업체 정보 가져오기
 		GunJoin myAccomInfo = mypageService.getMyAccomInfo(room);
-
+		System.out.println(myAccomInfo.getBiz_name());
 		model.addAttribute("myNickname", myNickname);
 		model.addAttribute("myAccomInfo", myAccomInfo);
 		model.addAttribute("revImg", revImg);
@@ -191,7 +193,7 @@ public class MypageController {
 	// 새 후기 작성하기(프로세스)
 	@RequestMapping("/commonUser/putReview")
 	public String putMyReview(GunJoin gj, Model model, @RequestParam MultipartFile[] files,
-							  Review review, Review_Img revImg) throws Exception {
+			Review review, Review_Img revImg) throws Exception {
 		//System.out.println("1. MypageController putMyReview Start...");
 		//System.out.println("1. MypageController putMyReview Start... 메타경로 -> "+fileDir);
 
@@ -200,8 +202,8 @@ public class MypageController {
 		//System.out.println("별점 점수-> " + rating);
 		int putMyReview = mypageService.putMyReview(gj);
 		//System.out.println("2. MypageController putMyReview result-> " + putMyReview);
-		
-//	 	 ---메타데이터 경로 구하는 법.
+
+		//	 	 ---메타데이터 경로 구하는 법.
 		// 	    이미지 업로드(메타데이터로 경로 지정, jsp사용할 때도 이렇게 잡을 것. getContextPath()는 옛날방식.) 
 		// 1. private final ResourceLoader resourceLoader; 빈 선언 
 		// 2. Resource resource = resourceLoader.getResource("classpath:static/img/review");
@@ -211,7 +213,7 @@ public class MypageController {
 		//      .getPath() 메서드를 호출하면 URL의 경로 부분이 반환되며, 이는 해당 리소스의 메타데이터 경로를 나타냄
 		// 4. metaPath -> C:\Users\\user\git\S20230403\bin\main\static\img\review\ 나온 값을 yml에 주입함.
 		// 5. yml에 주입한 값을 @Value 어노테이션으로 컨트롤러에 선언, String 변수로 받는다. (fileDir)
-		
+
 		String extension = null;
 		String savedName = null;
 		File convertFile = null;
@@ -235,24 +237,24 @@ public class MypageController {
 				//System.out.println("선택된 파일이 없습니다.");
 			}
 		}
-		
-		 if (putMyReview > 0) {
-			 return "redirect:/commonUser/myReviews";
-		 } else {
-			 model.addAttribute("msg", "후기 입력에 실패했습니다.");
-			 return "forward:/commonUser/myNewReview";
-		 }
+
+		if (putMyReview > 0) {
+			return "redirect:/commonUser/myReviews";
+		} else {
+			model.addAttribute("msg", "후기 입력에 실패했습니다.");
+			return "forward:/commonUser/myNewReview";
+		}
 
 	}
 
 	// savedName(파일명) 정의 및 DB에 입력
 	private String uploadFile(byte[] fileData, String fileDir, Review_Img revImg, String extension) throws IOException {
-	  //System.out.println("5. MypageController uploadFile start...");	
-    // View에서 이미지 출력시 '\img\review\' 부분 하드코딩하지 않도록 (보안 문제)
+		//System.out.println("5. MypageController uploadFile start...");	
+		// View에서 이미지 출력시 '\img\review\' 부분 하드코딩하지 않도록 (보안 문제)
 		// 해당 경로 별도로 추출하여 String타입 변수(extractedPath)로 선언
 		String extractedPath = fileDir.substring(fileDir.lastIndexOf("\\img\\review\\"));
 		//System.out.println("자른 경로 -> "+extractedPath);
-		
+
 		// Review_img_ID(MAX) 키 정의
 		// 현재 작성중인 Review의 pay_id와 일치하는 review값 중 MAX Review_img_id 값을 가져와 거기에 1을 더한다.
 		int imgNum = mypageService.getMaxImgNum(revImg);
@@ -261,7 +263,7 @@ public class MypageController {
 		//System.out.println("6.MypageController uploadFile imgNum-> " + imgNum);
 		// 파일명 형식: (extractedPath)(pay_id)-(review_img_id).(확장자명)--> 예) \img\review\26-1.jpg
 		String savedName = extractedPath + revImg.getPay_id() + "-" + imgNum + "." + extension;
-    //System.out.println("7.MypageController uploadFile savedName-> " + savedName);
+		//System.out.println("7.MypageController uploadFile savedName-> " + savedName);
 		// 지정한 경로(fileDir)에 동명의 폴더가 존재하지 않을시 Directory 생성
 		// Directory 생성
 		File fileDirectory = new File(fileDir);
@@ -285,8 +287,8 @@ public class MypageController {
 		return savedName;
 	}
 
-	
-	
+
+
 	// 작성한 후기 조회(View)
 	@RequestMapping("/commonUser/myReviews")
 	public String getMyReviews(@AuthenticationPrincipal PrincipalDetail userDetail, Model model) throws IOException {
@@ -300,7 +302,7 @@ public class MypageController {
 
 		return "/views/mypage/myReviews";
 	}
-	
+
 	// 작성한 후기 삭제(프로세스)
 	@RequestMapping("/commonUser/deleteMyReview")
 	public String deleteMyReview(@AuthenticationPrincipal PrincipalDetail userDetail, Review review) {
@@ -328,9 +330,9 @@ public class MypageController {
 		return "redirect:/commonUser/myReviews";
 	}
 
-	
-	
-//  =============== 탈퇴 관련 ===============
+
+
+	//  =============== 탈퇴 관련 ===============
 	// 회원 탈퇴 화면(View)
 	@RequestMapping("/commonUser/myWithdraw")
 	public String getWithdrawInfo(@AuthenticationPrincipal PrincipalDetail userDetail, Model model) {
@@ -345,10 +347,10 @@ public class MypageController {
 	// 회원 탈퇴 요청(프로세스)
 	@RequestMapping("/commonUser/updateWithdraw")
 	public String updateWithdraw(@AuthenticationPrincipal PrincipalDetail userDetail, Out outData,
-								 Model model, HttpSession session) {
+			Model model, HttpSession session) {
 		//System.out.println("MypageController updateWithdraw Start...");
 		String user_id = userDetail.getUsername();
-		
+
 		// 탈퇴여부 Update(User 테이블에서 deactivated로 변경)
 		mypageService.updateWithdraw(user_id);
 

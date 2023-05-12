@@ -75,7 +75,7 @@ public class ProductsFilterController {
 			model.addAttribute("auth", auth);
 			model.addAttribute("products", cgProductLists);
 			model.addAttribute("accom_type", accom_type);		
-			System.out.println("컨트롤러 /cgProduct/motel 끝");
+			//System.out.println("컨트롤러 /cgProduct/motel 끝");
 			return "/views/productLists/cgProductListsWithoutHotel";
 		}
 		
@@ -89,7 +89,7 @@ public class ProductsFilterController {
 									   	  @RequestParam("addr") String addr,
 									   	  Accom accom,
 									   	  Model model) {
-		System.out.println("컨트롤러 cgProductListsByAddr 시작");
+		//System.out.println("컨트롤러 cgProductListsByAddr 시작");
 		// userDetail에 있는 정보를 넣을 필드를 초기화 함.
 		// user_id 초기화
 		String user_id = "";

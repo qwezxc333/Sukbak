@@ -30,9 +30,9 @@ public class NotiQnaDaoImpl implements NotiQnaDao {
 		List<Notice_Faq> nfqlist =null;
 		try {
 			nfqlist =session.selectList("ysNotifaq",nf);
-			System.out.println(" 다오 임플 노트"+nfqlist.size());
+			//system.out.println(" 다오 임플 노트"+nfqlist.size());
 		} catch (Exception e) {
-			System.out.println("다오 임플 노트쪽 에러 노트쪽 "+e.getMessage());
+			//system.out.println("다오 임플 노트쪽 에러 노트쪽 "+e.getMessage());
 		}
 		return nfqlist;	
 	}
@@ -42,9 +42,9 @@ public class NotiQnaDaoImpl implements NotiQnaDao {
 		List<Notice_Faq> listnc =null;
 		try {
 			listnc =session.selectList("yslistnc",nf);
-			System.out.println(" 다오 임플 노트"+listnc.size());
+			//system.out.println(" 다오 임플 노트"+listnc.size());
 		} catch (Exception e) {
-			System.out.println("다오 임플 노트쪽 에러 노트쪽 "+e.getMessage());
+			//system.out.println("다오 임플 노트쪽 에러 노트쪽 "+e.getMessage());
 		}
 		return listnc;	
 
@@ -55,9 +55,9 @@ public class NotiQnaDaoImpl implements NotiQnaDao {
 		List<Notice_Faq> listnt =null;
 		try {
 			listnt =session.selectList("yslistnt",nf);
-			System.out.println(" 다오 임플 노트"+listnt.size());
+			//system.out.println(" 다오 임플 노트"+listnt.size());
 		} catch (Exception e) {
-			System.out.println("다오 임플 노트쪽 에러 노트쪽 "+e.getMessage());
+			//system.out.println("다오 임플 노트쪽 에러 노트쪽 "+e.getMessage());
 		}
 		return listnt;	
 	}
@@ -68,7 +68,7 @@ public class NotiQnaDaoImpl implements NotiQnaDao {
 		try {
 			qnaInsert =session.insert("ysQnaInsert",qna);
 		} catch (Exception e) {
-			System.out.println("qnaInsert 에러쪽 "+e.getMessage());
+			//system.out.println("qnaInsert 에러쪽 "+e.getMessage());
 		}		return qnaInsert;
 	}
 
@@ -77,9 +77,9 @@ public class NotiQnaDaoImpl implements NotiQnaDao {
 		List<Event> sukbakEvents = null;
 		try {
 			sukbakEvents = session.selectList("getEvent");
-			System.out.println("dao getevents 사이즈 -> "+sukbakEvents.size());
+			//system.out.println("dao getevents 사이즈 -> "+sukbakEvents.size());
 		} catch (Exception e) {
-			System.out.println("dao getevents error -> "+e.getMessage());
+			//system.out.println("dao getevents error -> "+e.getMessage());
 			// TODO: handle exception
 		}
 		return sukbakEvents;
