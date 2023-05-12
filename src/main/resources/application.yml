@@ -57,7 +57,10 @@ mybatis:
 
   
 file:
- dir: C:\Users\user\git\S20230403\bin\main\static\img\review\
+  dir: C:\Users\user\git\S20230403\bin\main\static\img\review\
+  
+file-room:
+  dir: C:\Users\user\git\S20230403\bin\main\static\img\room\
 
   
 

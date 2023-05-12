@@ -20,8 +20,6 @@ public interface SukbakDao {
 
 	void 			accomUpdate(Accom accom);
 
-	void 			accomDelete(String biz_id);
-
 	String 			getDBPassword(String user_id);
 
 	Users 			getNowLoginUser(String user_id);
@@ -53,6 +51,11 @@ public interface SukbakDao {
 	boolean 		getBizId(String biz_id);
 
 	void 			updateRoomCount(String biz_id, String string);
-   
-}       
-       	  
+
+	void 			accomStatus(Accom accom, String string);
+
+	List<Room> 		roomListSelectWithAccom(String biz_id);
+
+	List<Room_Img> 	selectAccomAllRoomImgList(String biz_id);  
+}        
+       	   
