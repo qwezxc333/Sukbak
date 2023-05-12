@@ -1,13 +1,53 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+   	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:replace="fragments/header :: headerFragment"></th:block>
 <head>
-<!-- <link rel="stylesheet" href="/css/kjs/myQna.css"> -->
-<link rel="stylesheet" href="/css/lgh/mypageSidebar.css">
 </head>
 <style type="text/css">
+	.container {
+		display: flex;
+		max-width: 100%;
+		justify-content: space-around;
+	}
+	
+	.sidenav {
+		width: 200px;
+		display: inline-block;
+		z-index: 1;
+		top: 20px;
+		left: 10px;
+		background: white;
+		overflow-x: hidden;
+		padding: 8px 0;
+		margin-left: 3%;
+	}
+	
+	.sidenav a {
+		padding: 10px 8px 10px 16px;
+		text-decoration: none;
+		font-size: 20px;
+		color: #2196F3;
+		display: block;
+		font-weight: bold;
+	}
+	
+	.sidenav a:hover {
+		background-color: #e6efff;
+	}
+	
+	@media screen and (max-height: 450px) {
+		.sidenav {padding-top: 15px;}
+		.sidenav a {font-size: 18px;}
+	}
+	
+	.main {
+		padding: 0px 10px 100px;
+		margin-left: auto;
+		margin-right: auto;
+		display: inline-block;
+	}
 	
 	.myProfileTitle {
 		text-align: center;
@@ -19,8 +59,6 @@
 	
 	.pItems {
 		margin-bottom: 20px;
-		text-align: center;
-		align-content: center;
 	}
 	
 	.pItems th {
@@ -57,18 +95,40 @@
 		margin: auto;
 	}
 	
-</style>
-<script type="text/javascript">
-	function savePopUp() {
-		alert("변경사항이 저장되었습니다.");
-	}
+	@media(max-width: 992px) {
+		.container {
+			flex-direction: column;
+		}
+		
+		.sidenav {
+			order: 1;
+			position: static;
+			width: 100%;
+			text-align: center;
+		}
+		
+		.main {
+			order: 2;
+		}
+		
+		.buttons {
+			text-align: center;
+		}
+		
+		button {
+			margin-top: 10px;
+			width: 80%;
+			height: 40px;
+		}
 
-</script>
+	}
+		
+</style>
 
 <th:block layout:fragment="content"></th:block>
 	<div class="container">
 	   <div class="sidenav">
-	      <a href="/commonUser/myProfile">프로필 수정</a> <a
+	      <a href="/commonUser/myProfile" style="color: #024abf;">프로필 수정</a> <a
 	         href="/commonUser/myReserved">예약 내역</a> <a
 	         href="/commonUser/myReviews">후기 관리</a> <a 
 	         href="/commonUser/myZzim">내 찜목록</a> <a 

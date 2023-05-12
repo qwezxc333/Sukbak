@@ -75,20 +75,59 @@ public class MypageDaoImpl implements MypageDao {
 		return myResvList;
 	}
 
-//	@Override
-//	public List<GunJoin> GetMyResvImgList(GunJoin biz_id) {
-//		System.out.println("MypageDAO GetMyResvImgList start...");
-//		List<GunJoin> myResvImgList = null;
-//		try {
-//			myResvImgList = session.selectList("getMyResvImgList", biz_id);
-//			System.out.println("MypageDAO myResvImgList.size()-> " + myResvImgList.size());
-//		} catch (Exception e) {
-//			System.out.println("MypageDAO GetMyResvImgList Exception-> " + e.getMessage());
-//		}
-//		return myResvImgList;
-//	}
+	@Override
+	public Review getMyResvReviews(GunJoin gunJoin) {
+		System.out.println("MypageDAO getMyResvReviews start");
+		Review myResvReviews = null;
+		try {
+			myResvReviews = session.selectOne("getMyResvReviews", gunJoin);
+			System.out.println("MypageDAO myResvReviews-> " + myResvReviews);
+		} catch (Exception e) {
+			System.out.println("MypageDAO getMyResvReviews Exception-> " + e.getMessage());
+		}
+		return myResvReviews;
+	}
 
-	
+	@Override
+	public int deleteSO(GunJoin gunJoin) {
+		System.out.println("MypageDAO deleteSO start");
+		int deleteSO = 0;
+		try {
+			deleteSO = session.delete("deleteSO", gunJoin);
+			System.out.println("MypageDAO deleteSO-> " + deleteSO);
+		} catch (Exception e) {
+			System.out.println("MypageDAO deleteSO Exception-> " + e.getMessage());
+		}
+		return deleteSO;
+	}
+
+	@Override
+	public int deletePay(GunJoin gunJoin) {
+		System.out.println("MypageDAO deletePay start");
+		int deletePay = 0;
+		try {
+			deletePay = session.delete("deletePay", gunJoin);
+			System.out.println("MypageDAO deletePay-> " + deletePay);
+		} catch (Exception e) {
+			System.out.println("MypageDAO deletePay Exception-> " + e.getMessage());
+		}
+		return deletePay;
+	}
+
+	@Override
+	public int deleteResv(GunJoin gunJoin) {
+		System.out.println("MypageDAO deleteResv start");
+		int deleteResv = 0;
+		try {
+			deleteResv = session.delete("deleteResv", gunJoin);
+			System.out.println("MypageDAO deleteResv-> " + deleteResv);
+		} catch (Exception e) {
+			System.out.println("MypageDAO deleteResv Exception-> " + e.getMessage());
+		}
+		return deleteResv;
+	}
+
+
 	
 	@Override
 	public GunJoin getMyAccomInfo(Room room) {
@@ -170,28 +209,16 @@ public class MypageDaoImpl implements MypageDao {
 	}
 	
 	@Override
-	public Review getMyRevUpdate(int pay_id) {
-		System.out.println("MypageDAO getMyRevUpdate start");
-		Review getMyRevUpdate = null;
+	public List<Review_Img> getDelImgList(Review_Img delImgNums) {
+		System.out.println("MypageDAO getDelImgList start");
+		List<Review_Img> delImgList = null;
 		try {
-			getMyRevUpdate = session.selectOne("getMyRevData", pay_id);
+			delImgList = session.selectList("getDelImgList", delImgNums);
+			System.out.println("MypageDAO delImgList-> " + delImgList);
 		} catch (Exception e) {
-			System.out.println("MypageDAO getMyRevUpdate Exception-> " + e.getMessage());
+			System.out.println("MypageDAO getDelImgList Exception-> " + e.getMessage());
 		}
-		return getMyRevUpdate;
-	}
-	
-	@Override
-	public int updateMyReview(Review review) {
-		System.out.println("MypageDAO updateMyReview start");
-		int updateMyReview = 0;
-		try {
-			updateMyReview = session.update("updateMyReview", review);
-			System.out.println("MypageDAO updateMyReview result-> " + updateMyReview);
-		} catch (Exception e) {
-			System.out.println("MypageDAO updateMyReview Exception-> " + e.getMessage());
-		}
-		return updateMyReview;
+		return delImgList;
 	}
 	
 	@Override
@@ -221,22 +248,7 @@ public class MypageDaoImpl implements MypageDao {
 		return deleteMyReview;
 	}
 
-	@Override
-	public int checkPassword(String user_id, String inputPW) {
-		System.out.println("MypageDAO inputPW-> " + inputPW);
-		int    pwChkResult = 0;
-		String dbPwString = null;
-		try {
-			dbPwString = session.selectOne("checkPassword", user_id);
-			System.out.println("MypageDAO dbPwString-> " + dbPwString);
-			if (inputPW.equals(dbPwString)) pwChkResult = 1;
-			else                            pwChkResult = 0;
-			
-		} catch (Exception e) {
-			System.out.println("MypageDAO checkPassword Exception-> " + e.getMessage());
-		}
-		return pwChkResult;
-	}
+	
 	
 	@Override
 	public int updateWithdraw(String user_id) {
@@ -263,112 +275,5 @@ public class MypageDaoImpl implements MypageDao {
 		}
 		return putWithdraw;
 	}
-
-	
-	
-	@Override
-	public Qna getMyQna(String user_id) {
-		System.out.println("MypageDAO getMyQna start");
-		Qna getMyQna = null;
-		try {
-			getMyQna = session.selectOne("getMyQna", user_id);
-		} catch (Exception e) {
-			System.out.println("MypageDAO getMyQna Exception-> " + e.getMessage());
-		}
-		return getMyQna;
-	}
-
-	@Override
-	public List<Review_Img> getRevImages(int pay_id) {
-		System.out.println("MypageDAO getRevImages Start..");
-		List<Review_Img> getMyRevImages = null;
-		try {
-			getMyRevImages = session.selectList("getMyRevImages", pay_id);
-		} catch (Exception e) {
-			System.out.println("MypageDAO getRevImages Exception-> " + e.getMessage());
-		}
-		return getMyRevImages;
-	}
-
-//	@Override
-//	public int cancelPay(int pay_id) {
-//		System.out.println("MypageDAO cancelPay start");
-//		int cancelPay = 0;
-//		try {
-//			cancelPay = session.update("cancelPay", pay_id);
-//		} catch (Exception e) {
-//			System.out.println("MypageDAO cancelPay Exception-> " + e.getMessage());
-//		}
-//		return cancelPay;
-//	}
-
-	@Override
-	public int deleteSO(GunJoin gunJoin) {
-		System.out.println("MypageDAO deleteSO start");
-		int deleteSO = 0;
-		try {
-			deleteSO = session.delete("deleteSO", gunJoin);
-			System.out.println("MypageDAO deleteSO-> " + deleteSO);
-		} catch (Exception e) {
-			System.out.println("MypageDAO deleteSO Exception-> " + e.getMessage());
-		}
-		return deleteSO;
-	}
-
-	@Override
-	public int deletePay(GunJoin gunJoin) {
-		System.out.println("MypageDAO deletePay start");
-		int deletePay = 0;
-		try {
-			deletePay = session.delete("deletePay", gunJoin);
-			System.out.println("MypageDAO deletePay-> " + deletePay);
-		} catch (Exception e) {
-			System.out.println("MypageDAO deletePay Exception-> " + e.getMessage());
-		}
-		return deletePay;
-	}
-
-	@Override
-	public int deleteResv(GunJoin gunJoin) {
-		System.out.println("MypageDAO deleteResv start");
-		int deleteResv = 0;
-		try {
-			deleteResv = session.delete("deleteResv", gunJoin);
-			System.out.println("MypageDAO deleteResv-> " + deleteResv);
-		} catch (Exception e) {
-			System.out.println("MypageDAO deleteResv Exception-> " + e.getMessage());
-		}
-		return deleteResv;
-	}
-
-	@Override
-	public Review getMyResvReviews(GunJoin gunJoin) {
-		System.out.println("MypageDAO getMyResvReviews start");
-		Review myResvReviews = null;
-		try {
-			myResvReviews = session.selectOne("getMyResvReviews", gunJoin);
-			System.out.println("MypageDAO myResvReviews-> " + myResvReviews);
-		} catch (Exception e) {
-			System.out.println("MypageDAO getMyResvReviews Exception-> " + e.getMessage());
-		}
-		return myResvReviews;
-	}
-
-	@Override
-	public List<Review_Img> getDelImgList(Review_Img delImgNums) {
-		System.out.println("MypageDAO getDelImgList start");
-		List<Review_Img> delImgList = null;
-		try {
-			delImgList = session.selectList("getDelImgList", delImgNums);
-			System.out.println("MypageDAO delImgList-> " + delImgList);
-		} catch (Exception e) {
-			System.out.println("MypageDAO getDelImgList Exception-> " + e.getMessage());
-		}
-		return delImgList;
-	}
-
-	
-
-
 
 }
