@@ -105,7 +105,7 @@ function checkLength(index) {
 					str += "<input type='hidden' name='pay_id' id= 'pay_id' value='" + this.pay_id + "'>";
 					str += "<input type='hidden' name='biz_id' id= 'biz_id' value='" + this.biz_id + "'>";
 					str += "<input type='hidden' name='del_request' id= 'del_request' value='" + this.del_request + "'>";
-					str += "<input type='text' name='kind' id= 'kind' value='" + kind + "'>";
+					str += "<input type='hidden' name='kind' id= 'kind' value='" + kind + "'>";
 					str += "</div>";
 					str += "<div class='modal-footer'>";
 					str += "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>닫기</button>";

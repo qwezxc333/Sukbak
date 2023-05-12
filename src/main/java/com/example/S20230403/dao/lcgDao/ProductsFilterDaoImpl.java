@@ -20,12 +20,12 @@ public class ProductsFilterDaoImpl implements ProductsFilterDao {
 		// 호텔 빼고 accom_type으로 호텔 리스트 가져오기
 		@Override
 		public List<Accom> cgGetProductByAccomtype(String accom_type) {
-			System.out.println(" 다오 cgProductByAccomtype 시작");
+			//System.out.println(" 다오 cgProductByAccomtype 시작");
 			List<Accom> cgProductLists = null;
 			try {
 				cgProductLists = session.selectList("cgGetProductByAccomtype",accom_type);
 			} catch (Exception e) {
-				System.out.println(" 다오 cgProductByAccomtype 에러-> "+e.getMessage());
+				//System.out.println(" 다오 cgProductByAccomtype 에러-> "+e.getMessage());
 				// TODO: handle exception
 			}
 			return cgProductLists;
@@ -35,12 +35,12 @@ public class ProductsFilterDaoImpl implements ProductsFilterDao {
 		// 호텔 사진빼고 다가져오기
 		@Override
 		public List<Room_Img> cgGetRoom_img() {
-			System.out.println("다오 getRoom_img 시작");
+			//System.out.println("다오 getRoom_img 시작");
 			List<Room_Img> cgGetRoom_img = null;
 			try {
 				cgGetRoom_img = session.selectList("cgGetRoom_img");
 			} catch (Exception e) {
-				System.out.println("다오 getRoom_img 에러-> "+e.getMessage());
+				//System.out.println("다오 getRoom_img 에러-> "+e.getMessage());
 			}
 			return cgGetRoom_img;
 		}
@@ -49,13 +49,13 @@ public class ProductsFilterDaoImpl implements ProductsFilterDao {
 		// 주소로 호텔빼고 리스트 가져오기
 		@Override
 		public List<Accom> cgGetProductListsByAddr(Accom accom) {
-			System.out.println("dao cgGetProductListsByAddr 시작");
+			//System.out.println("dao cgGetProductListsByAddr 시작");
 			List<Accom> cgProductListsByAddr = null;
 			try {
 				cgProductListsByAddr = session.selectList("cgGetProductListsByAddr", accom);
-				System.out.println("dao cgGetProductListsByAddr 사이즈-> "+cgProductListsByAddr.size());
+				//System.out.println("dao cgGetProductListsByAddr 사이즈-> "+cgProductListsByAddr.size());
 			} catch (Exception e) {
-				System.out.println("dao cgGetProductListsByAddr 에러-> "+e.getMessage());
+				//System.out.println("dao cgGetProductListsByAddr 에러-> "+e.getMessage());
 				// TODO: handle exception
 			}
 			return cgProductListsByAddr;
@@ -65,14 +65,14 @@ public class ProductsFilterDaoImpl implements ProductsFilterDao {
 		// ajax dao 필터링
 		@Override
 		public List<ChanJoin> cgGetAjaxProductListsByAccomtypeAndAddr(ChanJoin chanJoin) {
-			System.out.println("다오 cgProductList[통합] 시작");
+			//System.out.println("다오 cgProductList[통합] 시작");
 			List<ChanJoin> cgAjaxProductLists = null;
 			try {
 				//cgAjaxProductListsWithoutHotel = session.selectList("cgGetAjaxProductListsWithoutHotel", chanJoin);
 				cgAjaxProductLists = session.selectList("cgGetAjaxProductListsByAccomtypeAndAddr", chanJoin);
-				System.out.println("다오 cgProductList[통합] 침대확인용 2개 나와야됨 ->"+cgAjaxProductLists.size());
+				//System.out.println("다오 cgProductList[통합] 침대확인용 2개 나와야됨 ->"+cgAjaxProductLists.size());
 			} catch (Exception e) {
-				System.out.println("다오 cgProductList 에러 -> "+e.getMessage());
+				//System.out.println("다오 cgProductList 에러 -> "+e.getMessage());
 				// TODO: handle exception
 			}
 			return cgAjaxProductLists;
@@ -81,12 +81,12 @@ public class ProductsFilterDaoImpl implements ProductsFilterDao {
 
 		@Override
 		public List<Zzim> getZzimLists(String user_id) {
-			System.out.println("다오 getZzimLists시작");
+			//System.out.println("다오 getZzimLists시작");
 			List<Zzim> zzimLists = null;
 			try {
 				zzimLists = session.selectList("getZzimLists", user_id);
 			} catch (Exception e) {
-				System.out.println("getZzimLists 에러-> "+e.getMessage());
+				//System.out.println("getZzimLists 에러-> "+e.getMessage());
 				// TODO: handle exception
 			}
 			return zzimLists;
