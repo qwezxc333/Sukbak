@@ -24,13 +24,13 @@ public class MypageDaoImpl implements MypageDao {
 
 	@Override
 	public Users getMyProfileInfo(String user_id) {
-		//System.out.println("MypageDAO getMyProfileInfo Start...");
+		System.out.println("MypageDAO getMyProfileInfo Start...");
 		Users myProfileInfo = new Users();
 		try {
 			myProfileInfo = session.selectOne("getMyProfileInfo", user_id);
-			//System.out.println("MypageDAO myProfileInfo getNickname-> " + myProfileInfo.getNickname());
+			System.out.println("MypageDAO myProfileInfo getNickname-> " + myProfileInfo.getNickname());
 		} catch (Exception e) {
-			//System.out.println("MypageDAO myProfileInfo Exception-> " + e.getMessage());
+			System.out.println("MypageDAO myProfileInfo Exception-> " + e.getMessage());
 		}
 		return myProfileInfo;
 	}

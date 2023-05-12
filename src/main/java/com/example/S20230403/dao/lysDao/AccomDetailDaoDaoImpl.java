@@ -22,7 +22,7 @@ public class AccomDetailDaoDaoImpl implements AccomDetailDao {
 
 	@Override
 	public List<Accom> fetchAccomList() {
-		System.out.println("다오 fetchAccomList 스타트");
+		//system.out.println("다오 fetchAccomList 스타트");
 		List<Accom> accomList = session.selectList("jsAccomList");
 		
 		return accomList;
@@ -31,7 +31,7 @@ public class AccomDetailDaoDaoImpl implements AccomDetailDao {
 	//숙소별 객실리스트 가져오기
 	@Override
 	public List<JinJoin> fetchAccomDetailList(String biz_id, String checkIn, String checkOut) {
-		System.out.println("다오 fetchAccomDetailList 스타트");
+		//system.out.println("다오 fetchAccomDetailList 스타트");
 		
 		Map<String, Object> reservedCheck = new HashMap<>();
 		reservedCheck.put("biz_id", biz_id);
@@ -45,7 +45,7 @@ public class AccomDetailDaoDaoImpl implements AccomDetailDao {
 	//상세페이지 메인 숙소이름,주소 만 가져오기
 	@Override
 	public Accom fetchAccomBasicInfo(String biz_id) {
-		System.out.println("다오 fetchAccomBasicInfo 스타트");
+		//system.out.println("다오 fetchAccomBasicInfo 스타트");
 		Accom accomBasicInfo = session.selectOne("jsAccomBasicInfo", biz_id);
 		return accomBasicInfo;
 	}
@@ -53,7 +53,7 @@ public class AccomDetailDaoDaoImpl implements AccomDetailDao {
 	//상세페이지 메인 이미지 롤링 (모든객실 이미지 다가져오기)
 	@Override
 	public List<Room_Img> fetchRoomImgList(String biz_id) {
-		System.out.println("다오 fetchRoomImgList 스타트");
+		//system.out.println("다오 fetchRoomImgList 스타트");
 		List<Room_Img> roomImg = session.selectList("jsRoomImgList", biz_id);
 		return roomImg;
 	}
@@ -61,7 +61,7 @@ public class AccomDetailDaoDaoImpl implements AccomDetailDao {
 	//한 사업자에 대한 리뷰리스트 가져오기
 	@Override
 	public List<Review> fetchAccomReviewList(String biz_id) {
-		System.out.println("다오 fetchAccomReviewList 스타트");
+		//system.out.println("다오 fetchAccomReviewList 스타트");
 		List<Review> accomReview = session.selectList("jsAccomReviewList", biz_id);
 		return accomReview;
 	}
@@ -69,10 +69,10 @@ public class AccomDetailDaoDaoImpl implements AccomDetailDao {
 	//리뷰리스트에서 뽑은 List타입의 payIds를 이용해서 한 리뷰에 대한 pay_id와 그에 맞는 pay_id의 이미지'들' 가져오기
 	@Override
 	public List<Review_Img> fetchAccomReviewImgList(List<Integer> payIds) {
-		System.out.println("다오 fetchAccomReviewImgList 스타트");
-		System.out.println("payIds->"+payIds);
+		//system.out.println("다오 fetchAccomReviewImgList 스타트");
+		//system.out.println("payIds->"+payIds);
 		List<Review_Img> accomReviewImg = session.selectList("jsAccomReviewImgList", payIds);
-		System.out.println("payIds->"+payIds);
+		//system.out.println("payIds->"+payIds);
 		return accomReviewImg;
 	}
 

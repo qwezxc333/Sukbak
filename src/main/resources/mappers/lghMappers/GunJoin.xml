@@ -102,9 +102,6 @@
 						AND   r.r_id  		= ri.r_id
 			WHERE       	r.biz_id		= #{biz_id}
 			AND         	r.r_id 		= #{r_id}
-			AND         	ri.r_img_id = (SELECT   MIN(ri.r_img_id)
-                                       FROM     room r, room_img ri
-                                       WHERE    ri.r_id = r.r_id)
 	</select>
 	
 	<!-- Review 테이블에 insert하기(이미지 제외) -->

@@ -26,7 +26,7 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public Users getMyProfileInfo(String user_id) {
-		//System.out.println("MypageServiceImpl getMyProfileInfo...");
+		System.out.println("MypageServiceImpl getMyProfileInfo...");
 		Users myProfileInfo = mypageDao.getMyProfileInfo(user_id);
 		return myProfileInfo;
 	}

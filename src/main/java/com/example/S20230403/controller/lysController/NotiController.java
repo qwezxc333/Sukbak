@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.S20230403.model.Event;
 import com.example.S20230403.model.Notice_Faq;
 import com.example.S20230403.model.Qna;
-
 import com.example.S20230403.service.lysService.NotiServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,7 @@ public class NotiController {
 	
 	@GetMapping("noti")
 	public String noti(Model model,Notice_Faq nf, Event event) {
-		System.out.println("Qna Start Controller");
+		//system.out.println("Qna Start Controller");
 	
 		List<Notice_Faq> nfqlist =notiServiceImpl.listNoticeFaq(nf);
 		List<Notice_Faq> listnc =notiServiceImpl.listnc(nf);
@@ -35,7 +34,7 @@ public class NotiController {
 		List<Event> sukbakEvents = notiServiceImpl.getEvent(nf);
 		/*
 		 * 
-		 * System.out.println("이벤트 사이즈 -> "+sukbakEvents.size());
+		 * //system.out.println("이벤트 사이즈 -> "+sukbakEvents.size());
 		 * 
 		 */
 		model.addAttribute("sukbakEvents", sukbakEvents);
@@ -54,10 +53,10 @@ public class NotiController {
 		qna.setQna_type(qna.getQna_type());
 		qna.setQna_title(qna.getQna_title());
 		qna.setQna_content(qna.getQna_content());
-		System.out.println("qna.getUser_id() =>"+qna.getUser_id());
-		System.out.println("qna.getQna_type() => "+qna.getQna_type());
-		System.out.println("qna.getQna_title() =>"+qna.getQna_title());
-		System.out.println("qna.getQna_content() =>"+qna.getQna_content());
+		//system.out.println("qna.getUser_id() =>"+qna.getUser_id());
+		//system.out.println("qna.getQna_type() => "+qna.getQna_type());
+		//system.out.println("qna.getQna_title() =>"+qna.getQna_title());
+		//system.out.println("qna.getQna_content() =>"+qna.getQna_content());
 		
 		
 		int qnaInsert =notiServiceImpl.qnaInset(qna);
