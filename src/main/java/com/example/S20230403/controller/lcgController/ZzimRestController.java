@@ -20,25 +20,25 @@ public class ZzimRestController {
 	
 	@GetMapping("/cgAjaxInsertZzim")
 	public int cgAjaxInsertZzim(Zzim zzim) {
-		System.out.println("cgAjaxInsertZzim 시작");
+		//System.out.println("cgAjaxInsertZzim 시작");
 		int result = 0;
-		System.out.println(zzim.getAuth());
-		System.out.println(zzim.getUser_id());
-		System.out.println(zzim.getBiz_id());
+//		System.out.println(zzim.getAuth());
+//		System.out.println(zzim.getUser_id());
+//		System.out.println(zzim.getBiz_id());
 		// 혹시몰라서 여기서 한번 더 보안
 		if(zzim.getUser_id() == null || zzim.getUser_id() == "" || !zzim.getAuth().equals("[USER]")) {
 			return 0;
 		}
 		
 		result = service.cgAjaxInsertZzim(zzim);
-		System.out.println("찜결과 1이 나와야됨-> "+result);
+		//System.out.println("찜결과 1이 나와야됨-> "+result);
 		
 		return result;
 	}
 	
 	@GetMapping("/cgAjaxDeletetZzim")
 	public int cgAjaxDeletetZzim(Zzim zzim) {
-		System.out.println("cgAjaxInsertZzim 시작");
+		//System.out.println("cgAjaxInsertZzim 시작");
 		int result = 0;
 		System.out.println(zzim.getAuth());
 		System.out.println(zzim.getUser_id());
@@ -49,7 +49,7 @@ public class ZzimRestController {
 		}
 		
 		result = service.cgAjaxDeleteZzim(zzim);
-		System.out.println("컨트롤러 찜삭제결과 1이 나와야됨-> "+result);
+		//System.out.println("컨트롤러 찜삭제결과 1이 나와야됨-> "+result);
 		
 		return result;
 	}

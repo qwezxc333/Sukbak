@@ -92,4 +92,5 @@ public class PrincipalDetail implements UserDetails, OAuth2User {
         return user.getUser_status().equals("activated");
     }
 
+
 }

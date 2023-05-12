@@ -98,8 +98,6 @@
 			return;
 		}
 		
-		/* alert("비밀번호 inputPwd->"+inputPwd) */
-		
 		if ($('#cb5').is(':checked')) {
 			var textarea = $('#outTextarea').val();
 			if(!textarea) {
@@ -118,7 +116,6 @@
 				if (response === "1") {
 					if (confirm("정말 탈퇴하시겠습니까?")) {
 						console.log("비밀번호가 일치합니다.");
-						// parameter 여러개인 경우
 						var sendData = $('form').serialize();
 						location.href="updateWithdraw?" + sendData;
 					} else {
@@ -139,33 +136,28 @@
 </script>
 
 <th:block layout:fragment="content"></th:block>
-	
 	<div class="container">
 		<div class="sidenav">
 		  <a href="/commonUser/myProfile">프로필 수정</a>
 		  <a href="/commonUser/myReserved">예약 내역</a>
 		  <a href="/commonUser/myReviews">후기 관리</a>
 		  <a href="/commonUser/myZzim">내 찜목록</a>
-		  <a href="/commonUser/myQnA">내가 남긴 문의</a>
+		  <a href="/commonUser/myQnA">나의 문의</a>
 		</div>
 	
 		<div class="main">
 			<div class="outTitle">
 				<p>SukBak 탈퇴하기</p>
 			</div>
-			
 			<!-- 상단 고정 메시지(닉네임 변동) -->
 			<div class="withdrawTop">
 				<input type="hidden" name="user_id" th:value="${withdrawInfo.user_id}">
 				<span th:text="${withdrawInfo.nickname}"></span> 님과 더 함께하지 못해 아쉬워요!
 				<p>탈퇴 사유를 알려주시면 향후 더욱 나은 서비스를 제공해드리는 데에 도움이 됩니다.</p>
 			</div>
-			
-			
 			<!-- 탈퇴 사유(Insert값) -->
 			<div class="withdrawContent">
 				<form action="" method="get" name="frm">
-					
 					<!-- 탈퇴 사유 체크박스 -->
 					<div class="wdChkBoxes">
 						<div class="wdChkBox">
@@ -193,14 +185,14 @@
 		    		<!-- 탈퇴 상세 사유(텍스트로 작성) -->
 		    		<div class="outDetail">
 		        		<div>
-		            		<textarea name="out_content" id="outTextarea"
-		            		 style="height: 150px; width: 400px" placeholder="내용을 입력해 주세요"></textarea>
+	            		<textarea name="out_content" id="outTextarea"
+	            		 style="height: 150px; width: 400px" placeholder="내용을 입력해 주세요"></textarea>
 		        		</div>
 		        		
 		        		<!-- 비밀번호 유효성 체크 -->
 						<div class="wdPassword">
 							<p>비밀번호 입력<br>
-							<input type="password" name="inputPwd" id="inputPwd"></p>
+							<input type="text" name="inputPwd" id="inputPwd"></p>
 						</div>
 		        		
 		        		<div class="wdWarningMsg">
@@ -215,11 +207,9 @@
 		            		<button type="button" id="outBack"   th:onclick="|location.href='@{/commonUser/myProfile}'|">내 프로필로 돌아가기</button>
 		        		</div>
 		    		</div>
-		   
 				</form>
 			</div>
 		</div>
-		
 	</div>
 	
 <th:block th:replace="fragments/footer :: footerFragment"></th:block>
