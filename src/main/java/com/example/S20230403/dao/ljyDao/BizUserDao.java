@@ -283,17 +283,12 @@ public class BizUserDao implements SukbakDao{
 			System.out.println("비즈다오01 updateRoomCount string -> "+ string);
 			switch (string) {
 				case "update" :
-				System.out.println("비즈다오01 roomStatus roomCountUpdate 시작");
+				System.out.println("비즈다오01 updateRoomCount roomCountUpdate 시작");
 				sqlSession.update("roomCountUpdate", biz_id);
 				break;
 				
-				case "add" :
-				System.out.println("비즈다오01 roomStatus roomCountAdd 시작");
-				sqlSession.update("roomCountAdd", biz_id);
-				break;
-				
 				case "minus" :
-				System.out.println("비즈다오01 roomStatus roomCountMinus 시작");
+				System.out.println("비즈다오01 updateRoomCount roomCountMinus 시작");
 				sqlSession.update("roomCountMinus", biz_id);
 				break;
 			}		
