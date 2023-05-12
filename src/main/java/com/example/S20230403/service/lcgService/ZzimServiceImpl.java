@@ -35,6 +35,7 @@ public class ZzimServiceImpl implements ZzimService {
 	}
 	
 	// 내 아이디로 찜 되어 있는 목록만 가져오기 
+	// cgGetProductByAccomtype는 accomLists에 찜 여부를 붙이지만 이건 찜리스트에 AccomLists를 붙임
 	@Override
 	public List<Accom> getMyAccomZzimListsByUser_id(String user_id) {
 		System.out.println("서비스 getMyAccomZzimLists 시작");

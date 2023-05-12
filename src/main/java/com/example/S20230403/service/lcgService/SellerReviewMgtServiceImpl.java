@@ -51,10 +51,11 @@ public class SellerReviewMgtServiceImpl implements SellerReviewMgtService {
 
 	// 업체 별로 가지고 있는 리뷰 가져오는 로직  
 	@Override
-	public List<Review> getMyReviews(String biz_id) {
+	public List<Review> getMyReviews(Review p_review) {
+		String biz_id = p_review.getBiz_id();
 		System.out.println("서비스 getmyReivews 시작");
 		// 리뷰 받아오기
-		List<Review> myReviews = dao.getMyReviews(biz_id);
+		List<Review> myReviews = dao.getMyReviews(p_review);
 		
 		//biz_id, biz_name, r_name, r_id를 가져오기 위한 로직
 		List<Accom> myInfo = dao.getMyInfo(biz_id);
@@ -129,7 +130,7 @@ public class SellerReviewMgtServiceImpl implements SellerReviewMgtService {
 		return totalReviewAndBiz_id;
 	}
 	
-	// ajax 
+	// ajax biz_id와 kind를 가지고 필터링하는 로직
 	@Override
 	public List<Review> cgGetAjaxSortingReviewLists(Review reviewBiz_idKind) {
 		System.out.println("서비스 cgGetAjaxSortingReviewLists 시작");

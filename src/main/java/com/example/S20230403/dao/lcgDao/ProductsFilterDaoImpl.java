@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class ProductsFilterDaoImpl implements ProductsFilterDao {
 	private final SqlSession session;
 
-	// 호텔 빼고 accom_type으로 호텔 리스트 가져오기
+		// 호텔 빼고 accom_type으로 호텔 리스트 가져오기
 		@Override
 		public List<Accom> cgGetProductByAccomtype(String accom_type) {
 			System.out.println(" 다오 cgProductByAccomtype 시작");

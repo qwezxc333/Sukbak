@@ -22,17 +22,17 @@ public class ProductsFilterRestController {
 	
 	@RequestMapping("/cgAjaxProductList")
 	public List<ChanJoin> cgGetAjaxProductListsByAccomtypeAndAddr(@AuthenticationPrincipal PrincipalDetail userDetail, ChanJoin chanJoin){
-		System.out.println("ajax cgProductList  시작");
-		System.out.println("ajax cgProductList getKind->"+chanJoin.getKind());
-		System.out.println("ajax cgProductList getAccom_type->"+chanJoin.getAccom_type());
-		System.out.println("ajax cgProductList getCheck_in->"+chanJoin.getCheck_in());
-		System.out.println("ajax cgProductList getCheck_out->"+chanJoin.getCheck_out());
-		System.out.println("ajax cgProductList getBed_type->"+chanJoin.getBed_type());
-		System.out.println("ajax cgProductList getCafe->"+chanJoin.getCafe());
-		System.out.println("ajax cgProductList getStore->"+chanJoin.getStore());
-		System.out.println("ajax cgProductList getFitness->"+chanJoin.getFitness());
-		System.out.println("ajax cgProductList getcapacity->"+chanJoin.getR_capacity());
-		System.out.println("ajax cgProductList minPrice->"+chanJoin.getMin_price_r2());
+//		System.out.println("ajax cgProductList  시작");
+//		System.out.println("ajax cgProductList getKind->"+chanJoin.getKind());
+//		System.out.println("ajax cgProductList getAccom_type->"+chanJoin.getAccom_type());
+//		System.out.println("ajax cgProductList getCheck_in->"+chanJoin.getCheck_in());
+//		System.out.println("ajax cgProductList getCheck_out->"+chanJoin.getCheck_out());
+//		System.out.println("ajax cgProductList getBed_type->"+chanJoin.getBed_type());
+//		System.out.println("ajax cgProductList getCafe->"+chanJoin.getCafe());
+//		System.out.println("ajax cgProductList getStore->"+chanJoin.getStore());
+//		System.out.println("ajax cgProductList getFitness->"+chanJoin.getFitness());
+//		System.out.println("ajax cgProductList getcapacity->"+chanJoin.getR_capacity());
+//		System.out.println("ajax cgProductList minPrice->"+chanJoin.getMin_price_r2());
 
 	
 		if (chanJoin.getKind() == 1) {

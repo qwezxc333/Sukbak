@@ -1,15 +1,14 @@
 // 찜버튼 로직
-function cgAjaxInsertZzim(biz_id, user_id, auth){
-	alert("찜버튼 시작");
-	alert("biz_id -> "+biz_id);
-	alert("user_id-> "+user_id);
-	alert("auth-> "+auth);
+function cgAjaxInsertZzim(biz_id, user_id, auth, index){
+	//alert("찜버튼 시작");
+	//alert("index -> "+index);
+	//alert("user_id-> "+user_id);
+	//alert("auth-> "+auth);
 	// seller나 admin 찜 못하게 
 	if(auth == "[SELLER]" || auth == "[ADMIN]"){
 		alert("user 회원만 이용 가능합니다.");
 		return false;
 	}
-	
 	// 로그인을 하지 않았거나, user권한인지 판단하기 위함.
 	if(user_id == null || user_id == "" || auth != "[USER]"){
 		alert("로그인이 필요한 서비스 입니다.")
@@ -27,19 +26,27 @@ function cgAjaxInsertZzim(biz_id, user_id, auth){
 		success : function(zzim){
 			if(zzim == 1){
 				alert("찜목록에 추가하였습니다.");
+				//location.reload();
 			}else{
 				alert("찜목록 등록 실패");
 			}
 		}
 	})
-}
+	var zzimBtnInsertImg = $("#zzimBtnInsert" + index);
 
+	// 이미지 경로를 변경합니다.
+	zzimBtnInsertImg.attr("src", "/img/like.png");
+    
+   
+	
+	
+}
 // 찜 삭제 로직
-function cgAjaxDeleteZzim(biz_id, user_id, auth){
-	alert("찜삭제 시작");
-	alert("biz_id -> "+biz_id);
-	alert("user_id-> "+user_id);
-	alert("auth-> "+auth);
+function cgAjaxDeleteZzim(biz_id, user_id, auth, index){
+	//alert("찜삭제 시작");
+	//alert("index -> "+index);
+	//alert("user_id-> "+user_id);
+	//alert("auth-> "+auth);
 	
 	// insert 하는 ajax
 	$.ajax({
@@ -58,6 +65,11 @@ function cgAjaxDeleteZzim(biz_id, user_id, auth){
 			}
 		}
 	})
+	
+	var zzimBtnDeleteImg = $("#zzimBtnDelete" + index);
+
+	// 이미지 경로를 변경합니다.
+	zzimBtnDeleteImg.attr("src", "/img/dislike.png");
 	
 }
 
@@ -134,9 +146,9 @@ var maxPrice = ($("#priceSlider").val()*10000);
 if(maxPrice == 1000000){
 	maxPrice = 9999999999;
 }
-alert("maxPrice-> "+maxPrice);
-alert("user_id-> "+user_id);
-alert("auth-> "+auth);
+//alert("maxPrice-> "+maxPrice);
+//alert("user_id-> "+user_id);
+//alert("auth-> "+auth);
 // 체크아웃이 없을 때 유효성 검사
 if(checkIn != '' && !checkOut){
 	alert("체크아웃 날짜를 선택해주세요");
@@ -241,7 +253,7 @@ $.ajax({
 	dataType : 'json',
 	success : function(productSort) {
 		
-		$(productSort).each(function() {
+		$(productSort).each(function(index) {
 	     if (!checkIn || !checkOut) {
                 var diffDays = 1;
             } else {
@@ -258,7 +270,7 @@ $.ajax({
             str += "<a href='/accomDetail?biz_id=" + this.biz_id + "&checkIn="+checkIn+"&checkOut="+checkOut+"'>";
             str += "<div class='cgProduct_list_img'>";
             str += "<ul>";
-            str += "<li><img class='thumbnail_img' src='/img/" + this.r_img + "'></li>";
+            str += "<li><img class='thumbnail_img' src='" + this.r_img + "'></li>";
             str += "</ul>";
             str += "</div>";
             str += "<div class='cgProduct_list_contents'>";
@@ -278,20 +290,20 @@ $.ajax({
             if (this.zzim_status == null) {
                 str += "<div class='zzimButtons'>";
                 str += "<div>";
-                str += "<img id='zzimBtn' src='/img/dislike.png' onclick='cgAjaxInsertZzim(\"" + this.biz_id + "\", \"" + user_id + "\", \"" + auth + "\")'>";
+                str += "<img id='zzimBtnInsert" + index + "' src='/img/dislike.png' onclick='cgAjaxInsertZzim(\"" + this.biz_id + "\", \"" + user_id + "\", \"" + auth + "\", \"" + index + "\")'>";
                 str += "</div>";
                 str += "</div>";
             } else if (this.zzim_status == 'Y') {
                 str += "<div class='zzimButtons'>";
                 str += "<div>";
-                str += "<img id='zzimBtn' src='/img/like.png' onclick='cgAjaxDeleteZzim(\"" + this.biz_id + "\", \"" + user_id + "\", \"" + auth + "\")'>";
+                str += "<img id='zzimBtnDelete" + index + "' src='/img/like.png' onclick='cgAjaxDeleteZzim(\"" + this.biz_id + "\", \"" + user_id + "\", \"" + auth + "\", \"" + index + "\")'>";
                 str += "</div>";
                 str += "</div>";
             }
             str += "</div>";
 
 		})
-		alert('ajax str->' + str)
+		//alert('ajax str->' + str)
 		if(productSort == ""){
 			$(".listEmpty").show();
 			$(".cgProduct_lists_area").html(str);

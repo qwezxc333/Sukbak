@@ -66,12 +66,12 @@ public class SellerReviewMgtDaoImpl implements SellerReviewMgtDao {
 	}
 
 	@Override
-	public List<Review> getMyReviews(String biz_id) {
+	public List<Review> getMyReviews(Review review) {
 		System.out.println("다오 getMyReviews 시작");
 		List<Review> myReviews = null;
 		try {
-			myReviews = session.selectList("getMyReviews", biz_id);
-			System.out.println(biz_id+"다오 getMyReviews 사이즈 -> "+ myReviews.size());
+			myReviews = session.selectList("getMyReviews", review);
+			System.out.println("다오 getMyReviews 사이즈 -> "+ myReviews.size());
 		} catch (Exception e) {
 			System.out.println("다오 getMyReviews 에러 -> "+ e.getMessage());
 			// TODO: handle exception

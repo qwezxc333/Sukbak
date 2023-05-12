@@ -15,7 +15,7 @@ public interface SellerReviewMgtDao {
 
 	List<Accom> getMyInfo(String biz_id);
 
-	List<Review> getMyReviews(String biz_id);
+	List<Review> getMyReviews(Review review);
 
 	Users getUserNicknames(String user_id);
 

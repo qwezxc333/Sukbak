@@ -166,7 +166,7 @@
 						<p th:text="${myReviewItem.addr}"></p>
 					</div>
 					
-					<div class="myReviewContent" th:with="metaPath = ${metaPath}">
+					<div class="myReviewContent" th:with="fileDir = ${fileDir}">
 						<div class="line2">
 							<span class="rating" th:text="'평점: '+${myReviewItem.rating}+'점'"></span>
 							<span class="revDate" th:text="'작성날짜: '+${#dates.format(myReviewItem.review_date, 'yyyy/MM/dd')}"></span>
@@ -176,7 +176,9 @@
 						</div>
 					</div>
 					<div class="myReviewImage" th:each="reviewImage : ${myReviewItem.matchingReviewImages}">
-					 	 <img th:src="@{'/img/review/' + ${reviewImage.review_img}}" alt="Uploaded Image" />
+					 	<!--  <img th:src="@{${fileDir} + ${reviewImage.review_img}}" alt="Uploaded Image" />
+						<img th:src="@{'/img/review/' + ${reviewImage.review_img}}" alt="Uploaded Image" /> -->
+						<img th:src="@{${reviewImage.review_img}}" alt="Uploaded Image" />
 					</div>
 
 					<div class="myReviewButtons">
