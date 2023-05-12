@@ -8,4 +8,9 @@ public interface MyQnaService {
 
 	List<Qna> getMyQnaList(String user_id, String qna_type);
 
+	void myQnaUpdate(Qna qna);
+	
+	void myQnaDelete(int qna_id);
+
+
 }
