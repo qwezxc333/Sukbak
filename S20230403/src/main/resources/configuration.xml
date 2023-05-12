@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config
+3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias alias="Accom"
+			type="com.example.S20230403.model.Accom" />
+		
+		<typeAlias alias="AccomPayment"
+			type="com.example.S20230403.model.AccomPayment" />
+
+		<typeAlias alias="ChanJoin"
+			type="com.example.S20230403.model.ChanJoin" />
+
+		<typeAlias alias="Comm"
+			type="com.example.S20230403.model.Comm" />
+
+		<typeAlias alias="Event"
+			type="com.example.S20230403.model.Event" />
+
+		<typeAlias alias="GunJoin"
+			type="com.example.S20230403.model.GunJoin" />
+
+		<typeAlias alias="JinJoin"
+			type="com.example.S20230403.model.JinJoin" />
+		
+		<typeAlias alias="JooJoin"
+			type="com.example.S20230403.model.JooJoin" />
+
+		<typeAlias alias="Notice_Faq"
+			type="com.example.S20230403.model.Notice_Faq" />
+		
+		<typeAlias alias="Out"
+			type="com.example.S20230403.model.Out" />
+
+		<typeAlias alias="Payment"
+			type="com.example.S20230403.model.Payment" />
+
+		<typeAlias alias="Qna_Re"
+			type="com.example.S20230403.model.Qna_Re" />
+
+		<typeAlias alias="Qna"
+			type="com.example.S20230403.model.Qna" />
+
+		<typeAlias alias="Reservation"
+			type="com.example.S20230403.model.Reservation" />
+
+		<typeAlias alias="Review_Img"
+			type="com.example.S20230403.model.Review_Img" />
+
+		<typeAlias alias="Review"
+			type="com.example.S20230403.model.Review" />
+
+		<typeAlias alias="Room_Img"
+			type="com.example.S20230403.model.Room_Img" />
+
+		<typeAlias alias="Room"
+			type="com.example.S20230403.model.Room" />
+
+		<typeAlias alias="Soldout"
+			type="com.example.S20230403.model.Soldout" />
+
+		<typeAlias alias="Users"
+			type="com.example.S20230403.model.Users" />
+
+		<typeAlias alias="Zzim"
+			type="com.example.S20230403.model.Zzim" />
+	</typeAliases>
+</configuration>

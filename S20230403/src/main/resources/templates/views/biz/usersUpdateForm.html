@@ -1,0 +1,77 @@
+n<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<script type="text/javascript">
+	function goBack() {
+		location.href = "bizMain"
+	}
+	
+	function chkPassword(password1, password2) {
+		// var password1 =  $('#password1').val();;
+		// var password2 =  $('#password2').val();;
+		alert(password1);
+		alert(password2);
+ 		  if (password1 != password2) {
+		    alert("비밀번호가 일치하지 않습니다.");
+		    focus.on("#password1");
+		    focus.on("#password2");
+		    return false;
+		  } else {
+			alert("비밀번호가 일치합니다.");
+			alert("password1 -> "+password1 );
+			document.getElementById("password").value = password1;
+			alert("password - > "+document.getElementById("password"));
+		  } 
+		}
+	
+	function updateFormChk(password1, password2) {
+		alert(password1);
+		alert(password2);
+		if (password1 != password2) {
+			alert("비밀번호가 일치하지 않습니다.");
+			return false;
+		} else {
+			alert(document.getElementById("password"));
+			document.getElementById("password").value = password1;
+			alert("개인정보가 변경되었습니다");
+			return true;
+		} 
+		return false;
+	}  
+
+</script>
+<body>
+	<h3>계정정보 변경</h3>
+   <!-- <form action="/biz/usersUpdate" method="POST" onsubmit="updateFormChk(document.getElementById('password1').value, document.getElementById('password2').value); return false;" novalidate> -->
+		<form action="/biz/usersUpdate" method="POST" onsubmit="return updateFormChk(document.getElementById('password1').value, document.getElementById('password2').value);">
+			<label for="user_id">아이디</label>
+			<input type="text" readonly name="user_id" th:value="${nowLoginUser.user_id}"><br>
+			<label for="name">이름</label>
+			<input type="text" name="name" th:value="${nowLoginUser.name}"><br>
+			<label for="nickname">별명</label>
+			<input type="text" name="nickname" th:value="${nowLoginUser.nickname}"><br>
+					
+			<label for="password">비밀번호</label>
+			<input type="password" name="password1" id="password1" th:value="${nowLoginUser.password}"><br>
+			<label for="password">비밀번호 확인</label>
+			<input type="password" name="password2" id="password2" th:value="${nowLoginUser.password}">
+	 		<input type="button" value="비밀번호 확인" onclick="chkPassword(document.getElementById('password1').value, document.getElementById('password2').value)" ><br> 
+	<!-- 		<input type="button" value="비밀번호 확인" onclick="chkPassword()" ><br> -->
+			
+			<label for="tel">연락처</label>
+			<input type="tel" name="phone" th:value="${nowLoginUser.phone}"><br>
+			
+			<input type="hidden" name="password" id="password" th:value="${nowLoginUser.password}">
+			<input type="hidden" name="telecom" id="telecom" th:value="${nowLoginUser.telecom}">
+			<input type="hidden" name="gender" id="gender" th:value="${nowLoginUser.gender}">
+			<input type="hidden" name="agree" id="agree" th:value="${nowLoginUser.agree}">
+			<input type="hidden" name="user_status" id="user_status" th:value="${nowLoginUser.user_status}">
+			<input type="hidden" name="auth_level" id="auth_level" th:value="${nowLoginUser.auth_level}">
+			<input type="submit" value="변경">
+			<input type="button" value="뒤로가기" onclick="goBack()">
+		</form>
+</body>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</html>

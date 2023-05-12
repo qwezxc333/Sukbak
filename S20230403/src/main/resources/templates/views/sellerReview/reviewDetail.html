@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<head>
+<link rel="stylesheet" href="/css/lcg/reviewDetail.css">
+</head>
+<body>
+<div class = "container">
+	<th:block layout:fragment="content"></th:block>
+		<div class="accordion accordion-flush" id="accordionFlushExample">
+			  <div class="accordion-item">
+			    <h2 class="accordion-header" id="flush-headingOne">
+			      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+			        	업체 및 객실관리
+			      </button>
+			    </h2>
+			    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+			      <div class="accordion-body">
+						<a href="#" onclick="bizAccomCall()">업체관리</a><br>
+						<a href="#" onclick="bizRoomCall()">객실관리</a><br>
+				  </div>
+			    </div>
+			  </div>
+			  <div class="accordion-item">
+			    <h2 class="accordion-header" id="flush-headingTwo">
+			      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+			        	리뷰 및 예약관리
+			      </button>
+			    </h2>
+			    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+			      <div class="accordion-body">
+			       		<a href="/biz/review">리뷰관리</a><br>
+			       		예약관리<br>
+				  </div>
+			    </div>
+			  </div>
+			  <div class="accordion-item">
+			    <h2 class="accordion-header" id="flush-headingThree">
+			      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+			        	계정관리
+			      </button>
+			    </h2>
+			    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+			      <div class="accordion-body">
+			      	<form action="/biz/usersInfoChkForm" method="POST">
+			      		<input type="submit" value="계정정보 변경" name="userAction">
+			      		<input type="submit" value="계정 양도" name="userAction">
+			      		<input type="submit" value="회원 탈퇴" name="userAction">
+			      	</form>
+				  </div>
+			    </div>
+			  </div>
+		</div>
+		<div id="contents" class="contents" th:with = "totalReviewAndBiz_id = ${totalReviewAndBiz_id}">
+			<p id = "menuTitle" th:text="'전체리뷰(' + ${totalReviewAndBiz_id.totalReview} + ')'"></p>
+			<div class="reviewTop_sort">
+				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgGetAjaxSortingReviewLists(\''+ ${totalReviewAndBiz_id.biz_id} +'\', 1)'">최신순</button>
+				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgGetAjaxSortingReviewLists(\''+ ${totalReviewAndBiz_id.biz_id} +'\', 2)'">낮은평점순</button>
+				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgGetAjaxSortingReviewLists(\''+ ${totalReviewAndBiz_id.biz_id} +'\', 3)'">높은평점순</button>
+			</div>
+			<div class = "accomReviewContainer">
+			<!-- 모달 창에서 반복문이 안먹는에 이거 해결하려면 인덱스를 사용해야 함. -->
+				<div class="accomReview" th:each="myReview, status : ${myReviews}">
+					<div class = "accomReviewNicknameAndDate">
+						<span id="reviewBizName" th:text="${myReview.biz_name}"></span><p> 
+						<span th:text="${myReview.nickname} + '님 |'"></span> 
+						<span th:text="${#dates.format(myReview.review_date, 'yyyy-MM-dd')}"></span>
+					</div>
+					<div class="accomReviewRoomName">
+						<p th:text="${myReview.r_name}+' 객실'"></p>
+					</div>
+					<div class = "reviewContentline">
+						<hr id ="ReviewContentline">
+					</div>
+					<div class="accomReviewRating">
+						<span th:each="num : ${#numbers.sequence(1, myReview.rating)}">
+							<img th:src="@{/img/star.png}">
+						</span>
+					</div>
+					<div class="accomReviewRoomContent">
+						<p th:text="${myReview.review_content}"></p>
+					</div>
+					
+									
+					<!-- model에 저장된 accomReview를 review로 꺼냄 -->
+					<div class="accomReviewRoomImg" th:each="review : ${myReview}">
+						<!-- review 객체에 review테이블과 review_img테이블의 pay_id가 일치하는  
+							List타입의 reviewImages 필드를 또한번 each로 꺼내서 reviewImage를 받아내서 거기에 review_img를 뽑아냄 -->
+						<img th:each="reviewImage : ${review.reviewImages}"
+							th:src="@{/img/review/{re_img}(re_img=${reviewImage.review_img})}"
+							class="img-thumbnail" onerror="this.style.display='none';">		
+						<div class = "ReviewDeleteBtn">
+							<!-- Button trigger modal -->
+							<div th:if = "${myReview.del_request == 'N'}">
+							<!-- 모달 버튼이랑 창이랑 id로 매핑이 되는데 이 매핑된게 최초의 list값만 매핑이 되서 반복문이 안통함. 그걸 해결하기 위해 인덱스를 사용함. 147번째 열 참고. -->
+							<!-- th:attr="data-bs-target='#staticBackdrop'+${status.index} => #staticBackdrop'+ 0 이 나오고  #staticBackdrop'+ 1-->
+								<button type="button" id="modalOpenBtn" class="btn btn-primary" data-bs-toggle="modal"  th:attr="data-bs-target='#staticBackdrop'+${status.index}">
+								  삭제요청
+								</button>
+							</div>
+							<div th:if = "${myReview.del_request == 'Y'}">
+								<button type="button" id="modalDoneBtn" class="btn btn-secondary" disabled>삭제접수 완료</button>
+							</div>
+							
+							<!-- Modal -->
+							<!-- 모달버튼과 매핑되는곳 id에  th:id="'staticBackdrop'+${status.index}" 인덱스를 추가해준다.  -->
+							<div class="modal fade" th:id="'staticBackdrop'+${status.index}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							    <!-- textarea태그에  유효성 검사를 하기 위해 form에도 인덱스를 넣어준다. th:onsubmit="'return chk(' + ${status.index} + ')'".  -->
+							     <form th:action="@{/biz/reviewDeleteRequest}" method="post" name="frm" th:onsubmit="'return chk(' + ${status.index} + ')'">
+								      <div class="modal-header">
+								        <h1 class="modal-title fs-5" id="staticBackdropLabel">리뷰삭제요청</h1>
+								        <span id="modal-notice">(리뷰삭제는 관리자가 판단하고 삭제하므로 5일 이상 소요됩니다.)</span>
+								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								      </div>
+								      <div class="modal-body">
+								      <!--  textarea태그에  유효성 검사를 하기 위해 form에도 인덱스를 넣어준다. th:id="'del_reason'+${status.index}" 아이디값에 줘야함.  -->
+								 		<!-- maxlength가 151인건 alert가 뜨면 글자 하나를 지워버려서 151에서 한글자 빠지면 150이 되기 때문 -->
+								 		<!-- th:onkeyup="'checkLength('+${status.index}+')'"  onkeyup은 키보드 입력될 때쓰는 이벤트트리거  -->
+								        <textarea name="del_reason" th:onkeyup="'checkLength('+${status.index}+')'" 
+								        		  class= "del_reason" th:id="'del_reason'+${status.index}" 
+								        		  rows="10" cols="100" style="resize: none;" maxlength="151"
+								        		  placeholder="150자까지 작성 가능합니다."></textarea><p>
+								       <div class = "modalWordCount">
+								       	<span th:id = "'wordCount'+${status.index}">0/150</span>
+								       </div>
+								        <input type="hidden" name="pay_id" id= "pay_id" th:value="${myReview.pay_id}">
+								        <input type="hidden" name="biz_id" id= "biz_id" th:value="${myReview.biz_id}">
+								        <input type="hidden" name="del_request" id= "del_request" th:value="${myReview.del_request}">
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+								        <button type="submit" class="btn btn-primary">삭제요청</button>
+								      </div>
+							      </form>
+							    </div>
+							  </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</div>
+<script src="/js/lcg/reviewDetail.js" type="text/javascript" ></script>
+</body>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</html>

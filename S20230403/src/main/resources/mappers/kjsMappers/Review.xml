@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.S20230403.ReviewMapper">
+	
+	<!-- 리뷰 리스트 -->
+	<select id="jsAccomReviewList" parameterType="Review" resultType="Review">
+		SELECT r.r_name, u.nickname, p.pay_id, re.rating, re.review_date, re.review_content
+		FROM room r, reservation resv, users u, payment p, review re
+		WHERE r.biz_id = resv.biz_id
+			AND r.r_id = resv.r_id
+	        AND p.user_id = u.user_id
+	        AND resv.biz_id = p.biz_id
+	        AND resv.user_id = p.user_id
+	        AND resv.user_id = p.user_id
+	        AND p.pay_id = re.pay_id
+	        AND r.biz_id = #{biz_id}
+        ORDER BY re.review_date desc
+	</select>
+	
+	<!-- 리뷰 총 갯수, 평점 -->
+	<select id="jsCalculateReview" parameterType="Review" resultType="Review">
+		SELECT count(*) totalReview, AVG(rating) avgReview
+		FROM payment p, review re
+		WHERE p.pay_id = re.pay_id
+		AND p.biz_id = #{biz_id}
+	</select>
+	
+</mapper>

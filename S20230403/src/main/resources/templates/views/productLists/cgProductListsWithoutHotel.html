@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<th:block layout:fragment="content"></th:block>
+
+<head>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css/lcg/cgProductListsWithoutHotel.css">
+</head>
+<body>
+
+<th:block layout:fragment="content"></th:block>
+	<div class="cgContainer"  th:with="user_id=${user_id}, auth=${auth}, accom=${accom_type}">
+		<div class="cgFilter_wrap">
+			<div class = "cgSelectAccom_type">
+				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="motelBtn" onclick="location.href='/cgProductLists?accom-type=520'">모텔</button>
+				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="hotelBtn" onclick="location.href='/cgProductLists?accom-type=511,513,514,515'">호텔</button>
+				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="gehaBtn" onclick="location.href='/cgProductLists?accom-type=530'">게하</button>
+				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="pensionBtn" onclick="location.href='/cgProductLists?accom-type=540'">팬션</button>
+			<p>
+			</div>
+			<div class = "cgSearchLocationFilter">
+					<input type="hidden" name="addr" id="addr" value="">
+					<ul class="menu">
+			      <li>
+			        <a th:href="@{/cgProductListsByAddr(accom-type=${accom}, addr=서울)}">서울</a>
+			        <ul class="submenu">
+			          <li><a th:href="@{/cgProductListsByAddr(accom-type=${accom}, addr=용산)}">용산/이태원/서울역</a></li>
+			          <li><a th:href="@{/cgProductListsByAddr(accom-type=${accom}, addr=서초)}">서초/교대</a></li>
+			          <li><a th:href="@{/cgProductListsByAddr(accom-type=${accom}, addr=송파)}">잠실/송파</a></li>
+			          <li><a th:href="@{/cgProductListsByAddr(accom-type=${accom}, addr=중구)}">시청/을지로</a></li>
+			          <li><a th:href="@{/cgProductListsByAddr(accom-type=${accom}, addr=영등포)}">영등포/여의도</a></li>
+			          <li><a th:href="@{/cgProductListsByAddr(accom-type=${accom}, addr=양천)}">목동/신월동</a></li>
+			          <li><a th:href="@{/cgProductListsByAddr(accom-type=${accom}, addr=광진)}">중곡/구의</a></li>
+			          <li><a th:href="@{/cgProductListsByAddr(accom-type=${accom}, addr=동대문)}">청량리/신설동</a></li>
+			          <li><a th:href="@{/cgProductListsByAddr(accom-type=${accom}, addr=마포)}">신촌/홍대/연남</a></li>
+			          <li><a th:href="@{/cgProductListsByAddr(accom-type=${accom}, addr=종로)}">종로/종각/익선</a></li>
+			        </ul>
+			      </li>
+			      <li>
+			        <a href="#">강원</a>
+			        <ul class="submenu">
+			          <li><a href="#">서비스 준비중입니다.</a></li>
+			        </ul>
+			      </li>
+			      <li>
+			        <a href="#">제주</a>
+			        <ul class="submenu">
+			          <li><a href="#">서비스 준비중입니다.</a></li>
+			        </ul>
+			      </li>
+			    </ul>
+			</div>
+		
+			<div class="cgCalenderFilter" >
+				<hr>
+				<label class ="subtitle">날짜</label><p>
+				<input type="text" id="checkIn"  name="checkIn" placeholder="체크인" style="padding-bottom: 10"><p>
+				<input type="text" id="checkOut" name="checkOut" placeholder="체크아웃"><p>
+				<button type="button" class="btn btn-outline-primary" th:attr="onclick='cgAjaxProductList(\'' + ${accom} + '\', 1, \'' + ${user_id} + '\', \'' + ${auth} + '\')'">선택완료</button>
+				<hr>
+			</div>
+			<div class = "priceFilter">
+					<label for="customRange3" class="subtitle">가격범위</label>
+					<input type="range" class="form-range" min="0" max="100" step="1" id="priceSlider">
+					<input type="text" id = "minPrice" value="0" disabled="disabled">
+					<input type="text" id = "maxPrice" name = "r_price" value="50만원" disabled="disabled">
+			</div>
+			<div class = "cgConditionFilter">
+					<hr>
+					<label class ="subtitle">인원</label><p>
+					<span id = "minusBtn"><img src="/img/minus.png" height="20" width="20" onclick = "minus()"></span>
+					<input type="text"     name="capacity" 	id ="capacity" 		value="2"  placeholder="2">
+					<span id = "plusBtn"><img src="/img/add.png" height="20" width="20" onclick = "plus()"></span>
+				<hr>
+					<button type="button" class="btn btn-outline-primary" th:attr="onclick='cgAjaxProductList(\'' + ${accom} + '\', 1, \'' + ${user_id} + '\', \'' + ${auth} + '\')'">선택완료</button>
+					<button type="reset" class="btn btn-outline-primary">초기화</button>
+				<hr>
+				<p>
+				<label class ="subtitle">숙소조건</label><p>
+					<div class="cgCheckbox-filterLeft">
+					  <label class="form-check-label" for="pool">
+					  	<input class="form-check-input" type="checkbox" name="pool" id="pool" value="N">
+					  	<span style="padding-right: 10px">수영장</span>
+					  </label>
+					  <label class="form-check-label" for="parking">
+					  	<input class="form-check-input" type="checkbox" name="parking" id="parking" value="N">
+					  	<span style="padding-right: 10px">주차장</span>
+					  </label>
+					  <label  class="form-check-label" for="cafe">
+					  	<input class="form-check-input" type="checkbox" name="cafe" id="cafe" value="N">
+					  	<span style="padding-right: 10px">카페</span>
+					  </label>
+					  <label  class="form-check-label" for="restaurant">
+					  	<input class="form-check-input" type="checkbox" name="restaurant" id="restaurant" value="N">
+					  	<span style="padding-right: 10px">레스토랑</span>
+					  </label>
+					  <label  class="form-check-label" for="ac">
+					  	<input class="form-check-input" type="checkbox" name="ac" id="ac" value="N">
+					  	<span style="padding-right: 10px">에어컨</span>	
+					  </label>
+					  <label  class="form-check-label" for="tv">
+					  	<input class="form-check-input" type="checkbox" name="tv" id="tv" value="N">
+					  	<span style="padding-right: 10px">tv</span>
+					  </label>
+					</div>
+		
+					<div class="cgCheckbox-filterRight">
+					  <label  class="form-check-label" for="store">
+					  	<input class="form-check-input" type="checkbox" name="store" id="store" value="N">
+					  	<span style="padding-right: 10px">편의점</span>
+					  </label>
+					  <label  class="form-check-label" for="sauna">
+					  	<input class="form-check-input" type="checkbox" name="sauna" id="sauna" value="N">
+					  	<span style="padding-right: 10px">사우나</span>
+					  </label>
+					  <label  class="form-check-label" for="laundry">
+					  	<input class="form-check-input" type="checkbox" name="laundry" id="laundry" value="N">
+					  	<span style="padding-right: 10px">세탁기</span>
+					  </label>
+					  <label  class="form-check-label" for="fitness">
+					  	<input class="form-check-input" type="checkbox" name="fitness" id="fitness" value="N">
+					  	<span style="padding-right: 10px">피트니스</span>
+					  </label>
+					  <label  class="form-check-label" for="bath">
+					  	<input class="form-check-input" type="checkbox" name="bath" id="bath" value="N">
+					  	<span style="padding-right: 10px">스파</span>
+					  </label>
+					  <label  class="form-check-label" for="wifi">
+					  	<input class="form-check-input" type="checkbox" name="wifi" id="wifi" value="N">
+					  	<span style="padding-right: 10px">와이파이</span>
+					  </label>
+					</div>
+				<hr>
+				<p>
+				<div class = "bedTypeFilter">
+					<label class ="subtitle">침대타입</label>
+					<p>
+						<input type="checkbox" name="bed_type" id="singleBed" class="bed" value="310">
+						<label for="singleBed" class="singleBed-icon">
+							<span class="singleBed-icon-img"></span>
+							<span class="singleBed-icon-lavel"></span>
+						</label>
+						<input type="checkbox" name="bed_type" id="twinBed" class="bed" value="320">
+						<label for="twinBed" class="twinBed-icon">
+							<span class="twinBed-icon-img"></span>
+							<span class="twinBed-icon-lavel"></span>
+						</label>
+						<input type="checkbox" name="bed_type" id="doubleBed" class="bed" value="330">
+						<label for="doubleBed" class="doubleBed-icon">
+							<span class="doubleBed-icon-img"></span>
+							<span class="doubleBed-icon-lavel"></span>
+					</label>
+				</div>
+				<hr>
+				
+			</div>
+
+		</div>
+		<div class="cgList_wrap">
+			<div class="cgTop_sort">
+				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgAjaxProductList(\'' + ${accom} + '\', 1, \'' + ${user_id} + '\', \'' + ${auth} + '\')'">인기순</button>
+				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgAjaxProductList(\'' + ${accom} + '\', 2, \'' + ${user_id} + '\', \'' + ${auth} + '\')'">낮은가격순</button>
+				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgAjaxProductList(\'' + ${accom} + '\', 3, \'' + ${user_id} + '\', \'' + ${auth} + '\')'">높은가격순</button>
+			</div>
+			<div class = "listEmpty">
+				<img alt="" src="/img/penguin_oops.png">
+				<h4><label class ="emptyNotice">현재 조건에 맞는 숙소가 없습니다</label></h4>
+				<h5><label class ="emptyNotice">지역을 변경하거나 일정, 상세조건을 재설정해 보세요.</label></h5>
+			</div>
+			<div class="cgProduct_lists_area">
+				<div class="cgProduct_list_area" id = "cgProduct_list_area" th:each="product : ${products}">
+					<div class="cgProduct_list_wrapper">
+					<a id = "a_cgProduct_list_area" th:href="@{'/accomDetail?biz_id=' + ${product.biz_id} + '&checkIn=&checkOut='}">
+					 <div class = "cgProduct_list_img">
+						<ul>
+						  <li><img class= "thumbnail_img" th:src="@{/img/{r_img}(r_img=${product.r_img})}"></li>
+						</ul>
+					</div>
+					<div class="cgProduct_list_contents">
+						<ul>
+						  <li id = "productTitle" th:text="${product.biz_name}"></li>			  
+						  <li>
+						  	<span th:each = "i : ${#numbers.sequence(1, product.avg_rating)}">
+						  		<i><img th:src="@{/img/cgStar.png}" width="15" height="15"></i>
+						  	</span>
+						  	<span id= "productRating" th:text="${product.avg_rating}+'/5'"></span>
+						  </li>
+						  <li id="productPrice" th:text="${product.min_price_r2}+원"></li>
+						  <li id="productAddr" th:text="${product.addr}"></li>
+						</ul>
+					 </div> 
+					</a>
+					<div class ="zzimButtons">
+						 <div th:if ="${product.zzim_status == null}" >						
+						 	<img id="zzimBtn" src="/img/dislike.png" th:attr="onclick='cgAjaxInsertZzim(\'' + ${product.biz_id} + '\',\'' + ${user_id} + '\',\'' + ${auth} + '\')'">
+						 </div>
+						 <div th:if = "${product.zzim_status == 'Y'}">						
+						  	<img id="zzimBtn" src="/img/like.png" th:attr="onclick='cgAjaxDeleteZzim(\'' + ${product.biz_id} + '\',\'' + ${user_id} + '\',\'' + ${auth} + '\')'">
+						 </div>
+					</div>
+				  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script src="/js/lcg/cgProductListsWithoutHotel.js" type="text/javascript"></script>
+</body>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</html>

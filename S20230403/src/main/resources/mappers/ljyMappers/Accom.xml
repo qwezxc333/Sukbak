@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.S20230403_01.AccomMapper">
+
+	<insert id="accomInsert" parameterType="Accom">
+    INSERT INTO accom (
+        biz_id,
+        user_id,
+        accom_avail,
+        accom_type,
+        biz_name,
+        addr,
+        tel,
+        room_count,
+        description,
+        latitude,
+        longitude,
+        pool,
+        parking,
+        cafe,
+        restaurant,
+        store,
+        sauna,
+        laundry,
+        fitness
+    ) VALUES (
+        #{biz_id},
+        #{user_id},
+        #{accom_avail},
+        #{accom_type},
+        #{biz_name},
+        #{addr},
+        #{tel},
+        #{room_count},
+        #{description},
+        #{latitude},
+        #{longitude},
+        #{pool},
+        #{parking},
+        #{cafe},
+        #{restaurant},
+        #{store},
+        #{sauna},
+        #{laundry},
+        #{fitness}
+    )
+    
+	</insert>
+	<select id="accomList" parameterType="string" resultType="Accom">
+		select *
+		from accom
+		where user_id = #{id} and
+			accom_avail in(210, 220)
+		ORDER BY #{biz_id} ASC
+		
+						
+			
+	</select> 
+	<select id=""></select>
+	
+	<select id="accomSelect" parameterType="string" resultType="Accom">
+		select *
+		from accom
+		where biz_id = #{biz_id} and
+			accom_avail in(210,220)
+	</select>
+	
+	<update id="accomUpdate" parameterType="Accom">
+		update accom
+		set accom_type	 = #{accom_type},
+			biz_name 	 = #{biz_name},
+			addr		 = #{addr},
+			tel 		 = #{tel},
+			description  = #{description},
+			pool  		 = #{pool},
+			parking 	 = #{parking},
+			cafe 	 	 = #{cafe},
+			restaurant   = #{restaurant},
+			store   	 = #{store},
+			sauna 		 = #{sauna},
+			laundry  	 = #{laundry},
+			fitness 	 = #{fitness}
+		where biz_id 	 = #{biz_id} and
+			  accom_avail = 210	
+	</update>
+	
+	
+	<select id="getBizId" parameterType="String" resultType="Int">
+		select count(*)
+		from accom
+		where biz_id = #{biz_id}
+	</select>
+	
+	<update id="roomCountUpdate" parameterType="java.lang.String">		        	        
+		update accom
+		set room_count = (
+		                  select count(*)
+		                  from room
+		                  where biz_id = #{biz_id}
+		                  )
+		where biz_id = #{biz_id}
+	</update>
+	
+	<update id="roomCountAdd" parameterType="java.lang.String">		        		        
+		update accom
+		set room_count = (
+		                  select count(*) +1
+		                  from room
+		                  where biz_id = #{biz_id}
+		                  )
+		where biz_id = #{biz_id}
+	</update>
+	
+	<update id="roomCountMinus" parameterType="java.lang.String">		                
+		update accom
+		set room_count = (
+		                  select count(*) -1
+		                  from room
+		                  where biz_id = #{biz_id}
+		                  )
+		where biz_id = #{biz_id}
+	</update>
+	
+	<update id="accomOpen" parameterType="Accom">
+		update accom
+		set accom_avail = '210'
+		where biz_id = #{biz_id}
+	</update>
+	
+	<update id="accomHidden"  parameterType="Accom">
+		update accom
+		set accom_avail = '220'
+		where biz_id = #{biz_id}
+	</update>
+	
+	<update id="accomDelete"  parameterType="Accom">
+		update accom
+		set accom_avail = '230'
+		where biz_id = #{biz_id}
+	</update>
+	
+</mapper>

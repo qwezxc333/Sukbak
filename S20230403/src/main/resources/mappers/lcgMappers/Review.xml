@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.S20230403.ReviewMapper">
+		<select id="getMyReviews" parameterType="java.lang.String" resultType="Review">
+		SELECT  p.biz_id,p.r_id, p.user_id, re.review_content, re.rating, re.review_date, re.del_request, p.pay_id
+		FROM    reservation resv, payment p, review re
+		WHERE   resv.biz_id = p.biz_id
+		AND     resv.resv_id = p.resv_id
+		AND     resv.r_id = p.r_id
+		AND     resv.user_id = p.user_id
+		AND     p.pay_id = re.pay_id
+	    AND   	resv.biz_id = #{biz_id}
+		ORDER BY re.review_date desc
+	</select>
+	
+	<select id="updateReviewDelRequestByPayId" parameterType="Review">
+		UPDATE 	review 
+		SET 	del_request = 'Y',
+		    	del_reason = #{del_reason},
+		    	del_date = sysdate
+		WHERE 	pay_id = #{pay_id}
+	</select>
+	
+	<select id="getMyReviewConut" parameterType="java.lang.String" resultType="Review">
+		SELECT  COUNT(*) totalReview, p.biz_id
+		FROM    review re, payment p
+		WHERE   re.pay_id = p.pay_id
+		AND     p.biz_id = #{biz_id}
+		GROUP BY p.biz_id
+	</select>
+	
+	<!--ajax  -->
+	<select id="cgGetAjaxSortingReviewLists" parameterType="Review" resultType="Review">
+		SELECT  p.biz_id,p.r_id, p.user_id, re.review_content, re.rating, re.review_date, re.del_request, p.pay_id
+		FROM    reservation resv, payment p, review re
+		WHERE   resv.biz_id = p.biz_id
+		AND     resv.r_id = p.r_id
+		AND     resv.user_id = p.user_id
+		AND     resv.resv_id = p.resv_id
+		AND     p.pay_id = re.pay_id
+	    AND   	resv.biz_id = #{biz_id}
+		ORDER BY 
+		<choose>
+			<when test="kind == 1">
+				re.review_date desc
+			</when>
+			<when test="kind == 2">
+				re.rating
+			</when>
+			<otherwise>
+				re.rating desc
+			</otherwise>
+		</choose>
+	</select>
+</mapper>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<head>
+<link rel="stylesheet" href="/css/lgh/mypageSidebar.css">
+</head>
+<style type="text/css">
+
+.container{
+	max-width: 95%;
+	height: auto;
+	margin: auto;
+}
+
+	.sidenav {
+  width: 200px;
+  z-index: 1;
+  top: 20px;
+  left: 10px;
+  background: white;
+  overflow-x: hidden;
+  padding: 8px 0;
+  display: inline-block;
+
+
+}
+
+.sidenav a {
+  padding: 13px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #2196F3;
+  display: block;
+  font-weight: bold; 
+
+}
+
+.sidenav a:hover {
+  color: #064579;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+	
+	.myProfileTitle {
+		text-align: center;
+		font-size: 28px;
+		font-weight: bold;
+		color: #00b7f7;
+		padding: 20px 5px 30px 5px;
+	}
+
+	.main {
+	  /* margin-left: 250px; /* Same width as the sidebar + left position in px */ */
+	  font-size: 16px; /* Increased text to enable scrolling */
+	  padding: 0px 10px 100px;
+	  display: inline-block;
+	  flex-direction: column;
+	  justify-content: center;
+	  align-items: center;
+	  float: right;
+	  margin-right: 35%;
+	}
+	
+	
+	.pItems {
+		margin-bottom: 20px;
+	}
+	
+	.pItems th {
+		color: #404040;
+		padding-right: 30px;
+	}
+	
+	.pItems td {
+		padding: 5px 20px;
+	}
+	
+	.pButtons button {
+		margin-top: 10px;
+		width:		200px;
+		padding:	8px;
+		border-radius: 10px;
+		border: 	none;
+	}
+	
+	.pButtons #pSave {
+		color: white;
+		font-weight: bold;
+		background-color: #2196F3;
+	}
+	.pButtons #pChgPwd {
+		color: white;
+		font-weight: bold;
+		background-color: #2196F3;
+	}
+	.pButtons #pBack {
+		color: white;
+		font-weight: bold;
+		background-color: #2196F3;
+	}
+	
+	.pButtons #pOut {
+		color: #666666;
+		text-decoration: underline;
+		background-color: white;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: auto;
+	}
+	
+	.outBtn {
+		margin-top: 10px;
+	}
+	
+	.pData{
+		margin: auto;
+	}
+	
+</style>
+<script type="text/javascript">
+	function savePopUp() {
+		alert("변경사항이 저장되었습니다.");
+	}
+
+</script>
+
+<th:block layout:fragment="content"></th:block>
+	
+	<div class="container">
+			
+		<div class="sidenav">
+		  <a href="/commonUser/myProfile">프로필 수정</a>
+		  <a href="/commonUser/myReserved">예약 내역</a>
+		  <a href="/commonUser/myReviews">후기 관리</a>
+		  <a href="/commonUser/myZzim">내 찜목록</a>
+		  <a href="/commonUser/myQnA">내가 남긴 문의</a>
+		</div>
+		
+		<div class="main">
+			<div class="myProfileTitle">
+				<p>나의 프로필</p>
+			</div>
+			
+			<div class="pData">
+				<form action="updateMyProfile" method="post">
+					<table class="pItems">
+						<tr><th>이름*</th>
+							<td><input type="text"  name="name"  required="required" th:value="${myProfileInfo.name}" disabled="disabled"></td></tr>
+						<tr><th>이메일(아이디)*</th>
+							<td><input type="text"  name="user_id"  required="required" th:value="${myProfileInfo.user_id}" disabled="disabled"></td></tr>
+						<tr><th>닉네임*</th>
+							<td><input type="text"  name="nickname"  required="required" th:value="${myProfileInfo.nickname}"></td></tr>
+						<tr><th>통신사*</th>
+							<td><input type="text"  name="telecom"  required="required" th:value="${myProfileInfo.telecom}"></td></tr>
+						<tr><th>연락처(휴대폰)*</th>
+							<td><input type="text"  name="phone"  required="required" th:value="${myProfileInfo.phone}"></td></tr>
+						<tr><th>성별</th>
+							<td><input type="text"  name="gender"  th:value="${myProfileInfo.gender}"  disabled="disabled"></td></tr>
+					</table>
+					<div class="pButtons">
+					 <div>
+						<button type="submit" id="pSave"
+						th:onclick="savePopUp()">
+						변경사항 저장하기</button>
+						
+						<button type="button" id="pChgPwd" name="goToPwChg"
+						th:onclick="|location.href='@{/commonUser/myPwChange}'|">
+						비밀번호 변경하기</button><br>
+					</div>
+					<div class = "outBtn">
+						<button type="button" id="pOut" name="goToWithdraw"
+								th:onclick="|location.href='@{/commonUser/myWithdraw}'|">
+								회원 탈퇴하기</button>
+					</div>
+					</div>
+				</form>
+			</div>
+			
+		</div>
+		
+	</div>
+</body>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</html>

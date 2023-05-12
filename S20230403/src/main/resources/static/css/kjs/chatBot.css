@@ -1,0 +1,237 @@
+@charset "UTF-8";
+
+	#chat {
+		position: fixed;
+		bottom: 37px;
+		right: 19px;
+	    width: 370px;
+	    max-width: 90%;
+	    height: 420px;
+	    margin: 0 auto;
+	    background-color: white;
+	    box-shadow: 0px 0px 18px darkgray;
+	    padding: 22px 16px 16px 34px;
+	    overflow-y: auto;
+	    scroll-behavior: smooth;
+	    visibility: hidden;
+	    opacity: 0;
+	    transition: all 0.5s;
+	    z-index: 9998;
+	}
+	
+	.chatHeader{
+		position: fixed; 
+		display: block;
+		width: 369px;
+	    max-width: 90%;
+		height: 57px;
+		background-color: rgb(155, 216, 247);
+		box-shadow: -5px -1px 15px -3px darkgray;
+		bottom: 457px;
+		right: 20px;
+		border-radius: 20px 0 0 0;
+		z-index: 9999;
+	}
+	
+	.chatHeader span{
+		position: absolute;
+		font-weight: bold;
+		top: 16px;
+		left: 26px;
+	}
+	
+	.chatHeader button{
+		position: absolute;
+		top: 16px;
+		right: 20px;
+	}
+	
+	.chatContent{
+		text-align: center;
+		padding-bottom: 28px;
+	}
+	
+	.chatContent img{
+		width: 96px;
+		height: 96px;
+		margin: 20px auto;
+		display: block;
+		border-radius: 50px;
+	}
+	
+	.chatTitle {
+		font-weight: bold;
+	}
+	
+	.chatName{
+		color: darkgray;
+	}
+	
+	.currentTime{
+		color: darkgray;
+		font-size: 11px;
+		margin: 20px auto;
+	}
+	
+	.message {
+		position: relative;
+	    max-width: 82%;
+	    height: auto;
+	    margin: 0px 0px 8px 7px;
+	    padding: 8px;
+	    border-radius: 4px;
+	}
+	
+	.left {
+	    background-color: #f0f0f0;
+	    float: left;
+	    clear: both;
+	}
+	
+	.right {
+	    color: white;
+	    float: right;
+	    clear: both;
+	}
+	
+	.button-message {
+		border: 1px solid lightgray;
+		border-radius: 13px;
+		background-color:white;
+	    text-align: left;
+	    padding: 3px 10px 3px 10px;
+	    text-decoration: none;
+	    display: inline-block;
+	    font-size: 14px;
+	    cursor: pointer;
+	}
+	
+	.button-message.clicked {
+		color: rgb(0, 183, 247);
+		font-weight: bold;
+	}
+	
+	.button-message:hover {
+		background-color: rgb(155, 216, 247);
+	}
+	
+	.penguinBot {
+		position: fixed;
+		bottom: 18px;
+		right: 2px;
+		width: 130px;
+		height: 130px;
+		visibility: visible;
+		opacity: 1;
+		cursor: pointer;
+		z-index: 9997;
+	}
+	
+	.left-penguin-img {
+		width: 25px;
+		  height: 25px;
+		  position: absolute;
+		  left: -31px;
+		  bottom: 3px;
+		  border-radius: 50px;
+	}
+	
+	.top-penguin-name {
+		font-size: 8px;
+		position: absolute;
+		top: -18px;
+		left: 1px;
+	}
+	
+	.qnaForm{
+		border: 1px solid lightgray;
+		border-radius: 13px;
+		width: 309px;
+		max-width: 97%;
+		height: 298px;
+		margin-bottom: 30px;
+		clear: both;
+		padding: 13px;
+	}
+	
+	.qnaForm input, textarea{
+		display: block;
+		width: 100%;
+		border: 1px solid lightgray;
+		background-color: rgb(250, 250, 250);
+		padding: 10px 5px;
+		margin: 5px 0 15px;
+		border-radius: 10px;
+	}
+	
+	.qnaForm textarea{
+		height: 100px;
+		resize: none;
+	}
+	
+	.qnaForm label{
+		display: block;
+		font-weight: bold;
+		padding-left: 5px;
+	}
+	
+	.requiredMark{
+		color: rgb(244, 128, 11);
+	}
+	
+	.qnaBtn{
+		width: 100%;
+		border: none;
+		border-radius: 10px;
+		padding: 7px;
+		background-color: rgb(215, 236, 248);
+		font-weight: bold;
+	}
+	
+	.qnaBtnIsInput:hover{
+	}
+	
+	.qnaBtnIsInput{
+		width: 100%;
+		border: none;
+		border-radius: 10px;
+		padding: 7px;
+		background-color: darkgray;
+		font-weight: bold;
+	}
+	
+	.qnaBtn:hover{
+		transition: all 0.3s;
+		background-color: rgb(155, 216, 247);
+	}
+	
+	.submitted {
+		background-color: rgb(235, 235, 235);
+		pointer-events: none;
+	}
+	
+	.isInput{
+		background-color: lightgray;
+	}
+	
+	.isInput:hover{
+		cursor: not-allowed;
+	}
+	
+	.btn-close:focus, .btn-close:active:focus {
+	    box-shadow: none;
+	}
+	
+	#chat::-webkit-scrollbar {
+	    width: 5px;  /* 스크롤바의 너비 */
+	    height: 50%;
+	}
+	
+	#chat::-webkit-scrollbar-thumb {
+	    background-color: rgb(155, 216, 247); /* 스크롤바의 색상 */
+	    border-radius: 10px;
+	}
+	
+	#chat::-webkit-scrollbar-track {
+	    background: lightgray; /* 스크롤바의 뒷배경 */
+	}

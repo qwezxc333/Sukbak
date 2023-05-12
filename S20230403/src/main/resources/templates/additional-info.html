@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout" lang="ko">
+<th:block layout:fragment="content">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            body {
+                background-color: #F8F8F8;
+                font-family: 'Open Sans', sans-serif;
+            }
+
+            .container {
+                width: 60%;
+                margin: 50px auto;
+                background-color: #fff;
+                border-radius: 5px;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                text-align: center;
+                font-size: 24px;
+                margin-bottom: 30px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            label {
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+            input[type="email"],
+            input[type="text"],
+            input[type="password"],
+            input[type="number"],
+            input[type="tel"],
+            select {
+                width: 100%;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                padding: 10px;
+                box-sizing: border-box;
+                font-size: 16px;
+                font-family: 'Open Sans', sans-serif;
+                margin-bottom: 10px;
+            }
+
+            input[type="email"]:focus,
+            input[type="text"]:focus,
+            input[type="password"]:focus,
+            input[type="number"]:focus,
+            input[type="tel"]:focus,
+            select:focus {
+                outline: none;
+                box-shadow: 0 0 5px;
+            }
+
+            .btn {
+                border: none;
+                border-radius: 4px;
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            .alert {
+                padding: 10px;
+                border-radius: 4px;
+                margin-bottom: 10px;
+                font-size: 14px;
+            }
+
+            .field-error {
+                color: #e74c3c;
+                font-size: 14px;
+                margin-top: 5px;
+            }
+
+            textarea {
+                height: 170px;
+                width: 98%;
+                box-sizing: border-box;
+                border: none;
+                outline: none;
+                margin: 0;
+                padding: 20px;
+                font-size: 16px;
+                line-height: 20px;
+            }
+        </style>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script>
+            var verified_Phone = 1;
+
+            function checkDuplicationNick() {
+                var nickname = $('#nickname').val();
+                if (!nickname) {
+                    $('#duplicationCheckNickResult').css("display", "none");
+                    return;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/checkDuplicationNick',
+                    data: {
+                        nickname: nickname
+                    },
+                    success: function (response) {
+                        if (response === 0) {
+                            $('#duplicationCheckNickResult').removeClass("alert-danger")
+                                .addClass("alert-success")
+                                .css("display", "block")
+                                .text('사용 가능한 닉네임입니다.');
+                        } else {
+                            $('#duplicationCheckNickResult').removeClass("alert-success")
+                                .addClass("alert-danger")
+                                .css("display", "block")
+                                .text('이미 사용중인 닉네임입니다.');
+                        }
+                    },
+                    error: function (request, status, error) {
+                        console.log('AJAX Error: ' + error);
+                    }
+                });
+            }
+
+            function checkDuplicationPhone() {
+                var phone = $('#phone').val();
+                if (!phone) {
+                    $('#duplicationCheckPhoneResult').css("display", "none");
+                    return;
+                }
+                if (phone.length >= 12) {
+                    $('#phone').val(phone.substring(0, 11));
+                    alert("전화번호는 11자리를 넘을 수 없습니다.");
+                    $('#phone').focus();
+                }
+                if (10 <= phone.length && phone.length <= 11) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/checkDuplicationPhone',
+                        data: {
+                            phone: phone
+                        },
+                        success: function (response) {
+                            if (response === 0) {
+                                $('#duplicationCheckPhoneResult').removeClass("alert-danger")
+                                    .addClass("alert-success")
+                                    .css("display", "block")
+                                    .text('전화번호 인증을 진행해주세요.');
+                            } else {
+                                $('#duplicationCheckPhoneResult').removeClass("alert-success")
+                                    .addClass("alert-danger")
+                                    .css("display", "block")
+                                    .text('이미 가입된 전화번호입니다.');
+                            }
+                        },
+                        error: function (request, status, error) {
+                            console.log('AJAX Error: ' + error);
+                        }
+                    });
+                }
+            }
+
+            function sendPhone() {
+                var phone = $("#phone").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/send-one",
+                    data: {
+                        phone: phone
+                    },
+                    success: function (data) {
+                        $("#inputCertifiedNumber").css("display", "block");
+                        $("#verify").css("display", "block");
+                        alert("전송 성공");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("전화번호를 다시 확인해주세요");
+                        $("#phone").focus();
+                    }
+                });
+            }
+
+            function verifyCertifiedNumber() {
+                var certifiedNumber = $("#inputCertifiedNumber").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/verify-certified-number",
+                    data: {
+                        certifiedNumber: certifiedNumber
+                    },
+                    success: function (data) {
+                        alert("인증 성공");
+                        $("#phone").prop('disabled', true);
+                        $("#inputCertifiedNumber").prop('disabled', true);
+                        $("#phone_verify_success").css("display", "block");
+                        $("#verify").css("display", "none");
+                        $("#submit-button").css("display", "block");
+                        verified_Phone++;
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("인증 실패: " + textStatus);
+                    }
+                });
+            }
+
+            function checkSubmit() {
+                if (verified_Phone === 1) {
+                    $("form").submit();
+                } else {
+                    alert("휴대폰 인증을 해주세요.");
+                }
+            }
+
+            function postDelete() {
+                if (confirm("정말로 가입을 취소하시겠습니까?")) {
+                    var form = document.querySelector('form');
+                    form.setAttribute('action', '/delete');
+                    form.setAttribute('method', 'POST');
+                    form.submit();
+                }
+            }
+        </script>
+        <title></title>
+    </head>
+    <body>
+    <form method="post" action="/updateInfo">
+        <div class="container">
+            <h1>추가 정보 기입</h1>
+
+            <label for="user_id">회원 이메일</label>
+            <input type="text" class="form-control" id="user_id" name="user_id" th:value="${#authentication.name}"
+                   disabled>
+            <div class="form-group">
+                <label for="nickname">별 명</label>
+                <input type="text" th:errorclass="field-error" class="form-control" th:field="*{users.nickname}"
+                       id="nickname" name="nickname"
+                       placeholder="사용자 별명(최대 10글자까지 입력가능합니다.)"
+                       onkeyup="checkDuplicationNick()">
+                <span id="duplicationCheckNickResult" class="alert alert-danger"
+                      style="display: none"></span>
+                <div class="field-error" th:errors="*{users.nickname}">
+                    입력 오류
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="telecom">통신사</label>
+                <select th:field="*{users.telecom}" th:errorclass="field-error" class="form-control" id="telecom"
+                        name="telecom">
+                    <option value="SKT">SKT</option>
+                    <option value="KT">KT</option>
+                    <option value="LG">LG</option>
+                    <option value="알뜰폰">알뜰폰</option>
+                </select>
+                <div class="field-error" th:errors="*{users.telecom}">
+                    입력 오류
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phone">전화번호</label>
+                <input type="tel" th:field="*{users.phone}" th:errorclass="field-error" class="form-control" id="phone"
+                       name="phone" placeholder="사용자 전화번호 (01012345678) '-을 제외하고 입력해주세요.'"
+                       onkeyup="this.value = this.value.replace(/[^0-9]/g,''); checkDuplicationPhone();">
+                <span id="duplicationCheckPhoneResult" class="alert alert-danger"
+                      style="display: none"></span>
+                <div class="field-error" th:errors="*{users.phone}">
+                    입력 오류
+                </div>
+
+                <button type="button" id="check" class="btn btn-secondary" onclick="sendPhone()">전화번호 인증</button>
+            </div>
+            <div class="form-group">
+                <label for="inputCertifiedNumber" style="display:none;">인증번호</label>
+                <input type="number" class="form-control" id="inputCertifiedNumber" name="certifiedNumber"
+                       placeholder="인증번호를 입력하세요" style="display:none;">
+                <button type="button" id="verify" class="btn btn-secondary" onclick="verifyCertifiedNumber()"
+                        style="display:none;">인증번호 확인
+                </button>
+                <button type="button" disabled id="phone_verify_success" class="alert alert-success"
+                        style="display: none;">인증되었습니다.
+                </button>
+            </div>
+            <div class="form-group">
+                <label for="gender">성별</label>
+                <select th:field="*{users.gender}" th:errorclass="field-error" class="form-control" id="gender"
+                        name="gender">
+                    <option value="" selected disabled hidden>성별을 선택해주세요</option>
+                    <option value="male">남성</option>
+                    <option value="female">여성</option>
+                </select>
+                <div class="field-error" th:errors="*{users.gender}">
+                    입력 오류
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="auth_level">회원 구분</label>
+                <select th:field="*{users.auth_level}" th:errorclass="field-error" class="form-control" id="auth_level"
+                        name="auth_level">
+                    <option value="" selected disabled hidden>회원 구분을 선택해주세요</option>
+                    <option value="SELLER">SELLER</option>
+                    <option value="USER">USER</option>
+                </select>
+                <div class="field-error" th:errors="*{users.auth_level}">
+                    입력 오류
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submit-button" style="display:block;"
+                    onclick="checkSubmit()">
+                가입 완료
+            </button>
+            <button type="button" class="btn btn-danger" onclick="postDelete()">가입 취소</button>
+        </div>
+    </form>
+    </body>
+</th:block>
+</html>

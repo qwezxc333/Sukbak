@@ -1,0 +1,161 @@
+<!--로그인 페이지-->
+<!-- login.html-->
+<!DOCTYPE html>
+<!-- Latest compiled and minified CSS -->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout" lang="ko">
+<th:block layout:fragment="content">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            .container {
+                max-width: 500px;
+                margin: 0 auto;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .form-floating label {
+                display: block;
+                margin-bottom: 5px;
+                font-size: 16px;
+                font-weight: 600;
+            }
+
+            .form-floating input {
+                width: 100%;
+                padding: 10px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            .btn {
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 16px;
+                font-weight: 600;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .btn-primary {
+                color: #fff;
+                background-color: #007bff;
+                border: none;
+            }
+
+            .btn-primary:hover {
+                background-color: #0069d9;
+            }
+
+            .alert-danger {
+                color: #721c24;
+                background-color: #f8d7da;
+                border-color: #f5c6cb;
+                padding: 10px;
+                margin-bottom: 10px;
+                border-radius: 5px;
+            }
+
+            .form-group button {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            .form-group {
+                margin-top: 10px;
+            }
+
+        </style>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('form').submit(function () {
+                    var userId = $('#user_id').val();
+                    var password = $('#password').val();
+                    if (userId === '' || password === '') {
+                        alert('아이디와 비밀번호를 모두 입력해주세요.');
+                        return false;
+                    }
+                });
+            });
+
+            function checkDuplication() {
+                var userId = $('#user_id').val();
+
+                if (!userId) {
+                    $('#duplicationCheckResult').css("display", "none");
+                    $('#signUp').css("display", "block");
+                    $('#google_login').css("display", "block");
+                    $('#login').css("display", "none");
+                    return;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/checkDuplication',
+                    data: {
+                        user_id: userId
+                    },
+                    success: function (response) {
+                        if (response === 0) {
+                            $('#duplicationCheckResult').css("display", "block");
+                            $('#duplicationCheckResult').text('회원가입을 진행해주세요.');
+                            $('#signUp').css("display", "block");
+                            $('#google_login').css("display", "block");
+                            $('#login').css("display", "none");
+                        } else {
+                            $('#login').css("display", "block");
+                            $('#signUp').css("display", "none");
+                            $('#google_login').css("display", "none");
+                            $('#duplicationCheckResult').css("display", "none");
+                        }
+                    },
+                    error: function (request, status, error) {
+                        console.log('AJAX Error: ' + error);
+                    }
+                });
+            }
+        </script>
+        <title></title>
+    </head>
+    <body>
+    <div class="container">
+        <div th:if="${param.error}" class="alert alert-danger">로그인에 실패했습니다. 다시 시도해주세요.</div>
+        <h1>로그인</h1>
+        <form th:action="@{/login_proc}" method="post">
+            <div class="form-floating mb-3">
+                <input type="email" id="user_id" name="user_id" class="form-control" placeholder="name@example.com"
+                       onkeyup="checkDuplication()">
+                <label for="user_id">Email address</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                <label for="password">Password</label>
+            </div>
+            <div class="form-group">
+                <span id="duplicationCheckResult" style="display: none;" class="alert alert-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="login" style="display: none;">로그인</button>
+                <button type="button" class="btn btn-primary" id="signUp" onClick="location.href='sign'"
+                        style="display: block;">회원 가입
+                </button>
+            </div>
+            <div class="form-group">
+                <button type="button" id="google_login" class="btn btn-primary" style="display:block;"
+                        onclick="location.href='/oauth2/authorization/google'">
+                    구글 로그인
+                </button>
+            </div>
+        </form>
+        <br/>
+    </div>
+    </body>
+</th:block>
+</html>

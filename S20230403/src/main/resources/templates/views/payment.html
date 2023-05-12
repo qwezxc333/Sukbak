@@ -1,0 +1,377 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/default_layout">
+
+<th:block layout:fragment="content">
+
+	<style>
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+@media ( min-width : 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
+}
+</style>
+	<script type="text/javascript"
+		src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<!-- iamport.payment.js -->
+	<script type="text/javascript"
+		src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+	<body class="bg-light">
+
+		<div class="container">
+			<main>
+				<div class="row g-5">
+					<div class="col-md-5 col-lg-4 order-md-last">
+						<h4 class="d-flex justify-content-between align-items-center mb-3"
+							th:each="pmt : ${pmt}">
+							<span class="text-primary">숙박 예약 정보</span>
+						</h4>
+						<ul class="list-group mb-3">
+							<li class="list-group-item d-flex justify-content-between lh-sm">
+								<div>
+									<h6 class="my-0">
+										숙소 이름 <br> <strong style="font-size: 20px;"
+											th:text="${pmt.biz_name}"></strong>
+									</h6>
+									<small class="text-muted"><strong></strong></small>
+								</div> <span class="text-muted">기본 가격 :<a
+									th:text="${pmt.r_price}"></a> \
+							</span>
+							</li>
+							<li class="list-group-item d-flex justify-content-between lh-sm">
+								<div>
+									<h6 class="my-0">
+										<strong>객실 이름/기간</strong>
+									</h6>
+									<small class="text-muted" th:text="${pmt.r_name}"></small> / <small
+										th:text="${daysBetween}"></small><a>박</a>
+
+								</div> <span class="text-muted"
+								th:text="${pmt.r_price}*${daysBetween}+' \\'"></span>
+							</li>
+							<li class="list-group-item d-flex justify-content-between lh-sm">
+								<div>
+									<h6 class="my-0">체크인</h6>
+									<small class="text-muted" th:text="${formattedDate1}">
+									</small><a>15:00 </a>
+								</div> <span class="text-muted"></span>
+							</li>
+							<li class="list-group-item d-flex justify-content-between lh-sm">
+								<div>
+									<h6 class="my-0">체크아웃</h6>
+									<small class="text-muted" th:text="${formattedDate2}">
+									</small><a>12:00 </a>
+								</div> <span class="text-muted" th:text="${daysBetween}+'박'"></span>
+							</li>
+							<li class="list-group-item d-flex justify-content-between lh-sm">
+								<div>
+								  <h6 class="my-1">추가인원: 0</h6>
+								</div>
+							</li>
+							<li name="money"
+								class="list-group-item d-flex justify-content-between"><span>합계</span><strong
+								th:text="${pmt.r_price}*${daysBetween}+' \\'"></strong></li>
+						</ul>
+					</div>
+					<div class="col-md-7 col-lg-8"
+						style="max-width: 500px; margin: 0 auto; margin-top: 50px;">
+						<h4 class="mb-3"></h4>
+						<form class="needs-validation" novalidate>
+							<div class="row g-3">
+								<div class="col">
+									<label for="lastName" class="form-name">이름</label> <input
+										type="text" class="form-control" id="lastName" placeholder=""
+										value="" required onblur="validateName(this)">
+									<div class="invalid-feedback" id="RESV_NAME">이름을 입력해주세요.</div>
+								</div>
+								<!-- 이름의 유효성 검삼 -->
+								<script>
+													function validateName(input) {
+													  const value = input.value.trim();
+													  if (value === "") {
+													    input.setCustomValidity('이름을 입력해주세요.');
+													    input.classList.add('is-invalid');
+													  } else {
+													    input.setCustomValidity('');
+													    input.classList.remove('is-invalid');
+													  }
+													}
+													</script>
+								<div class="col-12">
+									<label for="address" class="form-label">휴대전화</label> <input
+										type="text" class="form-control" id="phone"
+										placeholder="010-0000-0000"
+										pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required
+										onkeyup="validatePhone(this)">
+									<div class="invalid-feedback" id="RESV_PHONE">- 을 포함한 올바른
+										형식으로 입력해주세요</div>
+								</div>
+								 <div class="col-md-5">
+							        <label for="count" class="form-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">추가인원</font></font></label>
+							        <select class="form-select" id="count">
+							          <option value="0">0</option>
+							          <option value="1">1 명</option>
+							          <option value="2">2 명</option>
+							          <option value="3">3 명</option>
+							          <option value="4">4 명</option>
+							          <option value="5">5 명</option>
+							        </select>
+							      </div>
+							      <a style="color: red; font-size: 11.3px;">추가인원 가능 여부는 숙소 별 상이 하므로 취소 또는 추가 결제가 이루어질 수 있습니다.</a>
+							      	<script>
+							      	var countVal;
+									  $(document).ready(function() {
+									    $('#count').change(function() {
+									       countVal = $(this).val(); // 선택한 옵션 값을 저장
+									      $('h6.my-1').text('추가인원: ' + countVal); // 선택한 값을 출력
+									    });
+									  });
+									</script>
+								<hr class="my-4">
+								<form onsubmit="return validateForm()">
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input"
+											id="stay-agreement"> <label class="form-check-label"
+											for="stay-agreement">숙소 이용에 대한 동의 (필수)</label>
+									</div>
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input"
+											id="personal-info-agreement"> <label
+											class="form-check-label" for="personal-info-agreement">개인정보
+											동의 (필수)</label>
+									</div>
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input"
+											id="age-verification"> <label
+											class="form-check-label" for="age-verification">만 14세
+											이상 확인 (필수)</label>
+									</div>
+									<hr>
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="save-info"
+											onclick="checkAll()"> <label class="form-check-label"
+											for="save-info"><strong>전체 동의</strong></label>
+									</div>
+								</form>
+
+								<script>
+								function checkAll() {
+									var checkboxes = document
+											.querySelectorAll('.form-check-input:not(#save-info)');
+									var saveInfoCheckbox = document
+											.getElementById('save-info');
+
+									for (var i = 0; i < checkboxes.length; i++) {
+										checkboxes[i].checked = saveInfoCheckbox.checked;
+									}
+								}
+								function validatePhone(input) {
+									  const phoneRegex = /^\d{3}-\d{3,4}-\d{4}$/; // 전화번호 형식 정규식
+									  const value = input.value.trim(); // 입력값에서 공백 제거
+
+									  if (!phoneRegex.test(value)) { // 전화번호 형식이 아니라면
+									    input.setCustomValidity('올바른 전화번호 형식을 입력해주세요.'); // 오류 메시지 설정
+									    input.classList.add('is-invalid'); // 오류 상태 스타일 적용
+									  } else {
+									    input.setCustomValidity(''); // 오류 메시지 제거
+									    input.classList.remove('is-invalid'); // 오류 상태 스타일 제거
+									  }
+									}
+								</script>
+
+								<hr class="my-4">
+
+								<h4 class="mb-3">결제 방식</h4>
+
+								<div class="my-3">
+									<div class="form-check">
+										<input id="credit" name="payment" type="radio"
+											class="form-checkinput" value="네이버페이" checked required>
+										<label class="form-checklabel" for="credit">네이버 페이</label>
+									</div>
+									<div class="form-check">
+										<input id="tosstest" name="payment" type="radio"
+											class="form-checkinput" value="토스"
+											required> <label class="form-checklabel"
+											for="tosstest">Toss 결제</label>
+									</div>
+									<div class="form-check">
+										<input id="kakaopay" name="payment" type="radio"
+											class="form-checkinput" value="카카오페이" required> <label
+											class="form-checklabel" for="kakaopay">카카오 페이</label>
+									</div>
+								</div>
+								<hr class="my-4">
+								<button class="w-100 btn btn-primary btn-lg"
+									onclick="validateFormAndPay()" type="button">결제 화면으로
+									이동</button>
+						</form>
+					</div>
+				</div>
+			</main>
+		</div>
+	</body>
+</html>
+
+<style>
+#username {
+	display: none;
+}
+</style>
+<a sec:authentication="name" id="username"></a>
+
+<script th:inline="javascript">
+
+function validateFormAndPay() {
+	  if (!document.getElementById('stay-agreement').checked) {
+	    alert('숙소 이용에 대한 동의에 체크해주세요.');
+	    return false;
+	  }
+	  
+	  if (!document.getElementById('personal-info-agreement').checked) {
+	    alert('개인정보 동의에 체크해주세요.');
+	    return false;
+	  }
+	  
+	  if (!document.getElementById('age-verification').checked) {
+	    alert('만 14세 이상 확인에 체크해주세요.');
+	    return false;
+	  }
+	  
+	  requestPay(); // Call the payment function only if the form is valid
+
+	  return true;
+	}
+
+function requestPay() {
+		const dateString1 = [[${pmt.check_in}]];
+		const date1 = new Date(dateString1);
+		const formattedDate1 = date1.toISOString().slice(0, 10).replace(/-/g, '');
+		console.log(formattedDate1); 
+		const dateString2 = [[${pmt.check_out}]];
+		const date2 = new Date(dateString2);
+		const formattedDate2 = date2.toISOString().slice(0, 10).replace(/-/g, '');
+		console.log(formattedDate2); // 출력: '20230508'
+	  const IMP = window.IMP;
+	  IMP.init('imp58168664');
+	  const buyerMemberName = $('input[name="memberName"]:checked').val();
+	  const user_id = $('input[name="username"]').text();
+	  var count = countVal;
+	  IMP.request_pay({
+	    m_redirect_url: "{url https://myservice.com/payments/complete?imp_uid=imp58168664&merchant_uid=('cart_' + new Date().getTime())&imp_success=true}",
+	    pg: buyerMemberName,
+	    pay_method: "card",
+	    merchant_uid: ('cart_' + new Date().getTime()),
+	    name: [[${pmt.biz_name} + ${pmt.r_name}]],
+	    amount: [[${pmt.r_price}*${daysBetween}]],
+	    buyer_email: 'yunstar2555@gmail.com',
+	    buyer_name: '윤상',
+	  }, function(rsp) {
+	    if (rsp.success) {
+	      $.ajax({
+	        url: '/ResvDate',
+	        method: 'GET',
+	        data: {
+	      /*   	private String ;
+	    		private String ;
+	          r_name: [[${pmt.r_name}]],
+	          biz_id: [[${pmt.biz_id}]],
+	          r_id: [[${pmt.r_id}]],
+	          user_id: [[${pmt.user_id}]],
+	          pay_amt: [[${pmt.r_price}]],
+	          pay_method: rsp.pay_method,
+	          resv_capa: count, 
+	          resv_date: 'sysdate',*/ // 예약 날짜를 추가하세요.
+	          biz_id: [[${pmt.biz_id}]],
+	          r_id: [[${pmt.r_id}]],
+	          check_in: formattedDate1, // 예약자 이름을 추가하세요.
+	          check_out: formattedDate2, // 예약자 전화번호를 추가하세요.
+	        },
+	        success: function(getResvDate) {
+	          alert("결제 성공했습니다.");
+	          alert("결제 성공했습니다."+getResvDate);
+	          insertPay(getResvDate);
+	        },
+	        error: function(xhr, status, error) {
+	          console.log(xhr);
+	          // Handle the error response from the server
+	        }
+	      })
+	    } else {
+	      alert("결제 실패: " + rsp.error_msg);
+	    }
+	  });
+	  
+	};
+	
+	function insertPay(getResvDate) {
+	    var name = $('#lastName').val(); // Retrieve the value of the 'lastName' input field
+	    var phone = $('#phone').val(); // Retrieve the value of the 'phone' input field
+	    var count = $('#count').val(); // Retrieve the selected value of the 'count' select field
+	    var patmentMethod =$('input[name="payment"]:checked').val();
+	    //체크인과 체크 아웃 값을 알맞는 형식으로 바꿔서 사용
+		const dateString1 = [[${pmt.check_in}]];
+		const date1 = new Date(dateString1);
+		const formattedDate1 = date1.toISOString().slice(0, 10).replace(/-/g, '');
+		console.log(formattedDate1); 
+		const dateString2 = [[${pmt.check_out}]];
+		const date2 = new Date(dateString2);
+		const formattedDate2 = date2.toISOString().slice(0, 10).replace(/-/g, '');
+		console.log(formattedDate2); // 출력: '20230508'
+		console.log("getResvDate+>  "+getResvDate); // 출력: '20230508'
+	   
+		var username = $('#username').text();
+		$.ajax({
+	        url: '/paymentSend',
+	        method: 'GET',
+	         data: {
+	        	 user_id : username,
+	          biz_id: [[${pmt.biz_id}]],
+	          r_id: [[${pmt.r_id}]],
+	        
+	          pay_date: new Date().toISOString().slice(0, 10),
+	          r_name: [[${pmt.r_name}]],
+	          pay_amt:  [[${pmt.r_price}*${daysBetween}]],
+	          pay_method: patmentMethod,
+	          resv_capa1: [[${pmt.r_capacity}]], 
+	          resv_capa2: count, 
+	          resv_date: JSON.stringify(getResvDate),
+	          //resv_date: 'sysdate', // 예약 날짜를 추가하세요.
+	          biz_id: [[${pmt.biz_id}]],
+	          r_id: [[${pmt.r_id}]],
+	          check_in: formattedDate1, // 예약자 이름을 추가하세요.
+	          check_out: formattedDate2, // 예약자 전화번호를 추가하세요.
+	          resv_name : name,
+	          resv_phone : phone,
+	         
+	         },
+	         dataType: 'JSON',
+	         success: function(response) {
+	        	    var paymentInsert = response; // Get the paymentInsert value from the response
+	        	    if (paymentInsert == 1) {
+	        	        console.log(paymentInsert);
+	        	        alert("insert 성공했습니다.");
+	        	    } else {
+	        	        alert("insert 실패.");
+	        	        console.log(paymentInsert);
+	        	    }
+	        	    // Add your code to handle the success response
+	        	    // and insert the payment data into the database
+	        	},
+	        error: function(xhr, status, error) {
+	            console.log(xhr);
+	            // Handle the error response from the server
+	        }
+	    });
+	}
+	
+</script>

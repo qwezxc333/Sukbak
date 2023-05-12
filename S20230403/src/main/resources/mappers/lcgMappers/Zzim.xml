@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.S20230403.AccomMapper">
+	<insert id="cgAjaxInsertZzim" parameterType="Zzim">
+		INSERT INTO zzim(user_id, biz_id, zzim_status, zzim_date)
+      	VALUES(#{user_id}, #{biz_id}, 'Y', SYSDATE)
+	</insert>
+	
+	<select id="getZzimLists" parameterType="java.lang.String" resultType="Zzim">
+		SELECT 	biz_id, user_id, zzim_status
+		FROM 	zzim
+		WHERE	user_id = #{user_id}
+	</select>
+	
+	<delete id="cgAjaxDeleteZzim" parameterType="Zzim">
+		DELETE 
+		FROM  zzim
+		WHERE user_id = #{user_id}
+		AND	  biz_id = #{biz_id}	
+	</delete>
+	
+</mapper>

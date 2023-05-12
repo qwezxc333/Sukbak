@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redirect Page</title>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+  window.onload = function () {
+    var msg = /*[[${msg}]]*/ '';
+    var nextPage = /*[[${nextPage}]]*/ '';
+
+    if (nextPage) {
+      alert(msg);
+      location.href = nextPage;
+    } else {
+      location.href = "/login";
+    }
+  };
+</script>
+</body>
+</html>
