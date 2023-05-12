@@ -103,16 +103,6 @@
 		where biz_id = #{biz_id}
 	</update>
 	
-	<update id="roomCountAdd" parameterType="java.lang.String">		        		        
-		update accom
-		set room_count = (
-		                  select count(*) +1
-		                  from room
-		                  where biz_id = #{biz_id}
-		                  )
-		where biz_id = #{biz_id}
-	</update>
-	
 	<update id="roomCountMinus" parameterType="java.lang.String">		                
 		update accom
 		set room_count = (

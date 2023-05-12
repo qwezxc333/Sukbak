@@ -49,8 +49,8 @@ public class RoomImgController {
 		room.setBiz_id(ownerRoom.getBiz_id());
 		room.setR_id(nowR_id);
 		room = ss.roomSelect(room);
-		// 방이 추가되는 로직이기 때문에  biz_id로 총 객실수 구해서 +1 = 최종 방 개수
-		ss.updateRoomCount(ownerRoom.getBiz_id(), "add");
+		// 방이 추가되는 로직이기 때문에  biz_id로 Room테이블총 객실수 구해서 Accom테이블에 업데이트
+		ss.updateRoomCount(ownerRoom.getBiz_id(), "update");
 		System.out.println("RoomImgController roomImgInsertForm room ->"+room);
 		roomImgDelete(room);
 		
