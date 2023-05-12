@@ -17,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 public class MyQnaRestController {
 	private final MyQnaService ms;
 	
-	//qna 리스트
 	@PostMapping("/commonUser/myQna")
 	public List<Qna> myQna(@AuthenticationPrincipal PrincipalDetail userDetail, 
 										String qna_type) {
@@ -28,21 +27,4 @@ public class MyQnaRestController {
 		
 		return myQna;
 	}
-	
-	//qna 수정
-	@PostMapping("/commonUser/myQnaUpdate")
-	public void myQnaUpdate(Qna qna) {
-		System.out.println("qna업데이트 qnaTitle->"+ qna.getQna_title());
-		System.out.println("qna업데이트 qnaContent->"+ qna.getQna_content());
-		System.out.println("qna업데이트 qna_id->" + qna.getQna_id());
-		ms.myQnaUpdate(qna);
-	}
-	
-	//qna 삭제
-	@PostMapping("/commonUser/myQnaDelete")
-	public void myQnaDelete(int qna_id) {
-		System.out.println("qna_id--->" + qna_id);
-		ms.myQnaDelete(qna_id);
-	}
-	
 }
