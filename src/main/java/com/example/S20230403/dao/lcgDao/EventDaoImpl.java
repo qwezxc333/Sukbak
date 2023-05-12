@@ -19,9 +19,9 @@ public class EventDaoImpl implements EventDao {
 		List<Event> sukbakEvents = null;
 		try {
 			sukbakEvents = session.selectList("getEvent");
-			System.out.println("dao getevents 사이즈 -> "+sukbakEvents.size());
+		//	System.out.println("dao getevents 사이즈 -> "+sukbakEvents.size());
 		} catch (Exception e) {
-			System.out.println("dao getevents error -> "+e.getMessage());
+		//	System.out.println("dao getevents error -> "+e.getMessage());
 			// TODO: handle exception
 		}
 		return sukbakEvents;
