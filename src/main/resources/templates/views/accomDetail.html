@@ -20,11 +20,11 @@
 				<div class="carousel-inner">
 					<!-- roomImgStat으로 상태값 받아와서 index속성으로 0번째만 active -->
 					<div class="carousel-item active" th:if="${roomImgStat.index == 0}" th:each="roomImg, roomImgStat :  ${roomImg}">
-						<img th:src="@{${roomImg.r_img}}" alt="객실사진 준비중" onerror="this.onerror=null; this.src='/img/imageLoading.jpg';">
+						<img th:src="@{/img/room/{r_img}(r_img=${roomImg.r_img})}" alt="객실사진 준비중" onerror="this.onerror=null; this.src='/img/imageLoading.jpg';">
 					</div>
 					<!-- roomImgStat으로 상태값 받아와서 index속성으로 0번째 이상은 no active -->
 					<div class="carousel-item" th:if="${roomImgStat.index > 0}" th:each="roomImg, roomImgStat :  ${roomImg}">
-						<img th:src="@{${roomImg.r_img}}" alt="객실사진 준비중" onerror="this.onerror=null; this.src='/img/imageLoading.jpg';">
+						<img th:src="@{/img/room/{r_img}(r_img=${roomImg.r_img})}" alt="객실사진 준비중" onerror="this.onerror=null; this.src='/img/imageLoading.jpg';">
 					</div>
 				</div>
 				<!-- 사진 롤링버튼 -->
@@ -139,7 +139,7 @@
 							<!-- review 객체에 review테이블과 review_img테이블의 pay_id가 일치하는  
 								List타입의 reviewImages 필드를 또한번 each로 꺼내서 reviewImage를 받아내서 거기에 review_img를 뽑아냄 -->
 							<img th:each="reviewImage : ${review.reviewImages}"
-								th:src="@{${reviewImage.review_img}}"
+								th:src="@{/img/review/{re_img}(re_img=${reviewImage.review_img})}"
 								class="img-thumbnail" onerror="this.style.display='none';">
 						</div>
 					</div>

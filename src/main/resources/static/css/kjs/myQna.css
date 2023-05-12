@@ -56,11 +56,11 @@
 		padding: 8px 8%;
 	}
 	
-	.main > button:hover {
+	.main button:hover {
 		color: rgb(0, 183, 247);
 	}
 	
-	.main > button:focus {
+	.main button:focus {
 		color: rgb(0, 183, 247);
 		font-weight: bold;
 	}
@@ -78,6 +78,8 @@
 	.main .complaint {
 		border-radius: 0 15px 15px 0;
 	}
+	
+	
 	
 	.qnaList {
 		text-align: left;
@@ -103,6 +105,8 @@
 		width: 87%;
 	}
 	
+	
+	
 	.qnaListDate, .qnaReListDate {
 		text-align:right;
 		color: gray;
@@ -122,32 +126,6 @@
 	
 	.qnaReListContent span, .qnaReNoReply {
 		color: red;
-	}
-	
-	.qnaBtn-container {
-		text-align: right;
-		margin-top: 10px;
-	}
-	
-	.qnaUpdateBtn, .qnaDeleteBtn, .qnaSaveBtn{
-		color: gray;
-		background: white;
-		border: none;
-		padding: 2px 0 2px 20px;
-		border-radius: 10px;
-	}
-	
-	.qnaUpdateBtn:hover, .qnaDeleteBtn:hover, .qnaSaveBtn:hover {
-		font-weight: bold;
-	}
-	
-	#updateTitle {
-		width: 100%;
-		border: 1px solid lightgray;
-		background-color: rgb(250, 250, 250);
-		padding: 10px 5px;
-		border-radius: 10px;
-		font-size: 16px;
 	}
 	
 	@media(max-width: 992px){
