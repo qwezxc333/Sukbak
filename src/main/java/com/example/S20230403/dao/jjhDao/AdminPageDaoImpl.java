@@ -56,7 +56,7 @@ public class AdminPageDaoImpl implements AdminPageDao {
 	public List<JooJoin> accomlist(JooJoin biz_id) {
 		List<JooJoin> accomlist =null;
 		try {
-			System.out.println("jjhDao AdminPageDaoImpl accomlist 시작");
+//			System.out.println("jjhDao AdminPageDaoImpl accomlist 시작");
 			accomlist = session.selectList("jhAccomlist", biz_id);
 		} catch (Exception e) {
 			System.out.println("jjhDao AdminPageDaoImpl accomlist Exception : "+e.getMessage());
@@ -128,10 +128,10 @@ public class AdminPageDaoImpl implements AdminPageDao {
 	@Override
 	public int delReviewImg(int pay_id) {
 		int result = 0;
-		System.out.println("다오 delReviewImg 삭제 시작");
+//		System.out.println("다오 delReviewImg 삭제 시작");
 		try {
 			result = session.delete("adminDeleteReviewImg", pay_id);
-			System.out.println("다오 delReviewImg 삭제 시작 result -> "+result);
+//			System.out.println("다오 delReviewImg 삭제 시작 result -> "+result);
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("다오 delReviewImg 삭제 에러-> "+e.getMessage());
@@ -152,7 +152,7 @@ public class AdminPageDaoImpl implements AdminPageDao {
 		JooJoin jooJoin = new JooJoin();
 		try {
 			jooJoin = session.selectOne("jhQnaSelOne", qna_id);
-			System.out.println("jjhDao AdminPageDaoImpl listReply qna_id-> "+qna_id);
+//			System.out.println("jjhDao AdminPageDaoImpl listReply qna_id-> "+qna_id);
 		} catch (Exception e) {
 			System.out.println("jjhDao AdminPageDaoImpl listReply Exception-> "+e.getMessage());
 		}
@@ -160,7 +160,7 @@ public class AdminPageDaoImpl implements AdminPageDao {
 	}
 	@Override
 	public int saveReply(JooJoin jooJoin) {
-		System.out.println("jjhDao AdminPageDaoImpl insertReply start");
+//		System.out.println("jjhDao AdminPageDaoImpl insertReply start");
 		return session.insert("jhInsertQnaRe", jooJoin);
 	}
 	@Override
@@ -203,11 +203,11 @@ public class AdminPageDaoImpl implements AdminPageDao {
 //	일반 회원 검색
 	@Override
 	public int condUserCnt(JooJoin jooJoin) {
-		System.out.println("jjhDao AdminPageDaoImpl condUserCnt 시작");
+//		System.out.println("jjhDao AdminPageDaoImpl condUserCnt 시작");
 		int conditionUserCount = 0;
 		try {
 			conditionUserCount = session.selectOne("condUserCnt", jooJoin);
-			System.out.println("jjhDao AdminPageDaoImpl conditionUserCount-> "+conditionUserCount);
+//			System.out.println("jjhDao AdminPageDaoImpl conditionUserCount-> "+conditionUserCount);
 		} catch (Exception e) {
 			System.out.println("jjhDao AdminPageDaoImpl condUserCnt 에러: "+e.getMessage());
 		}
@@ -216,11 +216,11 @@ public class AdminPageDaoImpl implements AdminPageDao {
 
 	@Override
 	public List<JooJoin> listSearchUser(JooJoin jooJoin) {
-		System.out.println("jjhDao AdminPageDaoImpl listSearchUser 시작");
+//		System.out.println("jjhDao AdminPageDaoImpl listSearchUser 시작");
 		List<JooJoin> listSearchUser = null;
 		try {
 			listSearchUser = session.selectList("jhUserSearchList", jooJoin);
-			System.out.println("jjhDao AdminPageDaoImpl listSearchUser-> "+listSearchUser);
+//			System.out.println("jjhDao AdminPageDaoImpl listSearchUser-> "+listSearchUser);
 		} catch (Exception e) {
 			System.out.println("jjhDao AdminPageDaoImpl listSearchUser 에러: "+e.getMessage());
 		}

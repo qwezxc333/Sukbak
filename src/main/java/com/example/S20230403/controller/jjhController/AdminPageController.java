@@ -30,7 +30,7 @@ public class AdminPageController {
 		
 		String user_id = userDetail.getUsername();
 		model.addAttribute("user_id",user_id);
-		System.out.println("로그인 한 관리자 id => "+user_id);
+//		System.out.println("로그인 한 관리자 id => "+user_id);
 		
 		return "views/admin/adminPage";
 	  }
@@ -45,9 +45,9 @@ public class AdminPageController {
 	  
      int userTotal = as.userTotal();
      AdminPaging page = new AdminPaging(userTotal, currentPage);
-     System.out.println("컨트롤러 userTotal-> "+userTotal);
-     System.out.println("컨트롤러 일반회원 시작 페이지-> "+ page.getStart());
-     System.out.println("컨트롤러 일반회원 끝 페이지-> "+ page.getEnd());
+//     System.out.println("컨트롤러 userTotal-> "+userTotal);
+//     System.out.println("컨트롤러 일반회원 시작 페이지-> "+ page.getStart());
+//     System.out.println("컨트롤러 일반회원 끝 페이지-> "+ page.getEnd());
      
      jooJoin.setStart(page.getStart()); // 시작시 1
      jooJoin.setEnd(page.getEnd());     // 시작시 10
@@ -71,9 +71,9 @@ public class AdminPageController {
 	  
 		int accomTotal = as.accomTotal();
 		AdminPaging page = new AdminPaging(accomTotal, currentPage);
-		System.out.println("컨트롤러 사업자 회원 -> "+currentPage+" 페이지");
-		System.out.println("컨트롤러 사업자 회원 시작 번호-> "+ page.getStart());
-		System.out.println("컨트롤러 사업자 회원 끝 번호-> "+ page.getEnd());
+//		System.out.println("컨트롤러 사업자 회원 -> "+currentPage+" 페이지");
+//		System.out.println("컨트롤러 사업자 회원 시작 번호-> "+ page.getStart());
+//		System.out.println("컨트롤러 사업자 회원 끝 번호-> "+ page.getEnd());
 		
 		jooJoin.setStart(page.getStart()); // 시작시 1
 		jooJoin.setEnd(page.getEnd());     // 시작시 10
@@ -95,9 +95,9 @@ public class AdminPageController {
 		  
 		int qnaTotal = as.qnaTotal();
 		AdminPaging page = new AdminPaging(qnaTotal, currentPage);
-		System.out.println("컨트롤러 게시판 -> "+currentPage+" 페이지");
-		System.out.println("컨트롤러 게시판 시작 번호-> "+ page.getStart());
-		System.out.println("컨트롤러 게시판 끝 번호-> "+ page.getEnd());
+//		System.out.println("컨트롤러 게시판 -> "+currentPage+" 페이지");
+//		System.out.println("컨트롤러 게시판 시작 번호-> "+ page.getStart());
+//		System.out.println("컨트롤러 게시판 끝 번호-> "+ page.getEnd());
 		
 		jooJoin.setStart(page.getStart()); // 시작시 1
 		jooJoin.setEnd(page.getEnd());     // 시작시 10
@@ -119,9 +119,9 @@ public class AdminPageController {
 		  
 		int qnaTotal = as.qnaReTotal();
 		AdminPaging page = new AdminPaging(qnaTotal, currentPage);
-		System.out.println("컨트롤러 게시판 -> "+currentPage+" 페이지");
-		System.out.println("컨트롤러 게시판 시작 번호-> "+ page.getStart());
-		System.out.println("컨트롤러 게시판 끝 번호-> "+ page.getEnd());
+//		System.out.println("컨트롤러 게시판 -> "+currentPage+" 페이지");
+//		System.out.println("컨트롤러 게시판 시작 번호-> "+ page.getStart());
+//		System.out.println("컨트롤러 게시판 끝 번호-> "+ page.getEnd());
 		
 		jooJoin.setStart(page.getStart()); // 시작시 1
 		jooJoin.setEnd(page.getEnd());     // 시작시 10
@@ -143,9 +143,9 @@ public class AdminPageController {
 		  
 		int reviewTotal = as.reviewTotal();
 		AdminPaging page = new AdminPaging(reviewTotal, currentPage);
-		System.out.println("컨트롤러 리뷰  -> "+currentPage+" 페이지");
-		System.out.println("컨트롤러 리뷰 시작 번호-> "+ page.getStart());
-		System.out.println("컨트롤러 리뷰 끝 번호-> "+ page.getEnd());
+//		System.out.println("컨트롤러 리뷰  -> "+currentPage+" 페이지");
+//		System.out.println("컨트롤러 리뷰 시작 번호-> "+ page.getStart());
+//		System.out.println("컨트롤러 리뷰 끝 번호-> "+ page.getEnd());
 		
 		jooJoin.setStart(page.getStart()); // 시작시 1
 		jooJoin.setEnd(page.getEnd());     // 시작시 10
@@ -167,9 +167,9 @@ public class AdminPageController {
 		  
 		int reviewTotal = as.reviewDelTotal();
 		AdminPaging page = new AdminPaging(reviewTotal, currentPage);
-		System.out.println("컨트롤러 리뷰  -> "+currentPage+" 페이지");
-		System.out.println("컨트롤러 리뷰 시작 번호-> "+ page.getStart());
-		System.out.println("컨트롤러 리뷰 끝 번호-> "+ page.getEnd());
+//		System.out.println("컨트롤러 리뷰  -> "+currentPage+" 페이지");
+//		System.out.println("컨트롤러 리뷰 시작 번호-> "+ page.getStart());
+//		System.out.println("컨트롤러 리뷰 끝 번호-> "+ page.getEnd());
 		
 		jooJoin.setStart(page.getStart()); // 시작시 1
 		jooJoin.setEnd(page.getEnd());     // 시작시 10
@@ -192,9 +192,9 @@ public class AdminPageController {
 		String user_id = userDetail.getUsername();
 	    model.addAttribute("user_id",user_id);
 	  
-		System.out.println("jjhController AdminPageController delUsers start");
-		System.out.println("jjhController AdminPageController delUsers getusersid-> "
-							+jooJoin.getUser_id());
+//		System.out.println("jjhController AdminPageController delUsers start");
+//		System.out.println("jjhController AdminPageController delUsers getusersid-> "
+//							+jooJoin.getUser_id());
 		int result = as.delUsers(jooJoin);
 		return "forward:/admin/adminPage-userlist";
 	}
@@ -207,9 +207,9 @@ public class AdminPageController {
 		String user_id = userDetail.getUsername();
 	    model.addAttribute("user_id",user_id);
 		  
-		System.out.println("jjhController AdminPageController delAccom start");
-		System.out.println("jjhController AdminPageController delAccom getBiz_id-> "
-							+jooJoin.getBiz_id());
+//		System.out.println("jjhController AdminPageController delAccom start");
+//		System.out.println("jjhController AdminPageController delAccom getBiz_id-> "
+//							+jooJoin.getBiz_id());
 		int result = as.delAccom(jooJoin);
 		return "forward:/admin/adminPage-accomlist";
 	}
@@ -222,7 +222,7 @@ public class AdminPageController {
 		String user_id = userDetail.getUsername();
 	    model.addAttribute("user_id",user_id);
 			  
-		System.out.println("jjhController AdminPageController delQnA start");
+//		System.out.println("jjhController AdminPageController delQnA start");
 		int result = as.delQnA(qna_id);
 		return "forward:/admin/adminPage-qnalist";
 	}
@@ -235,7 +235,7 @@ public class AdminPageController {
 		String user_id = userDetail.getUsername();
 	    model.addAttribute("user_id",user_id);
  
-		System.out.println("jjhController AdminPageController delQnARe start");
+//		System.out.println("jjhController AdminPageController delQnARe start");
 		int result = as.delQnARe(qna_id);
 		return "forward:/admin/adminPage-qnalist";
 	}
@@ -248,7 +248,7 @@ public class AdminPageController {
 		String user_id = userDetail.getUsername();
 	    model.addAttribute("user_id",user_id);
 		
-		System.out.println("jjhController AdminPageController delReviewImg start");
+//		System.out.println("jjhController AdminPageController delReviewImg start");
 		int result = as.delReviewImg(pay_id);
 		return "forward:/admin/adminPage-reviewDellist";
 	}
@@ -261,7 +261,7 @@ public class AdminPageController {
 		String user_id = userDetail.getUsername();
 		model.addAttribute("user_id",user_id);
 		
-		System.out.println("jjhController AdminPageController delReviewImg start");
+//		System.out.println("jjhController AdminPageController delReviewImg start");
 		int result = as.delReviewImg(pay_id);
 		return "forward:/admin/adminPage-reviewlist";
 	}
@@ -274,7 +274,7 @@ public class AdminPageController {
 		String user_id = userDetail.getUsername();
 	    model.addAttribute("user_id",user_id);
 		  
-		System.out.println("jjhController AdminPageController rejectDelReview start");
+//		System.out.println("jjhController AdminPageController rejectDelReview start");
 		int result = as.rejectDelReview(jooJoin);
 		return "forward:/admin/adminPage-reviewDellist";
 	}
@@ -287,8 +287,8 @@ public class AdminPageController {
 		String user_id = userDetail.getUsername();
 	    model.addAttribute("user_id",user_id);
 		
-		System.out.println("jjhController AdminPageController detailQna Start" );
-		System.out.println("jjhController AdminPageController detailQna qna_id-> "+qna_id );
+//		System.out.println("jjhController AdminPageController detailQna Start" );
+//		System.out.println("jjhController AdminPageController detailQna qna_id-> "+qna_id );
 		JooJoin jooJoin = as.detailQna(qna_id);
 		model.addAttribute("qna_id",jooJoin.getQna_id());
 		model.addAttribute("qna_type",jooJoin.getQna_type());
@@ -307,7 +307,7 @@ public class AdminPageController {
 		String user_id = userDetail.getUsername();
 	    model.addAttribute("user_id",user_id);
 		
-		System.out.println("jjhController AdminPageController saveReply start");
+//		System.out.println("jjhController AdminPageController saveReply start");
 		int insertResult = as.saveReply(jooJoin);
 		
 		if(insertResult > 0) return "forward:/admin/adminPage-qnalist";
@@ -320,11 +320,11 @@ public class AdminPageController {
 	@GetMapping("/admin/adminPage-userSearchList")
 	  public String userSearchList(@AuthenticationPrincipal PrincipalDetail userDetail, 
 			  						Model model, String currentPage, JooJoin jooJoin) {
-		System.out.println("searchlist search -> "+jooJoin.getSearch());
+//		System.out.println("searchlist search -> "+jooJoin.getSearch());
 		String search = jooJoin.getSearch();
 		String keyword = jooJoin.getKeyword();
-		System.out.println("searchlist keyword -> "+jooJoin.getKeyword());
-		System.out.println("searchlist currentPage 확인 -> "+currentPage);
+//		System.out.println("searchlist keyword -> "+jooJoin.getKeyword());
+//		System.out.println("searchlist currentPage 확인 -> "+currentPage);
 		
 		String user_id = userDetail.getUsername();
 	    model.addAttribute("user_id",user_id);
@@ -332,9 +332,9 @@ public class AdminPageController {
 		 int userTotal = as.conditionUserTotal(jooJoin);
 		 
 	     AdminPaging page = new AdminPaging(userTotal, currentPage);
-	     System.out.println("컨트롤러 userSearchList-> "+userTotal);
-	     System.out.println("컨트롤러 일반회원 검색 시작 페이지-> "+ page.getStart());
-	     System.out.println("컨트롤러 일반회원 검색 끝 페이지-> "+ page.getEnd());
+//	     System.out.println("컨트롤러 userSearchList-> "+userTotal);
+//	     System.out.println("컨트롤러 일반회원 검색 시작 페이지-> "+ page.getStart());
+//	     System.out.println("컨트롤러 일반회원 검색 끝 페이지-> "+ page.getEnd());
 	     
 	     jooJoin.setStart(page.getStart()); // 시작시 1
 	     jooJoin.setEnd(page.getEnd());     // 시작시 10

@@ -126,11 +126,11 @@
 				      </div>
 				      
 				      <div class="modal-footer">
-				        <form action="/rejectDelReview" method="post">
+				        <form action="/admin/rejectDelReview" method="post">
 							<input type="hidden" name="pay_id" th:value="${r.pay_id}">
 							<button type="submit" class="btn btn-secondary">반려</button>
 						</form>
-				        <form action="/delReviewImg" method="post">
+				        <form action="/admin/delReviewImg" method="post">
 							<input type="hidden" name="pay_id" th:value="${r.pay_id}">
 							<button type="submit" class="btn btn-primary">삭제</button>
 						</form>
