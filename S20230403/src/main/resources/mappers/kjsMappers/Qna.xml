@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.S20230403.QnaMapper">
+
+	<!-- 챗봇 1:1문의 접수 -->
+	<insert id="jsQnaInsert" parameterType="Qna">
+		INSERT INTO qna VALUES (Qna_ID_SEQ.nextval, #{user_id}, 430, #{qna_title}, #{qna_content}, sysdate)
+	</insert>
+	
+	<select id="jsMyQnaList" parameterType="map" resultType="Qna">
+		SELECT *
+		FROM qna q
+		LEFT JOIN qna_re qr ON q.qna_id = qr.qna_id
+		WHERE q.qna_type = #{qna_type}
+		AND q.user_id = #{user_id}
+		ORDER BY q.qna_id desc
+	</select>	
+	
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.S20230403.Room_ImgMapper">
+	<!-- 일반 모든 업소의 사진을 다 가져오는 로직  -->
+	<select id="cgGetRoom_img" resultType="Room_Img">
+		SELECT r_img1.BIZ_ID biz_id, r_img1.R_IMG r_img
+		FROM ROOM_IMG r_img1,
+		(
+			SELECT room_img1.BIZ_ID biz_id, room_img2.R_ID r_id, MIN(room_img1.R_IMG_ID) R_IMG_ID
+			FROM ROOM_IMG room_img1,
+			(
+				SELECT BIZ_ID, MIN(R_ID) R_ID
+				FROM ROOM_IMG
+				GROUP BY BIZ_ID
+			) room_img2
+			WHERE room_img1.BIZ_ID = room_img2.BIZ_ID AND room_img1.R_ID = room_img2.R_ID
+			GROUP BY room_img1.BIZ_ID, room_img2.R_ID
+		) r_img2
+		WHERE r_img1.BIZ_ID = r_img2.biz_id 
+		AND r_img1.R_ID = r_img2.r_id 
+		AND r_img1.R_IMG_ID = r_img2.R_IMG_ID
+	</select>
+	
+	<!-- user_id로 내가 찜한 숙소 사진만 가져오는 로직  -->
+	<select id="myZzimAccomImgsByUser_id" parameterType="java.lang.String" resultType="Room_Img">
+		SELECT r_img1.BIZ_ID biz_id, r_img1.R_IMG r_img, z.zzim_status
+		FROM ROOM_IMG r_img1, zzim z,
+		(
+		    SELECT room_img1.BIZ_ID biz_id, room_img2.R_ID r_id, MIN(room_img1.R_IMG_ID) R_IMG_ID
+		    FROM ROOM_IMG room_img1,
+		    (
+		        SELECT BIZ_ID, MIN(R_ID) R_ID
+		        FROM ROOM_IMG
+		        GROUP BY BIZ_ID
+		    ) room_img2
+		    WHERE room_img1.BIZ_ID = room_img2.BIZ_ID AND room_img1.R_ID = room_img2.R_ID
+		    GROUP BY room_img1.BIZ_ID, room_img2.R_ID
+		) r_img2
+		WHERE r_img1.BIZ_ID = r_img2.biz_id 
+		AND r_img1.R_ID = r_img2.r_id 
+		AND r_img1.R_IMG_ID = r_img2.R_IMG_ID
+		AND r_img1.biz_id = z.biz_id
+		and z.zzim_status = 'Y'
+		and z.user_id = #{user_id}
+	</select>
+</mapper>

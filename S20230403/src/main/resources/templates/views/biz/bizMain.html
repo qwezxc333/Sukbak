@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<head>
+	<link rel="stylesheet" href="/css/ljy/main.css">
+	<style type="text/css">
+	#biz_id{
+		border: none;
+		text-align: center;
+	}
+	</style>
+</head>
+<script src="/js/ljy/ljyScripts.js" type="text/javascript">
+</script>
+<body>
+	<div class="container">
+	
+		<div class="nav">
+			<div class="accordion accordion-flush" id="accordionFlushExample" style="width: 200px">
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingOne">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+				        	업체 및 객실관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+							<a href="/biz/bizMain">업체관리</a><br>
+							<a href="/biz/rooms" >객실관리</a><br>
+					  </div>
+				    </div>
+				  </div>
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingTwo">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+				        	리뷰 및 예약관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+				       		<a href="/biz/review">리뷰관리</a><br>
+				       		예약관리<br>
+					  </div>
+				    </div>
+				  </div>
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingThree">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+				        	계정관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+				      	<!-- <form action="/biz/usersInfoChkForm" method="POST">
+				      		<input type="submit" value="계정정보 변경" name="userAction">
+				      		<input type="submit" value="계정 양도" name="userAction">
+				      		<input type="submit" value="회원 탈퇴" name="userAction">
+				      	</form> -->
+				      	<a href="/biz/usersInfoChkForm?userAction=계정정보 변경">계정정보 변경</a><br>
+				      	<a href="/biz/usersInfoChkForm?userAction=계정 양도">계정 양도</a><br>
+				      	<a href="/biz/usersInfoChkForm?userAction=회원 탈퇴">회원 탈퇴</a><br>
+					  </div>
+				    </div>
+				  </div>
+			</div>
+		</div>
+		
+		<div class="content">
+		
+			<div id="title">
+				<div class="icon">
+				 	<img src="/img/accom_building.png" alt="building">
+				</div>
+				<p>내 업체 관리</p>	
+			</div>
+			
+			<div class="table">
+				<table class="responsive-table">
+				    <thead>
+				      <tr>
+				        <th scope="col">업체명</th>
+				        <th scope="col">업체코드</th>
+				        <th scope="col">유형</th>
+				        <th scope="col">주소</th>
+				        <th scope="col">대표번호</th>
+				        <th scope="col">객실 수</th>
+				        <th scope="col">상태</th>
+				        <th scope="col">관리</th>
+				      </tr>
+				    </thead>
+				    
+				    <tbody th:each="accoms : ${accomList}" class="accomsList">
+				    <form action="accomMngChk" method="POST">	
+				    		<input type="hidden" name="r_avail" id="r_avail"  th:value=${accoms.accom_avail}>
+					      <tr>
+					        <!-- <th scope="row" th:text="${accoms.biz_name}"></th> -->
+					        <td>
+					        	<button class="btn btn-light" type="submit" name="accomMngChk" value="상세확인" style="font-weight: bold; width: 150px;">
+					        		<span th:text="${accoms.biz_name}"></span>
+					       		</button>
+					        </td>
+					        
+					        <td data-title="biz_id">
+					        	<input type="text" 	 id="biz_id"   name = "biz_id" 	th:value="${accoms.biz_id}" readonly="readonly">
+					        </td>
+					        <td data-title="Studio">
+								<span th:switch="${accoms.accom_type}">
+								    <span th:case="'999'">기타</span>
+								    <span th:case="'511'">호텔(biz)</span>
+								    <span th:case="'513'">호텔(3성)</span>
+								    <span th:case="'514'">호텔(4성)</span>
+								    <span th:case="'515'">호텔(5성)</span>
+								    <span th:case="'520'">모텔</span>
+								    <span th:case="'530'">게스트하우스</span>
+								    <span th:case="'540'">펜션</span>
+								</span>
+							</td>
+					        <td data-title="addr" th:text="${accoms.addr}"></td>
+					        <td data-title="tel" th:text="${accoms.tel}"></td>
+					        <td data-title="room_count" th:text="${accoms.room_count}"></td>
+					        <td data-title="accom_avail" >  	
+					        	<span th:switch="${accoms.accom_avail}">
+								    <span th:case="'210'" id="goodsOpened" >사용</span>
+								    <span th:case="'220'" id="goodsHidden">숨김</span>
+								    <span th:case="'230'">삭제</span>
+								</span> 
+								<input th:if="${accoms.accom_avail == '210'}" type="submit" class="btn btn-warning" name="accomMngChk" value="숨기기" onclick="return chkHidden()">
+								<input th:if="${accoms.accom_avail == '220'}" type="submit" class="btn btn-success" name="accomMngChk" value="숨김해제" onclick="return chkOpen()">
+					        </td>
+					        <td data-title="accomMngChk">
+			        			<input class="btn btn-info" type="submit" name = "accomMngChk" value="객실조회">
+								<input class="btn btn-info" type="submit" name = "accomMngChk" value="수정">
+								<input class="btn btn-danger" type="submit" name = "accomMngChk" value="삭제" onclick="return chkDelete()">
+							</td>
+					      </tr>
+				      </form>
+				    </tbody>
+				 </table>
+		 	</div> 
+			<form action="/biz/accomInsertForm" method="POST">
+				<input type="hidden" id="biz_id" name="biz_id" th:value="${accom.biz_id}">
+				<div class="d-grid gap-2" id="insertButton">
+					<button class="btn btn-outline-primary" type="submit">업체 등록하기</button>
+				</div>
+			</form>
+		</div>
+		
+		<div class="imgs">
+				<div class="roomImgs" th:each="room_img : ${riList}">
+						<img th:src="@{/img/room/{img}(img=${room_img.r_img})}"
+							class="img-thumbnail" onerror="this.style.display='none';">
+				  </div><br>
+			</div>
+		
+	</div>
+</body>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</html>

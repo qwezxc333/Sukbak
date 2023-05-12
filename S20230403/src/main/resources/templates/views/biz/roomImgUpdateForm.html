@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<body>
+	<h3>객실 이미지 수정</h3>
+	<form action="/biz/roomImgUpdate" method="post" enctype="multipart/form-data" >
+	
+		<input type="hidden" id="biz_id" name="biz_id" th:value="${room.biz_id}">
+		<input type="hidden" id="r_id" name="r_id" th:value="${room.r_id}">
+		
+			<div data-name="fileDiv" class="form-group filebox bs3-primary">
+				<label for="file_0" class="col-sm-2 control-label">파일1</label>
+				<div class="col-sm-10">
+					<input type="text" class="upload-name" value="파일 찾기" readonly />
+					<label for="file_0" class="control-label">찾아보기</label>
+					<input type="file" name="files" id="file_0" class="upload-hidden" onchange="changeFilename(this)" accept=".jpg, .jpeg, .png, .gif"/>
+				
+					<button type="button" onclick="addFile()" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+						<i class="fa fa-plus" aria-hidden="true"></i>
+					</button>
+					<button type="button" onclick="removeFile(this)" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+						<i class="fa fa-minus" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+			<div id="btnDiv" class="btn_wrap text-center" >
+				<button type="button" class="btn btn-default waves-effect waves-light" onclick="return goBack()">뒤로가기</button>
+				<button type="submit" class="btn btn-primary waves-effect waves-light" onsubmit="return actAlertImgInsert()">저장하기</button>
+			</div>	
+			
+	</form>
+</body>
+<script src="/js/ljy/ljyScripts.js" type="text/javascript">
+	let fileIdx = 0; /*[- 파일 인덱스 처리용 전역 변수 -]*/
+	
+	function addFile() {
+	
+		const fileDivs = $('div[data-name="fileDiv"]');
+		if (fileDivs.length > 9) {
+			alert('파일은 최대 열 개까지 업로드 할 수 있습니다.');
+			return false;
+		}
+	
+		fileIdx++;
+	
+		const fileHtml = `
+			<div data-name="fileDiv" class="form-group filebox bs3-primary">
+				<label for="file_${fileIdx}" class="col-sm-2 control-label"></label>
+				<div class="col-sm-10">
+					<input type="text" class="upload-name" value="파일 찾기" readonly />
+					<label for="file_${fileIdx}" class="control-label">찾아보기</label>
+					<input type="file" name="files" id="file_${fileIdx}" class="upload-hidden" onchange="changeFilename(this)" accept=".jpg, .jpeg, .png, .gif"/>
+	
+					<button type="button" onclick="removeFile(this)" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+						<i class="fa fa-minus" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+		`;
+	
+		$('#btnDiv').before(fileHtml);
+	}
+	
+	/*[- end of function -]*/
+	
+	function removeFile(elem) {
+	
+		const prevTag = $(elem).prev().prop('tagName');
+		if (prevTag === 'BUTTON') {
+			const file = $(elem).prevAll('input[type="file"]');
+			const filename = $(elem).prevAll('input[type="text"]');
+			file.val('');
+			filename.val('파일 찾기');
+			return false;
+		}
+	
+		const target = $(elem).parents('div[data-name="fileDiv"]');
+		target.remove();
+	}
+	/*[- end of function -]*/
+	
+	function changeFilename(file) {
+	
+		file = $(file);
+		const filename = file[0].files[0].name;
+		const target = file.prevAll('input');
+		target.val(filename);
+	}
+</script>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</html>

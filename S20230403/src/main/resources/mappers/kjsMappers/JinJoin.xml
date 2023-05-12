@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.S20230403.JinJoinMapper">
+	
+	<!-- 객실리스트 뿌려줄 때 전부다 뿌려주지만, 날짜조건에 걸린건 is_reserved(JinJoin에 조회용 추가)로 1 담아서 view에서 1로 예약불가 버튼 변경
+		room_img는 셀프조인 후 MIN으로 맨앞장만 가져와 섬네일처럼 이용-->
+	<select id="jsAccomDetailRoomList" parameterType="map" resultType="JinJoin">
+		<![CDATA[
+		SELECT a.*, r.*, ri.*,
+		    CASE
+		        WHEN EXISTS (
+		            SELECT 1
+		            FROM reservation resv
+		            JOIN soldout s ON resv.biz_id = s.biz_id 
+		            AND resv.r_id = s.r_id
+		            AND resv.resv_id = s.resv_id
+		            WHERE resv.biz_id = r.biz_id AND resv.r_id = r.r_id
+		                AND TO_DATE(#{checkIn}, 'YY/MM/DD') <= TO_DATE(s.resv_date, 'YY/MM/DD')
+		                AND TO_DATE(s.resv_date, 'YY/MM/DD') < TO_DATE(#{checkOut}, 'YY/MM/DD')
+		        ) THEN 1
+		        ELSE 0
+		    END AS is_reserved
+		FROM accom a
+		JOIN room r ON a.biz_id = r.biz_id
+		LEFT JOIN (
+		    SELECT *
+		    FROM room_img ri1
+		    WHERE ri1.r_img_id = (
+		        SELECT MIN(ri2.r_img_id)
+		        FROM room_img ri2
+		        WHERE ri1.biz_id = ri2.biz_id AND ri1.r_id = ri2.r_id
+		    )
+		) ri ON r.biz_id = ri.biz_id AND r.r_id = ri.r_id
+		WHERE a.biz_id = #{biz_id}
+		]]>
+	</select>
+	
+</mapper>

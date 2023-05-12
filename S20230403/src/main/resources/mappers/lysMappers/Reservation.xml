@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.S20230403.ReservationMapper">
+	<insert id="ysInsertReserv" parameterType="Reservation">
+	        INSERT INTO Reservation ( RESV_ID         , biz_id  ,   R_ID ,   USER_ID ,   RESV_CAPA ,   CHECK_IN ,    CHECK_OUT ,   RESV_NAME,    RESV_PHONE ) 
+	        			VALUES (Resv_ID_SEQ.nextval, '${biz_id}', ${r_id},  '${user_id}',  ${resv_capa}, '${check_in}', '${check_out}', '${resv_name}','${resv_phone}') 
+	</insert>
+</mapper>

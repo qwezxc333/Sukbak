@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.S20230403.model.GunJoin">
+
+	<!-- =============== 프로필 =============== -->
+	<!-- 내 프로필 화면 불러오기(View) -->
+	<select id="getMyProfileInfo"  parameterType="java.lang.String"  resultType="Users">
+		SELECT	*
+		FROM		users
+		WHERE		user_id = #{user_id}
+	</select>
+	
+	<!-- 내 프로필 수정하기(update) -->
+	<update id="updateMyProfile"  parameterType="Users">
+		UPDATE	Users
+		SET		nickname	= #{nickname},
+					telecom	= #{telecom},
+					phone		= #{phone}
+		WHERE		user_id	= #{user_id}
+	</update>
+	
+	<!-- 내 비밀번호 수정하기(update) -->
+	<update id="updatePassword"  parameterType="Users">
+		UPDATE	Users
+		SET		password 	= #{password}
+		WHERE		user_id 		= #{user_id}
+	</update>
+	
+	
+	<!-- =============== 예약내역  =============== -->
+	<!-- 예약내역 불러오기 -->
+	<select id="getMyResvList3"  parameterType="java.lang.String"  resultType="GunJoin">
+		SELECT  p.user_id, a.biz_name, resv.check_in, resv.check_out, a.addr,
+		        p.pay_status, p.pay_amt, p.pay_id, c.content, p.biz_id, p.r_id,
+		        resv.resv_id
+		FROM    Accom a, Room r, Reservation resv, Payment p, Users u, Comm c
+		WHERE   u.user_id		= a.user_id
+		AND     a.biz_id		= r.biz_id
+		AND     r.biz_id		= resv.biz_id
+		AND     resv.biz_id  = p.biz_id
+		AND     r.r_id			= resv.r_id
+		AND     resv.r_id		= p.r_id
+		AND	  c.mid_code	= p.pay_status
+		AND     p.resv_id    = resv.resv_id
+		AND     p.user_id		= #{user_id}
+	</select>
+	
+	<select id="getMyResvList"  parameterType="java.lang.String"  resultType="GunJoin">
+		SELECT  p.user_id, a.biz_name, resv.check_in, resv.check_out, a.addr,
+		        p.pay_status, p.pay_amt, c.content, p.biz_id, p.r_id, resv.resv_id,
+		        p.pay_id as payment_id, re.pay_id as review_pay_id
+		FROM    Accom a, Room r, Reservation resv, Payment p, Users u, Comm c, Review re
+		WHERE   	u.user_id		= a.user_id
+		AND     	a.biz_id		= r.biz_id
+		AND     	r.biz_id		= resv.biz_id
+		AND     	resv.biz_id  = p.biz_id
+		AND     	r.r_id			= resv.r_id
+		AND     	resv.r_id		= p.r_id
+		AND     	p.pay_id     = re.pay_id(+)
+		AND	  	c.mid_code	= p.pay_status
+		AND     	p.resv_id    = resv.resv_id
+		AND     	p.user_id		= #{user_id}
+		ORDER BY resv.resv_id DESC
+	</select>
+	
+	<!-- 예약 내역과 일치하는 리뷰 데이터 조회하기 -->
+	<select id="getMyResvReviews" parameterType="GunJoin" resultType="Review">
+		SELECT  rv.rating, rv.review_date, rv.review_content
+		FROM    Accom a, Room r, Reservation resv, Payment p,
+		        Users u, Review rv
+		WHERE   u.user_id	= a.user_id
+		AND     a.biz_id	= r.biz_id
+		AND     r.biz_id	= resv.biz_id
+		AND     resv.biz_id = p.biz_id
+		AND     r.r_id		= resv.r_id
+		AND     resv.r_id	= p.r_id
+		AND     rv.pay_id   = p.pay_id
+		AND     p.pay_id    = #{pay_id}
+		AND     p.user_id   = #{user_id}
+	</select>
+	
+	<!-- 예약내역 이미지 불러오기 -->
+	<select id="getMyResvImgList"  parameterType="GunJoin"  resultType="GunJoin">
+		SELECT      rImg.r_img, p.biz_id, rImg.r_id, p.user_id
+		FROM        Accom a, Room r, Room_img rImg, Reservation resv, Payment p, Users u
+		WHERE       a.biz_id     = r.biz_id
+		AND         r.biz_id     = rImg.biz_id
+		AND         r.biz_id     = resv.biz_id
+		AND         resv.biz_id  = p.biz_id
+		AND         rImg.biz_id  = resv.biz_id
+		AND         rImg.biz_id  = p.biz_id
+		
+		AND         u.user_id    = resv.user_id
+		AND         resv.user_id = p.user_id
+		
+		AND         r.r_id       = rImg.r_id
+		AND         r.r_id       = resv.r_id
+		AND         resv.r_id    = p.r_id
+		AND         rImg.r_img_id = '1'
+		<if test="list != null and list.size() != 0">
+			AND		p.r_id	IN
+			  <foreach item="r_id" collection="list" open="(" separator="," close=")">
+				#{r_id}
+			  </foreach>
+		</if>
+		AND         p.user_id	 = #{login_id}
+	</select>
+	
+	<!-- <update id="cancelPay" parameterType="int">
+		UPDATE  Payment
+		SET     pay_status = 630
+		WHERE   pay_id 	 = #{pay_id}
+	</update> -->
+	
+	<delete id="deleteSO" parameterType="GunJoin">
+		DELETE FROM Soldout
+		WHERE		biz_id	= #{biz_id}
+		AND		resv_id	= #{resv_id}
+		AND		r_id		= #{r_id}
+	</delete>
+
+	<delete id="deletePay" parameterType="GunJoin">
+		DELETE FROM Payment
+		WHERE		pay_id	= #{pay_id}
+		AND		biz_id	= #{biz_id}
+		AND		resv_id	= #{resv_id}
+		AND		r_id		= #{r_id}
+	</delete>
+
+	<delete id="deleteResv" parameterType="GunJoin">
+		DELETE FROM Reservation
+		WHERE		biz_id	= #{biz_id}
+		AND		resv_id	= #{resv_id}
+		AND		r_id		= #{r_id}
+	</delete>
+	
+	
+	<!-- =============== 리뷰 =============== -->
+	<!-- 리뷰 작성 페이지에 띄울 ACCOM 정보 가져오기 -->
+	<select id="getMyAccomInfo" parameterType="Room" resultType="GunJoin">
+			SELECT      a.biz_id, a.biz_name, a.addr, ri.r_img_id
+			FROM        Accom a
+			JOIN        Room r  ON  a.biz_id = r.biz_id
+			LEFT JOIN   Room_img ri  
+						ON	  	r.biz_id		= ri.biz_id
+						AND   r.r_id  		= ri.r_id
+			WHERE       	r.biz_id		= #{biz_id}
+			AND         	r.r_id 		= #{r_id}
+			AND         	ri.r_img_id = (SELECT   MIN(ri.r_img_id)
+                                       FROM     room r, room_img ri
+                                       WHERE    ri.r_id = r.r_id)
+	</select>
+	
+	<!-- Review 테이블에 insert하기(이미지 제외) -->
+	<insert id="putMyReview" parameterType="GunJoin">
+		INSERT INTO	Review(pay_id, room_used, rating, review_date, review_content)
+		VALUES      	 (#{pay_id},
+						   'Y',
+						   #{rating, jdbcType=INTEGER},
+						   sysdate,
+						   #{review_content, jdbcType=VARCHAR})
+	</insert>
+	
+	<!-- Review_Img 테이블에서 MAX number 가져오기 -->
+	<select id="getMaxImgNum" parameterType="Review" resultType="int">
+		SELECT	NVL(Max(review_img_id), 0)
+		FROM		Review rv, Review_img rvImg
+		WHERE		rv.pay_id = rvImg.pay_id
+		AND		rv.pay_id = #{pay_id}
+	</select>
+	
+	<!-- Review_img 테이블에 신규 데이터 insert -->
+	<insert id="putRevImgNum" parameterType="Review_img">
+		INSERT INTO Review_Img(pay_id, 	  review_img_id, 	review_img)
+		VALUES				  (#{pay_id}, #{review_img_id}, #{review_img})
+	</insert>
+		
+	
+	<!-- 작성한 리뷰 페이지 정보 불러오기 -->
+	<select id="getMyReviewList" parameterType="java.lang.String" resultType="Review">
+		SELECT      p.user_id, a.biz_name, resv.check_in, resv.check_out, a.addr,
+		            p.pay_amt, rev.pay_id, rev.rating, rev.review_date, rev.review_content
+		FROM        Accom a, Room r, Reservation resv, Payment p, Users u,
+		            Review rev
+		WHERE       u.user_id   = a.user_id
+		AND         a.biz_id    = r.biz_id
+		AND         r.biz_id    = resv.biz_id
+		AND         r.r_id      = resv.r_id
+		AND         resv.resv_id = p.resv_id
+		AND         resv.biz_id = p.biz_id
+		AND         resv.r_id   = p.r_id
+		AND         p.pay_id    = rev.pay_id
+		AND			p.user_id	= #{user_id}
+	</select>
+	
+	<!-- 리뷰 이미지 리스트 불러오기 -->
+	<select id="getMyReviewImgList" parameterType="List" resultType="Review_Img">
+		SELECT	rv.pay_id, rvImg.review_img_id, rvImg.review_img
+		FROM		Review rv, Review_img rvImg
+		WHERE		rv.pay_id = rvImg.pay_id
+		<if test="list != null and list.size() != 0">
+			AND rvImg.pay_id IN
+				<foreach item="payId" collection="list" open="(" separator="," close=")">
+					#{payId}
+				</foreach>
+		</if>
+	</select>
+	
+	<!-- 수정할 리뷰(1개)정보 불러오기 -->
+	<select id="getMyRevData" parameterType="int" resultType="Review">
+		SELECT      p.user_id, a.biz_name, resv.check_in, resv.check_out, a.addr, p.pay_amt, rev.*
+		FROM        Accom a, Room r, Reservation resv, Payment p, Users u, Review rev
+		WHERE       u.user_id   = a.user_id
+		AND         a.biz_id    = r.biz_id
+		AND         r.biz_id    = resv.biz_id
+		AND         resv.biz_id = p.biz_id
+		AND         r.r_id      = resv.r_id
+		AND         resv.r_id   = p.r_id
+		AND         p.pay_id    = rev.pay_id
+		AND         rev.pay_id  = #{pay_id}
+	</select>
+	
+	<!-- 수정할 리뷰의 이미지 불러오기 -->
+	<select id="getMyRevImages" parameterType="int" resultType="Review_Img">
+		SELECT  review_img.*
+		FROM    Review_Img
+		WHERE   pay_id = #{pay_id}
+	</select>
+	
+	<!-- 리뷰(이미지 제외) 업데이트하기 -->
+	<update id="updateMyReview" parameterType="Review">
+		UPDATE  Review
+		SET     rating 		  = #{rating},
+		        review_date 	  = sysdate,
+		        review_content = #{review_content, jdbcType=VARCHAR}
+		WHERE   pay_id = #{pay_id}
+	</update>
+	
+	<!-- 삭제할 리뷰 이미지 넘버 불러오기 -->
+	<select id="getDelImgList" parameterType="Review_Img" resultType="Review_Img">
+		SELECT  review_img
+		FROM    Review_Img
+		WHERE   pay_id=#{pay_id}
+	</select>
+	
+	<!-- 리뷰 삭제하기(이미지 테이블) -->
+	<delete id="deleteMyReviewImg"  parameterType="int">
+		DELETE FROM	Review_img
+		WHERE		pay_id = #{pay_id}
+	</delete>
+	
+	<!-- 리뷰 삭제하기(Review 테이블) -->
+	<delete id="deleteMyReview" parameterType="int">
+		DELETE FROM	Review
+		WHERE		pay_id = #{pay_id}
+	</delete>
+	
+	
+	<!-- =============== 탈퇴 =============== -->
+	<!-- 비밀번호 유효성 검사 -->
+	<select id="checkPassword"  parameterType="java.lang.String"  resultType="java.lang.String">
+		SELECT	password
+		FROM		Users
+		WHERE		user_id = #{user_id}
+	</select>
+	
+	<!-- 회원 탈퇴 상태로 바꾸기 -->
+	<update id="updateWithdraw"  parameterType="java.lang.String">
+		UPDATE	Users
+		SET		user_status = 'deactivated'
+		WHERE		user_id 		= #{user_id}
+	</update>
+	
+	<!-- 탈퇴 회원 정보 OUT테이블에 Insert -->
+	<!-- *** null값이 들어갈 수 있는 param은 jdbcType=VARCHAR(INTEGER)를 반드시 넣어줘야 *** -->
+	<insert id="putWithdraw"  parameterType="Out">
+		INSERT INTO Out
+		VALUES	(#{user_id}
+				   , #{out_price,	jdbcType=VARCHAR}	
+				   , #{out_uncom,	jdbcType=VARCHAR}
+				   , #{out_nouse,	jdbcType=VARCHAR}
+				   , #{out_secure,	jdbcType=VARCHAR}
+				   , #{out_content,	jdbcType=VARCHAR}
+		)
+	</insert>
+
+</mapper>        
+        
