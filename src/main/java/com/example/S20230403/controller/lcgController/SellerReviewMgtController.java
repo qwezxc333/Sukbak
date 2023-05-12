@@ -50,7 +50,13 @@ public class SellerReviewMgtController {
 		
 		// biz_id별로  리뷰 개수 가져오기, biz_id도 가져와야됨. ajax사용해야됨.
 		Review totalReviewAndBiz_id = service.getMyReviewConut(biz_id);
+		int totalReviewCount = totalReviewAndBiz_id != null ? totalReviewAndBiz_id.getTotalReview() : 0;
 		//System.out.println("컨트롤러 내 리뷰 개수 -> "+totalReviewAndBiz_id);
+		
+		if(totalReviewAndBiz_id == null) {
+	         totalReviewAndBiz_id = new Review();
+	         totalReviewAndBiz_id.setTotalReview(0);
+	      }
 	
 		model.addAttribute("myReviews", myReviews);
 		model.addAttribute("totalReviewAndBiz_id", totalReviewAndBiz_id);

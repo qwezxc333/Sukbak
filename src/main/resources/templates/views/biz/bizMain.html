@@ -56,7 +56,7 @@
 				      	<!-- <a href="/biz/usersInfoChkForm?userAction=계정정보 변경">계정정보 변경</a><br>
 				      	<a href="/biz/usersInfoChkForm?userAction=계정 양도">계정 양도</a><br>
 				      	<a href="/biz/usersInfoChkForm?userAction=회원 탈퇴">회원 탈퇴</a><br> 사용안함-->
-				      	계정정보 변경
+				      	 <a href="/biz/bizProfile">프로필 수정</a>
 				      	
 					  </div>
 				    </div>
@@ -89,6 +89,7 @@
 				    </thead>
 				    
 				    <tbody th:each="accoms : ${accomList}" class="accomsList">
+				    
 				    	<form action="accomMngChk" method="POST">	
 				    		<input type="hidden" name="r_avail" id="r_avail"  th:value=${accoms.accom_avail}>
 					      <tr>

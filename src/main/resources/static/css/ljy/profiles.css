@@ -28,13 +28,16 @@
 		clear:both;
 		float: right;
 		width: 38%;
-		height: 1100px;
-		overflow: auto;
+		height: auto;
+		
 	
 	}
 	
 	.roomImgs img {	
 		padding-top: 20px;
+		max-width: 320px;
+		max-height: 280px;
+		min-height: 200px;
 	}
 	
 	.accordion-button.collapsed{

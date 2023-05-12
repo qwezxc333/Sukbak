@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,6 +19,7 @@ import com.example.S20230403.model.Accom;
 import com.example.S20230403.model.Room;
 import com.example.S20230403.model.Room_Img;
 import com.example.S20230403.model.Users;
+import com.example.S20230403.service.lghService.MypageService;
 import com.example.S20230403.service.ljyService.OwnerUser;
 import com.example.S20230403.service.ljyService.SukbakService;
 
@@ -31,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BizUserController {
 	
 	private final SukbakService ss01;
-		
+	private final MypageService mypageService;
 	//에러 페이지로 던지기
 	@ExceptionHandler
 	public String exceptionThrows(Exception e, Model model) {
@@ -397,6 +399,7 @@ public class BizUserController {
 		model.addAttribute("accom", accom);
 		return "/views/biz/rooms";
 	}
+	
 	
 	
 	

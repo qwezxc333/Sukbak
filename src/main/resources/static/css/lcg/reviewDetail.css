@@ -99,3 +99,16 @@
 		margin-right: 50px;
 		color: red;
 	}
+	.listEmpty{
+   
+   text-align: center;
+   color: #00B7F7;
+   }
+   .listEmpty img{
+      width: 300px;
+      height: 300px;
+      margin-bottom: 50px;
+   }
+   .emptyNotice{
+      font-weight: bold;
+   }
