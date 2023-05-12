@@ -10,20 +10,22 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
 <link rel="stylesheet" href="/css/lcg/myZzim.css">
+
 </head>
 <body>
 	<th:block layout:fragment="content"></th:block>
 	<div class = "container" th:with="user_id=${user_id}, auth=${auth}">
 
 		<div class="sidenav">
-		  <a href="/commonUser/myProfile">내 프로필 수정</a>
-		  <a href="/commonUser/myReserved">예약내역</a>
-		  <a href="/commonUser/myReviews">후기관리</a>
+		  <a href="/commonUser/myProfile">프로필 수정</a>
+		  <a href="/commonUser/myReserved">예약 내역</a>
+		  <a href="/commonUser/myReviews">후기 관리</a>
 		  <a href="/commonUser/myZzim">내 찜목록</a>
+		  <a href="/commonUser/myQnA">내가 남긴 문의</a>
 		</div>
 		
 		
-		<div class="cgList_wrap">
+		<div class="main">
 			
 				<div class = "pageName">
 					<label>내 찜목록</label>
@@ -33,7 +35,7 @@
 					<label class ="subtitle">날짜</label>
 					<input type="text" id="checkIn"  name="checkIn" placeholder="체크인">
 					<input type="text" id="checkOut" name="checkOut" placeholder="체크아웃">
-					<button type="button" class="btn btn-outline-primary" th:attr="onclick='cgAjaxZzimListsByUser_id(\'' + ${user_id} + '\', \'' + ${auth} + '\')'">선택완료</button>
+					<button type="button" id="dateBtn" class="btn btn-outline-primary" th:attr="onclick='cgAjaxZzimListsByUser_id(\'' + ${user_id} + '\', \'' + ${auth} + '\')'">선택완료</button>
 					<hr>
 				</div>
 				<div class ="ajaxLists">

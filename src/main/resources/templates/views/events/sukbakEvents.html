@@ -1,0 +1,46 @@
+<!-- <!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<head>
+<link rel="stylesheet" href="/css/lcg/sukbakEvent.css">
+
+</head>
+<body>
+	<th:block layout:fragment="content"></th:block>
+	<div class = "container">
+		<div class="sidenav">
+		  <a href="/commonUser/myProfile">프로필 수정</a>
+		  <a href="/commonUser/myReserved">예약 내역</a>
+		  <a href="/commonUser/myReviews">후기 관리</a>
+		  <a href="/commonUser/myZzim">내 찜목록</a>
+		  <a href="/commonUser/myQnA">내가 남긴 문의</a>
+		</div>		
+	
+		<div class ="eventMain">
+		 	<div class ="categoryTitle">
+				<label id = "eventWord">sukbak 이벤트</label>
+				<hr>
+			</div>
+			<div class = "eventContainer" th:each = "sukbakEvent : ${sukbakEvents}">
+				<div class = "eventTitle">
+					<label class="titles">
+						<span th:text = "${sukbakEvent.event_title}"></span>
+						<span th:text = "${sukbakEvent.event_content}"></span>
+						<span class="ribbon">NEW</span>
+					</label>
+				</div>
+				<div class = "eventDate">
+				<label th:text = "'기간 : '+${sukbakEvent.event_start_date}+' ~ '+${sukbakEvent.event_end_date}"></label>
+				</div> 
+				<div class = "eventImg">
+					<img alt="" th:src="@{/img/event/{event_img}(event_img=${sukbakEvent.event_img})}">
+				</div>
+				<hr>
+			</div>
+		</div>
+	</div>
+</body>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</html> -->

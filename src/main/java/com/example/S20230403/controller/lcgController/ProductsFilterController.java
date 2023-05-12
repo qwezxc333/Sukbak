@@ -23,7 +23,7 @@ public class ProductsFilterController {
 	private final ProductsFilterService service;
 	
 
-	// 리펙토링 호텔빼고 리스트 다뽑아오기
+	// 1.accom_type별로 숙소 리스트를 가져오기 위한 로직
 	@GetMapping("/cgProductLists")
 	public String cgGetProductByAccomtype(@AuthenticationPrincipal PrincipalDetail userDetail,
 										  @RequestParam("accom-type") String accom_type, 
@@ -38,7 +38,7 @@ public class ProductsFilterController {
 		// 권한 초기화.
 		Collection<? extends GrantedAuthority> auth = null;
 		
-		// 만약에 로그인을 안했다면.
+		// 만약에 로그인을 안했다면 없는상태로 
 		if(userDetail == null) {
 			user_id = "";
 			auth = null;

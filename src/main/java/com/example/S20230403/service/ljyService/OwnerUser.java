@@ -27,11 +27,19 @@ public class OwnerUser {
         accom.setLaundry(this.getStringBool(this.hasLaundry)); 
         accom.setFitness(this.getStringBool(this.hasFitness)); 
         accom.setAccom_avail("210");
-        accom.setAddr(this.addr);
+        accom.setAddr(convertAddr());
         accom.setLatitude(this.latitude);
         accom.setLongitude(this.longitude);
         
         return accom;
+    }
+    
+     
+    private String convertAddr() {
+    	String addr = this.addr;
+        addr = addr.replaceAll("대한민국 ", "");
+        addr = addr.replace(",", "");
+        return addr;
     }
     
     private String getStringBool(boolean isTrue) {

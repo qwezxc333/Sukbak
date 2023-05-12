@@ -22,7 +22,9 @@
         scrollToBottom();
     }
 	
-	// text:텍스트, messageType:대분류, notice_id:제목, reset:대분류 다시호출 , redirectpage:공지사항페이지 이동
+	// text:텍스트, messageType:대분류, notice_id:제목, 
+	// reset:대분류 다시호출 , redirectpage:noti or qna 페이지 이동
+
     function addButtonMessage(text, messageType, notice_id, reset, redirectPage) {
 		
         const messageDiv = document.createElement('div');
@@ -55,7 +57,11 @@
         	}
         }else if(redirectPage){
         		button.onclick = () => {
-        		location.href = '/noti?note_id=0';
+        		if(redirectPage.page === 'noti'){
+	        		location.href = '/noti?note_id=0&notice_id=' + redirectPage.notice_id;
+        		} else if(redirectPage === 'qna') {
+        			location.href = '/commonUser/myQnA';
+        		}
         	}
         }
         
@@ -115,12 +121,13 @@
                 
                 data.forEach( item => {
 	                addMessage(item.notice_content, "left");
+	                
+	                // 처음페이지 이동 버튼
+	                addButtonMessage('처음으로', undefined, undefined, true);
+	                // 공지사항 페이지 이동 ( 5번째 매개변수 줄때 객체로 주고 notice_id 까지 같이 줘서 자세히 보기 버튼 누를 시 페이지 이동하면 그에 맞는 notice 아코디언 열려짐 )
+	                addButtonMessage('자세히 알아보기', undefined, undefined, undefined, { page: 'noti', notice_id: item.notice_id});
                 });
                 
-                // 처음페이지 이동 버튼
-                addButtonMessage('처음으로', undefined, undefined, true);
-                // 공지사항 페이지 이동
-                addButtonMessage('자세히 알아보기', undefined, undefined, undefined, true);
             }
         });
     }
@@ -241,7 +248,7 @@
  				// 처음페이지 이동 버튼
                 addButtonMessage('처음으로', undefined, undefined, true);
                 // 공지사항 페이지 이동
-                addButtonMessage('자세히 알아보기', undefined, undefined, undefined, true);
+                addButtonMessage('내 문의 보러가기', undefined, undefined, undefined, 'qna');
  			}
  		});
  	}

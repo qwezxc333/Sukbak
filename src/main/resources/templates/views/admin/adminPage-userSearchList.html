@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/default_layout">
+<head>
+ 	<meta charset="UTF-8">
+ 	<link rel="stylesheet" href="/css/jjh/adminPage.css">
+</head>
+
+<th:block layout:fragment="content">
+	<div class="row" th:with = "search = ${search}, keyword = ${keyword}">
+		<h3 class="title">관리자 페이지 - 일반 회원 관리 (검색중)</h3>
+		
+		<!-- 검색창 -->
+		<form class="searchForm" action="/admin/adminPage-userSearchList">
+   		<select name="search" class="select">
+				<option>검색조건</option>
+				<option value="s_user_id">아이디</option>
+				<option value="s_name">이름</option>
+		</select>
+		<!-- search & keyword : DTO에 조회용으로 미리 적어둠 -->
+		<input type="text" name="keyword" class="searchinput"  placeholder=" 검색어를 입력하세요">
+        <button type="submit" class="searchbutton">검색 </button>
+    </form>
+		
+	  <!-- 각 화면의 네비게이션 탭 시작 부분 -->
+		<div class="col-4">
+			<div class="list-group" id="list-tab" role="tablist">
+				<!-- 일반 회원 관리탭 -->
+				<a class="list-group-item list-group-item-action active"
+					id="list-user-list" data-bs-toggle="list"
+					role="tab" aria-controls="list-user"
+					th:onclick="|location.href='@{/admin/adminPage-userlist}'|">
+					일반회원 
+				</a> 
+				
+				<!-- 사업자 회원 관리탭 -->
+				<a class="list-group-item list-group-item-action"
+					id="list-biz-list" data-bs-toggle="list"
+					role="tab" aria-controls="list-biz" 
+					th:onclick="|location.href='@{/admin/adminPage-accomlist}'|">
+					사업자 회원
+				</a> 
+					
+				<!-- QnA 전체 관리탭 -->
+				<a class="list-group-item list-group-item-action"
+					id="list-QnA-list" data-bs-toggle="list"
+					role="tab" aria-controls="list-QnA"
+					th:onclick="|location.href='@{/admin/adminPage-qnalist}'|">
+					게시판 전체
+				</a>
+				
+				<!-- QnA 답변 저장 탭 -->
+				<a class="list-group-item list-group-item-action"
+					id="list-QnARe-list" data-bs-toggle="list"
+					role="tab" aria-controls="list-QnARe"
+					th:onclick="|location.href='@{/admin/adminPage-qnaRelist}'|">
+					게시판 답변
+				</a>
+				
+				<!-- Review 전체 관리탭 -->
+				<a class="list-group-item list-group-item-action"
+					id="list-review-list" data-bs-toggle="list"
+					role="tab" aria-controls="list-review"
+					th:onclick="|location.href='@{/admin/adminPage-reviewlist}'|">
+					리뷰 전체
+				</a>
+				
+				<!-- Review 삭제 탭 -->
+				<a class="list-group-item list-group-item-action"
+					id="list-reviewDel-list" data-bs-toggle="list"
+					role="tab" aria-controls="list-reviewDel"
+					th:onclick="|location.href='@{/admin/adminPage-reviewDellist}'|">
+					리뷰 삭제
+				</a>
+				
+			</div>
+		</div>
+		
+		<!-- 각 탭을 클릭하면 나오는 표 시작 부분 -->
+		<div class="col-10">
+			<div class="tab-content table-responsive" id="nav-tabContent">
+			
+				<!-- User 테이블 헤더와 내용 -->
+				<div class="tab-pane fade show active" id="list-user"
+					role="tabpanel" aria-labelledby="list-user-list">
+					<table class="table align-middle">
+						<!-- 테이블 헤더 -->
+						<thead>
+							<tr>
+								<th scope="col">번호</th>
+								<th scope="col">아이디</th>
+								<th scope="col">이름</th>
+								<th scope="col">닉네임</th>
+								<th scope="col">전화번호</th>
+								<th scope="col">성별</th>
+								<th scope="col">회원상태</th>
+								<th scope="col">권한레벨</th>
+								<th scope="col">관리</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<!-- userlist를 이용해 사용자 정보 출력 -->
+							<tr th:each="user:${userSearchList}">
+								<th scope="row" th:text="${user.rn}"></th>
+								<td th:text="${user.user_id}"></td>
+								<td th:text="${user.name}"></td>
+								<td th:text="${user.nickname}"></td>
+								<td th:text="${user.phone}"></td>
+								<td>
+					           		<span th:if= "${user.gender == 'Male'}">남자</span>
+					           		<span th:if= "${user.gender == 'Female'}">여자</span>
+					           </td>
+								<td>
+					           		<span th:if= "${user.user_status == 'activated'}">사용중</span>
+					           		<span th:if= "${user.user_status == 'deactivated'}">탈퇴</span>
+					           </td>
+								<td>
+					           		<span th:if= "${user.auth_level == 'USER'}">일반회원</span>
+					           		<span th:if= "${user.auth_level == 'SELLER'}">사업자</span>
+					           		<span th:if= "${user.auth_level == 'ADMIN'}">관리자</span>
+					           </td>
+					           <td>
+								   <form action="delUser" method="post">
+							          <input type="hidden" name="user_id" th:value="${user.user_id}">
+							          <button type="submit" th:text="${user.user_status == 'activated' ? '비활성화' : '활성화'}" 
+							          		  id="deleteBtn" style="width: 80px;"></button>
+							        </form>
+					           </td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<!-- 페이징 작업 -->
+					<div class="paging">
+						<nav aria-label="Page navigation example">
+							<ul class="pagination justify-content-center">
+								<li class="page-item disabled"
+									th:if="${page.startPage - page.pageBlock >= 1}">
+									<a class="page-link"
+									   th:href="'/admin/adminPage-userSearchlist?currentPage=' + ${page.startPage - page.pageBlock}">
+										<span>&laquo;</span>
+										<span class="sr-only">Previous</span>
+									</a>
+								</li>
+								<li class="page-item"
+									th:each="i: ${#numbers.sequence(page.startPage, page.endPage)}">
+									<a class="page-link" th:href="@{'/admin/adminPage-userSearchList?search=' + ${search}
+																  + '&keyword='+ ${keyword} + '&'+'currentPage=' + ${i}}"
+										th:text="${i}" th:class="${i == page.currentPage ? 'active' : ''}">
+									</a>
+								</li>
+								<li class="page-item"
+									th:if="${page.endPage + page.pageBlock <= page.totalPage}">
+									<a class="page-link"
+									   th:href="'/admin/adminPage-userSearchlist?currentPage=' + ${page.startPage + page.pageBlock}">
+										<span>&raquo;</span>
+										<span class="sr-only">Next</span>
+									</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+				
+				
+					
+			</div>
+		</div>
+	</div>
+</th:block>
+</html>

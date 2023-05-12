@@ -7,7 +7,7 @@ import com.example.S20230403.model.Review;
 
 public interface SellerReviewMgtService {
 
-	List<Review> getMyReviews(String biz_id);
+	List<Review> getMyReviews(Review review);
 
 	List<Accom> getMyAccoms(String sellerUser_id);
 

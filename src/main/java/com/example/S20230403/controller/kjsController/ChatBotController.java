@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class ChatBotController {
 	private final ChatBotService cs;
 	
+	//notice 제목
 	@PostMapping("/noticeFaqTitle")
 	public List<Notice_Faq> noticeFaqtitle(String notice_type) {
     	List<Notice_Faq> noticeFaqtitle = cs.getNoticeFaqTitleList(notice_type);
@@ -25,6 +26,7 @@ public class ChatBotController {
 	    return noticeFaqtitle;
 	}
 	
+	//notice 내용
 	@PostMapping("/noticeFaqContent")
 	public List<Notice_Faq> noticeFaqContent(String notice_id){
 		List<Notice_Faq> noticeFaqContent = cs.getNoticeFaqContentList(notice_id);
@@ -32,6 +34,7 @@ public class ChatBotController {
 		return noticeFaqContent;
 	}
 	
+	//notice 삽입
 	@PostMapping("/qnaInsert")
 	public void qnaInsert(@AuthenticationPrincipal PrincipalDetail users, Qna qna) {
 		String user_id = users.getUsername();

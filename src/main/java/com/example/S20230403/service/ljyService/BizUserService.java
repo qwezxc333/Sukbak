@@ -67,13 +67,6 @@ public class BizUserService implements SukbakService{
 		log.info("비즈서비스01 accomUpdate 시작...");
 		sd01.accomUpdate(accom);
 	}
-	
-	// 이름은 삭제(delete)지만 실제로 로우를 삭제하는건 아님
-	@Override
-	public void accomDelete(String biz_id) {
-		log.info("비즈서비스01 accomDelete 시작...");
-		sd01.accomDelete(biz_id);
-	}
 
 	// 계정정보변경을 위해 비밀번호 검증, 아이디에 매칭되는 실제 비밀번호를 리턴할것
 	@Override
@@ -119,9 +112,9 @@ public class BizUserService implements SukbakService{
 		Room room = ownerRoom.toRoom();
 		//방번호 추출하기
 		Integer maxR_id = sd01.roomIdExtract(room);
-		System.out.println("maxR_id -> "+maxR_id);
+		System.out.println("비즈서비스01 roomInsert maxR_id -> "+maxR_id);
 		maxR_id +=1;
-		System.out.println("maxR_id -> "+maxR_id);
+		System.out.println("비즈서비스01 roomInsert maxR_id += 1 -> "+maxR_id);
 		room.setR_id(maxR_id);
 		sd01.roomInsert(room);
 		return maxR_id;
@@ -197,7 +190,28 @@ public class BizUserService implements SukbakService{
 		sd01.updateRoomCount(biz_id, string);
 	}
 
- 
+
+	@Override
+	public void accomStatus(Accom accom, String string) {
+		log.info("비즈서비스01 accomStatus 시작...");
+		sd01.accomStatus(accom, string);
+		
+	}
+
+
+	@Override
+	public List<Room> roomListSelectWithAccom(String biz_id) {
+		log.info("비즈서비스01 roomListSelectWithAccom 시작...");
+		return sd01.roomListSelectWithAccom(biz_id);
+	}
+
+
+	@Override
+	public List<Room_Img> selectAccomAllRoomImgList(String biz_id) {
+		log.info("비즈서비스01 selectAccomAllRoomImgList 시작...");
+		return sd01.selectAccomAllRoomImgList(biz_id);
+	}
+
  
 
 

@@ -50,6 +50,9 @@ public class PrincipalDetail implements UserDetails, OAuth2User {
                 case "SELLER":
                     authorities.add(new SimpleGrantedAuthority("SELLER"));
                     break;
+                case "ADMIN":
+                    authorities.add(new SimpleGrantedAuthority("ADMIN"));
+                    break;
                 default:
                     authorities.add(new SimpleGrantedAuthority("TEMPORARY"));
             }
@@ -86,7 +89,7 @@ public class PrincipalDetail implements UserDetails, OAuth2User {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return user.getUser_status().equals("activated");
     }
 
 

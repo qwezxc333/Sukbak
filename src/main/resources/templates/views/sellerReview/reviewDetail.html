@@ -89,7 +89,7 @@
 						<!-- review 객체에 review테이블과 review_img테이블의 pay_id가 일치하는  
 							List타입의 reviewImages 필드를 또한번 each로 꺼내서 reviewImage를 받아내서 거기에 review_img를 뽑아냄 -->
 						<img th:each="reviewImage : ${review.reviewImages}"
-							th:src="@{/img/review/{re_img}(re_img=${reviewImage.review_img})}"
+							th:src="@{${reviewImage.review_img}}"
 							class="img-thumbnail" onerror="this.style.display='none';">		
 						<div class = "ReviewDeleteBtn">
 							<!-- Button trigger modal -->

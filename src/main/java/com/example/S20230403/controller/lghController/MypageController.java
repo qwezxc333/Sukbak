@@ -42,7 +42,7 @@ public class MypageController {
 
 	private final MypageService mypageService;
 	private final static BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-	private final ResourceLoader resourceLoader;
+
 	
 	@Value("${file.dir}")
 	private String fileDir;
@@ -194,6 +194,7 @@ public class MypageController {
 	public String putMyReview(GunJoin gj, Model model, @RequestParam MultipartFile[] files,
 							  Review review, Review_Img revImg) throws Exception {
 		System.out.println("1. MypageController putMyReview Start...");
+		System.out.println("1. MypageController putMyReview Start... 메타경로 -> "+fileDir);
 
 		// Review 테이블에 Insert
 		int rating = gj.getRating();
@@ -215,15 +216,21 @@ public class MypageController {
 		String extension = null;
 		String savedName = null;
 		File convertFile = null;
-		
+
+		//String rootPath = ("C:\\Users\\user\\git\\S20230403\\bin\\main\\static");
 		String rootPath = fileDir.substring(0, fileDir.lastIndexOf("\\img\\review\\"));
-		
+		System.out.println("찬규 자른 루트경로 경로-> \\img\\review\\ 이거나오면안됨"+rootPath);
+
 		for (MultipartFile file : files) {
 			if (file != null && !file.isEmpty()) {
 				extension = FilenameUtils.getExtension(file.getOriginalFilename());
 				System.out.println("OriginalFilename extension-> " + extension);
 				savedName = uploadFile(file.getBytes(), fileDir, revImg, extension);
+
+				// rootPath = C:\Users\\user\git\S20230403\bin\main\static
+				// savedName = \img\review\56-1.png (DB에 저장되는 이름.)
 				convertFile = new File(rootPath + savedName);
+				System.out.println("최종 저장경로-> "+convertFile);
 				file.transferTo(convertFile);
 			} else {
 				System.out.println("선택된 파일이 없습니다.");
@@ -241,21 +248,23 @@ public class MypageController {
 
 	// savedName(파일명) 정의 및 DB에 입력
 	private String uploadFile(byte[] fileData, String fileDir, Review_Img revImg, String extension) throws IOException {
-		System.out.println("3. MypageController uploadFile start...");
-		// View에서 이미지 출력시 '\img\review\' 부분 하드코딩하지 않도록 (보안 문제)
+	  System.out.println("5. MypageController uploadFile start...");	
+    // View에서 이미지 출력시 '\img\review\' 부분 하드코딩하지 않도록 (보안 문제)
 		// 해당 경로 별도로 추출하여 String타입 변수(extractedPath)로 선언
 		String extractedPath = fileDir.substring(fileDir.lastIndexOf("\\img\\review\\"));
-		System.out.println("uploadFile extractedPath-> " + extractedPath);
+		System.out.println("자른 경로 -> "+extractedPath);
 		
 		// Review_img_ID(MAX) 키 정의
 		// 현재 작성중인 Review의 pay_id와 일치하는 review값 중 MAX Review_img_id 값을 가져와 거기에 1을 더한다.
 		int imgNum = mypageService.getMaxImgNum(revImg);
 		imgNum += 1;
-		
+
+		System.out.println("6.MypageController uploadFile imgNum-> " + imgNum);
 		// 파일명 형식: (extractedPath)(pay_id)-(review_img_id).(확장자명)--> 예) \img\review\26-1.jpg
 		String savedName = extractedPath + revImg.getPay_id() + "-" + imgNum + "." + extension;
-
+    System.out.println("7.MypageController uploadFile savedName-> " + savedName);
 		// 지정한 경로(fileDir)에 동명의 폴더가 존재하지 않을시 Directory 생성
+		// Directory 생성
 		File fileDirectory = new File(fileDir);
 		if (!fileDirectory.exists()) {
 			// 신규 폴더(Directory) 생성
@@ -285,18 +294,9 @@ public class MypageController {
 		System.out.println("MypageController getMyReviews Start...");
 		String user_id = userDetail.getUsername();
 
-		Resource resource = resourceLoader.getResource("classpath:static/img/review");
-		String metaPath = resource.getURL().getPath() + File.separator;
-		
-		if (metaPath.startsWith("/")) {
-			metaPath = metaPath.substring(1);
-		}
-		
-		metaPath = metaPath.replace("/", File.separator);
-		System.out.println("메타경로 확인-> " + metaPath);
-
 		// 리뷰 테이블의 데이터(이미지 포함) 불러오기
 		List<Review> myReviewImgList = mypageService.getMyReviewImages(user_id);
+		System.out.println("MypageController myReviewImgList-> " + myReviewImgList);
 		model.addAttribute("myReviewImgList", myReviewImgList);
 
 		return "/views/mypage/myReviews";
@@ -306,13 +306,17 @@ public class MypageController {
 	@RequestMapping("/commonUser/deleteMyReview")
 	public String deleteMyReview(@AuthenticationPrincipal PrincipalDetail userDetail, Review review) {
 		System.out.println("MypageController deleteMyReview Start...");
+		String rootPath = fileDir.substring(0, fileDir.lastIndexOf("\\img\\review\\"));
+		System.out.println("찬규 자른 루트경로  경로-> \\img\\review\\ 이거나오면안됨"+rootPath);
+
 		Review_Img delImgNums = new Review_Img();
 		delImgNums.setPay_id(review.getPay_id());
 		List<Review_Img> delImgList = mypageService.getDelImgList(delImgNums);
 
 		for (Review_Img revImg : delImgList) {
 			String rev_img = revImg.getReview_img();
-			File convertFile = new File(fileDir + rev_img);
+			File convertFile = new File(rootPath + rev_img);
+			System.out.println("삭제할 때 화긴 -> "+convertFile);
 			String deleteImg = convertFile.toString();
 			File file = new File(deleteImg);
 			file.delete();

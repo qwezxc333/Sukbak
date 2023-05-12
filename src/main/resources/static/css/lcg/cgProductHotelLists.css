@@ -1,16 +1,12 @@
 .cgContainer {
-	/* border: 1pt black solid; */
-	width: 90%;
+	width : 90%;
 	margin: 0 auto; /* 좌우 마진을 자동으로 조절하여 수평 중앙에 위치시킴 */
 
 }
 
+
 .cgFilter_wrap {
-	/* border: 1pt gray solid; */
-	/* position: fixed; */
 	top: 50%;
-/* 	float: left; */
-	/* transform: translateY(-50%); */
 	width: 400px;
 	height: 800px;
 	display: inline-block; /* 얘가 있어야 자기 크기만큼만 공간을 차지함 */
@@ -20,13 +16,11 @@
 }
 
 .cgSelectAccom_type {
-	/* border: 1pt red solid; */
 	margin: auto;
 	padding-top: 10px;
 }
 
 .cgSearchLocationFilter {
-	/* border: 1pt black solid; */
 	padding: 10pt;
 }
 
@@ -292,4 +286,34 @@ a:hover{
 }
 .emptyNotice{
 	font-weight: bold;
+}
+
+@media(max-width: 992px){
+		.cgContainer {
+			max-width: none;
+	 		margin: 0 auto;
+		}
+		.cgList_wrap {
+
+		float: none;
+		/* display: inline-block; */
+		margin: 0;
+		width: 100%;
+		margin-left: 50%;
+		/* padding-left: 40pt;
+		margin-right: 8%; */
+		
+		}
+		
+		.cgFilter_wrap {
+		top: 50%;
+		width: 100%;
+		height: auto;
+		/* display: inline-block; */ /* 얘가 있어야 자기 크기만큼만 공간을 차지함 */
+		/* margin-left: 8%; */
+		text-align: center;
+		margin:0;
+	
+	}
+		
 }

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/default_layout">
+
+<head>
+ 	<meta charset="UTF-8">
+ 	<link rel="stylesheet" href="/css/jjh/adminPage.css">
+</head>
+
+<th:block layout:fragment="content">
+
+	  <div class="mb-3 row">
+	  	
+	  	<!-- 첫 번째 row : 게시글 타입-->
+	    <label for="staticType" class="col-sm-2 col-form-label">타입</label>
+	    <div class="col-sm-10" id="staticType">
+      		<span th:if="${qna_type == '430'}">1대1문의</span>
+  			<span th:if="${qna_type == '440'}">불만접수</span>
+	    </div>
+	    
+	  	<!-- 두 번째 row : 회원 id (이메일) -->
+	    <label for="staticUserId" class="col-sm-2 col-form-label">회원 id</label>
+	    <div class="col-sm-10">
+	      <input type="text" readonly class="form-control-plaintext" id="staticUserId" 
+	      		 th:value="${user_id}">
+	    </div>
+	    
+	  	<!-- 세 번째 row : 게시글 제목 -->
+	    <label for="staticTitle" class="col-sm-2 col-form-label">제목</label>
+	    <div class="col-sm-10">
+	      <input type="text" readonly class="form-control-plaintext" id="staticTitle" 
+	      		 th:value="${qna_title}">
+	    </div>
+	    
+	  	<!-- 네 번째 row : 게시글 내용 -->
+	    <label for="staticContent" class="col-sm-2 col-form-label">내용</label>
+	    <div class="col-sm-10">
+	      <input type="text" readonly class="form-control-plaintext" id="staticContent" 
+	      		 th:value="${qna_content}">
+	    </div>
+	  </div>
+	  
+	  	<!-- 다섯 번째 row : 답변 작성 폼 -->
+	  <div class="mb-3 row">
+	    <label for="inputReply" class="col-sm-2 col-form-label">답변 작성</label>
+	    <div class="col-11">
+	      <form id="replyForm" method="post" action="/admin/saveReply">
+	      	<textarea class="form-control" id="inputReply" rows="3" name="reply"
+	      			  placeholder="답변을 작성하세요."></textarea>
+	      	<input type="hidden" name="qna_id" th:value="${qna_id}">
+	      	<input type="hidden" name="user_id" th:value="${user_id}">
+			<button type="submit" class="btn btn-primary">답변 저장</button>
+		  </form>
+		</div>
+	  </div>
+	
+	
+	
+		
+</th:block>
+</html>
