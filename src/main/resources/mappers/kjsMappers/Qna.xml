@@ -14,7 +14,24 @@
 		LEFT JOIN qna_re qr ON q.qna_id = qr.qna_id
 		WHERE q.qna_type = #{qna_type}
 		AND q.user_id = #{user_id}
-		ORDER BY q.qna_id desc
+		ORDER BY q.qna_date desc
 	</select>	
+	
+	<update id="jsMyQnaUpdate" parameterType="Qna">
+		UPDATE  qna
+		SET
+			qna_title = #{qna_title},
+			qna_content = #{qna_content},
+			qna_date = sysdate
+		WHERE
+		qna_id = #{qna_id}
+		
+	</update>
+	
+	<delete id="jsMyQnaDelete" parameterType="java.lang.Integer">
+		DELETE 
+		FROM qna
+		WHERE qna_id = #{qna_id}
+	</delete>
 	
 </mapper>

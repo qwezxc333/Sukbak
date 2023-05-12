@@ -117,6 +117,7 @@
 	
 	<!-- user_id 검증용 -->
     <div id="loginUserId" th:text="${#authentication.name}" style="display: none;"></div>
+    <div id="loginUserAuth" th:text="${#authentication.authorities}" style="display: none;"></div>
     <script src="/js/kjs/chatBot.js" type="text/javascript" ></script>
 </body>
 </th:block>

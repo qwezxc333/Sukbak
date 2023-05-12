@@ -131,19 +131,19 @@
 	            		  checkOut : formatDate(vCheckOut)},
 	            success: data => {
 	            	let html = "";
-	            												
+	            	
 	            	data.forEach( item => {
-	            		html += '<div class="roomList">'
-	            		html += '<div class="roomListImg"><img src=' + item.r_img + ' alt = roomImage ></div>';
-	            		html += '<div class="roomListContent">';
-	            		html += '<h2>' + item.r_name + '</h2>';
-	            		html += '<p>가격  <br>' + formatPrice(item.r_price) + ' / 1박</p>';
-						html += '<button class="roomListReserveBtn" data-is-reserved="'+item.is_reserved+'" onclick="location.href=\'/payment?biz_id='+item.biz_id+'&r_id='+item.r_id+'&checkIn='+formatDate(vCheckIn)+'&checkOut='+formatDate(vCheckOut)+'\'">';
+	            		html += `<div class="roomList">`
+	            		html += `<div class="roomListImg"><img src=${item.r_img} alt = "roomImage" onerror="this.onerror=null; this.src='/img/imageLoading.jpg';"></div>`;
+	            		html += `<div class="roomListContent">`;
+	            		html += `<h2>${item.r_name}</h2>`;
+	            		html += `<p>가격  <br>${formatPrice(item.r_price)}  / 1박</p>`;
+						html += `<button class="roomListReserveBtn" data-is-reserved="${item.is_reserved}" onclick="location.href='/payment?biz_id=${item.biz_id}&r_id=${item.r_id}&checkIn=${formatDate(vCheckIn)}&checkOut=${formatDate(vCheckOut)}'">`;
 						
 						if(item.is_reserved == 1){
 							html += '예약불가' ;
 						} else{
-							html += '예약 ' + formatPrice(item.totalRoomPrice) + '/ '+nights+'박';
+							html += `예약  ${formatPrice(item.totalRoomPrice)}/ ${nights} 박`;
 						}
 						html += '</button>';
 						html += '</div>';

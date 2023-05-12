@@ -20,7 +20,8 @@ import lombok.RequiredArgsConstructor;
 public class AccomDetailController {
 	private final AccomDetailService as;
 	
-	@GetMapping("/accomDetail")
+	// 주소값 2개를 처리 할 수 있도록 매핑 
+	@GetMapping({"/accomDetail","/*/accomDetail"})
 	public String accomDetail(String biz_id, Model model) {
 		
 		//메인숙소명, 메인주소, 기본정보
