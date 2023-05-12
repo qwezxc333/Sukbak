@@ -41,7 +41,7 @@
 				    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
 				      <div class="accordion-body">
 				       		<a href="/biz/review">리뷰관리</a><br>
-				       		예약관리<br>
+				       		<!-- 예약관리<br> 미구현-->
 					  </div>
 				    </div>
 				  </div>
@@ -53,14 +53,11 @@
 				    </h2>
 				    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
 				      <div class="accordion-body">
-				      	<!-- <form action="/biz/usersInfoChkForm" method="POST">
-				      		<input type="submit" value="계정정보 변경" name="userAction">
-				      		<input type="submit" value="계정 양도" name="userAction">
-				      		<input type="submit" value="회원 탈퇴" name="userAction">
-				      	</form> -->
-				      	<a href="/biz/usersInfoChkForm?userAction=계정정보 변경">계정정보 변경</a><br>
+				      	<!-- <a href="/biz/usersInfoChkForm?userAction=계정정보 변경">계정정보 변경</a><br>
 				      	<a href="/biz/usersInfoChkForm?userAction=계정 양도">계정 양도</a><br>
-				      	<a href="/biz/usersInfoChkForm?userAction=회원 탈퇴">회원 탈퇴</a><br>
+				      	<a href="/biz/usersInfoChkForm?userAction=회원 탈퇴">회원 탈퇴</a><br> 사용안함-->
+				      	계정정보 변경
+				      	
 					  </div>
 				    </div>
 				  </div>
@@ -92,7 +89,7 @@
 				    </thead>
 				    
 				    <tbody th:each="accoms : ${accomList}" class="accomsList">
-				    <form action="accomMngChk" method="POST">	
+				    	<form action="accomMngChk" method="POST">	
 				    		<input type="hidden" name="r_avail" id="r_avail"  th:value=${accoms.accom_avail}>
 					      <tr>
 					        <!-- <th scope="row" th:text="${accoms.biz_name}"></th> -->
