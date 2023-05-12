@@ -8,4 +8,9 @@ public interface MyQnaDao {
 
 	List<Qna> fetchMyQnaList(String user_id, String qna_type);
 
+	void myQnaUpdate(Qna qna);
+	
+	void myQnaDelete(int qna_id);
+
+
 }
