@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 @Slf4j
 @AllArgsConstructor
-public class BizUserDao implements SukbakDao{
+public class BizUserDao implements SukbakDao{ 
 
 	private final SqlSession sqlSession;
 	
@@ -81,17 +81,6 @@ public class BizUserDao implements SukbakDao{
 			throw e;
 		}
 		
-	}
-	
-	// 아이디받아서 해당 로우 삭제(비활성화) 실제로 삭제하지는 않는다.
-	@Override
-	public void accomDelete(String biz_id) {
-		log.info("비즈다오01 accomDelete 시작...");
-		try {
-			sqlSession.update("accomDelete", biz_id);
-		} catch (Exception e) {
-			throw e;
-		}
 	}
 
 	@Override
@@ -169,10 +158,10 @@ public class BizUserDao implements SukbakDao{
 			String biz_id = room.getBiz_id();
 			System.out.println("비즈다오01 roomIdExtract biz_id -> "+ biz_id);
 			Integer maxR_id = sqlSession.selectOne("roomIdExtract", biz_id); 
-			System.out.println("maxR_id -> "+maxR_id);
+			System.out.println("비즈다오01 roomIdExtract  maxR_id -> "+maxR_id);
 			if (maxR_id == null) {
-				maxR_id =0;
-				System.out.println("maxR_id -> "+maxR_id);
+				maxR_id = 0;
+				System.out.println("비즈다오01 roomIdExtract was null, set 0");
 			}
 			return maxR_id;
 		} catch (Exception e) {
@@ -312,6 +301,52 @@ public class BizUserDao implements SukbakDao{
 			throw e;
 		}	
 		
+	}
+
+	@Override
+	public void accomStatus(Accom accom, String string) {
+		try {
+			System.out.println("비즈다오01 accomStatus accom -> "+ accom);
+			System.out.println("비즈다오01 accomStatus string -> "+ string);
+			switch (string) {
+				case "hidden" :
+				System.out.println("비즈다오01 accomStatus roomHidden 시작");
+				sqlSession.update("accomHidden", accom);
+				break;
+				case "open" :
+				System.out.println("비즈다오01 accomStatus roomOpen 시작");
+				sqlSession.update("accomOpen", accom);
+				break;
+				case "delete" :
+				System.out.println("비즈다오01 accomStatus roomDelete 시작");
+				sqlSession.update("accomDelete", accom);
+				break;
+			}		
+		} catch (Exception e) {
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public List<Room> roomListSelectWithAccom(String biz_id) {
+		try {
+			System.out.println("비즈다오01 roomListSelectWithAccom biz_id -> "+ biz_id);
+			return sqlSession.selectList("roomListSelectWithAccom", biz_id);
+		} catch (Exception e) {
+			throw e;
+		}	
+		
+	}
+
+	@Override
+	public List<Room_Img> selectAccomAllRoomImgList(String biz_id) {
+		try {
+			System.out.println("비즈다오01 selectAccomAllRoomImgList biz_id -> "+ biz_id);
+			return sqlSession.selectList("selectAccomAllRoomImgList", biz_id);
+		} catch (Exception e) {
+			throw e;
+		}	
 	}
 
 	

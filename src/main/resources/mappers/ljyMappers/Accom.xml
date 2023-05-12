@@ -52,7 +52,11 @@
 		select *
 		from accom
 		where user_id = #{id} and
-			accom_avail = 210
+			accom_avail in(210, 220)
+		ORDER BY #{biz_id} ASC
+		
+						
+			
 	</select> 
 	<select id=""></select>
 	
@@ -60,7 +64,7 @@
 		select *
 		from accom
 		where biz_id = #{biz_id} and
-			accom_avail = 210
+			accom_avail in(210,220)
 	</select>
 	
 	<update id="accomUpdate" parameterType="Accom">
@@ -82,11 +86,6 @@
 			  accom_avail = 210	
 	</update>
 	
-	<update id="accomDelete" parameterType="String">
-		update accom
-		set accom_avail = 230
-		where biz_id = #{biz_id}
-	</update>
 	
 	<select id="getBizId" parameterType="String" resultType="Int">
 		select count(*)
@@ -121,6 +120,24 @@
 		                  from room
 		                  where biz_id = #{biz_id}
 		                  )
+		where biz_id = #{biz_id}
+	</update>
+	
+	<update id="accomOpen" parameterType="Accom">
+		update accom
+		set accom_avail = '210'
+		where biz_id = #{biz_id}
+	</update>
+	
+	<update id="accomHidden"  parameterType="Accom">
+		update accom
+		set accom_avail = '220'
+		where biz_id = #{biz_id}
+	</update>
+	
+	<update id="accomDelete"  parameterType="Accom">
+		update accom
+		set accom_avail = '230'
 		where biz_id = #{biz_id}
 	</update>
 	

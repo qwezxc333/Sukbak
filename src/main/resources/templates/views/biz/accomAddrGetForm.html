@@ -1,5 +1,13 @@
 <!DOCTYPE html>
-
+<head>
+	<style type="text/css">
+		.container {
+			position: relative;
+		}
+		.container div {
+		}
+	</style>
+</head>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<script
@@ -8,6 +16,10 @@
     ></script>
 	<script type="text/javascript">
 		
+		window.onload = function() {
+			window.resizeTo(1000, 800);
+		}
+	
 		function initAutocomplete() {
 			  const map = new google.maps.Map(document.getElementById("map"), {
 			    center: { lat: 37.5665, lng: 126.9780 },
@@ -117,21 +129,25 @@
 			}
 	</script>
 <body>
-	<input
-      id="pac-input"
-      class="controls"
-      type="text"
-      placeholder="주소를 입력하세요."
-      style="width: 400px"
-    />
-    <div id="map" style="height: 600px;"></div>
-    
-    <input type="text" readonly id="addr1" name="addr1" value="주소" style="width: 400px;">
-    <input type="text" readonly id="addr2" name="addr2" value="상세주소" style="width: 400px;">
-    <input type="hidden" id="addr" name="addr" value="">
-    <input type="hidden" id="latitude" name="latitude" value="">
-    <input type="hidden" id="longitude" name="longitude" value="">
-    <button onclick="sendValue()">확인</button>
+	<div class="container">
+		<input
+	      id="pac-input"
+	      class="controls"
+	      type="text"
+	      placeholder="주소를 입력하세요."
+	      style="width: 400px; height: 30px;"
+	    />
+	    <div id="map" 
+	    	style="height: 600px; width: 870px;"></div><br>
+	    <div id="buttons">
+		    <input type="text" readonly id="addr1" name="addr1" value="주소" style="width: 400px; height: 25px;">
+		    <input type="text" readonly id="addr2" name="addr2" value="상세주소" style="width: 400px; height: 25px;">
+		    <input type="hidden" id="addr" name="addr" value="">
+		    <input type="hidden" id="latitude" name="latitude" value="">
+		    <input type="hidden" id="longitude" name="longitude" value="">
+		    <button onclick="sendValue()">확인</button>
+		</div>
+	</div>
     
 </body>	
 </html>

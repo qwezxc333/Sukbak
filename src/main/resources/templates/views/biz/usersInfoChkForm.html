@@ -1,21 +1,32 @@
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:replace="fragments/header :: headerFragment"></th:block>
-<script type="text/javascript">
-	function goBack() {
-		location.href.goBack();
-	}
+<head>
+	<style type="text/css">
+		.container {
+			float: left;
+		}
+		.input{
+			padding: 10px;
+		}
+	</style>
+</head>
+<script src="/js/ljy/ljyScripts.js" type="text/javascript">
+
 </script>
 <body>
-	<form action="/biz/usersInfoChk" method="POST">
-		<label for="checkPassword">비밀번호 입력</label>
-		<input type="password" name="password" id="password">
-		<input type="submit" value="입력">
-		<input type="hidden" name="userAction" th:value="${userAction}">
-		<button onclick="goBack()" value="뒤로가기">뒤로가기</button>
-	</form>
+	<div id="content">
+		<form action="/biz/usersInfoChk" method="POST">
+			<div id="inputDiv">
+			<label for="checkPassword">비밀번호 입력 : </label>
+			<input type="password" name="password" id="password"><br>
+			</div>
+			<input type="submit" value="입력">
+			<input type="hidden" name="userAction" th:value="${userAction}">
+			<button onclick="return goBack()" value="뒤로가기">뒤로가기</button>
+		</form>
+	</div>
 </body>
 <th:block th:replace="fragments/footer :: footerFragment"></th:block>
 </html>

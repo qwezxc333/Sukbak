@@ -4,7 +4,7 @@
 
 <mapper namespace="com.example.S20230403_01.RoomMapper">
 
-	<select id="roomList" parameterType="String" resultType="Room">
+	<!-- <select id="roomList" parameterType="String" resultType="Room">
 	select *
 	from room r
 	inner join accom a on  a.biz_id = r.biz_id
@@ -17,7 +17,20 @@
 	        	AND (r.r_avail=210     OR r.r_avail=220)
                 )
                 AND r.r_avail  &lt;&gt; 230
+    ORDER BY CASE WHEN r.r_avail = 220 THEN 1 ELSE 0 END,
+    		 #{r.biz_id} ASC, 
+    		 #{r.r_id} ASC
+	</select> -->
+	<select id="roomList" parameterType="String" resultType="Room">
+		select r.*, a.biz_name
+		from accom a, room r
+		where a.biz_id =r.biz_id
+		and   a.user_id = #{user_id}
+		and   a.accom_avail not in(230)
+		and   r.r_avail not in (230)
+		order by a.biz_id asc, r.r_id asc
 	</select>
+	
 	<select id="roomIdExtract" parameterType="String" resultType="java.lang.Integer">
 		select max(r_id)
 		from room
@@ -137,5 +150,21 @@
 		where biz_id = #{biz_id}
 			and r_id = #{r_id}
 	</update>
+	
+	<select id="roomListSelectWithAccom" parameterType="String" resultType="Room">
+		select r.*, a.biz_name
+		from accom a, room r
+		where a.biz_id =r.biz_id
+		and   r.biz_id = #{biz_id}
+		and   a.accom_avail not in(230)
+		and   r.r_avail not in (230)
+		order by a.biz_id asc, r.r_id asc
+	</select>
+	
+	<select id="selectAccomAllRoomImgList" parameterType="string" resultType="Room">
+		select r_img
+		from room_img
+		where biz_id = #{biz_id}
+	</select>
 	
 </mapper>
