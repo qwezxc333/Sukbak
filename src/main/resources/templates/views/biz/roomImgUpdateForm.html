@@ -27,15 +27,14 @@
 					</button>
 				</div>
 			</div>
-
 			<div id="btnDiv" class="btn_wrap text-center" >
-				<button type="button" class="btn btn-default waves-effect waves-light">뒤로가기</button>
-				<button type="submit" class="btn btn-primary waves-effect waves-light">저장하기</button>
+				<button type="button" class="btn btn-default waves-effect waves-light" onclick="return goBack()">뒤로가기</button>
+				<button type="submit" class="btn btn-primary waves-effect waves-light" onsubmit="return actAlertImgInsert()">저장하기</button>
 			</div>	
 			
 	</form>
 </body>
-<script type="text/javascript">
+<script src="/js/ljy/ljyScripts.js" type="text/javascript">
 	let fileIdx = 0; /*[- 파일 인덱스 처리용 전역 변수 -]*/
 	
 	function addFile() {
