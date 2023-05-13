@@ -98,7 +98,7 @@ public class SellerReviewMgtDaoImpl implements SellerReviewMgtDao {
 		try {
 			review_imgs = session.selectList("getReviewImgs", pay_id);
 		} catch (Exception e) {
-			//System.out.println("dao getReviewImgs 에러-> "+e.getMessage());
+			System.out.println("dao getReviewImgs 에러-> "+e.getMessage());
 			// TODO: handle exception
 		}
 		return review_imgs;
