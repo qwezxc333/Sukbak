@@ -32,17 +32,17 @@
 		float: right;
 		width: 38%;
 		height: auto;
+		width: 325px;
 		margin-top: 50px;
-		margin-left: 20px;
-		width: 320px;
+		
 		
 	}
 	
 	.roomImgs img {	
 		padding-top: 20px;
 		width: 320px;
-		height: 250px;
-/* 	} */
+		height: 280px;
+	}
 	
 	#title {
 		left: 50%;
