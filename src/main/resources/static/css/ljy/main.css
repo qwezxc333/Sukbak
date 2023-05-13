@@ -20,13 +20,28 @@
 		display: inline-block;
 		float: left; 
 		margin-top: 20px;
-
-	
 	}
 	
 	a {
 		text-decoration: none;
 		color: black;
+	}
+	
+	.imgs{
+		clear:both;
+		float: right;
+		width: 38%;
+		height: auto;
+		margin-top: 50px;
+		margin-left: 20px;
+		width: 320px;
+		
+	}
+	
+	.roomImgs img {	
+		padding-top: 20px;
+		width: 320px;
+		height: 250px;
 	}
 	
 	.responsive-table {
