@@ -90,7 +90,7 @@
 		cursor: pointer;
 	}
 	
-	qnaListTitle h2 , .qnaListContent p{
+	.qnaListTitle h2 , .qnaListContent p{
 		resize: none;
 		width: 87%;
 	}

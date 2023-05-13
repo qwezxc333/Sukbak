@@ -59,7 +59,7 @@
         		if(redirectPage.page === 'noti'){
 	        		location.href = '/noti?note_id=0&notice_id=' + redirectPage.notice_id;
         		} else if(redirectPage === 'qna') {
-        			location.href = '/commonUser/myQnA';
+        			location.href = '/commonUser/myQna';
         		}
         	}
         }
@@ -190,6 +190,7 @@
  		inputTitle.addEventListener('input', updateBtn);
 		inputContent.addEventListener('input', updateBtn);
  		
+ 		//제목,내용 입력안할 시 버튼 비활성화
  		function updateBtn() {
  			if (inputTitle.value && inputContent.value) {
  				qnaBtn.classList.remove('isInput');
