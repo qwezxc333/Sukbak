@@ -18,8 +18,8 @@
 	function loadData(qnaType) {
 
 		$.ajax({
-			url: '/commonUser/myQna',
-			type: 'POST',
+			url: '/commonUser/myQnaAjax',
+			type: 'GET',
 			data: {
 				qna_type : qnaType
 			},
@@ -130,8 +130,8 @@
 			qnaContentElement.html(`<textarea id="updateContent">${qnaContent}</textarea>`);
 			
 			//수정 -> 저장버튼 변경
-			let saveButton = $(`<button class="qnaSaveBtn">저장</button>`);
-	    	$(this).replaceWith(saveButton);
+			let saveBtn = $(`<button class="qnaSaveBtn">저장</button>`);
+	    	$(this).replaceWith(saveBtn);
 	    	
 	    	// 토글 Off
 	    	qnaList.off('click', handleSlideToggle);
@@ -148,13 +148,14 @@
 	    		
 	    		$.ajax({
 	    			url: '/commonUser/myQnaUpdate',
-	    			type: 'POST',
+	    			type: 'GET',
 	    			data: {
 	    				qna_id : qnaId,
 	    				qna_title: updatedTitle,
 	    				qna_content: updatedContent
 	    			},
 	    			success: data => {
+	    				alert("문의글 수정이 완료되었습니다.");
 	    				//수정 버튼 변경
 	    				$('.qnaSaveBtn').replaceWith(qnaUpdateBtn);
 	    			
@@ -167,7 +168,6 @@
 	           		 	
 	           		 	// 토글 On
 	           		 	qnaList.on('click', handleSlideToggle);
-	           		 	
 	    			}
 	    		});
 			});
@@ -186,7 +186,7 @@
 		if(userInput === 'DELETE'){
 			$.ajax({
 				url: '/commonUser/myQnaDelete',
-				type: 'POST',
+				type: 'GET',
 				data: {
 					qna_id : qnaId
 				},
