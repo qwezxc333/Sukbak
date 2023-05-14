@@ -9,9 +9,8 @@
 	
 	.content{
 		flex: 4;
-		height: auto;
 		padding-left: 50px;
-		height: auto;
+		height: 800px;
 		display: inline-block;
 	}
 	
@@ -27,22 +26,6 @@
 		color: black;
 	}
 	
-	.imgs{
-		clear:both;
-		float: right;
-		width: 38%;
-		height: auto;
-		width: 325px;
-		margin-top: 50px;
-		
-		
-	}
-	
-	.roomImgs img {	
-		padding-top: 20px;
-		width: 320px;
-		height: 280px;
-	}
 	
 	#title {
 		left: 50%;
@@ -169,6 +152,22 @@
 	.rows label {
 		margin-right: 10px;
 		display: inline-block;
+	}
+	
+	.imgs{
+		clear: both;
+		float: right;
+		height: 1100px;
+		width: 500px;
+		margin-top: 50px;
+		overflow: auto;
+		
+	}
+	
+	.roomImgs img {	
+		padding-top: 20px;
+		width: 320px;
+		height: 280px;
 	}
 	
 	
