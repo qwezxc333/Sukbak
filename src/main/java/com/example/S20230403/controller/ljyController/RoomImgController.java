@@ -85,6 +85,7 @@ public class RoomImgController {
 		// 이미지 저장을 끝내고 사용자에게 보여줄 모델들과 함께 객실확인페이지로
 		// 객실확인페이지에는 객실이미지 출력, 해당 객실 의 정보 모두 가져가야함 room room_img
 		room = ss.roomSelect(room);
+		room.r_priceFormating(room.getR_price());
 		Room_Img ri = new Room_Img();
 		ri.setBiz_id(room.getBiz_id());
 		ri.setR_id(room.getR_id());
