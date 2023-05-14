@@ -10,7 +10,7 @@
 	.content{
 		flex: 4;
 		padding-left: 50px;
-		height: 800px;
+		height: auto;
 		display: inline-block;
 	}
 	
