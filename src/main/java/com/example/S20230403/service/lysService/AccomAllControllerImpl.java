@@ -47,39 +47,39 @@ public class AccomAllControllerImpl implements accomAllController {
 	@Override
 	@Transactional
 	public int paymentInsert(AccomPayment apt, List<String> resvDateList) {
-		int successCount = 0; // 확인 성공 횟수를 저장하기 위한 변수
-		try {
-			// 예약 정보 저장
-			if (d06.insertReserv(apt) == 0) {
-				return 0;
-			}
-			successCount++;
-			// 해당 일자의 숙소 예약 가능 수량 조정
-			if (d06.insertPayment(apt) == 0) {
+	    int successCount = 0; // Variable to store the number of successful operations
+	    try {
+	        // 예약 정보 저장
+	        if (d06.insertReserv(apt) == 0) {
+	            return 0;
+	        }
+	        successCount++;
 
-				return 0;
-			}
-			successCount++;
-			// 결제 정보 저장
-			if (d06.insertSoldOut(resvDateList) == 0) {
-				return 0;
-			}
-			successCount++;
-			//System.out.println("paymentInsert 트랜잭션 성공");
-			if (successCount == 3) { // 모두 성공할 경우
-				return 1;
-			}
-			else { // 일부만 성공할 경우
-				return 0;
-			}
-		} catch (Exception e) {
-			//System.out.println("paymentInsert 트랜잭션 오류: " + e.getMessage());
-			//System.out.println("successCount : " + successCount);
-			// 오류 처리를 위해 추가 작업 수행
-			e.printStackTrace();
-			return 0;
-		}
+	        // 해당 일자의 숙소 예약 가능 수량 조정
+	        if (d06.insertPayment(apt) == 0) {
+	            return 0;
+	        }
+	        successCount++;
+
+	        // 결제 정보 저장
+	        if (d06.insertSoldOut(resvDateList) == 0) {
+	            return 0;
+	        }
+	        successCount++;
+
+	        // All operations are successful
+	        if (successCount != 3) { // If not all operations are successful
+	            throw new RuntimeException("Failed to execute all operations");
+	        }
+
+	        return 1;
+	    } catch (Exception e) {
+	        // Error occurred, perform additional actions for error handling
+	        e.printStackTrace();
+	        return 0;
+	    }
 	}
+
 
 	//체크인 체크 아웃 값을 이용해서 그 사이에 있는 기간을 리스트 형식으로 가지고 오는 작업
 	@Override
