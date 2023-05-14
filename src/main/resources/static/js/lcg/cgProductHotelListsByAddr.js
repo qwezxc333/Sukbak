@@ -1,4 +1,4 @@
-// 찜버튼 로직
+//찜버튼 로직
 function cgAjaxInsertZzim(biz_id, user_id, auth, index){
 	//alert("찜버튼 시작");
 	//alert("index -> "+index);
@@ -276,7 +276,8 @@ function cgAjaxProductHotelList(addr, kind, user_id, auth){
 	                var diffDays = Math.ceil(diffTime /  (1000 * 60 * 60 * 24));
 	            }
 		     var totalPrice = this.min_price_r2 * diffDays;
-	            
+		 	 // 날짜변경해서 숙박 가격이 오른상태에서도 똑같이 필터링이 되게 하기.
+		     if(maxPrice >= totalPrice){
 	            str += "<div class='cgProduct_list_area'>";
 	            str += "<a href='/accomDetail?biz_id=" + this.biz_id + "&checkIn="+checkIn+"&checkOut="+checkOut+"'>";
 	            str += "<div class='cgProduct_list_img'>";
@@ -311,16 +312,22 @@ function cgAjaxProductHotelList(addr, kind, user_id, auth){
 	                str += "</div>";
 	                str += "</div>";
 	            }
-	            str += "</div>";					
+	            str += "</div>";	
+		     }
 			})
-			//alert('ajax str->' + str)
-			if(productSort == ""){
+			// alert('ajax str->' + str)
+			// 가격 변동 후에 다시 조건을 주었을 때 없다면  str에 축척되지 않으니 str로 비교해야 함.
+			if(str == ""){
+				// 조건이 없다면 행귄이 보여주기
 				$(".listEmpty").show();
-				$(".cgProduct_lists_area").html(str);
+				$(".cgProduct_lists_area").empty();
 			
 			}else{
+				// 조건이 있다면 행귄이 나옴
+				$(".listEmpty").hide();
 				$(".cgProduct_lists_area").html(str);	
 			}
+			
 		}
 	});
 }

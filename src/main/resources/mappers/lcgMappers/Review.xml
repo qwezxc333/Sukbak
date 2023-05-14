@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.S20230403.ReviewMapper">
 		<select id="getMyReviews" parameterType="Review" resultType="Review">
-		SELECT  p.biz_id,p.r_id, p.user_id, re.review_content, re.rating, re.review_date, re.del_request, p.pay_id
+		SELECT  p.biz_id,p.r_id, p.user_id, re.review_content, re.rating, re.review_date, re.del_request ,p.pay_id
 		FROM    reservation resv, payment p, review re
 		WHERE   resv.biz_id = p.biz_id
 		AND     resv.resv_id = p.resv_id

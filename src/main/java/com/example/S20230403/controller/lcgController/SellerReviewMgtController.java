@@ -50,13 +50,11 @@ public class SellerReviewMgtController {
 		
 		// biz_id별로  리뷰 개수 가져오기, biz_id도 가져와야됨. ajax사용해야됨.
 		Review totalReviewAndBiz_id = service.getMyReviewConut(biz_id);
-		int totalReviewCount = totalReviewAndBiz_id != null ? totalReviewAndBiz_id.getTotalReview() : 0;
 		//System.out.println("컨트롤러 내 리뷰 개수 -> "+totalReviewAndBiz_id);
-		
 		if(totalReviewAndBiz_id == null) {
-	         totalReviewAndBiz_id = new Review();
-	         totalReviewAndBiz_id.setTotalReview(0);
-	      }
+			totalReviewAndBiz_id = new Review();
+			totalReviewAndBiz_id.setTotalReview(0);
+		}
 	
 		model.addAttribute("myReviews", myReviews);
 		model.addAttribute("totalReviewAndBiz_id", totalReviewAndBiz_id);
@@ -67,15 +65,15 @@ public class SellerReviewMgtController {
 	// 부당하게 달린 리뷰를 삭제요청하는 로직
 	@PostMapping("/biz/reviewDeleteRequest")
 	public String reviewDeleteRequest(Review review, Model model) {
-		System.out.println("updateReviewDelRequestByPayId 시작");
-		System.out.println("delReason-> "+review.getDel_reason());
-		System.out.println("review payid-> "+review.getPay_id());
-		System.out.println("review payid-> "+review.getBiz_id());
+//		System.out.println("updateReviewDelRequestByPayId 시작");
+//		System.out.println("delReason-> "+review.getDel_reason());
+//		System.out.println("review payid-> "+review.getPay_id());
+//		System.out.println("review payid-> "+review.getBiz_id());
 		String biz_id = review.getBiz_id();
 		
 		int resultRequest = service.updateReviewDelRequestByPayId(review);
-		System.out.println("업데이트 결과 1이 나와야됨 1 -> "+resultRequest);
-		System.out.println("업데이트 결과 biz_id이 나와야됨  biz_id-> "+biz_id);
+//		System.out.println("업데이트 결과 1이 나와야됨 1 -> "+resultRequest);
+//		System.out.println("업데이트 결과 biz_id이 나와야됨  biz_id-> "+biz_id);
 		
 		// biz_id를 보내는 이유
 		// @RequestParam("biz_id") String biz_id가 있기 때문에 받아줘야 한다. 

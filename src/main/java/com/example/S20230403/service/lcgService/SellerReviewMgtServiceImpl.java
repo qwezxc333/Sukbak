@@ -173,7 +173,7 @@ public class SellerReviewMgtServiceImpl implements SellerReviewMgtService {
 			for(Review_Img review_Img : review_imgsByPay_id) {
 				// payid가 같아야지 같은 리뷰니까 그걸로 유효성 검사를 하고 
 				if(review.getPay_id() == review_Img.getPay_id()) {
-					System.out.println("두 개의 payid가 같은지 확인-> "+review.getPay_id()+" == "+review_Img.getPay_id()+"-> "+review_Img.getReview_img());
+					//System.out.println("두 개의 payid가 같은지 확인-> "+review.getPay_id()+" == "+review_Img.getPay_id()+"-> "+review_Img.getReview_img());
 					review_imgs.add(review_Img);
 				}
 			
