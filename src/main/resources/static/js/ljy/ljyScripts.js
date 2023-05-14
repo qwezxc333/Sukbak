@@ -95,24 +95,30 @@
 // 사업자등록번호 중복체크 accomInsert
 
 	function biz_idChk() {
-		var biz_id = document.getElementById("biz_id").value
-		if (biz_id =="") {
-			alert("사업자등록번호를 입력해 주세요")
-			return false
-		} else {
-			fetch('/biz/checkBizId?biz_id='+biz_id)
-			.then(response => response.text())
-			.then(result => {
-				if(result == "duplicate") {
-					alert("이미 등록된 사업자등록번호입니다/")
-					document.getElementById("biz_id").value="";
-				} else {
-					alert("사용 가능한 사업자등록번호입니다.")
-				}
-			})
-			.catch(error => console.log('error', error));
-		}
-	}
+    var biz_id = document.getElementById("biz_id").value
+    if (biz_id == "") {
+        alert("사업자등록번호를 입력해 주세요")
+        return false;
+    } else {
+        fetch('/biz/checkBizId?biz_id=' + biz_id)
+            .then(response => response.text())
+            .then(result => {
+                if (result == "duplicate") {
+                    alert("이미 등록된 사업자등록번호입니다.")
+                    document.getElementById("biz_id").value = "";
+                    document.getElementById("biz_idChecked").value = 0;
+                } else if (result == "nonMatched") {
+                    alert(" -(하이픈) 를 포함한 10자리 사업자 등록번호를 입력해 주세요")
+                    document.getElementById("biz_id").value = "";
+                    document.getElementById("biz_idChecked").value = 0;
+                } else {
+                    alert("사용 가능한 사업자등록번호입니다.")
+                    document.getElementById("biz_idChecked").value = 1;
+                }
+            })
+            .catch(error => console.log('error', error));
+    }
+}
 	
 	function accomImgInsert() {
 			var biz_id = document.getElementById("accombiz_id").value
@@ -121,4 +127,12 @@
 			if (a) return true;
 			else return false;
 		}
-	
+	function accomValueChk() {
+		var biz_idChecked = document.getElementById("biz_idChecked").value
+		if (biz_idChecked == 0 ) {
+			alert('사업자등록번호 중복확인이 필요합니다.')
+			focus("biz_id")
+			return false;
+		}
+		return true;
+		}

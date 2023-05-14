@@ -20,14 +20,14 @@
 		display: inline-block;
 		float: left; 
 		margin-top: 20px;
-
-	
 	}
 	
 	a {
 		text-decoration: none;
 		color: black;
 	}
+	
+	
 	
 	.responsive-table {
 	  margin:auto;
@@ -224,5 +224,7 @@
 	#btn btn-light {
 		width: auto;
 	}
+	
+	
 	
 	

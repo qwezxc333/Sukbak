@@ -9,66 +9,23 @@
 	
 	.content{
 		flex: 4;
-		height: auto;
 		padding-left: 50px;
-		height: auto;
+		height: 800px;
 		display: inline-block;
 	}
 	
 	#accordionFlushExample{
-	width: 250px;
-	display: inline-block;
-	float: left; 
-	margin-top: 20px;
-
-	
+		width: 250px;
+		display: inline-block;
+		float: left; 
+		margin-top: 20px;
 	}
 	
-	.imgs{
-		clear:both;
-		float: right;
-		width: 38%;
-		height: auto;
-		
-	
+	a {
+		text-decoration: none;
+		color: black;
 	}
 	
-	.roomImgs img {	
-		padding-top: 20px;
-		max-width: 320px;
-		max-height: 280px;
-		min-height: 200px;
-	}
-	
-	.accordion-button.collapsed{
-	  padding: 13px 8px 6px 16px;
-	  text-decoration: none;
-	  font-size: 20px;
-	  color: #2196F3;
-	  display: block;
-	  font-weight: bold; 
-	}
-	
-	.accordion-button {
-	  padding: 13px 8px 6px 16px;
-	  text-decoration: none;
-	  font-size: 20px;
-	  color: #2196F3;
-	  display: block;
-	  font-weight: bold; 
-	}
-	
-	.sidenav a {
-	  text-decoration: none;
-	  color: #2196F3;
-	  display: block;
-	  font-weight: bold; 
-	
-	}
-	
-	.sidenav a:hover {
-	  color: #064579;
-	}
 	
 	#title {
 		left: 50%;
@@ -195,6 +152,22 @@
 	.rows label {
 		margin-right: 10px;
 		display: inline-block;
+	}
+	
+	.imgs{
+		clear: both;
+		float: right;
+		height: 1100px;
+		width: 500px;
+		margin-top: 50px;
+		overflow: auto;
+		
+	}
+	
+	.roomImgs img {	
+		padding-top: 20px;
+		width: 320px;
+		height: 280px;
 	}
 	
 	
