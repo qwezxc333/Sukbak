@@ -1,10 +1,7 @@
 package com.example.S20230403.configration.yheConfiguration;
 
 import com.example.S20230403.auth.PrincipalOauth2UserService;
-import com.example.S20230403.handler.yheHandler.CustomAccessDeniedHandler;
-import com.example.S20230403.handler.yheHandler.CustomAuthenticationEntryPoint;
-import com.example.S20230403.handler.yheHandler.CustomAuthenticationSuccessHandler;
-import com.example.S20230403.handler.yheHandler.CustomLogoutSuccessHandler;
+import com.example.S20230403.handler.yheHandler.*;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +20,7 @@ public class SecurityConfig {
 
     private final PrincipalOauth2UserService principalOauth2UserService;
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
     private final CustomAccessDeniedHandler webAccessDeniedHandler;
 
@@ -50,6 +48,7 @@ public class SecurityConfig {
                 .usernameParameter("user_id")
                 .passwordParameter("password")
                 .loginPage("/login")
+                .failureHandler(customAuthenticationFailureHandler)
                 .loginProcessingUrl("/login_proc")
                 .defaultSuccessUrl("/")
                 .successHandler(customAuthenticationSuccessHandler)

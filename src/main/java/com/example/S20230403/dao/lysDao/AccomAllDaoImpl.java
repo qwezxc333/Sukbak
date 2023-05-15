@@ -1,4 +1,4 @@
-package com.example.S20230403.service.lysService;
+package com.example.S20230403.dao.lysDao;
 
 import java.util.List;
 
@@ -6,12 +6,14 @@ import com.example.S20230403.model.Accom;
 import com.example.S20230403.model.AccomPayment;
 import com.example.S20230403.model.Notice_Faq;
 import com.example.S20230403.model.Payment;
+import com.example.S20230403.model.Qna;
 import com.example.S20230403.model.Room;
 import com.example.S20230403.model.Soldout;
 import com.example.S20230403.model.Users;
 
-public interface Service06 {
+public interface AccomAllDaoImpl {
 
+	List<Accom> searchAc(Accom accom);
 
 	List<Users> userlist(Users usid);
 
@@ -19,7 +21,7 @@ public interface Service06 {
 
 	int userTotal();
 
-	int conditionUserCount(Users usid);
+	int coundTotalUser(Users usid);
 
 	List<Users> listSearchUsers(Users usid);
 
@@ -29,8 +31,14 @@ public interface Service06 {
 
 	List<Room> getR_price(AccomPayment apt);
 
-	int paymentInsert(AccomPayment apt,List<String> resvDateList);
+	int insertPayment(AccomPayment apt);
+
+	int insertReserv(AccomPayment apt);
+
+	int insertSoldOut(List<String> resvDateList);
+	
 
 	List<Soldout> getResvDate(AccomPayment apt);
+
 
 }

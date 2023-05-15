@@ -1,9 +1,9 @@
 //찜 삭제 로직
 function cgAjaxDeleteZzim(biz_id, user_id, auth){
-	alert("찜삭제 시작");
-	alert("biz_id -> "+biz_id);
-	alert("user_id-> "+user_id);
-	alert("auth-> "+auth);
+	//alert("찜삭제 시작");
+	//alert("biz_id -> "+biz_id);
+	//alert("user_id-> "+user_id);
+	//alert("auth-> "+auth);
 	
 	// insert 하는 ajax
 	$.ajax({
@@ -88,6 +88,11 @@ if(checkIn != '' && !checkOut){
 
 var str = "";
 
+//가격 포맷팅
+function formatPrice(price){
+	return price.toLocaleString('ko-KR');
+}
+
 // 버튼 클릭 시 ajax 호출
 $.ajax({
 	url : "/cgAjaxZzimListsByUser_id",
@@ -110,13 +115,13 @@ $.ajax({
                 var diffDays = Math.ceil(diffTime /  (1000 * 60 * 60 * 24));
             }
             var totalPrice = this.min_price_r2 * diffDays;
-            
+        	var formattedPrice = formatPrice(totalPrice);
 	    	str += "<div class='cgProduct_list_area'>";
             str += "    <div class='cgProduct_list_wrapper'>";
             str += "      <a href='/accomDetail?biz_id=" + this.biz_id + "&checkIn=" + checkIn + "&checkOut=" + checkOut + "'>";
             str += "        <div class='cgProduct_list_img'>";
             str += "          <ul>";
-            str += "            <li><img class='thumbnail_img' src='/img/" + this.r_img + "'></li>";
+            str += "            <li><img class='thumbnail_img' src='" + this.r_img + "'></li>";
             str += "          </ul>";
             str += "        </div>";
             str += "        <div class='cgProduct_list_contents'>";
@@ -128,7 +133,7 @@ $.ajax({
             }
             str += "              <span id='productRating'>" + this.avg_rating + "/5</span>";
             str += "            </li>";
-            str += "            <li id='productPrice'>" + totalPrice + "원</li>";
+            str += "            <li id='productPrice'>" + formattedPrice + "원</li>";
             str += "            <li id='productAddr'>" + this.addr + "</li>";
             str += "          </ul>";
             str += "        </div>";
@@ -147,8 +152,14 @@ $.ajax({
           str += "</div>";
           str += "</div>";
           
-		alert('ajax str->' + str)
-		$(".cgProduct_lists_area").html(str);
+		//alert('ajax str->' + str)
+		if(productSort == ""){
+			// 조건이 없다면 행귄이 보여주기
+			$(".listEmpty").show();
+		
+		}else{
+			$(".cgProduct_lists_area").html(str);	
+		}
 	}
 });
 }

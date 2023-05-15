@@ -9,56 +9,63 @@
 <body>
 <div class = "container">
 	<th:block layout:fragment="content"></th:block>
-		<div class="accordion accordion-flush" id="accordionFlushExample">
-			  <div class="accordion-item">
-			    <h2 class="accordion-header" id="flush-headingOne">
-			      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-			        	업체 및 객실관리
-			      </button>
-			    </h2>
-			    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-			      <div class="accordion-body">
-						<a href="#" onclick="bizAccomCall()">업체관리</a><br>
-						<a href="#" onclick="bizRoomCall()">객실관리</a><br>
+	
+			<div class="accordion accordion-flush" id="accordionFlushExample" style="width: 200px">
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingOne">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+				        	업체 및 객실관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+							<a href="/biz/bizMain">업체관리</a><br>
+							<a href="/biz/rooms" >객실관리</a><br>
+					  </div>
+				    </div>
 				  </div>
-			    </div>
-			  </div>
-			  <div class="accordion-item">
-			    <h2 class="accordion-header" id="flush-headingTwo">
-			      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-			        	리뷰 및 예약관리
-			      </button>
-			    </h2>
-			    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-			      <div class="accordion-body">
-			       		<a href="/biz/review">리뷰관리</a><br>
-			       		예약관리<br>
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingTwo">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+				        	리뷰 및 예약관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+				       		<a href="/biz/review">리뷰관리</a><br>
+				       		<!-- 예약관리<br> 미구현-->
+					  </div>
+				    </div>
 				  </div>
-			    </div>
-			  </div>
-			  <div class="accordion-item">
-			    <h2 class="accordion-header" id="flush-headingThree">
-			      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-			        	계정관리
-			      </button>
-			    </h2>
-			    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-			      <div class="accordion-body">
-			      	<form action="/biz/usersInfoChkForm" method="POST">
-			      		<input type="submit" value="계정정보 변경" name="userAction">
-			      		<input type="submit" value="계정 양도" name="userAction">
-			      		<input type="submit" value="회원 탈퇴" name="userAction">
-			      	</form>
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingThree">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+				        	계정관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+				      	<!-- <a href="/biz/usersInfoChkForm?userAction=계정정보 변경">계정정보 변경</a><br>
+				      	<a href="/biz/usersInfoChkForm?userAction=계정 양도">계정 양도</a><br>
+				      	<a href="/biz/usersInfoChkForm?userAction=회원 탈퇴">회원 탈퇴</a><br> 사용안함-->
+				      	 <a href="/biz/bizProfile">프로필 수정</a>
+				      	
+					  </div>
+				    </div>
 				  </div>
-			    </div>
-			  </div>
-		</div>
+			</div>
+		
 		<div id="contents" class="contents" th:with = "totalReviewAndBiz_id = ${totalReviewAndBiz_id}">
 			<p id = "menuTitle" th:text="'전체리뷰(' + ${totalReviewAndBiz_id.totalReview} + ')'"></p>
 			<div class="reviewTop_sort">
 				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgGetAjaxSortingReviewLists(\''+ ${totalReviewAndBiz_id.biz_id} +'\', 1)'">최신순</button>
 				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgGetAjaxSortingReviewLists(\''+ ${totalReviewAndBiz_id.biz_id} +'\', 2)'">낮은평점순</button>
 				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgGetAjaxSortingReviewLists(\''+ ${totalReviewAndBiz_id.biz_id} +'\', 3)'">높은평점순</button>
+			</div>
+			<div class = "listEmpty" th:if="${totalReviewAndBiz_id.totalReview == 0}">
+				<img alt="" src="/img/penguin_oops.png">
+				<h4><label class ="emptyNotice">현재 숙소에 작성된 리뷰가 없습니다</label></h4>
+				<h5><label class ="emptyNotice"></label></h5>
 			</div>
 			<div class = "accomReviewContainer">
 			<!-- 모달 창에서 반복문이 안먹는에 이거 해결하려면 인덱스를 사용해야 함. -->
@@ -89,7 +96,7 @@
 						<!-- review 객체에 review테이블과 review_img테이블의 pay_id가 일치하는  
 							List타입의 reviewImages 필드를 또한번 each로 꺼내서 reviewImage를 받아내서 거기에 review_img를 뽑아냄 -->
 						<img th:each="reviewImage : ${review.reviewImages}"
-							th:src="@{/img/review/{re_img}(re_img=${reviewImage.review_img})}"
+							th:src="@{${reviewImage.review_img}}"
 							class="img-thumbnail" onerror="this.style.display='none';">		
 						<div class = "ReviewDeleteBtn">
 							<!-- Button trigger modal -->
@@ -100,8 +107,11 @@
 								  삭제요청
 								</button>
 							</div>
-							<div th:if = "${myReview.del_request == 'Y'}">
+							<div th:if="${myReview.del_request == 'Y'}">
 								<button type="button" id="modalDoneBtn" class="btn btn-secondary" disabled>삭제접수 완료</button>
+							</div>
+							<div th:if = "${myReview.del_request == 'R'}">
+								<button type="button" id="deleteRefuseBtn" class="btn btn-danger" disabled>삭제요청이 거부되었습니다. 자세한 문의는 고객센터에 연락주세요</button>
 							</div>
 							
 							<!-- Modal -->

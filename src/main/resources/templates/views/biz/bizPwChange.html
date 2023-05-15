@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<head>
+<link rel="stylesheet" href="/css/lgh/mypageSidebar.css">
+</head>
+<style type="text/css">
+	.pwcTitle {
+		text-align: left;
+		font-size: 28px;
+		font-weight: bold;
+		color: #00b7f7;
+		padding: 20px 5px 30px 5px;
+	}
+	
+	.pwChk {
+		margin-bottom: 10px;
+	}
+	
+	.pwData label {
+		color: #404040;
+		font-weight: 600;
+		padding-bottom: 5px;
+	}
+	
+	.pwData input {
+		margin-bottom: 10px;
+		width: 300px;
+	}
+	
+	.pwcButton button {
+		padding:	8px;
+		border-radius: 10px;
+		border: 	none;
+		color: white;
+		font-weight: bold;
+		background-color: #2196F3;
+	}
+	
+	#pwcSave {
+		width: 100px;
+	}
+	
+	#pwcBack {
+		width: 200px
+	}
+</style>
+<script type="text/javascript">
+
+function PwdChk() {
+	var inputPwd	= $('#inputPwd').val();
+	var newPwd		= $('#newPwd').val();
+
+	if (!inputPwd) {
+		alert("비밀번호가 입력되지 않았습니다.")
+		return;
+	}
+		
+	$.ajax({
+		type: 'GET',
+		url:  '/bizPwdChk',
+		data: {
+			inputPwd: inputPwd
+		},
+		success: function (response) {
+			if (response === "1") {
+				console.log("비밀번호가 일치합니다.");
+				alert("비밀번호가 변경되었습니다. 변경된 비밀번호로 재로그인 해주세요.");
+				location.href="updateMyPassword?newPwd=" + newPwd;
+			} else {
+				alert("현재 비밀번호가 올바르지 않습니다. 다시 입력해주세요.");
+				return;
+			}
+		},
+		error: function(xhr, status, error) {
+			alert("비밀번호 확인 중 오류가 발생하였습니다.");
+		}
+	});
+}
+
+</script>
+<th:block layout:fragment="content"></th:block>
+	<div class="container">
+	
+	<div class="nav">
+			<div class="accordion accordion-flush" id="accordionFlushExample" style="width: 200px">
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingOne">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+				        	업체 및 객실관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+							<a href="/biz/bizMain">업체관리</a><br>
+							<a href="/biz/rooms" >객실관리</a><br>
+					  </div>
+				    </div>
+				  </div>
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingTwo">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+				        	리뷰 및 예약관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+				       		<a href="/biz/review">리뷰관리</a><br>
+				       		<!-- 예약관리<br> 미구현-->
+					  </div>
+				    </div>
+				  </div>
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingThree">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+				        	계정관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+				      	<!-- <a href="/biz/usersInfoChkForm?userAction=계정정보 변경">계정정보 변경</a><br>
+				      	<a href="/biz/usersInfoChkForm?userAction=계정 양도">계정 양도</a><br>
+				      	<a href="/biz/usersInfoChkForm?userAction=회원 탈퇴">회원 탈퇴</a><br> 사용안함-->
+				      	 <a href="/biz/bizProfile">프로필 수정</a>
+				      	
+					  </div>
+				    </div>
+				  </div>
+			</div>
+		</div>
+	
+		<div class="main">
+			<div class="pwcTitle">
+				<p>비밀번호 변경하기</p>
+			</div>
+			<div class="pwChk">
+				<input type="hidden" name="matchPw"  th:value="${myPassword.password}">
+				<div class="pwData">
+					<label for="inputPwd">현재 비밀번호</label><br>
+					<input type="password" name="inputPwd" id="inputPwd"><br>
+					<label for="newPwd">변경 비밀번호</label><br>
+					<input type="password" name="newPwd" id="newPwd">
+				</div>
+			</div>
+			<div class="pwcButton">
+				<button type="button" id="pwcSave" th:onclick="PwdChk()">저장</button>
+				<button type="button" id="pwcBack"
+						th:onclick="|location.href='@{/biz/bizProfile}'|">내 프로필로 돌아가기</button>
+			</div>
+		</div>
+	</div>
+
+</body>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</html>

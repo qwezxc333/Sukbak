@@ -1,0 +1,173 @@
+	.container{
+		max-width: 100%;
+		max-height: 100%;
+		height: auto;
+		position: relative;
+		display: flex;
+		
+	}
+	
+	.content{
+		flex: 4;
+		padding-left: 50px;
+		height: auto;
+		display: inline-block;
+	}
+	
+	#accordionFlushExample{
+		width: 250px;
+		display: inline-block;
+		float: left; 
+		margin-top: 20px;
+	}
+	
+	a {
+		text-decoration: none;
+		color: black;
+	}
+	
+	
+	#title {
+		left: 50%;
+		text-align: center;
+		font-size: 28px;
+		font-weight: bold;
+		color: #00b7f7;
+		padding: 50px;
+		display: flex;
+  		align-items: center;
+  		margin: 0 auto;
+	}
+
+	#title p {
+	  margin-right: 10px;
+	}
+	
+	#title .icon img {
+	  height: 36px;
+	  width: 36px;
+	}
+	
+	.main {
+	  /* margin-left: 250px; /* Same width as the sidebar + left position in px */ */
+	  font-size: 16px; /* Increased text to enable scrolling */
+	  padding: 0px 10px 100px;
+	  display: inline-block;
+	  flex-direction: column;
+	  justify-content: center;
+	  align-items: center;
+	  float: right;
+	  margin-right: 35%;
+	}
+	
+	@media screen and (max-height: 450px) {
+	  .sidenav {padding-top: 15px;}
+	  .sidenav a {font-size: 18px;}
+	}
+	
+	.pItems {
+		margin-bottom: 20px;
+	}
+	
+	.pItems th {
+		color: #404040;
+	}
+	
+	.pItems td {
+		padding: 5px 20px;
+	}
+	
+	.pButtons button {
+		margin-top: 10px;
+		width:		200px;
+		padding:	8px;
+		border-radius: 10px;
+		border: 	none;
+	}
+	
+	.pButtons #button {
+		color: white;
+		font-weight: bold;
+		background-color: #2196F3;
+	}
+	
+	.pButtons #buttonY {
+		color: white;
+		font-weight: bold;
+		background-color: orange;
+	}
+	
+	.pButtons #buttonR {
+		color: white;
+		font-weight: bold;
+		background-color: red;
+	}
+	
+	.pButtons #pChgPwd {
+		color: white;
+		font-weight: bold;
+		background-color: #2196F3;
+	}
+	.pButtons #pBack {
+		color: white;
+		font-weight: bold;
+		background-color: #2196F3;
+	}
+	.pButtons #pOut {
+		color: #666666;
+		text-decoration: underline;
+		background-color: white;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	/* */
+	label p {
+		color: #404040;
+		padding-right: 30px;
+		font-weight: bold;
+		width: 800px;
+		font-size: 17px;
+		margin-right: 50px; 
+	}
+	
+	
+	.icons{
+	display: flex;
+	align-items: center; /* 중앙 정렬 */
+	padding: 20px 10px;
+	}
+	
+	div.icon img{
+		display: inline-block; /* 인라인 엘리먼트가 아닌 블록 엘리먼트로 변환 */
+ 		margin-right: 10px; /* 아이콘들 간의 간격 설정 */
+		height: 36px;
+		width: 36px; 	
+	}
+	
+	.rows { 
+		display: inline-block;
+	}
+	
+	.rows label {
+		margin-right: 10px;
+		display: inline-block;
+	}
+	
+	.imgs{
+		clear: both;
+		float: right;
+		height: 1100px;
+		width: 500px;
+		margin-top: 50px;
+		overflow: auto;
+		
+	}
+	
+	.roomImgs img {	
+		padding-top: 20px;
+		width: 320px;
+		height: 280px;
+	}
+	
+	

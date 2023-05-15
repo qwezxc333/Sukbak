@@ -7,9 +7,6 @@
 <link rel="stylesheet" href="/css/lgh/mypageSidebar.css">
 </head>
 <style type="text/css">
-	.container {
-		max-width: 100%;
-	}
 	
 	.revTitle {
 		text-align: center;
@@ -86,7 +83,7 @@
 	
 	.myReviewImage img {
 		width: 100px;
-		height: auto;
+		height: 100px;
 		margin-right: 10px;
 	}
 	
@@ -112,11 +109,7 @@
 </style>
 <script type="text/javascript">
 	function confirmDel(index) {
-		alert("index-> " + index);
 		var payId = $('#pay_id'+index).val();
-		
-		alert("payId-> " + payId)
-		
 		var url = '/commonUser/deleteMyReview?pay_id=' + payId
 				
 		if (!confirm('리뷰를 삭제하시겠습니까? \n※ 삭제된 리뷰는 복구할 수 없습니다.')) {
@@ -135,22 +128,18 @@
 		  <a href="/commonUser/myReserved">예약 내역</a>
 		  <a href="/commonUser/myReviews">후기 관리</a>
 		  <a href="/commonUser/myZzim">내 찜목록</a>
-		  <a href="/commonUser/myQnA">내가 남긴 문의</a>
+		  <a href="/commonUser/myQna">나의 문의</a>
 		</div>
-	
+
 		<div class="main" style="align-self: center;">
-			
 			<div class="revTitle">
 				<p>내가 작성한 후기</p>
 			</div>
-		
 			<div class=myReviewItems th:each="myReviewItem, status : ${myReviewImgList}">
 				<form th:action="@{/commonUser/getMyReviewUpdate}" method="post">
-
 					<div class="myReviewBizName">
 						<p th:text="${myReviewItem.biz_name}"></p>
 					</div>
-					
 					<div class="line1">
 						<div class="myReviewUsedDates">
 							<span th:text="${#dates.format(myReviewItem.check_in, 'yyyy-MM-dd')} + ' ~ '"></span>
@@ -161,12 +150,12 @@
 							<span th:text="${#numbers.formatInteger(myReviewItem.pay_amt, 1, 'COMMA')} + '원'"></span>
 						</div>
 					</div>
-					
+	
 					<div class="myReviewAccomAddr">
 						<p th:text="${myReviewItem.addr}"></p>
 					</div>
 					
-					<div class="myReviewContent" th:with="metaPath = ${metaPath}">
+					<div class="myReviewContent" th:with="fileDir = ${fileDir}">
 						<div class="line2">
 							<span class="rating" th:text="'평점: '+${myReviewItem.rating}+'점'"></span>
 							<span class="revDate" th:text="'작성날짜: '+${#dates.format(myReviewItem.review_date, 'yyyy/MM/dd')}"></span>
@@ -176,18 +165,17 @@
 						</div>
 					</div>
 					<div class="myReviewImage" th:each="reviewImage : ${myReviewItem.matchingReviewImages}">
-					 	 <img th:src="@{'/img/review/' + ${reviewImage.review_img}}" alt="Uploaded Image" />
+					 	 <img th:src="${reviewImage.review_img}" alt="Uploaded Image" />
+
 					</div>
 
 					<div class="myReviewButtons">
-						<input type="text" readonly name="pay_id" th:id="'pay_id'+${status.index}" th:value="${myReviewItem.pay_id}">
-						<table>
-							<tr><td colspan="2">
-								<!-- <button type="submit">수정</button> -->
+						<input type="hidden" readonly name="pay_id" th:id="'pay_id'+${status.index}" th:value="${myReviewItem.pay_id}">
+							<div class="delButton">
 								<button type="button"
 										  th:onclick="'confirmDel('+${status.index}+')'">
 								삭제</button>
-						</table>
+							</div>
 					</div>
 				</form>
 			</div>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<head>
+<!-- <link rel="stylesheet" href="/css/kjs/myQna.css"> -->
+<link rel="stylesheet" href="/css/lgh/mypageSidebar.css">
+</head>
+<style type="text/css">
+
+	.myProfileTitle {
+		text-align: center;
+		font-size: 28px;
+		font-weight: bold;
+		color: #00b7f7;
+		padding: 20px 5px 30px 5px;
+	}
+	
+	.pItems {
+		margin-bottom: 20px;
+		text-align: center;
+		align-content: center;
+	}
+	
+	.pItems th {
+		color: 404040;
+		padding-right: 30px;
+		text-align: left;
+	}
+	
+	.pItems td {
+		padding: 5px 20px;
+	}
+	
+	button {
+		margin-top: 10px;
+		width:		200px;
+		padding:	8px;
+		border-radius: 10px;
+		border: 	none;
+	}
+	
+	#pSave, #pChgPwd, #pBack {
+		color: white;
+		font-weight: bold;
+		background-color: #2196F3;
+	}
+	
+	#pOut {
+		color: #666666;
+		text-decoration: underline;
+		background-color: white;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: auto;
+	}
+	
+</style>
+<script type="text/javascript">
+	function savePopUp() {
+		alert("변경사항이 저장되었습니다.");
+	}
+
+</script>
+
+<th:block layout:fragment="content"></th:block>
+	<div class="container">
+	<div class="nav">
+			<div class="accordion accordion-flush" id="accordionFlushExample" style="width: 200px">
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingOne">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+				        	업체 및 객실관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+							<a href="/biz/bizMain">업체관리</a><br>
+							<a href="/biz/rooms" >객실관리</a><br>
+					  </div>
+				    </div>
+				  </div>
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingTwo">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+				        	리뷰 및 예약관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+				       		<a href="/biz/review">리뷰관리</a><br>
+				       		<!-- 예약관리<br> 미구현-->
+					  </div>
+				    </div>
+				  </div>
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingThree">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+				        	계정관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+				      	<!-- <a href="/biz/usersInfoChkForm?userAction=계정정보 변경">계정정보 변경</a><br>
+				      	<a href="/biz/usersInfoChkForm?userAction=계정 양도">계정 양도</a><br>
+				      	<a href="/biz/usersInfoChkForm?userAction=회원 탈퇴">회원 탈퇴</a><br> 사용안함-->
+				      	 <a href="/biz/bizProfile">프로필 수정</a>
+				      	
+					  </div>
+				    </div>
+				  </div>
+			</div>
+		</div>
+	
+	   <div class="main">
+	      <div class="myProfileTitle">
+	         <p>나의 프로필</p>
+	      </div>
+	
+	      <div class="pData">
+	         <form action="updateMyProfile" method="post">
+	            <table class="pItems">
+	               <tr>
+	                  <th>이름*</th>
+	                  <td><input type="text" name="name" required="required"
+	                     th:value="${myProfileInfo.name}" disabled="disabled"></td>
+	               </tr>
+	               <tr>
+	                  <th>이메일(아이디)*</th>
+	                  <td><input type="text" name="user_id" required="required"
+	                     th:value="${myProfileInfo.user_id}" disabled="disabled"></td>
+	               </tr>
+	               <tr>
+	                  <th>닉네임*</th>
+	                  <td><input type="text" name="nickname" required="required"
+	                     th:value="${myProfileInfo.nickname}"></td>
+	               </tr>
+	               <tr>
+	                  <th>통신사*</th>
+	                  <td><input type="text" name="telecom" required="required"
+	                     th:value="${myProfileInfo.telecom}"></td>
+	               </tr>
+	               <tr>
+	                  <th>연락처(휴대폰)*</th>
+	                  <td><input type="text" name="phone" required="required"
+	                     th:value="${myProfileInfo.phone}"></td>
+	               </tr>
+	               <tr>
+	                  <th>성별</th>
+	                  <td><input type="text" name="gender"
+	                     th:value="${myProfileInfo.gender}" disabled="disabled"></td>
+	               </tr>
+	            </table>
+	            <div class="buttons">
+	                  <button type="submit" id="pSave" th:onclick="savePopUp()">변경사항 저장하기</button>
+	                  <button type="button" id="pChgPwd" name="goToPwChg" th:onclick="|location.href='@{/biz/bizPwChange}'|">
+							비밀번호 변경하기</button><br><br>
+	                  <button type="button" id="pOut" name="goToWithdraw" th:onclick="|location.href='@{/biz/bizWithdraw}'|">
+							회원 탈퇴하기</button>
+	            </div>
+	         </form>
+	      </div> <!-- pData -->
+	   </div> <!-- main -->
+	</div> <!-- container -->
+
+</body>
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</html>

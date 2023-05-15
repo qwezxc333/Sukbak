@@ -3,7 +3,13 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:replace="fragments/header :: headerFragment"></th:block>
+<head>
+	<link rel="stylesheet" href="/css/ljy/profiles.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<script src="/js/ljy/ljyScripts.js" type="text/javascript"></script>
 <script type="text/javascript">
+
 	var check = ["pool", "parking", "cafe", "restaurant", "store", "sauna", "laundry", "fitness"];
 	
 	for (var i = 0; i < check.length; i++) {
@@ -15,37 +21,90 @@
 		}
 	}
 	
-	function goBack() {
-		var a = confirm("작성한 내용은 저장되지 않습니다. 사업자 메인 페이지로 이동합니다.")
-		if (a) window.location.href = "/biz/bizMain";
-		else return false;
-	}
+	
 	
 </script>
 <body>
 	<th:block layout:fragment="content">
+	<div class="container">
+	
+		<div class="nav">
+			<div class="accordion accordion-flush" id="accordionFlushExample" style="width: 200px">
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingOne">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+				        	업체 및 객실관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+							<a href="/biz/bizMain">업체관리</a><br>
+							<a href="/biz/rooms" >객실관리</a><br>
+					  </div>
+				    </div>
+				  </div>
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingTwo">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+				        	리뷰 및 예약관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+				       		<a href="/biz/review">리뷰관리</a><br>
+				       		<!-- 예약관리<br> 미구현-->
+					  </div>
+				    </div>
+				  </div>
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingThree">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+				        	계정관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+				      	<!-- <a href="/biz/usersInfoChkForm?userAction=계정정보 변경">계정정보 변경</a><br>
+				      	<a href="/biz/usersInfoChkForm?userAction=계정 양도">계정 양도</a><br>
+				      	<a href="/biz/usersInfoChkForm?userAction=회원 탈퇴">회원 탈퇴</a><br> 사용안함-->
+				      	<a href="/biz/bizProfile">프로필 수정</a>
+				      	
+					  </div>
+				    </div>
+				  </div>
+			</div>
+		</div>
+	
+	<div class="content">
+	
 	<form action="/biz/accomDelete" method="POST" name="frm">
-		<h4>내 업체 삭제</h4><br><br>
+		<div id="title">
+			<div class="icon">
+			 	<img src="/img/accom_building.png" alt="building">
+			</div>
+			<p>내 업체 삭제</p>	
+		</div>
+		
 			<div class="mb-3 row">
-			    <label for="user_id" class="col-sm-2 col-form-label">Email</label>
+			    <label for="user_id" class="col-sm-2 col-form-label"><p>Email</p></label>
 			    <div class="col-sm-10">
 			      <input type="text" readonly class="form-control-plaintext" id="user_id" name="user_id" th:value="${accom.user_id}">
 			    </div>
 			 </div>
 			 <div class="mb-3 row">
-			    <label for="biz_id" class="col-sm-2 col-form-label">사업자등록번호</label>
+			    <label for="biz_id" class="col-sm-2 col-form-label"><p>사업자등록번호</p></label>
 			    <div class="col-sm-10">
 			      <input type="text" readonly class="form-control-plaintext" id="biz_id" name="biz_id" th:value="${accom.biz_id}">
 			    </div>
 			 </div>
 			 <div class="mb-3 row">
-			    <label for="biz_name" class="col-sm-2 col-form-label">업체명</label>
+			    <label for="biz_name" class="col-sm-2 col-form-label"><p>업체명</p></label>
 			    <div class="col-sm-10">
 			      <input type="text" readonly class="form-control-plaintext" id="biz_name" name="biz_name" th:value="${accom.biz_name}">
 			    </div>
 			 </div>
 			 <div class="mb-3 row">
-			    <label for="accom_type" class="col-sm-2 col-form-label">업체 유형</label>
+			    <label for="accom_type" class="col-sm-2 col-form-label"><p>업체 유형</p></label>
 			    <div class="col-sm-10">
 			      <span th:switch="${accom.accom_type}">
 					    <span th:case="'999'">기타</span>
@@ -60,54 +119,68 @@
 			    </div>
 			 </div>
 			 <div class="mb-3 row">
-			    <label for="addr" class="col-sm-2 col-form-label">업체 상세주소</label>
+			    <label for="addr" class="col-sm-2 col-form-label"><p>업체 상세주소</p></label>
 			    <div class="col-sm-10">
 			      <input type="text" readonly class="form-control-plaintext" id="addr" name="addr" th:value="${accom.addr}">
 			    </div>
 			 </div>
 			 <div class="mb-3 row">
-			    <label for="room_count" class="col-sm-2 col-form-label">등록 객실 수</label>
+			    <label for="room_count" class="col-sm-2 col-form-label"><p>등록 객실 수</p></label>
 			    <div class="col-sm-10">
 			      <input type="text" readonly class="form-control-plaintext" id="room_count" name="room_count" th:value="${accom.room_count}">
 			    </div>
 			 </div>
 			 <div class="mb-3 row">
-			    <label for="tel" class="col-sm-2 col-form-label">업체 대표 전화번호</label>
+			    <label for="tel" class="col-sm-2 col-form-label"><p>업체 대표번호</p></label>
 			    <div class="col-sm-10">
 			      <input type="text" readonly class="form-control-plaintext" id="tel" name="tel" th:value="${accom.tel}">
 			    </div>
 			 </div>
 
-			  <div class="form-check">
-			  	  <h6>부대시설 확인</h6>
-			  	  <label for="pool">수영장</label>
-				  <input type="text" readonly name="pool" id="pool" th:value="${accom.pool}"><br>
-				  <label for="parking">주차시설</label>
-				  <input type="text" readonly name="parking" id="parking" th:value="${accom.parking}"><br>
-				  <label for="cafe">카페</label>
-				  <input type="text" readonly name="cafe" id="cafe" th:value="${accom.cafe}"><br>
-				  <label for="restaurant">레스토랑</label>
-				  <input type="text" readonly name="restaurant" id="restaurant" th:value="${accom.restaurant}"><br>
-				  <label for="store">편의점</label>
-				  <input type="text" readonly name="store" id="store" th:value="${accom.store}"><br>
-				  <label for="sauna">사우나</label>
-				  <input type="text" readonly name="sauna" id="sauna" th:value="${accom.sauna}"><br>
-				  <label for="laundry">라운더리</label>
-				  <input type="text" readonly name="laundry" id="laundry" th:value="${accom.laundry}"><br>
-				  <label for="fitness">헬스장</label>
-				  <input type="text" readonly name="fitness" id="fitness" th:value="${accom.fitness}"><br>
+			  <div class="options">
+				<label for="icons"><p>부대시설</p></label>
+					<div class="icons">
+					  <div th:if="${accom.pool == 'Y'}" class="icon">
+					  	<img src="/img/accom_pool.png" alt="pool">
+					  </div>
+					  <div th:if="${accom.parking == 'Y'}" class="icon">
+					  	<img src="/img/accom_parking.png" alt="parking">
+					  </div>
+					  <div th:if="${accom.cafe == 'Y'}" class="icon">
+					  	<img src="/img/accom_cafe.png" alt="cafe">
+					  </div>
+					  <div th:if="${accom.restaurant == 'Y'}" class="icon">
+					  	<img src="/img/accom_restaurant.png" alt="restaurant">
+					  </div>
+					  <div th:if="${accom.store == 'Y'}" class="icon">
+					  	<img src="/img/accom_store.png" alt="store">
+					  </div>
+					  <div th:if="${accom.sauna == 'Y'}" class="icon">
+					  	<img src="/img/accom_sauna.png" alt="sauna">
+					  </div>
+					  <div th:if="${accom.fitness == 'Y'}" class="icon">
+					  	<img src="/img/accom_fitness.png" alt="fitness">
+					  </div>
+					  <div th:if="${accom.laundry == 'Y'}" class="icon">
+					  	<img src="/img/accom_laundry.png" alt="laundry">
+					  </div>
+				  </div>
 			   </div>
 			   <br>
 			   <div class="mb-3 row">
-				    <h6><b>업체 소개</b></h6>
+			   		<label><p>업체 소개</p></label>
 				    <br>
-				    <div class="col-sm-10">
-				      <textarea class="form-control-plaintext" rows="10" id="description" name="description" th:value="${accom.description}"></textarea>
+				    <div class="col-sm-10" style="padding-left: 40px;">
+				      <textarea class="form-control-plaintext" rows="10" readonly id="description" name="description" th:text="${accom.description}" th:value="${accom.description}"></textarea>
 				    </div>
 			   </div>
-				<button type="submit" value="삭제">삭제</button>
+			<div class="pButtons">
+				<button id="button" type="submit" value="수정" onclick="actAlert()" >삭제하기</button>
+				<button id="button" type="button" onclick="goBack()">메인으로</button>
+			</div>
 		</form>
-		<input type="button" onclick="return goBack()" value="메인으로">
+		</div>
+	</div>
 	</th:block>
 </body>
 <th:block th:replace="fragments/footer :: footerFragment"></th:block>

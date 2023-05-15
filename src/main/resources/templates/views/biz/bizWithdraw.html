@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<head>
+<link rel="stylesheet" href="/css/lgh/mypageSidebar.css">
+</head>
+<style type="text/css">
+	.outTitle {
+		text-align: center;
+		font-size: 28px;
+		font-weight: bold;
+		color: #00b7f7;
+		padding: 20px 5px 30px 5px;
+	}
+	
+	.withdrawTop {
+		margin-bottom: 40px;
+		font-size: 13px;
+		color: #2196F3;
+		text-align: center;
+	}
+	
+	.wdChkBoxes {
+		clear: both;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		text-align: center;
+		align-self: center;
+		align-items: flex-start;
+		margin-left: 10%;
+	}
+	
+	.wdChkBox {
+		clear: both;
+		display: flex;
+		font-size: 14px;
+		margin-bottom: 5px;
+	}
+	
+	input[type="checkbox"] {
+		margin-right: 5px;
+	}
+	
+	.outDetail {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin: 5px 10px;
+		font-size: 14px;
+	}
+	
+	.wdPassword {
+		text-align: center;
+		font-size: 14px;
+	}
+	
+	#inputPwd {
+		margin: 5px 15px;
+	}
+	
+	.wdWarningMsg {
+		color: red;
+		font-size: 13px;
+		text-align: center;
+	}
+	
+	.outButtons button {
+		width: 200px;
+		padding:	8px;
+		border-radius: 10px;
+		border: none;
+		font-size: 15px;
+	}
+	
+	.outButtons #outButton {
+		background-color: #e35729;
+		color: white;
+		font-weight: bold;
+	}
+
+	.outButtons #outBack {
+		background-color: #2196F3;
+		color: white;
+		font-weight: bold;
+	}
+
+</style>
+<script type="text/javascript">
+	function outPwdChk() {
+		var inputPwd	= $('#inputPwd').val();
+		
+		if (!inputPwd) {
+			alert("비밀번호를 입력해주세요.")
+			return;
+		}
+		
+		if ($('#cb5').is(':checked')) {
+			var textarea = $('#outTextarea').val();
+			if(!textarea) {
+				alert("기타 사유를 입력해주세요.")
+				return;
+			}
+		}
+		
+		$.ajax({
+			type: 'GET',
+			url:  '/bizPwdChk',
+			data: {
+				inputPwd: inputPwd
+			},
+			success: function (response) {
+				if (response === "1") {
+					if (confirm("정말 탈퇴하시겠습니까?")) {
+						console.log("비밀번호가 일치합니다.");
+						var sendData = $('form').serialize();
+						location.href="updateWithdraw?" + sendData;
+					} else {
+						console.log("탈퇴 취소")
+						return;
+					}
+				} else {
+					alert("비밀번호가 일치하지 않습니다.");
+					return;
+				}
+			},
+			error: function(xhr, status, error) {
+				alert("비밀번호 확인 중 오류가 발생하였습니다.");
+			}
+		});
+	}
+	
+</script>
+
+<th:block layout:fragment="content"></th:block>
+	<div class="container">
+	<div class="nav">
+			<div class="accordion accordion-flush" id="accordionFlushExample" style="width: 200px">
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingOne">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+				        	업체 및 객실관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+							<a href="/biz/bizMain">업체관리</a><br>
+							<a href="/biz/rooms" >객실관리</a><br>
+					  </div>
+				    </div>
+				  </div>
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingTwo">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+				        	리뷰 및 예약관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+				       		<a href="/biz/review">리뷰관리</a><br>
+				       		<!-- 예약관리<br> 미구현-->
+					  </div>
+				    </div>
+				  </div>
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="flush-headingThree">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+				        	계정관리
+				      </button>
+				    </h2>
+				    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+				      <div class="accordion-body">
+				      	<!-- <a href="/biz/usersInfoChkForm?userAction=계정정보 변경">계정정보 변경</a><br>
+				      	<a href="/biz/usersInfoChkForm?userAction=계정 양도">계정 양도</a><br>
+				      	<a href="/biz/usersInfoChkForm?userAction=회원 탈퇴">회원 탈퇴</a><br> 사용안함-->
+				      	 <a href="/biz/bizProfile">프로필 수정</a>
+				      	
+					  </div>
+				    </div>
+				  </div>
+			</div>
+		</div>
+	
+		<div class="main">
+			<div class="outTitle">
+				<p>SukBak 탈퇴하기</p>
+			</div>
+			<!-- 상단 고정 메시지(닉네임 변동) -->
+			<div class="withdrawTop">
+				<input type="hidden" name="user_id" th:value="${withdrawInfo.user_id}">
+				<span th:text="${withdrawInfo.nickname}"></span> 님과 더 함께하지 못해 아쉬워요!
+				<p>탈퇴 사유를 알려주시면 향후 더욱 나은 서비스를 제공해드리는 데에 도움이 됩니다.</p>
+			</div>
+			<!-- 탈퇴 사유(Insert값) -->
+			<div class="withdrawContent">
+				<form action="" method="get" name="frm">
+					<!-- 탈퇴 사유 체크박스 -->
+					<div class="wdChkBoxes">
+						<div class="wdChkBox">
+				    		<input type="checkbox"	name="out_price"	id="cb1"	th:value="Y">
+				    		<label for="cb1">더욱 좋은 플랫폼을 발견해서</label><br>
+			    		</div>
+			    		<div class="wdChkBox">
+				    		<input type="checkbox"	name="out_uncom"	id="cb2"	th:value="Y">
+				    		<label for="cb2">사용이 불편해서</label><br>
+				    	</div>
+				    	<div class="wdChkBox">
+				    		<input type="checkbox"	name="out_nouse"	id="cb3"	th:value="Y">
+				    		<label for="cb3">사용 빈도가 낮아서</label><br>
+				    	</div>	
+				    	<div class="wdChkBox">
+				    		<input type="checkbox"	name="out_secure"	id="cb4"	th:value="Y">
+				    		<label for="cb4">폐업 및 리모델링</label><br>
+				    	</div>	
+				    	<div class="wdChkBox">
+				    		<input type="checkbox"	id="cb5"  th:value="Y">
+				    		<label for="cb5">기타(아래 입력란에 작성해 주세요)</label>
+				    	</div>
+			    	</div>
+		    		
+		    		<!-- 탈퇴 상세 사유(텍스트로 작성) -->
+		    		<div class="outDetail">
+		        		<div>
+	            		<textarea name="out_content" id="outTextarea"
+	            		 style="height: 150px; width: 400px" placeholder="내용을 입력해 주세요"></textarea>
+		        		</div>
+		        		
+		        		<!-- 비밀번호 유효성 체크 -->
+						<div class="wdPassword">
+							<p>비밀번호 입력<br>
+							<input type="password" name="inputPwd" id="inputPwd"></p>
+						</div>
+		        		
+		        		<div class="wdWarningMsg">
+		        			<p>※ 탈퇴시에는 회원님의 모든 이용 기록이 소멸됩니다.<br>
+		        			삭제된 정보는 복구될 수 없으니 신중하게 결정해주세요.</p>
+		        		</div>
+		        		
+		        		<div class="outButtons">
+		        			<input type="hidden" name="user_id"  id="user_id"  th:value="${withdrawInfo.user_id}">
+		        			<input type="hidden" name="matchPwd" id="matchPwd" th:value="${withdrawInfo.password}">
+		            		<button type="button" id="outButton" th:onclick="outPwdChk()">SukBak 탈퇴하기</button>
+		            		<button type="button" id="outBack"   th:onclick="|location.href='@{/biz/bizProfile}'|">내 프로필로 돌아가기</button>
+		        		</div>
+		    		</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</html>

@@ -14,12 +14,28 @@ import lombok.RequiredArgsConstructor;
 public class MyQnaServiceImpl implements MyQnaService {
 	private final MyQnaDao md;
 	
+	// 문의 ajax
 	@Override
-	public List<Qna> getMyQnaList(String user_id, String qna_type) {
-
-		List<Qna> myQna = md.fetchMyQnaList(user_id, qna_type);
+	public List<Qna> getMyQnaAjaxList(String user_id, String qna_type) {
+		List<Qna> myQnaAjax = md.fetchMyQnaAjaxList(user_id, qna_type);
 		
-		return myQna;
+		return myQnaAjax;
 	}
+	
+	// 문의 수정
+	@Override
+	public void myQnaUpdate(Qna qna) {
+		md.myQnaUpdate(qna);
+		
+	}
+	
+	// 문의 삭제
+	@Override
+	public void myQnaDelete(int qna_id) {
+		md.myQnaDelete(qna_id);
+	}
+
+	
+
 
 }

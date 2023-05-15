@@ -1,7 +1,9 @@
 package com.example.S20230403.service.lcgService;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,19 +22,30 @@ import lombok.RequiredArgsConstructor;
 public class ProductsFilterServiceImpl implements ProductsFilterService {
 	private final ProductsFilterDao dao;
 	
+	// 원화로 바꿔주는 메소드 
+	public String formatPrice(int price) {
+		// 한국으로 위치 지정
+	    Locale locale = new Locale("ko", "KR");
+	    // NumberFormat.getCurrencyInstance(locale); 으로 화폐 포멧을 한국으로 변경함.
+	    NumberFormat formattedPrice = NumberFormat.getCurrencyInstance(locale);
+	    // 포멧 한걸 다시 string 타입에 넣어주고 원화 표시를 없앤채로 리턴
+	    String formattedPriceWithoutW = formattedPrice.format(price);
+	    return formattedPriceWithoutW.replace("₩", "");
+	}
+	
 	// 숙소 타입별로 가져오는 로직
 	@Override
 	public List<Accom> cgGetProductByAccomtype(Accom accom) {
 		// 기존 로직을 재활용하기 위함과 값이 재대로 넘어왔는지 확인하기 위해 객체에 넣어줌.
 		String accom_type = accom.getAccom_type();
 		String user_id = accom.getUser_id();
-		System.out.println("찜목록 서비스 accom_type-> "+accom_type);
-		System.out.println("찜목록 서비스 user_id-> "+ user_id);
+//		System.out.println("찜목록 서비스 accom_type-> "+accom_type);
+//		System.out.println("찜목록 서비스 user_id-> "+ user_id);
 		// accom_type에 맞게 모든 상품을 다 가져오는 로직
 		List<Accom> cgProductLists = dao.cgGetProductByAccomtype(accom_type);
 		// user_id값이 변하지 않는지 확인.
 		user_id = accom.getUser_id();
-		System.out.println("찜목록 서비스 리스트 가져오고  user_id-> "+ user_id);
+	//	System.out.println("찜목록 서비스 리스트 가져오고  user_id-> "+ user_id);
 		
 		// 로그인한 user_id로 찜 테이블에서 리스트 가져오기
 		// 로그인을 하지 않았다면 리스트가 없음.
@@ -47,7 +60,14 @@ public class ProductsFilterServiceImpl implements ProductsFilterService {
 		// 우선 리스트를 하나 하나 꺼내준다.
 		for(Accom accom2 : cgProductLists) {
 			//user_id가 살아잇는지 확인.
-			System.out.println("이중 for문안에서 유저아이디-> "+user_id);
+			//System.out.println("이중 for문안에서 유저아이디-> "+user_id);
+			
+			
+			 int price = Integer.parseInt(accom2.getMin_price_r2());
+			 // 값을 뽑아와서 인트로 바꾼 후 포멧팅 메소드로 변환 후에 다시 세팅을 해준다. 
+		     String formattedPrice = formatPrice(price);
+		     accom2.setMin_price_r2(formattedPrice);
+			
 			
 			// 이미지 사진도 꺼내줌
 			for(Room_Img room_Img : cgRoom_img) {
@@ -78,13 +98,13 @@ public class ProductsFilterServiceImpl implements ProductsFilterService {
 	public List<Accom> cgGetProductListsByAddr(Accom accom) {
 		// 기존 로직을 재활용하기 위함과 값이 재대로 넘어왔는지 확인하기 위해 객체에 넣어줌.
 		String user_id = accom.getUser_id();
-		System.out.println("주소기반 유저아이디 나와야됨 1 -> "+user_id);
+		//System.out.println("주소기반 유저아이디 나와야됨 1 -> "+user_id);
 		// accom_type과 addr에 맞게 모든 상품을 다 가져오는 로직
 		List<Accom> cgProductLists = dao.cgGetProductListsByAddr(accom);
 		
 		// 숙박업소 썸네일 가져오는 로직
 		List<Room_Img> cgGetRoomImg = dao.cgGetRoom_img();
-		System.out.println("주소기반 유저아이디 나와야됨 2 -> "+user_id);
+		//System.out.println("주소기반 유저아이디 나와야됨 2 -> "+user_id);
 		
 		// 로그인한 user_id로 찜 테이블에서 리스트 가져오기
 		// 로그인을 하지 않았다면 리스트가 없음.
@@ -96,7 +116,11 @@ public class ProductsFilterServiceImpl implements ProductsFilterService {
 		// 우선 리스트를 하나 하나 꺼내준다.
 		for(Accom accom2 : cgProductLists) {
 			//user_id가 살아잇는지 확인.
-			System.out.println("주소기반 유저아이디 나와야됨 3 -> "+user_id);
+			//System.out.println("주소기반 유저아이디 나와야됨 3 -> "+user_id);
+			 int price = Integer.parseInt(accom2.getMin_price_r2());
+			 // 값을 뽑아와서 인트로 바꾼 후 포멧팅 메소드로 변환 후에 다시 세팅을 해준다. 
+		     String formattedPrice = formatPrice(price);
+		     accom2.setMin_price_r2(formattedPrice);
 			
 			// 이미지 사진도 꺼내줌
 			for(Room_Img room_Img : cgGetRoomImg) {
@@ -123,17 +147,21 @@ public class ProductsFilterServiceImpl implements ProductsFilterService {
 	
 		@Override
 		public List<ChanJoin> cgGetAjaxProductListsByAccomtypeAndAddr(ChanJoin chanJoin) {
-			System.out.println("서비스 cgProductList 시작");
+			//System.out.println("서비스 cgProductList 시작");
 			String user_id = chanJoin.getUser_id();
-			System.out.println("user_id 잘 가져왓나 확인용 -> "+user_id);
+			//System.out.println("user_id 잘 가져왓나 확인용 -> "+user_id);
 			List<ChanJoin> cgAjaxProductLists = dao.cgGetAjaxProductListsByAccomtypeAndAddr(chanJoin);
 			List<Room_Img> cgAjaxProductImg = dao.cgGetRoom_img();
 			List<Zzim> zzimLists = dao.getZzimLists(user_id);
 			List<ChanJoin> cgAjaxProductListsByAccomtypeAndAddr = new ArrayList<ChanJoin>();
-			System.out.println("user_id 잘 가져왓나 확인용 2-> "+user_id);
+			//System.out.println("user_id 잘 가져왓나 확인용 2-> "+user_id);
 			
 			for(ChanJoin chanJoin2 : cgAjaxProductLists) {
-				System.out.println("user_id 잘 가져왓나 확인용 foreach -> "+user_id);
+				//System.out.println("user_id 잘 가져왓나 확인용 foreach -> "+user_id);
+//				 int price = Integer.parseInt(chanJoin2.getMin_price_r2());
+//				 // 값을 뽑아와서 인트로 바꾼 후 포멧팅 메소드로 변환 후에 다시 세팅을 해준다. 
+//			     String formattedPrice = formatPrice(price);
+//			     chanJoin2.setMin_price_r2(formattedPrice);
 				
 				for(Room_Img room_Img : cgAjaxProductImg) {
 					if(chanJoin2.getBiz_id().equals(room_Img.getBiz_id())) {
@@ -150,7 +178,7 @@ public class ProductsFilterServiceImpl implements ProductsFilterService {
 					}
 				}
 				cgAjaxProductListsByAccomtypeAndAddr.add(chanJoin2);
-				System.out.println("서비스 cgAjaxProductListWithoutHotel 사이즈 2가 나와야됨-> "+cgAjaxProductListsByAccomtypeAndAddr.size());
+				//System.out.println("서비스 cgAjaxProductListWithoutHotel 사이즈 2가 나와야됨-> "+cgAjaxProductListsByAccomtypeAndAddr.size());
 			}
 			
 			return cgAjaxProductListsByAccomtypeAndAddr;

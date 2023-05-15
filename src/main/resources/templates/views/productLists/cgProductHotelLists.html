@@ -19,8 +19,8 @@
 			<div class = "cgSelectAccom_type">
 				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="motelBtn" onclick="location.href='/cgProductLists?accom-type=520'">모텔</button>
 				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="hotelBtn" onclick="location.href='/cgProductLists?accom-type=511,513,514,515'">호텔</button>
-				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="gehaBtn" onclick="location.href='/cgProductLists?accom-type=530'">게하</button>
 				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="pensionBtn" onclick="location.href='/cgProductLists?accom-type=540'">팬션</button>
+				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="gehaBtn" onclick="location.href='/cgProductLists?accom-type=530'">게하</button>
 			<p>
 			</div>
 			<div class = "cgSearchLocationFilter">
@@ -181,9 +181,9 @@
 		</div>
 		<div class="cgList_wrap">
 			<div class="cgTop_sort">
-				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgAjaxProductHotelList(1, \'' + ${user_id} + '\', \'' + ${auth} + '\')'">인기순</button>
-				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgAjaxProductHotelList(2, \'' + ${user_id} + '\', \'' + ${auth} + '\')'">낮은가격순</button>
-				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgAjaxProductHotelList(3, \'' + ${user_id} + '\', \'' + ${auth} + '\')'">높은가격순</button>
+				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort"  th:attr="onclick='cgAjaxProductHotelList(1, \'' + ${user_id} + '\', \'' + ${auth} + '\')'">인기순</button>
+				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort"  th:attr="onclick='cgAjaxProductHotelList(2, \'' + ${user_id} + '\', \'' + ${auth} + '\')'">낮은가격순</button>
+				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort"  th:attr="onclick='cgAjaxProductHotelList(3, \'' + ${user_id} + '\', \'' + ${auth} + '\')'">높은가격순</button>
 			</div>
 			<div class = "listEmpty">
 				<img alt="" src="/img/penguin_oops.png">
@@ -191,11 +191,11 @@
 				<h5><label class ="emptyNotice">지역을 변경하거나 일정, 상세조건을 재설정해 보세요.</label></h5>
 			</div>
 			<div class = "cgProduct_lists_area" th:with="user_id=${user_id}, auth=${auth}">
-				<div class="cgProduct_list_area" id = "cgProduct_list_area" th:each="product : ${products}">
+				<div class="cgProduct_list_area" id = "cgProduct_list_area" th:each="product, status : ${products}">
 					<a id="a_cgProduct_list_area" th:href="@{'/accomDetail?biz_id=' + ${product.biz_id} + '&checkIn=&checkOut='}">
 					 <div class = "cgProduct_list_img">
 						<ul>
-						  <li><img class= "thumbnail_img" th:src="@{/img/{r_img}(r_img=${product.r_img})}"></li>
+						  <li><img class= "thumbnail_img" th:src="@{${product.r_img}}" onerror="this.onerror=null; this.src='/img/imageLoading.jpg'"></li>
 						</ul>
 					</div>
 					<div class="cgProduct_list_contents">
@@ -214,17 +214,17 @@
 					</a>
 					 <div class ="zzimButtons">
 						 <div th:if ="${product.zzim_status == null}" >						
-						 	<img id="zzimBtn" src="/img/dislike.png" th:attr="onclick='cgAjaxInsertZzim(\'' + ${product.biz_id} + '\',\'' + ${user_id} + '\',\'' + ${auth} + '\')'">
-						 </div>
-						 <div th:if = "${product.zzim_status == 'Y'}">						
-						  	<img id="zzimBtn" src="/img/like.png" th:attr="onclick='cgAjaxDeleteZzim(\'' + ${product.biz_id} + '\',\'' + ${user_id} + '\',\'' + ${auth} + '\')'">
+							<img th:id="'zzimBtnInsert'+${status.index}" src="/img/dislike.png" th:attr="onclick='cgAjaxInsertZzim(\'' + ${product.biz_id} + '\',\'' + ${user_id} + '\',\'' + ${auth} + '\',' + ${status.index} + ')'" />
+						 	</div>
+						 <div th:if = "${product.zzim_status == 'Y'}">					
+							<img th:id="'zzimBtnDelete'+${status.index}" src="/img/like.png" th:attr="onclick='cgAjaxDeleteZzim(\'' + ${product.biz_id} + '\',\'' + ${user_id} + '\',\'' + ${auth} + '\',' + ${status.index} + ')'" />
 						 </div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-<script src="/js/lcg/cgProductHotelLists.js" type="text/javascript"></script> 
+<script src="/js/lcg/cgProductHotelLists.js" type="text/javascript"></script>  
 </body>
 <th:block th:replace="fragments/footer :: footerFragment"></th:block>
 </html>

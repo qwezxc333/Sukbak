@@ -1,15 +1,14 @@
-// 찜버튼 로직
-function cgAjaxInsertZzim(biz_id, user_id, auth){
-	alert("찜버튼 시작");
-	alert("biz_id -> "+biz_id);
-	alert("user_id-> "+user_id);
-	alert("auth-> "+auth);
+//찜버튼 로직
+function cgAjaxInsertZzim(biz_id, user_id, auth, index){
+	//alert("찜버튼 시작");
+	//alert("index -> "+index);
+	//alert("user_id-> "+user_id);
+	//alert("auth-> "+auth);
 	// seller나 admin 찜 못하게 
 	if(auth == "[SELLER]" || auth == "[ADMIN]"){
 		alert("user 회원만 이용 가능합니다.");
 		return false;
 	}
-	
 	// 로그인을 하지 않았거나, user권한인지 판단하기 위함.
 	if(user_id == null || user_id == "" || auth != "[USER]"){
 		alert("로그인이 필요한 서비스 입니다.")
@@ -27,19 +26,27 @@ function cgAjaxInsertZzim(biz_id, user_id, auth){
 		success : function(zzim){
 			if(zzim == 1){
 				alert("찜목록에 추가하였습니다.");
+				//location.reload();
 			}else{
 				alert("찜목록 등록 실패");
 			}
 		}
 	})
-}
+	var zzimBtnInsertImg = $("#zzimBtnInsert" + index);
 
+	// 이미지 경로를 변경합니다.
+	zzimBtnInsertImg.attr("src", "/img/like.png");
+    
+   
+	
+	
+}
 // 찜 삭제 로직
-function cgAjaxDeleteZzim(biz_id, user_id, auth){
-	alert("찜삭제 시작");
-	alert("biz_id -> "+biz_id);
-	alert("user_id-> "+user_id);
-	alert("auth-> "+auth);
+function cgAjaxDeleteZzim(biz_id, user_id, auth, index){
+	//alert("찜삭제 시작");
+	//alert("index -> "+index);
+	//alert("user_id-> "+user_id);
+	//alert("auth-> "+auth);
 	
 	// insert 하는 ajax
 	$.ajax({
@@ -58,6 +65,11 @@ function cgAjaxDeleteZzim(biz_id, user_id, auth){
 			}
 		}
 	})
+	
+	var zzimBtnDeleteImg = $("#zzimBtnDelete" + index);
+
+	// 이미지 경로를 변경합니다.
+	zzimBtnDeleteImg.attr("src", "/img/dislike.png");
 	
 }
 
@@ -134,9 +146,9 @@ var maxPrice = ($("#priceSlider").val()*10000);
 if(maxPrice == 1000000){
 	maxPrice = 9999999999;
 }
-alert("maxPrice-> "+maxPrice);
-alert("user_id-> "+user_id);
-alert("auth-> "+auth);
+//alert("maxPrice-> "+maxPrice);
+//alert("user_id-> "+user_id);
+//alert("auth-> "+auth);
 // 체크아웃이 없을 때 유효성 검사
 if(checkIn != '' && !checkOut){
 	alert("체크아웃 날짜를 선택해주세요");
@@ -213,6 +225,10 @@ if ($("#tv").prop("checked")) {
 }; 
 
 var str = "";
+//가격 포맷팅
+function formatPrice(price){
+	return price.toLocaleString('ko-KR');
+}
 
 // 버튼 클릭 시 ajax 호출
 $.ajax({
@@ -241,7 +257,7 @@ $.ajax({
 	dataType : 'json',
 	success : function(productSort) {
 		
-		$(productSort).each(function() {
+		$(productSort).each(function(index) {
 	     if (!checkIn || !checkOut) {
                 var diffDays = 1;
             } else {
@@ -253,50 +269,56 @@ $.ajax({
                 var diffDays = Math.ceil(diffTime /  (1000 * 60 * 60 * 24));
             }
             var totalPrice = this.min_price_r2 * diffDays;
-            
-            str += "<div class='cgProduct_list_area'>";
-            str += "<a href='/accomDetail?biz_id=" + this.biz_id + "&checkIn="+checkIn+"&checkOut="+checkOut+"'>";
-            str += "<div class='cgProduct_list_img'>";
-            str += "<ul>";
-            str += "<li><img class='thumbnail_img' src='/img/" + this.r_img + "'></li>";
-            str += "</ul>";
-            str += "</div>";
-            str += "<div class='cgProduct_list_contents'>";
-            str += "<ul>";
-            str += "<li id='productTitle'>" + this.biz_name + "</li>";
-            str += "<li>";
-            for (var i = 0; i < this.avg_rating; i++) {
-            	str += "<i><img src='/img/cgStar.png' style='width:15px;height:15px;margin-right:5px;'></i>";
-            }
-            str += "<span id='productRating'>" + this.avg_rating + "/5</span>";
-            str += "</li>";
-            str += "<li id='productPrice'>" + totalPrice + "원</li>";
-            str += "<li id='productAddr'>" + this.addr + "</li>";
-            str += "</ul>";
-            str += "</div>";
-            str += "</a>";
-            if (this.zzim_status == null) {
-                str += "<div class='zzimButtons'>";
-                str += "<div>";
-                str += "<img id='zzimBtn' src='/img/dislike.png' onclick='cgAjaxInsertZzim(\"" + this.biz_id + "\", \"" + user_id + "\", \"" + auth + "\")'>";
-                str += "</div>";
-                str += "</div>";
-            } else if (this.zzim_status == 'Y') {
-                str += "<div class='zzimButtons'>";
-                str += "<div>";
-                str += "<img id='zzimBtn' src='/img/like.png' onclick='cgAjaxDeleteZzim(\"" + this.biz_id + "\", \"" + user_id + "\", \"" + auth + "\")'>";
-                str += "</div>";
-                str += "</div>";
-            }
-            str += "</div>";
-
+            // 날짜변경해서 숙박 가격이 오른상태에서도 똑같이 필터링이 되게 하기.
+		    if(maxPrice >= totalPrice){
+		    	var formattedPrice = formatPrice(totalPrice);
+	            str += "<div class='cgProduct_list_area'>";
+	            str += "<a href='/accomDetail?biz_id=" + this.biz_id + "&checkIn="+checkIn+"&checkOut="+checkOut+"'>";
+	            str += "<div class='cgProduct_list_img'>";
+	            str += "<ul>";
+	            str += "<li><img class='thumbnail_img' src='" + this.r_img + "'></li>";
+	            str += "</ul>";
+	            str += "</div>";
+	            str += "<div class='cgProduct_list_contents'>";
+	            str += "<ul>";
+	            str += "<li id='productTitle'>" + this.biz_name + "</li>";
+	            str += "<li>";
+	            for (var i = 0; i < this.avg_rating; i++) {
+	            	str += "<i><img src='/img/cgStar.png' style='width:15px;height:15px;margin-right:5px;'></i>";
+	            }
+	            str += "<span id='productRating'>" + this.avg_rating + "/5</span>";
+	            str += "</li>";
+	            str += "<li id='productPrice'>" + formattedPrice + "원</li>";
+	            str += "<li id='productAddr'>" + this.addr + "</li>";
+	            str += "</ul>";
+	            str += "</div>";
+	            str += "</a>";
+	            if (this.zzim_status == null) {
+	                str += "<div class='zzimButtons'>";
+	                str += "<div>";
+	                str += "<img id='zzimBtnInsert" + index + "' src='/img/dislike.png' onclick='cgAjaxInsertZzim(\"" + this.biz_id + "\", \"" + user_id + "\", \"" + auth + "\", \"" + index + "\")'>";
+	                str += "</div>";
+	                str += "</div>";
+	            } else if (this.zzim_status == 'Y') {
+	                str += "<div class='zzimButtons'>";
+	                str += "<div>";
+	                str += "<img id='zzimBtnDelete" + index + "' src='/img/like.png' onclick='cgAjaxDeleteZzim(\"" + this.biz_id + "\", \"" + user_id + "\", \"" + auth + "\", \"" + index + "\")'>";
+	                str += "</div>";
+	                str += "</div>";
+	            }
+	            str += "</div>";
+		    }
 		})
-		alert('ajax str->' + str)
-		if(productSort == ""){
+		// alert('ajax str->' + str)
+		// 가격 변동 후에 다시 조건을 주었을 때 없다면  str에 축척되지 않으니 str로 비교해야 함.
+		if(str == ""){
+			// 조건이 없다면 행귄이 보여주기
 			$(".listEmpty").show();
-			$(".cgProduct_lists_area").html(str);
+			$(".cgProduct_lists_area").empty();
 		
 		}else{
+			// 조건이 있다면 행귄이 나옴
+			$(".listEmpty").hide();
 			$(".cgProduct_lists_area").html(str);	
 		}
 	}

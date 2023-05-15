@@ -24,7 +24,6 @@
 	
 	// text:텍스트, messageType:대분류, notice_id:제목, 
 	// reset:대분류 다시호출 , redirectpage:noti or qna 페이지 이동
-
     function addButtonMessage(text, messageType, notice_id, reset, redirectPage) {
 		
         const messageDiv = document.createElement('div');
@@ -60,7 +59,7 @@
         		if(redirectPage.page === 'noti'){
 	        		location.href = '/noti?note_id=0&notice_id=' + redirectPage.notice_id;
         		} else if(redirectPage === 'qna') {
-        			location.href = '/commonUser/myQnA';
+        			location.href = '/commonUser/myQna';
         		}
         	}
         }
@@ -136,7 +135,9 @@
  	function getQnaForm() {
  		//아이디 출력
  		const loginUserId = document.getElementById('loginUserId').textContent;
- 		
+ 		const loginUserAuth = document.getElementById('loginUserAuth').textContent;
+ 		console.log(loginUserId);
+ 		console.log(loginUserAuth);
  		const form = document.createElement('form');
  		
  		const labelTitle = document.createElement('label');  // 제목 레이블 생성
@@ -189,6 +190,7 @@
  		inputTitle.addEventListener('input', updateBtn);
 		inputContent.addEventListener('input', updateBtn);
  		
+ 		//제목,내용 입력안할 시 버튼 비활성화
  		function updateBtn() {
  			if (inputTitle.value && inputContent.value) {
  				qnaBtn.classList.remove('isInput');
@@ -213,8 +215,8 @@
  			
  			//로그인 했을때
  			if(loginUserId && loginUserId != "anonymousUser"){
- 				//제목, 내용 둘다 입력 했을때
- 				if(inputTitleValue && inputContentValue){
+ 				//제목, 내용 둘다 입력 하고 USER일때
+ 				if(inputTitleValue && inputContentValue && loginUserAuth === "[USER]"){
 	 				qnaBtn.textContent  = '제출 완료';
 		 			qnaBtn.classList.add('submitted');
 		 			inputTitle.disabled = true;
@@ -222,6 +224,8 @@
 		 			
 		 			//insertQna 호출
 		 			insertQna(inputTitleValue, inputContentValue);
+ 				} else{
+					alert('일반회원만 문의를 남길 수 있습니다.'); 					
  				}
  			}else{
  				alert('로그인 후 이용해 주세요.');

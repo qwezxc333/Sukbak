@@ -1,3 +1,4 @@
+
 function checkLength(index) {
 	  // 텍스트에리어의 값을 읽음
 	  const textarea = $("#del_reason"+index).val();
@@ -13,7 +14,7 @@ function checkLength(index) {
 	}
 
 	function chk(index){
-		// 띄어쓰기까지 없애기
+		// 띄어쓰기까지 없애기 trim()으로 스페이스바 만 눌러도 통과되는걸 방지.
 		var del_reason = $("#del_reason"+index).val().trim();
 		if(del_reason == "" || del_reason == null){
 			alert("내용을 입력해주세요");
@@ -22,6 +23,7 @@ function checkLength(index) {
 		alert("접수되었습니다.");
 		return true;
 	} 
+	
 	
 	function cgGetAjaxSortingReviewLists(biz_id, kind){
 		var kind = kind;
@@ -51,6 +53,7 @@ function checkLength(index) {
 					str += "<div class = 'accomReviewNicknameAndDate'>";
 					str += "<span id='reviewBizName'>" + this.biz_name + "</span><p>";
 					str += "<span>" +this.nickname + "님 | </span>";
+					str += "<span>" +this.del_request_count + "님 | </span>";
 					str += "<span>" +formatDate+"</span>";
 					str += "</div>";
 					str += "<div class = 'accomReviewRoomName'>";
@@ -72,7 +75,7 @@ function checkLength(index) {
 					str += "<div class = 'accomReviewRoomImg'>";
 					$(this.reviewImages).each(function(){
 					    if (this.review_img) { // 이미지가 있을 경우에만 img 태그 추가
-					        str += "<img src = '/img/review/"+this.review_img + "'class='img-thumbnail' onerror='this.style.display='none';'>";
+					        str += "<img src = '"+this.review_img + "'class='img-thumbnail' onerror='this.style.display='none';'>";
 					    }
 					});
 					str += "<div class='ReviewDeleteBtn'>";
@@ -86,6 +89,11 @@ function checkLength(index) {
 					str += "<button type='button' id='modalDoneBtn' class='btn btn-secondary' disabled>삭제접수 완료</button>";
 					}
 					str += "</div>";
+					if (this.del_request == 'R'){
+					str += "<button type='button' id='deleteRefuseBtn' class='btn btn-danger' disabled>삭제요청이 거부되었습니다. 자세한 문의는 고객센터에 연락주세요</button>";
+					}
+					str += "</div>";
+					
 					str += "<div class='modal fade' id='staticBackdrop" + index + "' data-bs-backdrop='static' data-bs-keyboard='false' tabindex='-1' aria-labelledby='staticBackdropLabel' aria-hidden='true'>";
 					str += "<div class='modal-dialog'>";
 					str += "<div class='modal-content'>";
@@ -104,6 +112,7 @@ function checkLength(index) {
 					str += "<input type='hidden' name='pay_id' id= 'pay_id' value='" + this.pay_id + "'>";
 					str += "<input type='hidden' name='biz_id' id= 'biz_id' value='" + this.biz_id + "'>";
 					str += "<input type='hidden' name='del_request' id= 'del_request' value='" + this.del_request + "'>";
+					str += "<input type='hidden' name='kind' id= 'kind' value='" + kind + "'>";
 					str += "</div>";
 					str += "<div class='modal-footer'>";
 					str += "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>닫기</button>";
@@ -118,8 +127,10 @@ function checkLength(index) {
 					str += "</div>";
 					str += "</div>";
 				});
-				alert("ajax str-> "+str);
+				//alert("ajax str-> "+str);
 				$(".accomReviewContainer").html(str);
 			}
 		}) 
 	}
+	
+	
