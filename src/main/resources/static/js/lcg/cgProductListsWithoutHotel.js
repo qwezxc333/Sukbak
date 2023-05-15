@@ -1,4 +1,4 @@
-// 찜버튼 로직
+//찜버튼 로직
 function cgAjaxInsertZzim(biz_id, user_id, auth, index){
 	//alert("찜버튼 시작");
 	//alert("index -> "+index);
@@ -265,50 +265,55 @@ $.ajax({
                 var diffDays = Math.ceil(diffTime /  (1000 * 60 * 60 * 24));
             }
             var totalPrice = this.min_price_r2 * diffDays;
-            
-            str += "<div class='cgProduct_list_area'>";
-            str += "<a href='/accomDetail?biz_id=" + this.biz_id + "&checkIn="+checkIn+"&checkOut="+checkOut+"'>";
-            str += "<div class='cgProduct_list_img'>";
-            str += "<ul>";
-            str += "<li><img class='thumbnail_img' src='" + this.r_img + "'></li>";
-            str += "</ul>";
-            str += "</div>";
-            str += "<div class='cgProduct_list_contents'>";
-            str += "<ul>";
-            str += "<li id='productTitle'>" + this.biz_name + "</li>";
-            str += "<li>";
-            for (var i = 0; i < this.avg_rating; i++) {
-            	str += "<i><img src='/img/cgStar.png' style='width:15px;height:15px;margin-right:5px;'></i>";
-            }
-            str += "<span id='productRating'>" + this.avg_rating + "/5</span>";
-            str += "</li>";
-            str += "<li id='productPrice'>" + totalPrice + "원</li>";
-            str += "<li id='productAddr'>" + this.addr + "</li>";
-            str += "</ul>";
-            str += "</div>";
-            str += "</a>";
-            if (this.zzim_status == null) {
-                str += "<div class='zzimButtons'>";
-                str += "<div>";
-                str += "<img id='zzimBtnInsert" + index + "' src='/img/dislike.png' onclick='cgAjaxInsertZzim(\"" + this.biz_id + "\", \"" + user_id + "\", \"" + auth + "\", \"" + index + "\")'>";
-                str += "</div>";
-                str += "</div>";
-            } else if (this.zzim_status == 'Y') {
-                str += "<div class='zzimButtons'>";
-                str += "<div>";
-                str += "<img id='zzimBtnDelete" + index + "' src='/img/like.png' onclick='cgAjaxDeleteZzim(\"" + this.biz_id + "\", \"" + user_id + "\", \"" + auth + "\", \"" + index + "\")'>";
-                str += "</div>";
-                str += "</div>";
-            }
-            str += "</div>";
-
+            // 날짜변경해서 숙박 가격이 오른상태에서도 똑같이 필터링이 되게 하기.
+		    if(maxPrice >= totalPrice){
+	            str += "<div class='cgProduct_list_area'>";
+	            str += "<a href='/accomDetail?biz_id=" + this.biz_id + "&checkIn="+checkIn+"&checkOut="+checkOut+"'>";
+	            str += "<div class='cgProduct_list_img'>";
+	            str += "<ul>";
+	            str += "<li><img class='thumbnail_img' src='" + this.r_img + "'></li>";
+	            str += "</ul>";
+	            str += "</div>";
+	            str += "<div class='cgProduct_list_contents'>";
+	            str += "<ul>";
+	            str += "<li id='productTitle'>" + this.biz_name + "</li>";
+	            str += "<li>";
+	            for (var i = 0; i < this.avg_rating; i++) {
+	            	str += "<i><img src='/img/cgStar.png' style='width:15px;height:15px;margin-right:5px;'></i>";
+	            }
+	            str += "<span id='productRating'>" + this.avg_rating + "/5</span>";
+	            str += "</li>";
+	            str += "<li id='productPrice'>" + totalPrice + "원</li>";
+	            str += "<li id='productAddr'>" + this.addr + "</li>";
+	            str += "</ul>";
+	            str += "</div>";
+	            str += "</a>";
+	            if (this.zzim_status == null) {
+	                str += "<div class='zzimButtons'>";
+	                str += "<div>";
+	                str += "<img id='zzimBtnInsert" + index + "' src='/img/dislike.png' onclick='cgAjaxInsertZzim(\"" + this.biz_id + "\", \"" + user_id + "\", \"" + auth + "\", \"" + index + "\")'>";
+	                str += "</div>";
+	                str += "</div>";
+	            } else if (this.zzim_status == 'Y') {
+	                str += "<div class='zzimButtons'>";
+	                str += "<div>";
+	                str += "<img id='zzimBtnDelete" + index + "' src='/img/like.png' onclick='cgAjaxDeleteZzim(\"" + this.biz_id + "\", \"" + user_id + "\", \"" + auth + "\", \"" + index + "\")'>";
+	                str += "</div>";
+	                str += "</div>";
+	            }
+	            str += "</div>";
+		    }
 		})
-		//alert('ajax str->' + str)
-		if(productSort == ""){
+		// alert('ajax str->' + str)
+		// 가격 변동 후에 다시 조건을 주었을 때 없다면  str에 축척되지 않으니 str로 비교해야 함.
+		if(str == ""){
+			// 조건이 없다면 행귄이 보여주기
 			$(".listEmpty").show();
-			$(".cgProduct_lists_area").html(str);
+			$(".cgProduct_lists_area").empty();
 		
 		}else{
+			// 조건이 있다면 행귄이 나옴
+			$(".listEmpty").hide();
 			$(".cgProduct_lists_area").html(str);	
 		}
 	}

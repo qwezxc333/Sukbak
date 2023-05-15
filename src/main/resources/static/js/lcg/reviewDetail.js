@@ -1,3 +1,4 @@
+
 function checkLength(index) {
 	  // 텍스트에리어의 값을 읽음
 	  const textarea = $("#del_reason"+index).val();
@@ -52,6 +53,7 @@ function checkLength(index) {
 					str += "<div class = 'accomReviewNicknameAndDate'>";
 					str += "<span id='reviewBizName'>" + this.biz_name + "</span><p>";
 					str += "<span>" +this.nickname + "님 | </span>";
+					str += "<span>" +this.del_request_count + "님 | </span>";
 					str += "<span>" +formatDate+"</span>";
 					str += "</div>";
 					str += "<div class = 'accomReviewRoomName'>";
@@ -87,6 +89,11 @@ function checkLength(index) {
 					str += "<button type='button' id='modalDoneBtn' class='btn btn-secondary' disabled>삭제접수 완료</button>";
 					}
 					str += "</div>";
+					if (this.del_request == 'R'){
+					str += "<button type='button' id='deleteRefuseBtn' class='btn btn-danger' disabled>삭제요청이 거부되었습니다. 자세한 문의는 고객센터에 연락주세요</button>";
+					}
+					str += "</div>";
+					
 					str += "<div class='modal fade' id='staticBackdrop" + index + "' data-bs-backdrop='static' data-bs-keyboard='false' tabindex='-1' aria-labelledby='staticBackdropLabel' aria-hidden='true'>";
 					str += "<div class='modal-dialog'>";
 					str += "<div class='modal-content'>";
@@ -125,3 +132,5 @@ function checkLength(index) {
 			}
 		}) 
 	}
+	
+	

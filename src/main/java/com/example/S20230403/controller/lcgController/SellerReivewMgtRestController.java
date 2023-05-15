@@ -20,8 +20,8 @@ public class SellerReivewMgtRestController {
 	// biz_id와 kind(높은평점순 낮은평점순 인기순 구분자)를 파라미터로 사용해서 sorting해주는 로직
 	@GetMapping("/cgGetAjaxSortingReviewLists")
 	public List<Review> cgGetAjaxSortingReviewLists(Review review){
-		System.out.println("/cgGetAjaxSortingReviewLists kind-> "+review.getKind());
-		System.out.println("/cgGetAjaxSortingReviewLists kind-> "+review.getBiz_id());
+		//System.out.println("/cgGetAjaxSortingReviewLists kind-> "+review.getKind());
+		//System.out.println("/cgGetAjaxSortingReviewLists kind-> "+review.getBiz_id());
 		// kind가 잘 들어오는지 확인용.
 //		if(1 == review.getKind()) {
 //			System.out.println("최신순");

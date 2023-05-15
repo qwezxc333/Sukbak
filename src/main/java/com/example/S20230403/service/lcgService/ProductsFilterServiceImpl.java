@@ -123,9 +123,9 @@ public class ProductsFilterServiceImpl implements ProductsFilterService {
 	
 		@Override
 		public List<ChanJoin> cgGetAjaxProductListsByAccomtypeAndAddr(ChanJoin chanJoin) {
-			System.out.println("서비스 cgProductList 시작");
+			//System.out.println("서비스 cgProductList 시작");
 			String user_id = chanJoin.getUser_id();
-			System.out.println("user_id 잘 가져왓나 확인용 -> "+user_id);
+			//System.out.println("user_id 잘 가져왓나 확인용 -> "+user_id);
 			List<ChanJoin> cgAjaxProductLists = dao.cgGetAjaxProductListsByAccomtypeAndAddr(chanJoin);
 			List<Room_Img> cgAjaxProductImg = dao.cgGetRoom_img();
 			List<Zzim> zzimLists = dao.getZzimLists(user_id);
@@ -133,7 +133,7 @@ public class ProductsFilterServiceImpl implements ProductsFilterService {
 			//System.out.println("user_id 잘 가져왓나 확인용 2-> "+user_id);
 			
 			for(ChanJoin chanJoin2 : cgAjaxProductLists) {
-				System.out.println("user_id 잘 가져왓나 확인용 foreach -> "+user_id);
+				//System.out.println("user_id 잘 가져왓나 확인용 foreach -> "+user_id);
 				
 				for(Room_Img room_Img : cgAjaxProductImg) {
 					if(chanJoin2.getBiz_id().equals(room_Img.getBiz_id())) {
@@ -150,7 +150,7 @@ public class ProductsFilterServiceImpl implements ProductsFilterService {
 					}
 				}
 				cgAjaxProductListsByAccomtypeAndAddr.add(chanJoin2);
-				System.out.println("서비스 cgAjaxProductListWithoutHotel 사이즈 2가 나와야됨-> "+cgAjaxProductListsByAccomtypeAndAddr.size());
+				//System.out.println("서비스 cgAjaxProductListWithoutHotel 사이즈 2가 나와야됨-> "+cgAjaxProductListsByAccomtypeAndAddr.size());
 			}
 			
 			return cgAjaxProductListsByAccomtypeAndAddr;
