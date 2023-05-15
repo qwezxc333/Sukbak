@@ -30,6 +30,11 @@ public class MypageServiceImpl implements MypageService {
 		Users myProfileInfo = mypageDao.getMyProfileInfo(user_id);
 		return myProfileInfo;
 	}
+	
+	@Override
+	public int existingNick(String newNickname) {
+		return mypageDao.existingNick(newNickname);
+	}
 
 	@Override
 	public int updateMyProfile(Users users) {

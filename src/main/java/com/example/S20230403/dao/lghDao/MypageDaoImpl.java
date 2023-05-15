@@ -34,6 +34,18 @@ public class MypageDaoImpl implements MypageDao {
 		}
 		return myProfileInfo;
 	}
+	
+	@Override
+	public int existingNick(String newNickname) {
+		//System.out.println("MypageDAO existingNick start...");
+		int existingNick = 0;
+		try {
+			existingNick = session.selectOne("existingNickCount", newNickname);
+		} catch (Exception e) {
+			//System.out.println("MypageDAO existingNick Exception-> " + e.getMessage());
+		}
+		return existingNick;
+	}
 
 	@Override
 	public int updateMyProfile(Users users) {

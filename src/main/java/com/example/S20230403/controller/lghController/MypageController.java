@@ -61,6 +61,14 @@ public class MypageController {
 
 		return "/views/mypage/myProfile";
 	}
+	
+	// 중복 닉네임 체크
+	@PostMapping("/checkDupNick")
+	@ResponseBody
+	public int checkDupNick(@AuthenticationPrincipal PrincipalDetail userDetail,
+			@RequestParam("newNickname") String newNickname) {
+		return mypageService.existingNick(newNickname);
+	}
 
 	// 내 프로필 수정(프로세스)
 	@PostMapping("/commonUser/updateMyProfile")

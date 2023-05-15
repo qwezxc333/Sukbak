@@ -14,6 +14,7 @@ public interface MypageService {
 
 			// 프로필 관련
 			Users 				getMyProfileInfo(String user_id);
+			int 				existingNick(String newNickname);
 			int		 			updateMyProfile(Users users);
 			int 				updatePassword(Users users);
 
