@@ -58,6 +58,35 @@
 	
 </style>
 <script type="text/javascript">
+	function checkDupNick() {
+		var newNickname = $('#newNickname').val();
+		
+		$.ajax({
+			type:	'POST',
+			url:	'/checkDupNick',
+			data: {
+				newNickname: newNickname
+			},
+			success: function(response) {
+				if (response === 0) {
+					$('#dupNickChkResult').removeClass("alert-danger")
+						.addClass("alert-success")
+						.css("display", "block")
+						.text('사용 가능한 닉네임입니다.');
+				} else {
+					$('#dupNickChkResult').removeClass("alert-success")
+						.addClass("alert-danger")
+						.css("display", "block")
+						.text('이미 사용중인 닉네임입니다.');
+				}
+			},
+			error: function (request, status, error) {
+				console.log('AJAX Error: ' + error);
+			}
+		});
+		
+	}
+	
 	function savePopUp() {
 		alert("변경사항이 저장되었습니다.");
 	}
@@ -94,8 +123,9 @@
 	               </tr>
 	               <tr>
 	                  <th>닉네임*</th>
-	                  <td><input type="text" name="nickname" required="required"
-	                     th:value="${myProfileInfo.nickname}"></td>
+	                  <td><input type="text" name="nickname" required="required" id="newNickname"
+	                     th:value="${myProfileInfo.nickname}" onkeyup="checkDupNick()"></td>
+	                  <span id="dupNickChkResult" class="alert alert-danger" style="display: none"></span>
 	               </tr>
 	               <tr>
 	                  <th>통신사*</th>

@@ -12,6 +12,13 @@
 		WHERE		user_id = #{user_id}
 	</select>
 	
+	<!-- 중복 닉네임 체크 -->
+	<select id="existingNickCount" parameterType="String" resultType="int">
+		SELECT	Count(*)
+		FROM		Users
+		WHERE		nickname = #{nickname}
+	</select>
+	
 	<!-- 내 프로필 수정하기(update) -->
 	<update id="updateMyProfile"  parameterType="Users">
 		UPDATE	Users

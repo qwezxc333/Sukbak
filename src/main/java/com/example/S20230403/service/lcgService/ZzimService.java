@@ -13,6 +13,9 @@ public interface ZzimService {
 	
 	// 찜 리스트 가져오기 
 	List<Accom> getMyAccomZzimListsByUser_id(String user_id);
+	
+	
+	List<Accom> getAjaxMyAccomZzimListsByUser_id(String user_id);
 
 
 }

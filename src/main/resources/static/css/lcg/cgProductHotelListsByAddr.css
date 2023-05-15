@@ -272,11 +272,20 @@ a:hover{
 }
 
 .listEmpty{
-	display: none;
 	text-align: center;
 	color: #00B7F7;
 }
 .listEmpty img{
+	width: 300px;
+	height: 300px;
+	margin-bottom: 50px;
+}
+.ajaxListEmpty{
+	display:none;
+	text-align: center;
+	color: #00B7F7;
+}
+.ajaxListEmpty img{
 	width: 300px;
 	height: 300px;
 	margin-bottom: 50px;

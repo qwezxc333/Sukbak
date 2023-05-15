@@ -18,8 +18,8 @@
 			<div class = "cgSelectAccom_type">
 				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="motelBtn" onclick="location.href='/cgProductLists?accom-type=520'">모텔</button>
 				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="hotelBtn" onclick="location.href='/cgProductLists?accom-type=511,513,514,515'">호텔</button>
-				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="gehaBtn" onclick="location.href='/cgProductLists?accom-type=530'">게하</button>
 				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="pensionBtn" onclick="location.href='/cgProductLists?accom-type=540'">팬션</button>
+				<button type="button" class="btn btn-outline-primary" id= "directoryBtn" name="gehaBtn" onclick="location.href='/cgProductLists?accom-type=530'">게하</button>
 			<p>
 			</div>
 			<div class = "cgSearchLocationFilter">
@@ -163,7 +163,12 @@
 				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgAjaxProductListsWithoutHotelByAddr(\'' + ${accom} + '\', 2, \'' + ${addr} + '\', \'' + ${user_id} + '\', \'' + ${auth} + '\')'">낮은가격순</button>
 				<button type="button" class="btn btn-primary" name="btn_sort" id="btn_sort" th:attr="onclick='cgAjaxProductListsWithoutHotelByAddr(\'' + ${accom} + '\', 3, \'' + ${addr} + '\', \'' + ${user_id} + '\', \'' + ${auth} + '\')'">높은가격순</button>
 			</div>
-			<div class = "listEmpty">
+			<div class = "listEmpty" th:if="${products.size()==0}">
+				<img alt="" src="/img/penguin_oops.png">
+				<h4><label class ="emptyNotice">현재 조건에 맞는 숙소가 없습니다</label></h4>
+				<h5><label class ="emptyNotice">지역을 변경하거나 일정, 상세조건을 재설정해 보세요.</label></h5>
+			</div>
+			<div class = "ajaxListEmpty">
 				<img alt="" src="/img/penguin_oops.png">
 				<h4><label class ="emptyNotice">현재 조건에 맞는 숙소가 없습니다</label></h4>
 				<h5><label class ="emptyNotice">지역을 변경하거나 일정, 상세조건을 재설정해 보세요.</label></h5>

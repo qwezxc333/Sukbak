@@ -18,7 +18,7 @@
 				<a class="list-group-item list-group-item-action"
 					id="list-user-list" data-bs-toggle="list"
 					role="tab" aria-controls="list-user"
-					th:onclick="|location.href='@{/admin/adminPage}'|">일반회원 </a> 
+					th:onclick="|location.href='@{/admin/adminPage-userlist}'|">일반회원 </a> 
 				
 				<!-- 사업자 회원 관리탭 -->
 				<a class="list-group-item list-group-item-action"
@@ -104,7 +104,7 @@
 								</td>
 
 					           <td>
-									<form action="/admin/delQnA" method="post">
+									<form action="/admin/delQnAInRe" method="post">
 									    <input type="hidden" name="qna_id" th:value="${qna.qna_id}">
 									    <button type="submit" id="deleteBtn" style="width: 100px;">질문삭제</button>
 									</form>
