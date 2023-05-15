@@ -123,5 +123,8 @@
 		background-color: #87cefa;
 	}
 	
+	.list-group-item:hover {
+		cursor: pointer;
+	}
 	
 	
