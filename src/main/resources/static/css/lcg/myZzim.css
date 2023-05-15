@@ -1,6 +1,6 @@
 .container{
 	margin: auto;
-	width: 80%;
+	width: 95%;
 	
 	
 }
@@ -148,7 +148,19 @@ hr{
 		display: inline-block;
 		float: right;
 	}
-
+	.listEmpty{
+		/* display: none; */
+		text-align: center;
+		color: #00B7F7;
+	}
+	.listEmpty img{
+		width: 300px;
+		height: 300px;
+		margin-bottom: 50px;
+	}
+	.emptyNotice{
+		font-weight: bold;
+	}
 	
 	@media(max-width: 992px){
 		.container {

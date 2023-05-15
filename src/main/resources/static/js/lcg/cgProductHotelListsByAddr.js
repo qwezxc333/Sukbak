@@ -237,6 +237,11 @@ function cgAjaxProductHotelList(addr, kind, user_id, auth){
 	
 	var str = "";
 	
+	//가격 포맷팅
+	function formatPrice(price){
+		return price.toLocaleString('ko-KR');
+	}
+	
 	// 버튼 클릭 시 ajax 호출
 	$.ajax({
 		url : "/cgAjaxProductList",
@@ -278,6 +283,7 @@ function cgAjaxProductHotelList(addr, kind, user_id, auth){
 		     var totalPrice = this.min_price_r2 * diffDays;
 		 	 // 날짜변경해서 숙박 가격이 오른상태에서도 똑같이 필터링이 되게 하기.
 		     if(maxPrice >= totalPrice){
+		     	var formattedPrice = formatPrice(totalPrice);
 	            str += "<div class='cgProduct_list_area'>";
 	            str += "<a href='/accomDetail?biz_id=" + this.biz_id + "&checkIn="+checkIn+"&checkOut="+checkOut+"'>";
 	            str += "<div class='cgProduct_list_img'>";
@@ -294,7 +300,7 @@ function cgAjaxProductHotelList(addr, kind, user_id, auth){
 	            }
 	            str += "<span id='productRating'>" + this.avg_rating + "/5</span>";
 	            str += "</li>";
-	            str += "<li id='productPrice'>" + totalPrice + "원</li>";
+	            str += "<li id='productPrice'>" + formattedPrice + "원</li>";
 	            str += "<li id='productAddr'>" + this.addr + "</li>";
 	            str += "</ul>";
 	            str += "</div>";
@@ -319,12 +325,13 @@ function cgAjaxProductHotelList(addr, kind, user_id, auth){
 			// 가격 변동 후에 다시 조건을 주었을 때 없다면  str에 축척되지 않으니 str로 비교해야 함.
 			if(str == ""){
 				// 조건이 없다면 행귄이 보여주기
-				$(".listEmpty").show();
+				$(".ajaxListEmpty").show();
+				$(".listEmpty").hide();
 				$(".cgProduct_lists_area").empty();
 			
 			}else{
 				// 조건이 있다면 행귄이 나옴
-				$(".listEmpty").hide();
+				$(".ajaxListEmpty").hide();
 				$(".cgProduct_lists_area").html(str);	
 			}
 			

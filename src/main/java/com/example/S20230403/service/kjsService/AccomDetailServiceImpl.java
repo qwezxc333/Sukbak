@@ -110,7 +110,7 @@ public class AccomDetailServiceImpl implements AccomDetailService {
 	        review.setReviewImages(reviewImagesForCurrentReview);
 	    }
 		
-		System.out.println("reviewImages->"+reviewImages);
+		//System.out.println("reviewImages->"+reviewImages);
 		return accomReview;
 		
 	}

@@ -225,6 +225,10 @@ if ($("#tv").prop("checked")) {
 }; 
 
 var str = "";
+//가격 포맷팅
+function formatPrice(price){
+	return price.toLocaleString('ko-KR');
+}
 
 // 버튼 클릭 시 ajax 호출
 $.ajax({
@@ -267,6 +271,7 @@ $.ajax({
             var totalPrice = this.min_price_r2 * diffDays;
             // 날짜변경해서 숙박 가격이 오른상태에서도 똑같이 필터링이 되게 하기.
 		    if(maxPrice >= totalPrice){
+		    	var formattedPrice = formatPrice(totalPrice);
 	            str += "<div class='cgProduct_list_area'>";
 	            str += "<a href='/accomDetail?biz_id=" + this.biz_id + "&checkIn="+checkIn+"&checkOut="+checkOut+"'>";
 	            str += "<div class='cgProduct_list_img'>";
@@ -283,7 +288,7 @@ $.ajax({
 	            }
 	            str += "<span id='productRating'>" + this.avg_rating + "/5</span>";
 	            str += "</li>";
-	            str += "<li id='productPrice'>" + totalPrice + "원</li>";
+	            str += "<li id='productPrice'>" + formattedPrice + "원</li>";
 	            str += "<li id='productAddr'>" + this.addr + "</li>";
 	            str += "</ul>";
 	            str += "</div>";
