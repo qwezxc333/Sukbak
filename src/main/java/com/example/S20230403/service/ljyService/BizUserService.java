@@ -42,7 +42,7 @@ public class BizUserService implements SukbakService{
 	public List<Accom> accomList(String user_id) {
 		//log.info("비즈서비스01 accomList 시작...");
 		List<Accom> accomList =  sd01.accomList(user_id);
-		System.out.println("accomList -> "+accomList.toString());
+		//System.out.println("accomList -> "+accomList.toString());
 		return accomList;
 	}
 
@@ -112,9 +112,9 @@ public class BizUserService implements SukbakService{
 		Room room = ownerRoom.toRoom();
 		//방번호 추출하기
 		Integer maxR_id = sd01.roomIdExtract(room);
-		System.out.println("비즈서비스01 roomInsert maxR_id -> "+maxR_id);
+		//System.out.println("비즈서비스01 roomInsert maxR_id -> "+maxR_id);
 		maxR_id +=1;
-		System.out.println("비즈서비스01 roomInsert maxR_id += 1 -> "+maxR_id);
+		//System.out.println("비즈서비스01 roomInsert maxR_id += 1 -> "+maxR_id);
 		room.setR_id(maxR_id);
 		sd01.roomInsert(room);
 		return maxR_id;
@@ -125,7 +125,7 @@ public class BizUserService implements SukbakService{
 	public int getImgNum(Room room) {
 		//log.info("비즈서비스01 getImgNum 시작...");
 		int imgNum = sd01.getImgNum(room);
-		System.out.println("비즈서비스01 getImgNum imgNum -> "+imgNum);
+		//System.out.println("비즈서비스01 getImgNum imgNum -> "+imgNum);
 		return imgNum;
 	}
 
