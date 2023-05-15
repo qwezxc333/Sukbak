@@ -10,7 +10,6 @@
 		flex: 4;
 		height: auto;
 		padding-left: 50px;
-		height: 800px;
 		display: inline-block;
 	}
 	
@@ -206,9 +205,9 @@
 	}
 	
 	#insertButton {
-		position: absolute;
-		left: 50%;
-		transform: translateX(-50%);
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 	
 	#goodsOpened{
