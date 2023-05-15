@@ -23,18 +23,6 @@ public class AdminPageController {
 	
 	private final AdminPageService as;
 	
-//	관리자 페이지 클릭하면 나오는 메인
-	@RequestMapping("/admin/adminPage")
-	public String adminPage(@AuthenticationPrincipal PrincipalDetail userDetail, 
-			Model model, String currentPage, JooJoin jooJoin) {
-		
-		String user_id = userDetail.getUsername();
-		model.addAttribute("user_id",user_id);
-//		System.out.println("로그인 한 관리자 id => "+user_id);
-		
-		return "views/admin/adminPage";
-	  }
-	
 //	관리자 페이지에 일반 회원 테이블 불러오기 & 페이징
   @RequestMapping("/admin/adminPage-userlist")
   public String userlist(@AuthenticationPrincipal PrincipalDetail userDetail, 
@@ -227,6 +215,19 @@ public class AdminPageController {
 		return "forward:/admin/adminPage-qnalist";
 	}
 	
+//	QnA 삭제
+	@RequestMapping(value = "/admin/delQnAInRe")
+	public String delQnAInRe(@AuthenticationPrincipal PrincipalDetail userDetail, 
+			@RequestParam("qna_id") int qna_id, Model model) {
+		
+		String user_id = userDetail.getUsername();
+		model.addAttribute("user_id",user_id);
+		
+//		System.out.println("jjhController AdminPageController delQnA start");
+		int result = as.delQnA(qna_id);
+		return "forward:/admin/adminPage-qnaRelist";
+	}
+	
 //	QnA Reply 삭제
 	@RequestMapping(value = "/admin/delQnARe")
 	public String delQnARe(@AuthenticationPrincipal PrincipalDetail userDetail, 
@@ -310,10 +311,7 @@ public class AdminPageController {
 //		System.out.println("jjhController AdminPageController saveReply start");
 		int insertResult = as.saveReply(jooJoin);
 		
-		if(insertResult > 0) return "forward:/admin/adminPage-qnalist";
-		else {
-			return "redirect:/admin/adminPage-qnaRelist";
-		}
+		return "redirect:/admin/adminPage-qnaRelist";
 	}
 	
 //	일반 회원 검색
