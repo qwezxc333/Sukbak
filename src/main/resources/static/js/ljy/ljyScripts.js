@@ -14,6 +14,10 @@
 	function goBackNonAlert() {
 		window.location.href = "/biz/bizMain";
 		}
+		
+	function goBackRooms() {
+		window.location.href = "/biz/rooms";
+		}
 
 //bizMain Only
 
