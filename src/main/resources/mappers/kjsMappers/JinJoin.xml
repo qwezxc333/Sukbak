@@ -34,6 +34,7 @@
 		) ri ON r.biz_id = ri.biz_id AND r.r_id = ri.r_id
 		WHERE a.biz_id = #{biz_id}
 		AND r.r_avail = '210'
+		ORDER BY r.r_price
 		]]>
 	</select>
 	

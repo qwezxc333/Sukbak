@@ -173,7 +173,7 @@
 					<a id="a_cgProduct_list_area" th:href="@{'/accomDetail?biz_id=' + ${product.biz_id} + '&checkIn=&checkOut='}">
 					 <div class = "cgProduct_list_img">
 						<ul>
-						  <li><img class= "thumbnail_img" th:src="@{${product.r_img}}"></li>
+						  <li><img class= "thumbnail_img" th:src="@{${product.r_img}}" onerror="this.onerror=null; this.src='/img/imageLoading.jpg'"></li>
 						</ul>
 					</div>
 					<div class="cgProduct_list_contents">

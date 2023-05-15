@@ -225,7 +225,7 @@
 		 			//insertQna 호출
 		 			insertQna(inputTitleValue, inputContentValue);
  				} else{
-					alert('유저만 문의를 남길 수 있습니다.'); 					
+					alert('일반회원만 문의를 남길 수 있습니다.'); 					
  				}
  			}else{
  				alert('로그인 후 이용해 주세요.');

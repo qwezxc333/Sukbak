@@ -33,13 +33,13 @@
 	}
 	
 	.no-content p {
-		color: rgb(0, 183, 247);
-		font-weight: bold;
+		color: darkgray;
 		margin: 30px 0;
 	}
 	
 	.no-content a {
-		color: red;
+		color: rgb(0, 183, 247);
+		font-weight: bold;
 	}
 	
 	#myQna {
@@ -101,6 +101,7 @@
 		overflow: hidden;
 		text-overflow: ellipsis; /* 말줄임표 */
 		width: 87%;
+		line-height: 30px;
 	}
 	
 	.qnaListDate, .qnaReListDate {
@@ -187,7 +188,7 @@
 		} 
 		
 		.no-content img {
-			max-width: 55%;
+			max-width: 36%;
 		}
 		
 		.main button.qna, .main button.complaint{
