@@ -45,12 +45,12 @@ public class MypageController {
 	// 내 프로필 화면 조회(View)
 	@RequestMapping("/commonUser/myProfile")
 	public String getMyProfile(@AuthenticationPrincipal PrincipalDetail userDetail, Model model) {
-		System.out.println("MypageController getMyProfile start");
+		//System.out.println("MypageController getMyProfile start");
 		String user_id = userDetail.getUsername();
-		System.out.println("MypageController 프로필 정보 불러오기 user_id-> " + user_id);
+		//System.out.println("MypageController 프로필 정보 불러오기 user_id-> " + user_id);
 		Users myProfileInfo = mypageService.getMyProfileInfo(user_id);
 		// mapper로 가져온 결과 조회
-		System.out.println("MypageController 프로필 정보 myProfileInfo-> " + myProfileInfo);
+		//System.out.println("MypageController 프로필 정보 myProfileInfo-> " + myProfileInfo);
 		model.addAttribute("myProfileInfo", myProfileInfo);
 
 		return "/views/mypage/myProfile";
