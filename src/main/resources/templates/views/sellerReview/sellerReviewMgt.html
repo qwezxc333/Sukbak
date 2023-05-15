@@ -90,6 +90,11 @@
 		      </tr>
 		    </tbody>
   		</table>
+		<div class = "listEmpty" th:if="${myAccoms.size()==0}">
+			<img alt="" src="/img/penguin_oops.png">
+			<h4><label class ="emptyNotice">등록된 업체가 없습니다.</label></h4>
+			<h5><label class ="emptyNotice">업체 등록 후 이용해주세요</label></h5>
+		</div>
   	</div>
  </div>
 </body>

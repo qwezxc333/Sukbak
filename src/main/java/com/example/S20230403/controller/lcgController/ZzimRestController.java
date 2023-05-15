@@ -57,7 +57,7 @@ public class ZzimRestController {
 	@GetMapping("cgAjaxZzimListsByUser_id")
 	public List<Accom> cgAjaxGetZzimListsByUser_id(@RequestParam("user_id") String user_id){
 		
-		List<Accom> cgAjaxZzimListsByUser_id = service.getMyAccomZzimListsByUser_id(user_id);
+		List<Accom> cgAjaxZzimListsByUser_id = service.getAjaxMyAccomZzimListsByUser_id(user_id);
 		
 		return cgAjaxZzimListsByUser_id;
 	}

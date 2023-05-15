@@ -1,7 +1,9 @@
 package com.example.S20230403.service.lcgService;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductsFilterServiceImpl implements ProductsFilterService {
 	private final ProductsFilterDao dao;
+	
+	// 원화로 바꿔주는 메소드 
+	public String formatPrice(int price) {
+		// 한국으로 위치 지정
+	    Locale locale = new Locale("ko", "KR");
+	    // NumberFormat.getCurrencyInstance(locale); 으로 화폐 포멧을 한국으로 변경함.
+	    NumberFormat formattedPrice = NumberFormat.getCurrencyInstance(locale);
+	    // 포멧 한걸 다시 string 타입에 넣어주고 원화 표시를 없앤채로 리턴
+	    String formattedPriceWithoutW = formattedPrice.format(price);
+	    return formattedPriceWithoutW.replace("₩", "");
+	}
 	
 	// 숙소 타입별로 가져오는 로직
 	@Override
@@ -48,6 +61,13 @@ public class ProductsFilterServiceImpl implements ProductsFilterService {
 		for(Accom accom2 : cgProductLists) {
 			//user_id가 살아잇는지 확인.
 			//System.out.println("이중 for문안에서 유저아이디-> "+user_id);
+			
+			
+			 int price = Integer.parseInt(accom2.getMin_price_r2());
+			 // 값을 뽑아와서 인트로 바꾼 후 포멧팅 메소드로 변환 후에 다시 세팅을 해준다. 
+		     String formattedPrice = formatPrice(price);
+		     accom2.setMin_price_r2(formattedPrice);
+			
 			
 			// 이미지 사진도 꺼내줌
 			for(Room_Img room_Img : cgRoom_img) {
@@ -97,6 +117,10 @@ public class ProductsFilterServiceImpl implements ProductsFilterService {
 		for(Accom accom2 : cgProductLists) {
 			//user_id가 살아잇는지 확인.
 			//System.out.println("주소기반 유저아이디 나와야됨 3 -> "+user_id);
+			 int price = Integer.parseInt(accom2.getMin_price_r2());
+			 // 값을 뽑아와서 인트로 바꾼 후 포멧팅 메소드로 변환 후에 다시 세팅을 해준다. 
+		     String formattedPrice = formatPrice(price);
+		     accom2.setMin_price_r2(formattedPrice);
 			
 			// 이미지 사진도 꺼내줌
 			for(Room_Img room_Img : cgGetRoomImg) {
@@ -134,6 +158,10 @@ public class ProductsFilterServiceImpl implements ProductsFilterService {
 			
 			for(ChanJoin chanJoin2 : cgAjaxProductLists) {
 				//System.out.println("user_id 잘 가져왓나 확인용 foreach -> "+user_id);
+//				 int price = Integer.parseInt(chanJoin2.getMin_price_r2());
+//				 // 값을 뽑아와서 인트로 바꾼 후 포멧팅 메소드로 변환 후에 다시 세팅을 해준다. 
+//			     String formattedPrice = formatPrice(price);
+//			     chanJoin2.setMin_price_r2(formattedPrice);
 				
 				for(Room_Img room_Img : cgAjaxProductImg) {
 					if(chanJoin2.getBiz_id().equals(room_Img.getBiz_id())) {
