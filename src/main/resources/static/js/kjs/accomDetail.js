@@ -143,7 +143,7 @@
 						if(item.is_reserved == 1){
 							html += '예약불가' ;
 						} else{
-							html += `예약  ${formatPrice(item.totalRoomPrice)}/ ${nights} 박`;
+							html += `예약  ${formatPrice(item.totalRoomPrice)}/ ${nights}박`;
 						}
 						html += '</button>';
 						html += '</div>';

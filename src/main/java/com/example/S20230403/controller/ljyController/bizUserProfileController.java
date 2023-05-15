@@ -37,12 +37,12 @@ public class bizUserProfileController {
 	// 내 프로필 화면 조회(View)
 	@RequestMapping("/biz/bizProfile")
 	public String getBizProfile(@AuthenticationPrincipal PrincipalDetail userDetail, Model model) {
-		//System.out.println("MypageController getMyProfile start");
+		////System.out.println("MypageController getMyProfile start");
 		String user_id = userDetail.getUsername();
-		//System.out.println("MypageController 프로필 정보 불러오기 user_id-> " + user_id);
+		////System.out.println("MypageController 프로필 정보 불러오기 user_id-> " + user_id);
 		Users myProfileInfo = mypageService.getMyProfileInfo(user_id);
 		// mapper로 가져온 결과 조회
-		//System.out.println("MypageController 프로필 정보 myProfileInfo-> " + myProfileInfo);
+		////System.out.println("MypageController 프로필 정보 myProfileInfo-> " + myProfileInfo);
 		model.addAttribute("myProfileInfo", myProfileInfo);
 		
 		return "/views/biz/bizProfile";
@@ -51,11 +51,11 @@ public class bizUserProfileController {
 	// 내 프로필 수정(프로세스)
 	@PostMapping("/biz/updateMyProfile")
 	public String updateMyProfile(@AuthenticationPrincipal PrincipalDetail userDetail, Users users) {
-		//System.out.println("MypageController updateMyProfile Start...");
+		////System.out.println("MypageController updateMyProfile Start...");
 		users.setUser_id(userDetail.getUsername());
 		int updateMyProfile = mypageService.updateMyProfile(users);
 		// update 성공시 result 1 반환
-		//System.out.println("MypageController updateMyProfile result-> " + updateMyProfile);
+		////System.out.println("MypageController updateMyProfile result-> " + updateMyProfile);
 
 		return "redirect:/biz/bizProfile";
 	}
@@ -63,10 +63,10 @@ public class bizUserProfileController {
 	// 비밀번호 수정(View)
 	@RequestMapping("/biz/bizPwChange")
 	public String getMyPwCheck(@AuthenticationPrincipal PrincipalDetail userDetail, Model model) {
-		//System.out.println("MypageController myPwChange Start...");
+		////System.out.println("MypageController myPwChange Start...");
 		String user_id = userDetail.getUsername();
-		//System.out.println("MypageController myPwChange user_id-> " + user_id);
-		//System.out.println("MypageController myPwChange password-> " + userDetail.getPassword());
+		////System.out.println("MypageController myPwChange user_id-> " + user_id);
+		////System.out.println("MypageController myPwChange password-> " + userDetail.getPassword());
 		Users myPassword = mypageService.getMyProfileInfo(user_id);
 		model.addAttribute("myPassword", myPassword);
 
@@ -80,9 +80,9 @@ public class bizUserProfileController {
 	public String checkPW(@AuthenticationPrincipal PrincipalDetail userDetail,
 						  @RequestParam("inputPwd") String inputPwd) {
 		String password = userDetail.getPassword();
-		//System.out.println("Controller password-> " + password);
+		////System.out.println("Controller password-> " + password);
 		Boolean pwdBool = passwordEncoder.matches(inputPwd, password);
-		//System.out.println("Controller pwdBool-> " + pwdBool);
+		////System.out.println("Controller pwdBool-> " + pwdBool);
 		if (pwdBool)
 			return "1";
 		else
@@ -93,14 +93,14 @@ public class bizUserProfileController {
 	@RequestMapping("/biz/updateMyPassword")
 	public String updatePassword(@AuthenticationPrincipal PrincipalDetail userDetail, Users users,
 								 @RequestParam("newPwd") String newPwd, HttpSession session) {
-		//System.out.println("MypageController updatePassword start...");
-		//System.out.println("newPwdBefore-> " + newPwd);
+		////System.out.println("MypageController updatePassword start...");
+		////System.out.println("newPwdBefore-> " + newPwd);
 		String encodedPwd = new BCryptPasswordEncoder().encode(newPwd);
-		//System.out.println("newPwdAfter-> " + encodedPwd);
+		////System.out.println("newPwdAfter-> " + encodedPwd);
 		users.setPassword(encodedPwd);
 		users.setUser_id(userDetail.getUsername());
 		int updatePwd = mypageService.updatePassword(users);
-		//System.out.println("MypageController updatePassword result-> " + updatePwd);
+		////System.out.println("MypageController updatePassword result-> " + updatePwd);
 		
 		// 보안 정책상 처음 로그인된 ID와 PW 정보로 session이 유지되기때문에 로그아웃 후 업데이트 된 정보로 재로그인 필요.
 		session.invalidate();
@@ -112,7 +112,7 @@ public class bizUserProfileController {
 	// 회원 탈퇴 화면(View)
 	@RequestMapping("/biz/bizWithdraw")
 	public String getWithdrawInfo(@AuthenticationPrincipal PrincipalDetail userDetail, Model model) {
-		//System.out.println("MypageController getWithdrawInfo Start...");
+		////System.out.println("MypageController getWithdrawInfo Start...");
 		String user_id = userDetail.getUsername();
 		Users withdrawInfo = mypageService.getMyProfileInfo(user_id);
 		model.addAttribute("withdrawInfo", withdrawInfo);
@@ -124,7 +124,7 @@ public class bizUserProfileController {
 	@RequestMapping("/biz/updateWithdraw")
 	public String updateBizWithdraw(@AuthenticationPrincipal PrincipalDetail userDetail, Out outData,
 								 Model model, HttpSession session) {
-		System.out.println("MypageController updateWithdraw Start...");
+		//System.out.println("MypageController updateWithdraw Start...");
 		String user_id = userDetail.getUsername();
 		
 		// 탈퇴여부 Update(User 테이블에서 deactivated로 변경)

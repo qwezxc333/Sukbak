@@ -10,7 +10,6 @@
 		flex: 4;
 		height: auto;
 		padding-left: 50px;
-		height: 800px;
 		display: inline-block;
 	}
 	
@@ -20,14 +19,14 @@
 		display: inline-block;
 		float: left; 
 		margin-top: 20px;
-
-	
 	}
 	
 	a {
 		text-decoration: none;
 		color: black;
 	}
+	
+	
 	
 	.responsive-table {
 	  margin:auto;
@@ -206,9 +205,9 @@
 	}
 	
 	#insertButton {
-		position: absolute;
-		left: 50%;
-		transform: translateX(-50%);
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 	
 	#goodsOpened{
@@ -224,5 +223,7 @@
 	#btn btn-light {
 		width: auto;
 	}
+	
+	
 	
 	

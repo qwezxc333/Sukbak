@@ -55,7 +55,7 @@ public class MyQnaRestController {
 	@ResponseBody
 	@RequestMapping("/commonUser/myQnaDelete")
 	public void myQnaDelete(int qna_id) {
-		System.out.println("qna_id--->" + qna_id);
+//		System.out.println("qna_id--->" + qna_id);
 		ms.myQnaDelete(qna_id);
 	}
 	
