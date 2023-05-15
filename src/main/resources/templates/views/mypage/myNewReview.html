@@ -171,6 +171,10 @@
 		}
 	}
 	
+	function chk() {
+		alert("후기가 등록되었습니다.\n후기 관리 페이지로 이동합니다.");
+	}
+	
 	
 </script>
 
@@ -261,7 +265,7 @@
 			        		 
 		       		<div class="newRevButtons">
 		       			<input type="hidden" name="pay_id" th:value="${pay_id}">
-		           		<button type="submit">후기 남기기</button>
+		           		<button type="submit" th:onclick="chk()">후기 남기기</button>
 							<button type="button"  name="backToMyReserved"
 									th:onclick="|location.href='@{/commonUser/myReserved}'|">
 									예약 내역으로 돌아가기</button>

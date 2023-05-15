@@ -101,14 +101,11 @@
 	<!-- =============== 리뷰 =============== -->
 	<!-- 리뷰 작성 페이지에 띄울 ACCOM 정보 가져오기 -->
 	<select id="getMyAccomInfo" parameterType="Room" resultType="GunJoin">
-			SELECT      a.biz_id, a.biz_name, a.addr, ri.r_img_id
-			FROM        Accom a
-			JOIN        Room r  ON  a.biz_id = r.biz_id
-			LEFT JOIN   Room_img ri  
-						ON	  	r.biz_id		= ri.biz_id
-						AND   r.r_id  		= ri.r_id
-			WHERE       	r.biz_id		= #{biz_id}
-			AND         	r.r_id 		= #{r_id}
+			SELECT      a.biz_id, a.biz_name, a.addr
+			FROM        Accom a, Room r
+			WHERE       a.biz_id = r.biz_id	
+			AND       	r.biz_id = #{biz_id}
+			AND         r.r_id   = #{r_id}
 	</select>
 	
 	<!-- Review 테이블에 insert하기(이미지 제외) -->

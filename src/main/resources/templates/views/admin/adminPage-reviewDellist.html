@@ -74,21 +74,22 @@
 						<thead>
 							<tr>
 								<th scope="col">번호</th>
-								<th scope="col">작성 날짜</th>
-								<th scope="col">작성자 ID</th>
-								<th scope="col">내용</th>
+								<th scope="col">삭제 신청 날짜</th>
+								<th scope="col">사업자 ID</th>
+								<th scope="col">리뷰 내용</th>
 								<th scope="col">삭제요청</th>
 							</tr>
 						</thead>
 						<tbody>
 						<!-- listReview를 이용해 리뷰 정보 출력 -->
-							<tr th:each="r : ${reviewDellist}">
+							<tr th:each="r, status : ${reviewDellist}">
 					           <th scope="row" th:text="${r.rn}"></th>
-					           <td th:text="${#dates.format(r.review_date, 'yyyy-MM-dd')}"></td>
-					           <td th:text="${r.user_id}"></td>
+					           <!-- <td th:text="${#dates.format(r.del_date, 'yyyy-MM-dd')}"></td> -->
+					           <td th:text="${r.del_date}"></td>
+					           <td th:text="${r.biz_id}"></td>
 					           <td th:text="${r.review_content}"></td>
 					           <td>
-					           		<button type="button" class="detail" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+					           		<button type="button" class="detail" data-bs-toggle="modal" th:attr="data-bs-target='#staticBackdrop'+${status.index}">
 					           			내용 확인
 					           		</button>
 					           </td>
@@ -97,8 +98,8 @@
 					</table>
 				
 				<!-- Modal -->
-				<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" 
-					 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" th:each="r : ${reviewDellist}">
+				<div class="modal fade" th:id="'staticBackdrop'+${status.index}" data-bs-backdrop="static" data-bs-keyboard="false" 
+					 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" th:each="r, status : ${reviewDellist}">
 				  <div class="modal-dialog modal-lg">
 				    <div class="modal-content">
 				      <div class="modal-header">
