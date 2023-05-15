@@ -2,5 +2,156 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.S20230403.RoomMapper">
-
+	
+	<!-- 재영 -->
+	<select id="roomList" parameterType="String" resultType="Room">
+		select r.*, a.biz_name
+		from accom a, room r
+		where a.biz_id =r.biz_id
+		and   a.user_id = #{user_id}
+		and   a.accom_avail not in(230)
+		and   r.r_avail not in (230)
+		order by a.biz_id asc, r.r_id asc
+	</select>
+	
+	<select id="roomIdExtract" parameterType="String" resultType="java.lang.Integer">
+		select max(r_id)
+		from room
+		where biz_id = #{biz_id}
+	</select>
+	
+	<insert id="roomInsert" parameterType="Room">
+		insert into room (
+			biz_id,
+			r_id,
+			r_name,
+			r_price,
+			r_capacity,
+			r_info,
+			r_count,
+			bath_count,
+			bath,
+			wifi,
+			ac,
+			tv,
+			bed_type
+		) values (
+			#{biz_id},
+			#{r_id},
+			#{r_name},
+			#{r_price},
+			#{r_capacity},
+			#{r_info},
+			#{r_count},
+			#{bath_count},
+			#{bath},
+			#{wifi},
+			#{ac},
+			#{tv},
+			#{bed_type}
+			)	
+	</insert>
+	
+	<select id="getImgNum" parameterType="Room" resultType="java.lang.Integer">
+		select max(r_img_id)
+		from room_img
+		where biz_id = #{biz_id}
+			and r_id = #{r_id}
+	</select>
+	
+	<insert id="roomImgInsert" parameterType="Room">
+		insert into room_img (
+			biz_id,
+			r_id,
+			r_img_id,
+			r_img
+		) values (
+			#{biz_id},
+			#{r_id},
+			#{r_img_id},
+			#{r_img}
+			)	
+	</insert>
+	
+	<select id="selectRoomImgList" parameterType="Room" resultType="Room">
+		select r_img
+		from room_img
+		where biz_id = #{biz_id}
+		    and r_id = #{r_id}
+	</select>
+	
+	<select id="roomSelect" parameterType="Room" resultType="Room">
+		select r.*, a.biz_name
+		from room r
+		inner join accom a on a.biz_id = r.biz_id
+		where r.biz_id = #{biz_id}
+		    and r_id = #{r_id}
+	</select>
+	
+	<delete id="roomImgDelete" parameterType="Room">
+		delete room_img
+		where biz_id = #{biz_id}
+			and r_id = #{r_id}
+	</delete>
+	
+	<update id="roomUpdate" parameterType="Room">
+		update room
+		set r_name = #{r_name}, 
+			r_price = #{r_price}, 
+			r_capacity = #{r_capacity}, 
+			r_info = #{r_info}, 
+			r_count = #{r_count}, 
+			bath_count = #{bath_count},
+			bath = #{bath},
+			wifi = #{wifi},
+			ac = #{ac},
+			tv = #{tv},
+			bed_type = #{bed_type}
+		where biz_id = #{biz_id}
+			and r_id = #{r_id}
+	</update>
+	
+	
+	
+	<update id="roomOpen">
+		update room
+		set r_avail = '210'
+		where biz_id = #{biz_id}
+			and r_id = #{r_id}
+	</update>
+	
+	<update id="roomHidden">
+		update room
+		set r_avail = '220'
+		where biz_id = #{biz_id}
+			and r_id = #{r_id}
+	</update>
+	
+	<update id="roomDelete">
+		update room
+		set r_avail = '230'
+		where biz_id = #{biz_id}
+			and r_id = #{r_id}
+	</update>
+	
+	<select id="roomListSelectWithAccom" parameterType="String" resultType="Room">
+		select r.*, a.biz_name
+		from accom a, room r
+		where a.biz_id =r.biz_id
+		and   r.biz_id = #{biz_id}
+		and   a.accom_avail not in(230)
+		and   r.r_avail not in (230)
+		order by a.biz_id asc, r.r_id asc
+	</select>
+	
+	<select id="selectAccomAllRoomImgList" parameterType="String" resultType="Room">
+		select r_img
+		from room_img
+		where biz_id = #{biz_id}
+	</select>
+	
+	<!-- 윤상 -->
+	<select id="ygetR_pricet" resultType="Room" parameterType="Room">
+		select * from room where biz_id = #{biz_id} and r_id = #{r_id}
+	</select>
 </mapper>

@@ -25,7 +25,7 @@ public class Users {
 
     @NotBlank(groups = {SaveCheck.class}, message = "비밀번호를 입력해주세요")
     @Pattern(groups = {SaveCheck.class}, regexp = "^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]*$", message = "알파벳 대소문자, 숫자, 일부 특수문자(!@#$%^&*()_+-=[]{};':\"|,.<>/?)만 입력 가능합니다.")
-    @Size(groups = {SaveCheck.class}, min = 4, max = 12)
+    @Size(groups = {SaveCheck.class}, min = 8, max = 12)
     private String password;
 
     @NotBlank(groups = {SaveCheck.class, AddInfoCheck.class}, message = "전화번호를 입력해주세요")
