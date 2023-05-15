@@ -3,12 +3,10 @@ package com.example.S20230403.dao.lghDao;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.example.S20230403.model.GunJoin;
 import com.example.S20230403.model.Out;
-import com.example.S20230403.model.Qna;
 import com.example.S20230403.model.Review;
 import com.example.S20230403.model.Review_Img;
 import com.example.S20230403.model.Room;
@@ -24,13 +22,13 @@ public class MypageDaoImpl implements MypageDao {
 
 	@Override
 	public Users getMyProfileInfo(String user_id) {
-		System.out.println("MypageDAO getMyProfileInfo Start...");
+		//System.out.println("MypageDAO getMyProfileInfo Start...");
 		Users myProfileInfo = new Users();
 		try {
 			myProfileInfo = session.selectOne("getMyProfileInfo", user_id);
-			System.out.println("MypageDAO myProfileInfo getNickname-> " + myProfileInfo.getNickname());
+			//System.out.println("MypageDAO myProfileInfo getNickname-> " + myProfileInfo.getNickname());
 		} catch (Exception e) {
-			System.out.println("MypageDAO myProfileInfo Exception-> " + e.getMessage());
+			//System.out.println("MypageDAO myProfileInfo Exception-> " + e.getMessage());
 		}
 		return myProfileInfo;
 	}
