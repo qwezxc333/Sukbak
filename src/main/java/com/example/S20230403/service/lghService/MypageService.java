@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.example.S20230403.model.GunJoin;
 import com.example.S20230403.model.Out;
-import com.example.S20230403.model.Qna;
 import com.example.S20230403.model.Review;
 import com.example.S20230403.model.Review_Img;
 import com.example.S20230403.model.Room;
@@ -14,6 +13,7 @@ public interface MypageService {
 
 			// 프로필 관련
 			Users 				getMyProfileInfo(String user_id);
+			int 				existingNick(String newNickname);
 			int		 			updateMyProfile(Users users);
 			int 				updatePassword(Users users);
 

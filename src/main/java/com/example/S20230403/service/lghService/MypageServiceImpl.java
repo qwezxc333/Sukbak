@@ -9,13 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.S20230403.dao.lghDao.MypageDao;
 import com.example.S20230403.model.GunJoin;
 import com.example.S20230403.model.Out;
-import com.example.S20230403.model.Qna;
 import com.example.S20230403.model.Review;
 import com.example.S20230403.model.Review_Img;
 import com.example.S20230403.model.Room;
 import com.example.S20230403.model.Users;
 
-import groovyjarjarantlr4.v4.parse.ANTLRParser.parserRule_return;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -26,9 +24,14 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public Users getMyProfileInfo(String user_id) {
-		System.out.println("MypageServiceImpl getMyProfileInfo...");
+		//System.out.println("MypageServiceImpl getMyProfileInfo...");
 		Users myProfileInfo = mypageDao.getMyProfileInfo(user_id);
 		return myProfileInfo;
+	}
+	
+	@Override
+	public int existingNick(String newNickname) {
+		return mypageDao.existingNick(newNickname);
 	}
 
 	@Override
