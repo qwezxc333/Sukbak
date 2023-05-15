@@ -6,6 +6,14 @@
     <head>
         <meta charset="UTF-8">
         <style>
+            #button-container {
+                display: flex;
+            }
+
+            #submit-button, #cancel-button {
+                margin: 0 5px; /* 버튼 사이의 여백을 설정 (옵션) */
+            }
+
             body {
                 background-color: #F8F8F8;
                 font-family: 'Open Sans', sans-serif;
@@ -96,7 +104,7 @@
         </style>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script>
-            var verified_Phone = 1;
+            var verified_Phone = 0;
 
             function checkDuplicationNick() {
                 var nickname = $('#nickname').val();
@@ -200,7 +208,6 @@
                     },
                     success: function (data) {
                         alert("인증 성공");
-                        $("#phone").prop('disabled', true);
                         $("#inputCertifiedNumber").prop('disabled', true);
                         $("#phone_verify_success").css("display", "block");
                         $("#verify").css("display", "none");
@@ -214,11 +221,11 @@
             }
 
             function checkSubmit() {
-                if (verified_Phone === 1) {
-                    $("form").submit();
-                } else {
+                if (verified_Phone === 0) {
                     alert("휴대폰 인증을 해주세요.");
+                    return false; // 폼 전송 중지
                 }
+                  true; // 폼 전송 실행
             }
 
             function postDelete() {
@@ -313,11 +320,13 @@
                     입력 오류
                 </div>
             </div>
+            <div id="button-container">
             <button type="submit" class="btn btn-primary" id="submit-button" style="display:block;"
-                    onclick="checkSubmit()">
+                    onclick="return checkSubmit()">
                 가입 완료
             </button>
             <button type="button" class="btn btn-danger" onclick="postDelete()">가입 취소</button>
+            </div>
         </div>
     </form>
     </body>

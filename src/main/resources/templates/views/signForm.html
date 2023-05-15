@@ -6,6 +6,14 @@
     <head>
         <meta charset="UTF-8">
         <style>
+            #button-container {
+                display: flex;
+            }
+
+            #submit-button, #cancel-button {
+                margin: 0 5px; /* 버튼 사이의 여백을 설정 (옵션) */
+            }
+
             body {
                 background-color: #F8F8F8;
                 font-family: 'Open Sans', sans-serif;
@@ -96,9 +104,9 @@
         </style>
         <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
         <script>
-            var verified_Phone = 1;
-            var verified_Email = 1;
-            var success_check_password = 1;
+            var verified_Phone = 0;
+            var verified_Email = 0;
+            var success_check_password = 0;
 
             function PasswordCheck() {
                 var password = $("#password").val();
@@ -199,7 +207,6 @@
                         $('#email_check').css("display", "none");
                         $("#email_verify").css("display", "none");
                         $("#email_verify_number").prop('disabled', true);
-                        $("#user_id").prop('disabled', true);
                         $("#email_verify_success").css("display", "block");
                         $("#duplicationCheckResult").removeClass("alert-danger")
                             .addClass("alert-success")
@@ -315,11 +322,9 @@
                     },
                     success: function (data) {
                         alert("인증 성공");
-                        $("#phone").prop('disabled', true);
                         $("#inputCertifiedNumber").prop('disabled', true);
                         $("#phone_verify_success").css("display", "block");
                         $("#verify").css("display", "none");
-                        $("#submit-button").css("display", "block");
                         verified_Phone++;
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -331,14 +336,19 @@
             function checkSubmit() {
                 if (verified_Phone === 1 && verified_Email === 1 && success_check_password >= 1) {
                     $("form").submit();
+                    return true;
                 } else if (verified_Email === 0) {
                     alert("이메일 인증을 해주세요.");
+                    return false;
                 } else if (verified_Phone === 0) {
                     alert("휴대폰 인증을 해주세요.");
+                    return false;
                 } else if (success_check_password === 0) {
                     alert("비밀번호가 일치해야 합니다.")
+                    return false;
                 } else {
                     alert("이메일과 전화번호 인증을 모두 완료해야 합니다.");
+                    return false;
                 }
             }
 
@@ -524,14 +534,15 @@
                     입력 오류
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" id="submit-button" style="display: block;"
-                    onclick="checkSubmit()">
-                가입 신청
-            </button>
-            <button type="button" class="btn btn-danger" id="cancel_button" onclick="location.href='/'"
-                    style="display: block;">
-                가입 취소
-            </button>
+
+            <div id="button-container">
+                <button type="submit" class="btn btn-primary" id="submit-button" onclick="return checkSubmit()">
+                    가입 신청
+                </button>
+                <button type="button" class="btn btn-danger" id="cancel-button" onclick="location.href='/'">
+                    가입 취소
+                </button>
+            </div>
         </div>
     </form>
     </body>

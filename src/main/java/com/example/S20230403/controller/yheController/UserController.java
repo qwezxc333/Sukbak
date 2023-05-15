@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 
@@ -79,14 +78,14 @@ public class UserController {
     @GetMapping("/additional-info")
     public String showAdditionalInfo(Model model) {
         model.addAttribute("users", new Users());
-        return "additional-info";
+        return "views/additional-info";
     }
 
     @PostMapping("/updateInfo")
     public String submitAdditionalInfoForm(@Validated(AddInfoCheck.class) @ModelAttribute("users") Users user, BindingResult bindingResult,
                                            @AuthenticationPrincipal PrincipalDetail users, Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
-            return "additional-info";
+            return "views/additional-info";
         }
         String user_id = users.getUsername();
         Users currentUser = new Users();

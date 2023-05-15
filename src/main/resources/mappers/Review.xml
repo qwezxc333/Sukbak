@@ -3,4 +3,92 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.S20230403.ReviewMapper">
 
+	<!-- 진선 -->
+	<!-- 리뷰 리스트 -->
+	<select id="jsAccomReviewList" parameterType="Review" resultType="Review">
+		SELECT r.r_name, u.nickname, p.pay_id, re.rating, re.review_date, re.review_content
+		FROM room r, reservation resv, users u, payment p, review re
+		WHERE r.biz_id = resv.biz_id
+			AND r.r_id = resv.r_id
+	        AND p.user_id = u.user_id
+	        AND resv.biz_id = p.biz_id
+	        AND resv.user_id = p.user_id
+	        AND resv.resv_id = p.resv_id
+	        AND p.pay_id = re.pay_id
+	        AND r.biz_id = #{biz_id}
+        ORDER BY re.review_date desc
+	</select>
+	
+	<!-- 리뷰 총 갯수, 평점 -->
+	<select id="jsCalculateReview" parameterType="Review" resultType="Review">
+		SELECT count(*) totalReview, AVG(rating) avgReview
+		FROM payment p, review re
+		WHERE p.pay_id = re.pay_id
+		AND p.biz_id = #{biz_id}
+	</select>
+	
+	<!-- 찬규 -->
+	<select id="getMyReviews" parameterType="Review" resultType="Review">
+		SELECT  p.biz_id,p.r_id, p.user_id, re.review_content, re.rating, re.review_date, re.del_request ,p.pay_id
+		FROM    reservation resv, payment p, review re
+		WHERE   resv.biz_id = p.biz_id
+		AND     resv.resv_id = p.resv_id
+		AND     resv.r_id = p.r_id
+		AND     resv.user_id = p.user_id
+		AND     p.pay_id = re.pay_id
+	    AND   	resv.biz_id = #{biz_id}
+		ORDER BY
+		<choose>
+			<when test="kind == 1">
+				re.review_date desc
+			</when>
+			<when test="kind == 2">
+				re.rating
+			</when>
+			<otherwise>
+				re.rating desc
+			</otherwise>
+		 </choose>
+	</select>
+	
+	<select id="updateReviewDelRequestByPayId" parameterType="Review">
+		UPDATE 	review 
+		SET 	del_request = 'Y',
+		    	del_reason = #{del_reason},
+		    	del_date = sysdate
+		WHERE 	pay_id = #{pay_id}
+	</select>
+	
+	<select id="getMyReviewConut" parameterType="java.lang.String" resultType="Review">
+		SELECT  COUNT(*) totalReview, p.biz_id
+		FROM    review re, payment p
+		WHERE   re.pay_id = p.pay_id
+		AND     p.biz_id = #{biz_id}
+		GROUP BY p.biz_id
+	</select>
+	
+	<!--ajax  -->
+	<select id="cgGetAjaxSortingReviewLists" parameterType="Review" resultType="Review">
+		SELECT  p.biz_id,p.r_id, p.user_id, re.review_content, re.rating, re.review_date, re.del_request, p.pay_id
+		FROM    reservation resv, payment p, review re
+		WHERE   resv.biz_id = p.biz_id
+		AND     resv.r_id = p.r_id
+		AND     resv.user_id = p.user_id
+		AND     resv.resv_id = p.resv_id
+		AND     p.pay_id = re.pay_id
+	    AND   	resv.biz_id = #{biz_id}
+		ORDER BY 
+		<choose>
+			<when test="kind == 1">
+				re.review_date desc
+			</when>
+			<when test="kind == 2">
+				re.rating
+			</when>
+			<otherwise>
+				re.rating desc
+			</otherwise>
+		</choose>
+	</select>
+	
 </mapper>
