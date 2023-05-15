@@ -120,50 +120,50 @@
 
 <!-- user_id -->
 <script type="text/javascript">
-	function qnachk() {
-		// Get the values of the input fields
-		var qna_title = $("#qna_title").val();
-		;
-		var qna_type = $("#qna_type").val();
-		var qna_content = $("#qna_content").val();
-		var user_id = document.getElementById("user_id").innerHTML; // 수정된 부분
-		//alert(qna_title + ' === ' + qna_type + ' === ' + qna_content + ' === '
-			//	+ user_id);
-		// Send the data to the server using AJAX
-		$.ajax({
-			url : '/QnASend', // The URL of the server endpoint
-			method : 'POST', // Use POST method to send data
-			data : {
-				qna_title : qna_title,
-				qna_type : qna_type,
-				qna_content : qna_content,
-				user_id : user_id
-			}, // The data to send to the server
-			success : function(response) {
-				if (response == 1) {
-					alert('문의 완료');
-					location.replace("/commonUser/myQna");
-				} else if (user_id == 'anonymousUser') {
-					alert('로그인 후 이용해 주세요');
-					location.replace("/login");
-				} else if (qna_title == '') {
-					alert('제목을 입력하세요');
-					document.getElementById("qna_title").focus();
-				} else if (qna_content == '') {
-					alert('질문을 입력해 주세요');
-					document.getElementById("qna_content").focus();
-				} else {
-					//alert('오류 페이지 이동');
-					location.replace("/error2");
-				}
-				console.log(response);
-			},
-			error : function(xhr, status, error) {
-				console.log(xhr);
-				// Handle the error response from the server
-			}
-		});
-	}
+function qnachk() {
+    //유저 검증용
+    const loginUserAuth = document.getElementById('loginUserAuth').textContent;
+    // Get the values of the input fields
+    var qna_title = $("#qna_title").val();
+    var qna_type = $("#qna_type").val();
+    var qna_content = $("#qna_content").val();
+    var user_id = document.getElementById("user_id").innerHTML; // 수정된 부분
+    //alert(qna_title + ' === ' + qna_type + ' === ' + qna_content + ' === '
+       //   + user_id);
+    // Send the data to the server using AJAX
+    $.ajax({
+       url : '/QnASend', // The URL of the server endpoint
+       method : 'POST', // Use POST method to send data
+       data : {
+          qna_title : qna_title,
+          qna_type : qna_type,
+          qna_content : qna_content,
+          user_id : user_id
+       }, // The data to send to the server
+       success : function(response) {
+          if (response == 1  && loginUserAuth === "[USER]") {
+             alert('문의 완료');
+             location.replace("/commonUser/myQna");
+          } else if (user_id == 'anonymousUser') {
+             alert('로그인 후 이용해 주세요');
+             location.replace("/login");
+          } else if (qna_title == '') {
+             alert('제목을 입력하세요');
+             document.getElementById("qna_title").focus();
+          } else if (qna_content == '') {
+             alert('질문을 입력해 주세요');
+             document.getElementById("qna_content").focus();
+          } else {
+             alert('일반회원만 문의를 남길 수 있습니다.');
+          }
+          console.log(response);
+       },
+       error : function(xhr, status, error) {
+          console.log(xhr);
+          // Handle the error response from the server
+       }
+    });
+ }
 	var getNoteId = window.location.search;
 	var getParam = new URLSearchParams(getNoteId);
 	var rstParamVal = getParam.get('note_id');

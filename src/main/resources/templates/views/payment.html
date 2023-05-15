@@ -191,23 +191,22 @@
 								<hr class="my-4">
 
 								<h4 class="mb-3">결제 방식</h4>
-
 								<div class="my-3">
-									<div class="form-check">
-										<input id="credit" name="payment" type="radio"
-											class="form-checkinput" value="네이버페이" checked required>
-										<label class="form-checklabel" for="credit">네이버 페이</label>
-									</div>
-									<div class="form-check">
-										<input id="tosstest" name="payment" type="radio"
-											class="form-checkinput" value="토스"
-											required> <label class="form-checklabel"
-											for="tosstest">Toss 결제</label>
-									</div>
 									<div class="form-check">
 										<input id="kakaopay" name="payment" type="radio"
 											class="form-checkinput" value="카카오페이" required> <label
 											class="form-checklabel" for="kakaopay">카카오 페이</label>
+									</div>
+									<div class="form-check">
+										<input id="naverPay" name="payment" type="radio"
+											class="form-checkinput" value="네이버페이" checked required>
+										<label class="form-checklabel" for="credit">네이버 페이</label>
+									</div>
+									<div class="form-check">
+										<input id="tossPay" name="payment" type="radio"
+											class="form-checkinput" value="토스"
+											required> <label class="form-checklabel"
+											for="tosstest">Toss 결제</label>
 									</div>
 								</div>
 								<hr class="my-4">
@@ -232,6 +231,14 @@
 <script th:inline="javascript">
 
 function validateFormAndPay() {
+	 if (document.getElementById('tossPay').checked) {
+		    alert('연동 준비중 입니다 카카오 페이로 결제해 주세요.');
+		    return false;
+		  }
+	 if (document.getElementById('naverPay').checked) {
+		    alert('연동 준비중 입니다 카카오 페이로 결제해 주세요.');
+		    return false;
+		  }
 	  if (!document.getElementById('stay-agreement').checked) {
 	    alert('숙소 이용에 대한 동의에 체크해주세요.');
 	    return false;
