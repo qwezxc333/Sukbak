@@ -17,7 +17,7 @@ public class MessageController {
     final DefaultMessageService messageService;
 
     public MessageController() {
-        this.messageService = NurigoApp.INSTANCE.initialize("NCSBZOEO6XEJVDAO", "BKQ7N32EYBBHG9TKEHU41FLDR2WT1YZR", "https://api.coolsms.co.kr");
+        this.messageService = NurigoApp.INSTANCE.initialize("NCSSGUPJIKILZUAZ", "XKX4MWGQDAVYT6KATCIAFWFWM7AET4DL", "https://api.coolsms.co.kr");
     }
 
     @PostMapping("/send-one")
@@ -30,7 +30,7 @@ public class MessageController {
 
         Message message = new Message();
         // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-        message.setFrom("01026245448");
+        message.setFrom("01099600414");
         message.setTo(phone);
         message.setText("인증번호는 " + certifiedNumber + " 입니다.");
 
