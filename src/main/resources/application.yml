@@ -57,10 +57,10 @@ mybatis:
 
   
 file:
-  dir: C:\Users\qwezx\git\S20230403\bin\main\static\img\review\
+  dir: C:\Users\admin\git\S20230403\bin\main\static\img\review\
   
 file-room:
-  dir: C:\Users\qwezx\git\S20230403\bin\main\static\img\room\
+  dir: C:\Users\admin\git\S20230403\bin\main\static\img\room\
 
   
 
