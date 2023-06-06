@@ -20,7 +20,7 @@ spring:
 # oracle connect
   datasource:
     url: jdbc:oracle:thin:@localhost:1521/xe
-    username: S20230403
+    username: sukbak
     password: tiger
     driver-class-name: oracle.jdbc.driver.OracleDriver
   
@@ -55,12 +55,12 @@ mybatis:
   config-location: classpath:configuration.xml
   mapper-locations: classpath:mappers/**/*.xml
 
-  
+
 file:
-  dir: C:\Users\admin\git\S20230403\bin\main\static\img\review\
+  dir: C:\Users\qwezx\git\sukbak\bin\main\static\img\review\
   
 file-room:
-  dir: C:\Users\admin\git\S20230403\bin\main\static\img\room\
+  dir: C:\Users\qwezx\git\sukbak\bin\main\static\img\room\
 
   
 

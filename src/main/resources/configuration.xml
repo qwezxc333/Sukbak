@@ -6,66 +6,66 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="Accom"
-			type="com.example.S20230403.model.Accom" />
+			type="com.example.sukbak.model.Accom" />
 		
 		<typeAlias alias="AccomPayment"
-			type="com.example.S20230403.model.AccomPayment" />
+			type="com.example.sukbak.model.AccomPayment" />
 
 		<typeAlias alias="ChanJoin"
-			type="com.example.S20230403.model.ChanJoin" />
+			type="com.example.sukbak.model.ChanJoin" />
 
 		<typeAlias alias="Comm"
-			type="com.example.S20230403.model.Comm" />
+			type="com.example.sukbak.model.Comm" />
 
 		<typeAlias alias="Event"
-			type="com.example.S20230403.model.Event" />
+			type="com.example.sukbak.model.Event" />
 
 		<typeAlias alias="GunJoin"
-			type="com.example.S20230403.model.GunJoin" />
+			type="com.example.sukbak.model.GunJoin" />
 
 		<typeAlias alias="JinJoin"
-			type="com.example.S20230403.model.JinJoin" />
+			type="com.example.sukbak.model.JinJoin" />
 		
 		<typeAlias alias="JooJoin"
-			type="com.example.S20230403.model.JooJoin" />
+			type="com.example.sukbak.model.JooJoin" />
 
 		<typeAlias alias="Notice_Faq"
-			type="com.example.S20230403.model.Notice_Faq" />
+			type="com.example.sukbak.model.Notice_Faq" />
 		
 		<typeAlias alias="Out"
-			type="com.example.S20230403.model.Out" />
+			type="com.example.sukbak.model.Out" />
 
 		<typeAlias alias="Payment"
-			type="com.example.S20230403.model.Payment" />
+			type="com.example.sukbak.model.Payment" />
 
 		<typeAlias alias="Qna_Re"
-			type="com.example.S20230403.model.Qna_Re" />
+			type="com.example.sukbak.model.Qna_Re" />
 
 		<typeAlias alias="Qna"
-			type="com.example.S20230403.model.Qna" />
+			type="com.example.sukbak.model.Qna" />
 
 		<typeAlias alias="Reservation"
-			type="com.example.S20230403.model.Reservation" />
+			type="com.example.sukbak.model.Reservation" />
 
 		<typeAlias alias="Review_Img"
-			type="com.example.S20230403.model.Review_Img" />
+			type="com.example.sukbak.model.Review_Img" />
 
 		<typeAlias alias="Review"
-			type="com.example.S20230403.model.Review" />
+			type="com.example.sukbak.model.Review" />
 
 		<typeAlias alias="Room_Img"
-			type="com.example.S20230403.model.Room_Img" />
+			type="com.example.sukbak.model.Room_Img" />
 
 		<typeAlias alias="Room"
-			type="com.example.S20230403.model.Room" />
+			type="com.example.sukbak.model.Room" />
 
 		<typeAlias alias="Soldout"
-			type="com.example.S20230403.model.Soldout" />
+			type="com.example.sukbak.model.Soldout" />
 
 		<typeAlias alias="Users"
-			type="com.example.S20230403.model.Users" />
+			type="com.example.sukbak.model.Users" />
 
 		<typeAlias alias="Zzim"
-			type="com.example.S20230403.model.Zzim" />
+			type="com.example.sukbak.model.Zzim" />
 	</typeAliases>
 </configuration>

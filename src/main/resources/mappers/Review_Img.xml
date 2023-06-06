@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.S20230403.Review_ImgMapper">
+<mapper namespace="com.example.sukbak.Review_ImgMapper">
 
 	<!-- 진선  -->
 	<!-- 모든객실의 사진들 다 가져와서 메인에서 롤링으로 뿌려줌 -->

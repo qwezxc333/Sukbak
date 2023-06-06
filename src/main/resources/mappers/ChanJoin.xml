@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.S20230403.ChanJoinMapper">
+<mapper namespace="com.example.sukbak.ChanJoinMapper">
 	<select id="cgGetAjaxProductListsByAccomtypeAndAddr" parameterType="ChanJoin" resultType="ChanJoin">
 	
 			SELECT a.biz_id, a.biz_name, a.addr, r.min_price_r2 , room_resv_pay_re.avg_rating 

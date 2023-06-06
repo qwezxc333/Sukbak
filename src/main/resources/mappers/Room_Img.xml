@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.S20230403.Room_ImgMapper">
+<mapper namespace="com.example.sukbak.Room_ImgMapper">
 	<!-- 일반 모든 업소의 사진을 다 가져오는 로직  -->
 	<select id="cgGetRoom_img" resultType="Room_Img">
 		SELECT r_img1.BIZ_ID biz_id, r_img1.R_IMG r_img
