@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.S20230403.QnaMapper">
+<mapper namespace="com.example.sukbak.QnaMapper">
 	
 	<!-- 진선 -->
 	<!-- 챗봇 1:1문의 접수 -->
